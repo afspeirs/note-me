@@ -1,9 +1,11 @@
 import React, { Component } from "react";
+
 import { orange500, orange700 } from "material-ui/styles/colors";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import getMuiTheme from "material-ui/styles/getMuiTheme";
+
 import NavBar from "./components/NavBar/NavBar";
-import "./App.css";
+import Note from "./components/Note/Note";
 
 class App extends Component {
   render() {
@@ -18,6 +20,7 @@ class App extends Component {
       <MuiThemeProvider muiTheme={muiTheme}>
         <div>
           <NavBar />
+          <Note />
         </div>
       </MuiThemeProvider>
     );
