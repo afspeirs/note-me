@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Markdown from "react-markdown";
+import "./note.css";
 
 export class Note extends Component {
   constructor(props, context) {
@@ -9,27 +10,20 @@ export class Note extends Component {
     };
   }
   render() {
-    const textAreaStyle = {
-      width: "100%",
-      resize: "none",
-      border: "none",
-      padding: "16px"
-    };
-    const markdownStyle = {
-      padding: "16px"
-    };
     return (
-      <div>
+      <div className="note">
         <textarea
-          style={textAreaStyle}
+          className={this.props.edit ? "edit" : "hide"}
           type="text"
           ref="someData"
           defaultValue={this.state.textData}
           onChange={e => this.setState({ textData: e.target.value })}
         />
-        <div style={markdownStyle}>
-          <Markdown escapeHtml={true} source={this.state.textData} />
-        </div>
+        <Markdown
+          className="markdown"
+          escapeHtml={true}
+          source={this.state.textData}
+        />
       </div>
     );
   }

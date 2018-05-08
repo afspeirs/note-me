@@ -8,6 +8,21 @@ import NavBar from "./components/NavBar/NavBar";
 import Note from "./components/Note/Note";
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+
+    // Bind the this context to the editToggle function
+    this.editToggle = this.editToggle.bind(this);
+
+    this.state = { edit: false };
+  }
+
+  editToggle() {
+    this.setState({
+      edit: !this.state.edit
+    });
+  }
+
   render() {
     const muiTheme = getMuiTheme({
       palette: {
@@ -19,8 +34,8 @@ class App extends Component {
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
         <div>
-          <NavBar />
-          <Note />
+          <NavBar edit={this.state.edit} editToggle={this.editToggle} />
+          <Note edit={this.state.edit} />
         </div>
       </MuiThemeProvider>
     );

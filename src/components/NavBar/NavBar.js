@@ -3,6 +3,7 @@ import React from "react";
 import AppBar from "material-ui/AppBar";
 import Drawer from "material-ui/Drawer";
 import MenuItem from "material-ui/MenuItem";
+import FlatButton from "material-ui/FlatButton";
 
 class NavBar extends React.Component {
   constructor(props) {
@@ -16,7 +17,14 @@ class NavBar extends React.Component {
   render() {
     return (
       <div>
-        <AppBar title="List Me" onLeftIconButtonClick={this.handleToggle} />
+        <AppBar
+          title="List Me"
+          onLeftIconButtonClick={this.handleToggle}
+          iconElementRight={
+            <FlatButton label={this.props.edit ? "done" : "edit"} />
+          }
+          onRightIconButtonClick={this.props.editToggle}
+        />
         <Drawer
           docked={false}
           width={250}
