@@ -11,7 +11,7 @@ export class Note extends Component {
   }
   render() {
     return (
-      <div className="note">
+      <div>
         <textarea
           className={this.props.edit ? "edit" : "hide"}
           type="text"
