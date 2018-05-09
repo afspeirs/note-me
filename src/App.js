@@ -2,6 +2,7 @@ import { orange500, orange700 } from "material-ui/styles/colors";
 import getMuiTheme from "material-ui/styles/getMuiTheme";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import React, { Component } from "react";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 import NavBar from "./components/NavBar/NavBar";
 import Note from "./components/Note/Note";
@@ -32,10 +33,14 @@ class App extends Component {
 
 		return (
 			<MuiThemeProvider muiTheme={muiTheme}>
-				<div>
-					<NavBar edit={this.state.edit} editToggle={this.editToggle} />
-					<Note edit={this.state.edit} />
-				</div>
+				<Router>
+					<div>
+						<NavBar edit={this.state.edit} editToggle={this.editToggle} />
+
+						<Route exact path="/" render={() => <Link to="/note">Note</Link>} />
+						<Route path="/note" render={() => <Note edit={this.state.edit} />} />
+					</div>
+				</Router>
 			</MuiThemeProvider>
 		);
 	}
