@@ -1,20 +1,22 @@
 textarea,
 .markdown {
-  padding: 16px;
+	padding: 16px;
 }
 
 textarea {
-  display: block;
-  position: absolute;
-  width: 100%;
-  height: calc(100% - 64px);
-  resize: none;
-  border: none;
-  font-size: 1em;
+	display: block;
+	position: absolute;
+	width: 100%;
+	height: calc(100% - 64px);
+	resize: none;
+	border: none;
+	font-size: 1em;
 }
+
 textarea:focus {
-  outline: none;
+	outline: none;
 }
+
 textarea.hide {
-  display: none;
+	display: none;
 }
