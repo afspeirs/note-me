@@ -1,13 +1,16 @@
 {
+	"name": "List Me",
 	"short_name": "List Me",
-	"name": "Create React App Sample",
+	"description": "Store your notes as markdown",
+	"dir": "ltr",
+	"lang": "en",
+	"start_url": "./index.html",
+	"display": "standalone",
+	"theme_color": "#ff9800",
+	"background_color": "#ffffff",
 	"icons": [{
 		"src": "favicon.ico",
 		"sizes": "64x64 32x32 24x24 16x16",
 		"type": "image/x-icon"
-	}],
-	"start_url": "./index.html",
-	"display": "standalone",
-	"theme_color": "#ff9800",
-	"background_color": "#ffffff"
+	}]
 }
