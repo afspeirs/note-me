@@ -1,6 +1,6 @@
 {
-	"name": "List Me",
-	"short_name": "List Me",
+	"name": "Note Me",
+	"short_name": "Note Me",
 	"description": "Store your notes as markdown",
 	"dir": "ltr",
 	"lang": "en",

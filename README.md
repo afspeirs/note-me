@@ -1,4 +1,4 @@
-# List Me [![pipeline status](https://gitlab.com/AFSpeirs/list-me/badges/master/pipeline.svg)](https://gitlab.com/AFSpeirs/list-me/commits/master)
+# Note Me [![pipeline status](https://gitlab.com/AFSpeirs/note-me/badges/master/pipeline.svg)](https://gitlab.com/AFSpeirs/note-me/commits/master)
 
 
 Below you will find some information on how to perform common tasks.<br>

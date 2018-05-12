@@ -17,7 +17,7 @@ class NavBar extends React.Component {
 			<div>
 				<Route exact path="/" render={() => (
 					<AppBar
-						title="List Me"
+						title="Note Me"
 						onLeftIconButtonClick={this.handleToggle}
 					/>
 				)} />
