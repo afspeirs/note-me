@@ -1,8 +1,7 @@
-import AppBar from "material-ui/AppBar";
-import Drawer from "material-ui/Drawer";
-import FlatButton from "material-ui/FlatButton";
-import MenuItem from "material-ui/MenuItem";
+import { AppBar, Drawer, FlatButton, IconButton, MenuItem } from 'material-ui';
+import ArrowBack from "material-ui/svg-icons/navigation/arrow-back";
 import React from "react";
+import { Route } from "react-router-dom";
 
 class NavBar extends React.Component {
 	constructor(props) {
@@ -16,14 +15,27 @@ class NavBar extends React.Component {
 	render() {
 		return (
 			<div>
-				<AppBar
-					title="List Me"
-					onLeftIconButtonClick={this.handleToggle}
-					iconElementRight={
-						<FlatButton label={this.props.edit ? "done" : "edit"} />
-					}
-					onRightIconButtonClick={this.props.editToggle}
-				/>
+				<Route exact path="/" render={() => (
+					<AppBar
+						title="List Me"
+						onLeftIconButtonClick={this.handleToggle}
+					/>
+				)} />
+				<Route exact path="/note" render={() => (
+					<AppBar
+						title="Note"
+						iconElementLeft={
+							<IconButton>
+								<ArrowBack />
+							</IconButton>
+						}
+						onLeftIconButtonClick={() => window.history.back()}
+						iconElementRight={
+							<FlatButton label={this.props.edit ? "done" : "edit"} />
+						}
+						onRightIconButtonClick={this.props.editToggle}
+					/>
+				)} />
 				<Drawer
 					docked={false}
 					width={250}
