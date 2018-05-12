@@ -33,7 +33,7 @@ class NavBar extends React.Component {
 						iconElementRight={
 							<FlatButton label={this.props.edit ? "done" : "edit"} />
 						}
-						onRightIconButtonClick={this.props.editToggle}
+						onRightIconButtonClick={this.props.toggleEdit}
 					/>
 				)} />
 				<Drawer

@@ -12,13 +12,13 @@ class App extends Component {
 	constructor(props) {
 		super(props);
 
-		// Bind the this context to the editToggle function
-		this.editToggle = this.editToggle.bind(this);
+		// Bind the this context to the toggleEdit function
+		this.toggleEdit = this.toggleEdit.bind(this);
 
 		this.state = { edit: false };
 	}
 
-	editToggle() {
+	toggleEdit() {
 		this.setState({
 			edit: !this.state.edit
 		});
@@ -42,7 +42,7 @@ class App extends Component {
 			<MuiThemeProvider muiTheme={muiTheme}>
 				<Router>
 					<div>
-						<NavBar edit={this.state.edit} editToggle={this.editToggle} />
+						<NavBar edit={this.state.edit} toggleEdit={this.toggleEdit} />
 
 						<Route exact path="/" render={() =>
 							<div>
