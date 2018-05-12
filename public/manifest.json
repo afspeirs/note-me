@@ -4,7 +4,7 @@
 	"description": "Store your notes as markdown",
 	"dir": "ltr",
 	"lang": "en",
-	"start_url": "./index.html",
+	"start_url": ".",
 	"display": "standalone",
 	"theme_color": "#ff9800",
 	"background_color": "#ffffff",
