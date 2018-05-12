@@ -1,5 +1,5 @@
 import { AppBar, Drawer, FlatButton, IconButton, MenuItem } from 'material-ui';
-import ArrowBack from "material-ui/svg-icons/navigation/arrow-back";
+import IconArrowBack from "material-ui/svg-icons/navigation/arrow-back";
 import React from "react";
 import { Route } from "react-router-dom";
 
@@ -26,7 +26,7 @@ class NavBar extends React.Component {
 						title="Note"
 						iconElementLeft={
 							<IconButton>
-								<ArrowBack />
+								<IconArrowBack />
 							</IconButton>
 						}
 						onLeftIconButtonClick={() => window.history.back()}
