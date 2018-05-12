@@ -1,6 +1,5 @@
 import { orange500, orange700 } from "material-ui/styles/colors";
-import getMuiTheme from "material-ui/styles/getMuiTheme";
-import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
+import { getMuiTheme, MuiThemeProvider } from "material-ui/styles";
 import { FloatingActionButton } from 'material-ui';
 import IconAdd from 'material-ui/svg-icons/content/add';
 import React, { Component } from "react";
