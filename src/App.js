@@ -1,6 +1,6 @@
 import { orange500, orange700 } from "material-ui/styles/colors";
 import { getMuiTheme, MuiThemeProvider } from "material-ui/styles";
-import { FloatingActionButton } from 'material-ui';
+import { FloatingActionButton, Paper } from 'material-ui';
 import IconAdd from 'material-ui/svg-icons/content/add';
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
@@ -46,6 +46,10 @@ class App extends Component {
 			bottom: '16px',
 			right: '16px'
 		};
+		const paperStyle = {
+			margin: 16,
+			padding: 16
+		};
 
 		return (
 			<MuiThemeProvider muiTheme={muiTheme}>
@@ -58,23 +62,21 @@ class App extends Component {
 
 						<Route exact path="/" render={() =>
 							<div>
-								<ul>
-									{this.state.notes.map((noteText, index) => {
-										return (
-											<li key={`note-${index}`}>
-												<Link to={{
-													pathname: '/note',
-													state: {
-														id: index,
-														text: this.state.notes[index]
-													}
-												}}>
-													{noteText.replace(/\n.*$/, '')}
-												</Link>
-											</li>
-										)
-									})}
-								</ul>
+								{this.state.notes.map((noteText, index) => {
+									return (
+										<Link to={{
+											pathname: '/note',
+											state: {
+												id: index,
+												text: this.state.notes[index]
+											}
+										}} style={{ textDecoration: 'none' }}>
+											<Paper key={`note-${index}`} style={paperStyle}>
+												{noteText.split('\n')[0]}
+											</Paper>
+										</Link>
+									)
+								})}
 
 								<Link to={{
 									pathname: '/note',
