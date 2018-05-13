@@ -51,7 +51,10 @@ class App extends Component {
 			<MuiThemeProvider muiTheme={muiTheme}>
 				<Router>
 					<div>
-						<NavBar edit={this.state.edit} handleEditToggle={this.handleEditToggle} />
+						<NavBar
+							edit={this.state.edit}
+							handleEditToggle={this.handleEditToggle}
+						/>
 
 						<Route exact path="/" render={() =>
 							<div>
@@ -73,7 +76,13 @@ class App extends Component {
 									})}
 								</ul>
 
-								<Link to="/note">
+								<Link to={{
+									pathname: '/note',
+									state: {
+										id: this.state.notes.length,
+										text: ''
+									}
+								}}>
 									<FloatingActionButton style={fabStyle}>
 										<IconAdd />
 									</FloatingActionButton>
@@ -85,7 +94,9 @@ class App extends Component {
 								edit={this.state.edit}
 								currentNoteID={match.location.state.id}
 								currentNoteText={this.state.notes[match.location.state.id]}
-								handleNoteUpdate={this.handleNoteUpdate} />
+								handleEditToggle={this.handleEditToggle}
+								handleNoteUpdate={this.handleNoteUpdate}
+							/>
 						}} />
 					</div>
 				</Router>

@@ -4,6 +4,16 @@ import React, { Component } from "react";
 import "./note.css";
 
 export class Note extends Component {
+	constructor(props) {
+		super(props)
+
+		// If edit is false and there is no current note text
+		// Allow for editing
+		if (!props.edit && !props.currentNoteText) {
+			props.handleEditToggle();
+		}
+	}
+
 	render() {
 		return (
 			<div>
