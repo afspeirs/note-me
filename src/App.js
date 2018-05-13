@@ -69,7 +69,7 @@ class App extends Component {
 														text: this.state.notes[index]
 													}
 												}}>
-													{noteText}
+													{noteText.replace(/\n.*$/, '')}
 												</Link>
 											</li>
 										)
