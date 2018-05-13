@@ -55,7 +55,8 @@ class App extends Component {
 				marginBottom: 64,
 			},
 			paper: {
-				padding: 16
+				padding: 16,
+				marginBottom: 8
 			}
 		}
 
