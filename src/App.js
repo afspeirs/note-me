@@ -41,15 +41,23 @@ class App extends Component {
 			}
 		});
 
-		const fabStyle = {
-			position: 'absolute',
-			bottom: '16px',
-			right: '16px'
-		};
-		const paperStyle = {
-			margin: 16,
-			padding: 16
-		};
+		const styles = {
+			fab: {
+				position: 'fixed',
+				bottom: '16px',
+				right: '16px'
+			},
+			page: {
+				marginTop: 64,
+				padding: 16
+			},
+			pageHome: {
+				marginBottom: 64,
+			},
+			paper: {
+				padding: 16
+			}
+		}
 
 		return (
 			<MuiThemeProvider muiTheme={muiTheme}>
@@ -61,17 +69,21 @@ class App extends Component {
 						/>
 
 						<Route exact path="/" render={() =>
-							<div>
+							<div style={{ ...styles.page, ...styles.pageHome }}>
 								{this.state.notes.map((noteText, index) => {
 									return (
-										<Link to={{
-											pathname: '/note',
-											state: {
-												id: index,
-												text: this.state.notes[index]
-											}
-										}} style={{ textDecoration: 'none' }}>
-											<Paper key={`note-${index}`} style={paperStyle}>
+										<Link
+											to={{
+												pathname: '/note',
+												state: {
+													id: index,
+													text: this.state.notes[index]
+												}
+											}}
+											style={{ textDecoration: 'none' }}
+											key={`note-${index}`}
+										>
+											<Paper style={styles.paper}>
 												{noteText.split('\n')[0]}
 											</Paper>
 										</Link>
@@ -85,20 +97,24 @@ class App extends Component {
 										text: ''
 									}
 								}}>
-									<FloatingActionButton style={fabStyle}>
+									<FloatingActionButton style={styles.fab}>
 										<IconAdd />
 									</FloatingActionButton>
 								</Link>
 							</div>
 						} />
 						<Route path="/note" render={(match) => {
-							return <Note
-								edit={this.state.edit}
-								currentNoteID={match.location.state.id}
-								currentNoteText={this.state.notes[match.location.state.id]}
-								handleEditToggle={this.handleEditToggle}
-								handleNoteUpdate={this.handleNoteUpdate}
-							/>
+							return (
+								<div style={styles.page}>
+									<Note
+										edit={this.state.edit}
+										currentNoteID={match.location.state.id}
+										currentNoteText={this.state.notes[match.location.state.id]}
+										handleEditToggle={this.handleEditToggle}
+										handleNoteUpdate={this.handleNoteUpdate}
+									/>
+								</div>
+							)
 						}} />
 					</div>
 				</Router>

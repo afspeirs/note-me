@@ -13,17 +13,27 @@ class NavBar extends React.Component {
 	handleDrawerClose = () => this.setState({ open: false });
 
 	render() {
+		const styles = {
+			appbar: {
+				position: 'fixed',
+				top: 0,
+				left: 0
+			}
+		}
+
 		return (
 			<div>
 				<Route exact path="/" render={() => (
 					<AppBar
 						title="Note Me"
+						style={styles.appbar}
 						onLeftIconButtonClick={this.handleDrawerToggle}
 					/>
 				)} />
 				<Route exact path="/note" render={() => (
 					<AppBar
 						title="Note"
+						style={styles.appbar}
 						iconElementLeft={
 							<IconButton>
 								<IconArrowBack />
