@@ -9,8 +9,8 @@ class NavBar extends React.Component {
 		this.state = { open: false };
 	}
 
-	handleToggle = () => this.setState({ open: !this.state.open });
-	handleClose = () => this.setState({ open: false });
+	handleDrawerToggle = () => this.setState({ open: !this.state.open });
+	handleDrawerClose = () => this.setState({ open: false });
 
 	render() {
 		return (
@@ -18,7 +18,7 @@ class NavBar extends React.Component {
 				<Route exact path="/" render={() => (
 					<AppBar
 						title="Note Me"
-						onLeftIconButtonClick={this.handleToggle}
+						onLeftIconButtonClick={this.handleDrawerToggle}
 					/>
 				)} />
 				<Route exact path="/note" render={() => (
@@ -33,7 +33,7 @@ class NavBar extends React.Component {
 						iconElementRight={
 							<FlatButton label={this.props.edit ? "done" : "edit"} />
 						}
-						onRightIconButtonClick={this.props.toggleEdit}
+						onRightIconButtonClick={this.props.handleEditToggle}
 					/>
 				)} />
 				<Drawer
@@ -42,8 +42,8 @@ class NavBar extends React.Component {
 					open={this.state.open}
 					onRequestChange={open => this.setState({ open })}
 				>
-					<MenuItem onClick={this.handleClose}>Menu Item</MenuItem>
-					<MenuItem onClick={this.handleClose}>Menu Item 2</MenuItem>
+					<MenuItem onClick={this.handleDrawerClose}>Menu Item</MenuItem>
+					<MenuItem onClick={this.handleDrawerClose}>Menu Item 2</MenuItem>
 				</Drawer>
 			</div>
 		);

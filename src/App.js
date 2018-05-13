@@ -12,17 +12,26 @@ class App extends Component {
 	constructor(props) {
 		super(props);
 
-		// Bind the this context to the toggleEdit function
-		this.toggleEdit = this.toggleEdit.bind(this);
+		// Bind the this context to the handleEditToggle function
+		this.handleEditToggle = this.handleEditToggle.bind(this);
 
-		this.state = { edit: false };
-	}
+		this.state = {
+			edit: false,
+			notes: [
+				'# Your markdown here\n<h1>This won\'t be translated into HTML</h1>',
+				'# Your markdown here 2\n<h1>This won\'t be translated into HTML</h1>'
+			]
+		};
+	};
 
-	toggleEdit() {
-		this.setState({
-			edit: !this.state.edit
-		});
-	}
+	handleEditToggle = () => this.setState({ edit: !this.state.edit });
+
+	handleNoteUpdate = (index, text) => {
+		const notes = this.state.notes;
+		notes[index] = text;
+
+		this.setState({ notes });
+	};
 
 	render() {
 		const muiTheme = getMuiTheme({
@@ -42,10 +51,28 @@ class App extends Component {
 			<MuiThemeProvider muiTheme={muiTheme}>
 				<Router>
 					<div>
-						<NavBar edit={this.state.edit} toggleEdit={this.toggleEdit} />
+						<NavBar edit={this.state.edit} handleEditToggle={this.handleEditToggle} />
 
 						<Route exact path="/" render={() =>
 							<div>
+								<ul>
+									{this.state.notes.map((noteText, index) => {
+										return (
+											<li key={`note-${index}`}>
+												<Link to={{
+													pathname: '/note',
+													state: {
+														id: index,
+														text: this.state.notes[index]
+													}
+												}}>
+													{noteText}
+												</Link>
+											</li>
+										)
+									})}
+								</ul>
+
 								<Link to="/note">
 									<FloatingActionButton style={fabStyle}>
 										<IconAdd />
@@ -53,14 +80,18 @@ class App extends Component {
 								</Link>
 							</div>
 						} />
-						<Route path="/note" render={() => <Note edit={this.state.edit} />} />
+						<Route path="/note" render={(match) => {
+							return <Note
+								edit={this.state.edit}
+								currentNoteID={match.location.state.id}
+								currentNoteText={this.state.notes[match.location.state.id]}
+								handleNoteUpdate={this.handleNoteUpdate} />
+						}} />
 					</div>
 				</Router>
 			</MuiThemeProvider>
 		);
 	}
 }
-
-
 
 export default App;
