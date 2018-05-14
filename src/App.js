@@ -18,8 +18,13 @@ class App extends Component {
 		this.state = {
 			edit: false,
 			notes: [
-				'# Your markdown here\n<h1>This won\'t be translated into HTML</h1>',
-				'# Your markdown here 2\n<h1>This won\'t be translated into HTML</h1>'
+				{
+					text: '# Your markdown here\n<h1>This won\'t be translated into HTML</h1>',
+					date: ''
+				}, {
+					text: '# Your markdown here 2\n<h1>This won\'t be translated into HTML</h1>',
+					date: ''
+				}
 			]
 		};
 	};
@@ -28,7 +33,7 @@ class App extends Component {
 
 	handleNoteUpdate = (index, text) => {
 		const notes = this.state.notes;
-		notes[index] = text;
+		notes[index].text = text;
 
 		this.setState({ notes });
 	};
@@ -71,21 +76,22 @@ class App extends Component {
 
 						<Route exact path="/" render={() =>
 							<div style={{ ...styles.page, ...styles.pageHome }}>
-								{this.state.notes.map((noteText, index) => {
+								{this.state.notes.map((note, index) => {
 									return (
 										<Link
 											to={{
 												pathname: '/note',
 												state: {
 													id: index,
-													text: this.state.notes[index]
+													text: note.text,
+													date: note.date,
 												}
 											}}
 											style={{ textDecoration: 'none' }}
 											key={`note-${index}`}
 										>
 											<Paper style={styles.paper}>
-												{noteText.split('\n')[0]}
+												{note.text ? note.text.split('\n')[0] : 'Untitled'}
 											</Paper>
 										</Link>
 									)
@@ -110,7 +116,8 @@ class App extends Component {
 									<Note
 										edit={this.state.edit}
 										currentNoteID={match.location.state.id}
-										currentNoteText={this.state.notes[match.location.state.id]}
+										currentNoteText={this.state.notes[match.location.state.id].text}
+										currentNoteDate={this.state.notes[match.location.state.id].date}
 										handleEditToggle={this.handleEditToggle}
 										handleNoteUpdate={this.handleNoteUpdate}
 									/>
