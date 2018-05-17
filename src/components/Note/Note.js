@@ -3,7 +3,7 @@ import React, { Component } from "react";
 
 import "./note.css";
 
-export class Note extends Component {
+class Note extends Component {
 	constructor(props) {
 		super(props)
 
