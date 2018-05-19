@@ -1,9 +1,9 @@
-import { orange500, orange700 } from "material-ui/styles/colors";
-import { getMuiTheme, MuiThemeProvider } from "material-ui/styles";
-import { FloatingActionButton, Paper } from 'material-ui';
-import IconAdd from 'material-ui/svg-icons/content/add';
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { Button, Paper, Typography } from '@material-ui/core';
+import { deepOrange } from '@material-ui/core/colors';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { Add as AddIcon } from '@material-ui/icons';
 
 import NavBar from "./components/NavBar/NavBar";
 import Note from "./components/Note/Note";
@@ -39,11 +39,10 @@ class App extends Component {
 	};
 
 	render() {
-		const muiTheme = getMuiTheme({
+		const theme = createMuiTheme({
 			palette: {
-				primary1Color: orange500,
-				primary2Color: orange700
-			}
+				primary: deepOrange,
+			},
 		});
 
 		const styles = {
@@ -53,7 +52,6 @@ class App extends Component {
 				right: '16px'
 			},
 			page: {
-				marginTop: 64,
 				padding: 16
 			},
 			pageHome: {
@@ -66,7 +64,7 @@ class App extends Component {
 		}
 
 		return (
-			<MuiThemeProvider muiTheme={muiTheme}>
+			<MuiThemeProvider theme={theme}>
 				<Router>
 					<div>
 						<NavBar
@@ -90,8 +88,10 @@ class App extends Component {
 											style={{ textDecoration: 'none' }}
 											key={`note-${index}`}
 										>
-											<Paper style={styles.paper}>
-												{note.text ? note.text.split('\n')[0] : 'Untitled'}
+											<Paper style={styles.paper} elevation={4}>
+												<Typography component="p">
+													{note.text ? note.text.split('\n')[0] : 'Untitled'}
+												</Typography>
 											</Paper>
 										</Link>
 									)
@@ -104,9 +104,9 @@ class App extends Component {
 										text: ''
 									}
 								}}>
-									<FloatingActionButton style={styles.fab}>
-										<IconAdd />
-									</FloatingActionButton>
+									<Button variant="fab" color="primary" aria-label="add" style={styles.fab}>
+										<AddIcon />
+									</Button>
 								</Link>
 							</div>
 						} />
