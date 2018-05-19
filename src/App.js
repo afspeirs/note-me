@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { Button, Paper, Typography } from '@material-ui/core';
-import { deepOrange } from '@material-ui/core/colors';
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { Add as AddIcon } from '@material-ui/icons';
 
 import NavBar from "./components/NavBar/NavBar";
@@ -39,12 +37,6 @@ class App extends Component {
 	};
 
 	render() {
-		const theme = createMuiTheme({
-			palette: {
-				primary: deepOrange,
-			},
-		});
-
 		const styles = {
 			fab: {
 				position: 'fixed',
@@ -64,69 +56,67 @@ class App extends Component {
 		}
 
 		return (
-			<MuiThemeProvider theme={theme}>
-				<Router>
-					<div>
-						<NavBar
-							edit={this.state.edit}
-							handleEditToggle={this.handleEditToggle}
-						/>
+			<Router>
+				<div>
+					<NavBar
+						edit={this.state.edit}
+						handleEditToggle={this.handleEditToggle}
+					/>
 
-						<Route exact path="/" render={() =>
-							<div style={{ ...styles.page, ...styles.pageHome }}>
-								{this.state.notes.map((note, index) => {
-									return (
-										<Link
-											to={{
-												pathname: '/note',
-												state: {
-													id: index,
-													text: note.text,
-													date: note.date,
-												}
-											}}
-											style={{ textDecoration: 'none' }}
-											key={`note-${index}`}
-										>
-											<Paper style={styles.paper} elevation={4}>
-												<Typography component="p">
-													{note.text ? note.text.split('\n')[0] : 'Untitled'}
-												</Typography>
-											</Paper>
-										</Link>
-									)
-								})}
+					<Route exact path="/" render={() =>
+						<div style={{ ...styles.page, ...styles.pageHome }}>
+							{this.state.notes.map((note, index) => {
+								return (
+									<Link
+										to={{
+											pathname: '/note',
+											state: {
+												id: index,
+												text: note.text,
+												date: note.date,
+											}
+										}}
+										style={{ textDecoration: 'none' }}
+										key={`note-${index}`}
+									>
+										<Paper style={styles.paper} elevation={4}>
+											<Typography component="p">
+												{note.text ? note.text.split('\n')[0] : 'Untitled'}
+											</Typography>
+										</Paper>
+									</Link>
+								)
+							})}
 
-								<Link to={{
-									pathname: '/note',
-									state: {
-										id: this.state.notes.length,
-										text: ''
-									}
-								}}>
-									<Button variant="fab" color="primary" aria-label="add" style={styles.fab}>
-										<AddIcon />
-									</Button>
-								</Link>
+							<Link to={{
+								pathname: '/note',
+								state: {
+									id: this.state.notes.length,
+									text: ''
+								}
+							}}>
+								<Button variant="fab" color="primary" aria-label="add" style={styles.fab}>
+									<AddIcon />
+								</Button>
+							</Link>
+						</div>
+					} />
+					<Route path="/note" render={(match) => {
+						return (
+							<div style={styles.page}>
+								<Note
+									edit={this.state.edit}
+									currentNoteID={match.location.state.id}
+									currentNoteText={this.state.notes[match.location.state.id].text}
+									currentNoteDate={this.state.notes[match.location.state.id].date}
+									handleEditToggle={this.handleEditToggle}
+									handleNoteUpdate={this.handleNoteUpdate}
+								/>
 							</div>
-						} />
-						<Route path="/note" render={(match) => {
-							return (
-								<div style={styles.page}>
-									<Note
-										edit={this.state.edit}
-										currentNoteID={match.location.state.id}
-										currentNoteText={this.state.notes[match.location.state.id].text}
-										currentNoteDate={this.state.notes[match.location.state.id].date}
-										handleEditToggle={this.handleEditToggle}
-										handleNoteUpdate={this.handleNoteUpdate}
-									/>
-								</div>
-							)
-						}} />
-					</div>
-				</Router>
-			</MuiThemeProvider>
+						)
+					}} />
+				</div>
+			</Router>
 		);
 	}
 }
