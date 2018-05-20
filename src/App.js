@@ -91,8 +91,7 @@ class App extends Component {
 								<Note
 									edit={this.state.edit}
 									currentNoteIndex={match.location.state.index}
-									currentNoteText={this.state.notes[match.location.state.index] ? this.state.notes[match.location.state.index].text : ''}
-									currentNoteDate={this.state.notes[match.location.state.index] ? this.state.notes[match.location.state.index].date : ''}
+									currentNote={this.state.notes[match.location.state.index]}
 									handleEditToggle={this.handleEditToggle}
 									handleNoteUpdate={this.handleNoteUpdate}
 								/>
