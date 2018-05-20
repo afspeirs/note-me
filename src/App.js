@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import { Button, Paper, Typography } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import { Add as AddIcon } from '@material-ui/icons';
 import NavBar from "./components/NavBar/NavBar";
 import Note from "./components/Note/Note";
+import NoteInfo from "./components/NoteInfo/NoteInfo";
 
 class App extends Component {
 	constructor(props) {
@@ -42,18 +43,14 @@ class App extends Component {
 			fab: {
 				position: 'fixed',
 				bottom: '16px',
-				right: '16px'
+				right: '16px',
 			},
 			page: {
-				padding: 16
+				padding: 16,
 			},
-			pageHome: {
+			pageFab: {
 				marginBottom: 64,
 			},
-			paper: {
-				padding: 16,
-				marginBottom: 8
-			}
 		}
 
 		return (
@@ -65,21 +62,14 @@ class App extends Component {
 					/>
 
 					<Route exact path="/" render={() =>
-						<div style={{ ...styles.page, ...styles.pageHome }}>
+						<div style={{ ...styles.page, ...styles.pageFab }}>
 							{this.state.notes.map((note, index) => (
 								<Link
 									key={`note-${index}`}
 									style={styles.anchor}
 									to={{ pathname: '/note', state: { index } }}
 								>
-									<Paper style={styles.paper} elevation={4}>
-										<Typography component="p">
-											{note.text ? note.text.split('\n')[0] : 'Untitled'}
-										</Typography>
-										<Typography component="p">
-											{note.date ? note.date : 'No Date Provided'}
-										</Typography>
-									</Paper>
+									<NoteInfo note={note} />
 								</Link>
 							))}
 
