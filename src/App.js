@@ -36,6 +36,9 @@ class App extends Component {
 
 	render() {
 		const styles = {
+			anchor: {
+				textDecoration: 'none'
+			},
 			fab: {
 				position: 'fixed',
 				bottom: '16px',
@@ -66,7 +69,7 @@ class App extends Component {
 							{this.state.notes.map((note, index) => (
 								<Link
 									key={`note-${index}`}
-									style={{ textDecoration: 'none' }}
+									style={styles.anchor}
 									to={{ pathname: '/note', state: { index } }}
 								>
 									<Paper style={styles.paper} elevation={4}>
@@ -87,19 +90,17 @@ class App extends Component {
 							</Link>
 						</div>
 					} />
-					<Route path="/note" render={(match) => {
-						return (
-							<div style={styles.page}>
-								<Note
-									edit={this.state.edit}
-									currentNoteIndex={match.location.state.index}
-									currentNoteText={this.state.notes[match.location.state.index] ? this.state.notes[match.location.state.index].text : ''}
-									handleEditToggle={this.handleEditToggle}
-									handleNoteUpdate={this.handleNoteUpdate}
-								/>
-							</div>
-						)
-					}} />
+					<Route path="/note" render={(match) => (
+						<div style={styles.page}>
+							<Note
+								edit={this.state.edit}
+								currentNoteIndex={match.location.state.index}
+								currentNoteText={this.state.notes[match.location.state.index] ? this.state.notes[match.location.state.index].text : ''}
+								handleEditToggle={this.handleEditToggle}
+								handleNoteUpdate={this.handleNoteUpdate}
+							/>
+						</div>
+					)} />
 				</div>
 			</Router>
 		);
