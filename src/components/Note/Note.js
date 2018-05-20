@@ -22,7 +22,7 @@ class Note extends Component {
 					type="text"
 					ref="someData"
 					defaultValue={this.props.currentNoteText}
-					onChange={e => this.props.handleNoteUpdate(this.props.currentNoteID, e.target.value)}
+					onChange={e => this.props.handleNoteUpdate(this.props.currentNoteIndex, e.target.value)}
 				/>
 				<Markdown
 					className="markdown"

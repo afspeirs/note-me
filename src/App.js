@@ -15,15 +15,7 @@ class App extends Component {
 
 		this.state = {
 			edit: false,
-			notes: [
-				{
-					text: '# Your markdown here\n<h1>This won\'t be translated into HTML</h1>',
-					date: ''
-				}, {
-					text: '# Your markdown here 2\n<h1>This won\'t be translated into HTML</h1>',
-					date: ''
-				}
-			]
+			notes: JSON.parse(localStorage.getItem('notes')) || []
 		};
 	};
 
@@ -31,8 +23,15 @@ class App extends Component {
 
 	handleNoteUpdate = (index, text) => {
 		const notes = this.state.notes;
-		notes[index].text = text;
 
+		if (!notes[index]) {
+			notes.push({});
+		}
+
+		notes[index].text = text;
+		notes[index].date = Date.now();
+
+		localStorage.setItem('notes', JSON.stringify(notes))
 		this.setState({ notes });
 	};
 
@@ -65,36 +64,21 @@ class App extends Component {
 
 					<Route exact path="/" render={() =>
 						<div style={{ ...styles.page, ...styles.pageHome }}>
-							{this.state.notes.map((note, index) => {
-								return (
-									<Link
-										to={{
-											pathname: '/note',
-											state: {
-												id: index,
-												text: note.text,
-												date: note.date,
-											}
-										}}
-										style={{ textDecoration: 'none' }}
-										key={`note-${index}`}
-									>
-										<Paper style={styles.paper} elevation={4}>
-											<Typography component="p">
-												{note.text ? note.text.split('\n')[0] : 'Untitled'}
-											</Typography>
-										</Paper>
-									</Link>
-								)
-							})}
+							{this.state.notes.map((note, index) => (
+								<Link
+									key={`note-${index}`}
+									style={{ textDecoration: 'none' }}
+									to={{ pathname: '/note', state: { index } }}
+								>
+									<Paper style={styles.paper} elevation={4}>
+										<Typography component="p">
+											{note.text ? note.text.split('\n')[0] : 'Untitled'}
+										</Typography>
+									</Paper>
+								</Link>
+							))}
 
-							<Link to={{
-								pathname: '/note',
-								state: {
-									id: this.state.notes.length,
-									text: ''
-								}
-							}}>
+							<Link to={{ pathname: '/note', state: { index: this.state.notes.length } }}>
 								<Button variant="fab" color="primary" aria-label="add" style={styles.fab}>
 									<AddIcon />
 								</Button>
@@ -106,9 +90,9 @@ class App extends Component {
 							<div style={styles.page}>
 								<Note
 									edit={this.state.edit}
-									currentNoteID={match.location.state.id}
-									currentNoteText={this.state.notes[match.location.state.id].text}
-									currentNoteDate={this.state.notes[match.location.state.id].date}
+									currentNoteIndex={match.location.state.index}
+									currentNoteText={this.state.notes[match.location.state.index] ? this.state.notes[match.location.state.index].text : ''}
+									currentNoteDate={this.state.notes[match.location.state.index] ? this.state.notes[match.location.state.index].date : ''}
 									handleEditToggle={this.handleEditToggle}
 									handleNoteUpdate={this.handleNoteUpdate}
 								/>
