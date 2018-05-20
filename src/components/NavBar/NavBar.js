@@ -43,31 +43,6 @@ class NavBar extends Component {
 					</Toolbar>
 				</AppBar>
 			</div>
-			// <div>
-			// 	<Route exact path="/" render={() => (
-			// 		<AppBar
-			// 			title="Note Me"
-			// 			style={styles.appbar}
-			// 			onLeftIconButtonClick={this.handleDrawerToggle}
-			// 		/>
-			// 	)} />
-			// 	<Route exact path="/note" render={() => (
-			// 		<AppBar
-			// 			title="Note"
-			// 			style={styles.appbar}
-			// 			iconElementLeft={
-			// 				<IconButton>
-			// 					<IconArrowBack />
-			// 				</IconButton>
-			// 			}
-			// 			onLeftIconButtonClick={() => window.history.back()}
-			// 			iconElementRight={
-			// 				<Button label={this.props.edit ? "done" : "edit"} />
-			// 			}
-			// 			onRightIconButtonClick={this.props.handleEditToggle}
-			// 		/>
-			// 	)} />
-			// </div>
 		);
 	}
 }
