@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { Button, Paper, Typography } from '@material-ui/core';
 import { Add as AddIcon } from '@material-ui/icons';
-
 import NavBar from "./components/NavBar/NavBar";
 import Note from "./components/Note/Note";
 

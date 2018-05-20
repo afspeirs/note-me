@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { Component } from "react";
 import { NavLink, Route } from 'react-router-dom';
 import { AppBar, Button, IconButton, Toolbar, Typography } from '@material-ui/core';
 import { ArrowBack as ArrowBackIcon } from '@material-ui/icons';
 
-class NavBar extends React.Component {
+class NavBar extends Component {
 	render() {
 		const styles = {
 			root: {

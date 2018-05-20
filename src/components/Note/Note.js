@@ -1,6 +1,5 @@
 import Markdown from "react-markdown";
 import React, { Component } from "react";
-
 import "./note.css";
 
 class Note extends Component {
