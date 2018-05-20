@@ -14,7 +14,7 @@ class NavBar extends Component {
 			},
 			leftIcon: {
 				marginLeft: -12,
-				marginRight: 20,
+				marginRight: 16,
 				color: 'inherit',
 			},
 		};
