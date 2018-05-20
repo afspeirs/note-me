@@ -8,7 +8,7 @@ class Note extends Component {
 
 		// If edit is false and there is no current note text
 		// Allow for editing
-		if (!props.edit && !props.currentNote.text) {
+		if (!props.edit && !props.currentNoteText) {
 			props.handleEditToggle();
 		}
 	}
@@ -20,13 +20,13 @@ class Note extends Component {
 					className={this.props.edit ? "edit" : "hide"}
 					type="text"
 					ref="someData"
-					defaultValue={this.props.currentNote.text}
+					defaultValue={this.props.currentNoteText}
 					onChange={e => this.props.handleNoteUpdate(this.props.currentNoteIndex, e.target.value)}
 				/>
 				<Markdown
 					className="markdown"
 					escapeHtml={true}
-					source={this.props.currentNote.text}
+					source={this.props.currentNoteText}
 				/>
 			</div>
 		);

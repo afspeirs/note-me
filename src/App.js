@@ -28,7 +28,7 @@ class App extends Component {
 		}
 
 		notes[index].text = text;
-		notes[index].date = Date.now();
+		notes[index].date = new Date().toLocaleString();
 
 		localStorage.setItem('notes', JSON.stringify(notes))
 		this.setState({ notes });
@@ -73,6 +73,9 @@ class App extends Component {
 										<Typography component="p">
 											{note.text ? note.text.split('\n')[0] : 'Untitled'}
 										</Typography>
+										<Typography component="p">
+											{note.date ? note.date : 'No Date Provided'}
+										</Typography>
 									</Paper>
 								</Link>
 							))}
@@ -90,7 +93,7 @@ class App extends Component {
 								<Note
 									edit={this.state.edit}
 									currentNoteIndex={match.location.state.index}
-									currentNote={this.state.notes[match.location.state.index]}
+									currentNoteText={this.state.notes[match.location.state.index] ? this.state.notes[match.location.state.index].text : ''}
 									handleEditToggle={this.handleEditToggle}
 									handleNoteUpdate={this.handleNoteUpdate}
 								/>
