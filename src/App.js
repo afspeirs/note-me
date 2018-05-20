@@ -83,24 +83,32 @@ class App extends Component {
 								</Link>
 							))}
 
-							<Link to={{ pathname: '/note', state: { index: this.state.notes.length } }}>
-								<Button variant="fab" color="primary" aria-label="add" style={styles.fab}>
-									<AddIcon />
-								</Button>
-							</Link>
+							<Button
+								component={Link}
+								to={{ pathname: '/note', state: { index: this.state.notes.length } }}
+								variant="fab"
+								style={styles.fab}
+								color="primary"
+								aria-label="add"
+							>
+								<AddIcon />
+							</Button>
 						</div>
 					} />
-					<Route path="/note" render={(match) => (
-						<div style={styles.page}>
-							<Note
-								edit={this.state.edit}
-								currentNoteIndex={match.location.state.index}
-								currentNoteText={this.state.notes[match.location.state.index] ? this.state.notes[match.location.state.index].text : ''}
-								handleEditToggle={this.handleEditToggle}
-								handleNoteUpdate={this.handleNoteUpdate}
-							/>
-						</div>
-					)} />
+					<Route path="/note" render={(match) => {
+						const { index } = match.location.state;
+						return (
+							<div style={styles.page}>
+								<Note
+									edit={this.state.edit}
+									currentNoteIndex={index}
+									currentNoteText={this.state.notes[index] ? this.state.notes[index].text : ''}
+									handleEditToggle={this.handleEditToggle}
+									handleNoteUpdate={this.handleNoteUpdate}
+								/>
+							</div>
+						)
+					}} />
 				</div>
 			</Router>
 		);

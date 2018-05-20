@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { NavLink, Route } from 'react-router-dom';
+import { Link, Route } from 'react-router-dom';
 import { AppBar, Button, IconButton, Toolbar, Typography } from '@material-ui/core';
 import { ArrowBack as ArrowBackIcon } from '@material-ui/icons';
 
@@ -9,15 +9,13 @@ class NavBar extends Component {
 			root: {
 				flexGrow: 1,
 			},
-			anchor: {
-				color: 'inherit',
-			},
 			flex: {
 				flex: 1,
 			},
-			menuButton: {
+			leftIcon: {
 				marginLeft: -12,
 				marginRight: 20,
+				color: 'inherit',
 			},
 		};
 
@@ -26,11 +24,9 @@ class NavBar extends Component {
 				<AppBar position="static">
 					<Toolbar>
 						<Route path="/note" render={() => (
-							<NavLink to="/" style={styles.anchor}>
-								<IconButton style={styles.menuButton} color="inherit" aria-label="Menu">
-									<ArrowBackIcon />
-								</IconButton>
-							</NavLink>
+							<IconButton component={Link} to="/" style={styles.leftIcon} aria-label="Menu">
+								<ArrowBackIcon />
+							</IconButton>
 						)} />
 						<Typography variant="title" color="inherit" style={styles.flex}>
 							Note Me
