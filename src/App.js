@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import { Button } from '@material-ui/core';
-import { Add as AddIcon } from '@material-ui/icons';
+import { BrowserRouter as Router, Route } from "react-router-dom";
+
+import CreateNoteButton from "./components/CreateNoteButton/CreateNoteButton";
+import Home from "./components/Home/Home";
 import NavBar from "./components/NavBar/NavBar";
 import Note from "./components/Note/Note";
-import NoteInfo from "./components/NoteInfo/NoteInfo";
 
 class App extends Component {
 	constructor(props) {
@@ -40,11 +40,6 @@ class App extends Component {
 			anchor: {
 				textDecoration: 'none'
 			},
-			fab: {
-				position: 'fixed',
-				bottom: '16px',
-				right: '16px',
-			},
 			page: {
 				padding: 16,
 			},
@@ -63,26 +58,9 @@ class App extends Component {
 
 					<Route exact path="/" render={() =>
 						<div style={{ ...styles.page, ...styles.pageFab }}>
-							{this.state.notes.map((note, index) => (
-								<Link
-									key={`note-${index}`}
-									style={styles.anchor}
-									to={{ pathname: '/note', state: { index } }}
-								>
-									<NoteInfo note={note} />
-								</Link>
-							))}
+							<Home notes={this.state.notes} styles={styles} />
 
-							<Button
-								component={Link}
-								to={{ pathname: '/note', state: { index: this.state.notes.length } }}
-								variant="fab"
-								style={styles.fab}
-								color="primary"
-								aria-label="add"
-							>
-								<AddIcon />
-							</Button>
+							<CreateNoteButton notes={this.state.notes} />
 						</div>
 					} />
 					<Route path="/note" render={(match) => {
