@@ -14,9 +14,6 @@ export default class MainApp extends React.Component {
 		methods: {
 			handleNoteUpdate: (index, note) => {
 				const notes = this.state.notes;
-				console.log(notes);
-				console.log(index);
-				console.log(note);
 
 				if (!notes[index]) {
 					notes.push({});
