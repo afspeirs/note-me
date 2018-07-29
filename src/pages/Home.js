@@ -1,5 +1,5 @@
 import React from 'react';
-import { Page, Navbar, Card, Link, Fab, Icon } from 'framework7-react';
+import { Page, Navbar, List, ListItem, Fab, Icon } from 'framework7-react';
 
 export default class Home extends React.Component {
 	constructor() {
@@ -16,20 +16,17 @@ export default class Home extends React.Component {
 			<Page>
 				<Navbar title="Note Me"></Navbar>
 
-				{notes.length === 0 ? <Card content="Create some notes"></Card> : null}
-				{notes.map((note, index) => (
-					<Link
-						href={`/notes/?indexOfNote=${index}`}
-						key={`note-${index}`}
-					>
-						<Card
-							content={note.text ? note.text.split('\n')[0] : 'Untitled'}
-							footer={note.date ? note.date : 'No Date Provided'}
-						></Card>
-
-					</Link>
-					// TODO - Link to note
-				))}
+				<List>
+					{notes.length === 0 ? <ListItem title="No notes"></ListItem> : null}
+					{notes.map((note, index) => (
+						<ListItem
+							key={`note-${index}`}
+							link={`/notes/?indexOfNote=${index}`}
+							title={note.text ? note.text.split('\n')[0] : 'Untitled'}
+							after={note.date ? note.date : 'No Date Provided'}
+						></ListItem>
+					))}
+				</List>
 
 				<Fab position="right-bottom" href={`/notes/?indexOfNote=${notes.length}`} slot="fixed" color="orange">
 					<Icon ios="f7:add" md="material:add"></Icon>
