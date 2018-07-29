@@ -3,6 +3,8 @@
 	"version": "0.1.0",
 	"private": true,
 	"dependencies": {
+		"babel-cli": "^6.26.0",
+		"babel-plugin-transform-class-properties": "^6.24.1",
 		"framework7": "^3.0.7",
 		"framework7-react": "^3.0.7",
 		"react": "^16.4.1",
