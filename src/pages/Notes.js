@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Markdown from 'react-markdown';
-import { Page, Navbar, NavRight, Button } from 'framework7-react';
+import { Page, Navbar, NavRight, Button, Block } from 'framework7-react';
 
 export default class Notes extends React.Component {
 	constructor(props) {
@@ -12,8 +12,11 @@ export default class Notes extends React.Component {
 		const currentNote = globalState.notes[indexOfNote];
 
 		this.state = {
+			// Add currentNote to state, or add empty text
 			currentNote: (currentNote) ? currentNote : { text: '' },
-			edit: false,
+			// Set to true if there is no text
+			edit: (currentNote && currentNote.text.length > 0) ? false : true,
+			// Store the index of the current note
 			indexOfNote,
 		};
 		// console.table(this.state);
@@ -48,17 +51,21 @@ export default class Notes extends React.Component {
 					</NavRight>
 				</Navbar>
 
-				<textarea
-					className={edit ? 'edit' : 'hide'}
-					type="text"
-					defaultValue={currentNote ? currentNote.text : ''}
-					onChange={e => this.handleCurrentNoteUpdate(e.target.value)}
-				/>
-				<Markdown
-					className="markdown"
-					escapeHtml={true}
-					source={currentNote.text}
-				/>
+				<Block className={`textarea ${edit ? 'edit' : 'hide'}`}>
+					<textarea
+						type="text"
+						defaultValue={currentNote.text}
+						onChange={e => this.handleCurrentNoteUpdate(e.target.value)}
+					/>
+				</Block>
+				<Block
+					className={`markdown ${!edit ? 'edit' : 'hide'}`}
+				>
+					<Markdown
+						escapeHtml={true}
+						source={currentNote.text}
+					/>
+				</Block>
 			</Page>
 		);
 	}
