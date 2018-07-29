@@ -1,24 +1,16 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import { deepOrange } from '@material-ui/core/colors';
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import App from "./App";
-import registerServiceWorker from "./registerServiceWorker";
-import "./index.css";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import Framework7 from 'framework7/framework7.esm.bundle.js';
+import Framework7React from 'framework7-react';
+import App from './App';
+import registerServiceWorker from './registerServiceWorker';
+import './index.css';
+Framework7.use(Framework7React);
 
-const theme = createMuiTheme({
-	palette: {
-		primary: deepOrange,
-	},
-});
+// Mount React App
+ReactDOM.render(
+	React.createElement(App),
+	document.getElementById('app')
+);
 
-function Index() {
-	return (
-		<MuiThemeProvider theme={theme}>
-			<App />
-		</MuiThemeProvider>
-	);
-}
-
-ReactDOM.render(<Index />, document.getElementById("root"));
 registerServiceWorker();

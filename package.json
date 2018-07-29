@@ -3,19 +3,19 @@
 	"version": "0.1.0",
 	"private": true,
 	"dependencies": {
-		"@material-ui/core": "^1.0.0",
-		"@material-ui/icons": "^1.0.0",
-		"material-ui": "^0.20.1",
-		"react": "^16.3.2",
-		"react-dom": "^16.3.2",
+		"framework7": "^3.0.7",
+		"framework7-react": "^3.0.7",
+		"react": "^16.4.1",
+		"react-dom": "^16.4.1",
 		"react-markdown": "^3.3.0",
-		"react-router-dom": "^4.2.2",
 		"react-scripts": "1.1.4"
 	},
 	"scripts": {
 		"start": "react-scripts start",
 		"build": "react-scripts build",
-		"test": "react-scripts test --env=jsdom",
-		"eject": "react-scripts eject"
+		"es6toes5-f7": "babel ./node_modules/framework7 --presets babel-preset-env --plugins transform-class-properties --out-dir ./node_modules/framework7",
+		"es6toes5-f7r": "babel ./node_modules/framework7-react --presets babel-preset-env --plugins transform-class-properties --out-dir ./node_modules/framework7-react",
+		"es6toes5-dom7": "babel ./node_modules/dom7 --presets babel-preset-env --plugins transform-class-properties --out-dir ./node_modules/dom7",
+		"es6toes5-template7": "babel ./node_modules/template7 --presets babel-preset-env --plugins transform-class-properties --out-dir ./node_modules/template7"
 	}
 }
