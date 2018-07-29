@@ -24,6 +24,12 @@ export default class MainApp extends React.Component {
 				localStorage.setItem('notes', JSON.stringify(notes));
 				this.setState({ notes });
 			},
+			handleNoteDelete: (index) => {
+				const notes = this.state.notes;
+				notes.splice(index, 1);
+				localStorage.setItem('notes', JSON.stringify(notes));
+				// this.setState({ notes });
+			},
 			getGlobalState: () => this.state,
 		},
 	}
