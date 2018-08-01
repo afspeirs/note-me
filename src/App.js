@@ -2,6 +2,7 @@ import React from 'react';
 import { App, View, Statusbar } from 'framework7-react';
 import 'framework7/css/framework7.min.css';
 import f7Settings from './data/f7Settings';
+import db from './myDB';
 
 // import CreateNoteButton from "./components/CreateNoteButton/CreateNoteButton";
 // import Home from "./components/Home/Home";
@@ -12,6 +13,13 @@ export default class MainApp extends React.Component {
 	f7Params = {
 		...f7Settings,
 		methods: {
+			handleAddNote: (title) => {
+				const note = {
+					title,
+					done: false,
+				};
+				db.table('notes').add(note);
+			},
 			handleNoteUpdate: (index, note) => {
 				const notes = this.state.notes;
 
@@ -39,6 +47,7 @@ export default class MainApp extends React.Component {
 
 		// this.f7Params.methods.handleEditToggle = this.f7Params.methods.handleEditToggle.bind(this);
 		// this.f7Params.methods.handleNoteUpdate = this.f7Params.methods.handleNoteUpdate.bind(this);
+		this.f7Params.methods.handleAddNote('test');
 
 		this.state = {
 			edit: false,
