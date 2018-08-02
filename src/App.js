@@ -22,7 +22,8 @@ export default class MainApp extends React.Component {
 			},
 			handleNoteUpdate: (key, text) => {
 				const note = {
-					text
+					text,
+					date: new Date().toLocaleString(),
 				};
 				db.table('notes').update(key, note);
 			},
