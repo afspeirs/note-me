@@ -13,10 +13,10 @@ export default class MainApp extends React.Component {
 	f7Params = {
 		...f7Settings,
 		methods: {
-			handleAddNote: (title) => {
+			handleAddNote: (text) => {
 				const note = {
-					title,
-					done: false,
+					text,
+					date: new Date().toLocaleString(),
 				};
 				db.table('notes').add(note);
 			},
@@ -47,7 +47,6 @@ export default class MainApp extends React.Component {
 
 		// this.f7Params.methods.handleEditToggle = this.f7Params.methods.handleEditToggle.bind(this);
 		// this.f7Params.methods.handleNoteUpdate = this.f7Params.methods.handleNoteUpdate.bind(this);
-		this.f7Params.methods.handleAddNote('test');
 
 		this.state = {
 			edit: false,

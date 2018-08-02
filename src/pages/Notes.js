@@ -25,7 +25,9 @@ export default class Notes extends React.Component {
 	handleEditToggle = () => {
 		const { edit, indexOfNote, currentNote } = this.state;
 
+		this.$f7.methods.handleAddNote(currentNote.text);
 		this.$f7.methods.handleNoteUpdate(indexOfNote, currentNote);
+
 		this.setState({ edit: !edit });
 	};
 	handleCurrentNoteUpdate = (text) => {
