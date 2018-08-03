@@ -4,11 +4,6 @@ import 'framework7/css/framework7.min.css';
 import f7Settings from './data/f7Settings';
 import db from './myDB';
 
-// import CreateNoteButton from "./components/CreateNoteButton/CreateNoteButton";
-// import Home from "./components/Home/Home";
-// import NavBar from "./components/NavBar/NavBar";
-// import Note from "./components/Note/Note";
-
 export default class MainApp extends React.Component {
 	f7Params = {
 		...f7Settings,
