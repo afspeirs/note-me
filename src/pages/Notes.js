@@ -1,52 +1,63 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Markdown from 'react-markdown';
-import { Page, Navbar, NavRight, Button, Block } from 'framework7-react';
+import { Page, Navbar, NavLeft, NavTitle, NavRight, Link, Icon, Button, Block } from 'framework7-react';
 
 export default class Notes extends React.Component {
 	constructor(props) {
 		super(props);
 
-		const { indexOfNote } = props.f7route.query;
-		const globalState = this.$f7.methods.getGlobalState();
-		const currentNote = globalState.notes[indexOfNote];
-
 		this.state = {
-			// Add currentNote to state, or add empty text
-			currentNote: (currentNote) ? currentNote : { text: '' },
 			// Set to true if there is no text
-			edit: (currentNote && currentNote.text.length > 0) ? false : true,
-			// Store the index of the current note
-			indexOfNote,
+			edit: false
 		};
-		// console.table(this.state);
+	}
+
+	componentWillMount() {
+		const { keyOfNote } = this.props.f7route.query;
+
+		if (keyOfNote) {
+			const that = this;
+			const table = that.$f7.methods.getTable();
+			table.get(parseInt(keyOfNote, 10), (note) => that.setState({ currentNote: note.text, keyOfNote: parseInt(keyOfNote, 10) }));
+		} else {
+			this.setState({ currentNote: '', edit: true });
+		}
 	}
 
 	handleEditToggle = () => {
-		const { edit, indexOfNote, currentNote } = this.state;
+		const { edit, keyOfNote, currentNote } = this.state;
 
-		this.$f7.methods.handleNoteUpdate(indexOfNote, currentNote);
+		if (edit && keyOfNote) {
+			this.$f7.methods.handleNoteUpdate(keyOfNote, currentNote);
+		} else if (edit) {
+			this.$f7.methods.handleNoteAdd(currentNote);
+		}
+
 		this.setState({ edit: !edit });
 	};
 	handleCurrentNoteUpdate = (text) => {
-		const currentNote = this.state.currentNote;
-
-		currentNote.text = text;
-		currentNote.date = new Date().toLocaleString();
-
+		let currentNote = this.state.currentNote;
+		currentNote = text;
 		this.setState({ currentNote });
 	};
 
 	render() {
 		const { edit, currentNote } = this.state;
-		// console.log(indexOfNote);
 
 		return (
 			<Page>
-				<Navbar title="Notes" backLink="Back">
+				<Navbar>
+					<NavLeft>
+						<Link back force>
+							<Icon icon="icon-back"></Icon>
+							<span className="ios-only">Back</span>
+						</Link>
+					</NavLeft>
+					<NavTitle>Notes</NavTitle>
 					<NavRight>
 						<Button onClick={this.handleEditToggle}>
-							{edit ? 'done' : 'edit'}
+							{edit ? 'Save' : 'Edit'}
 						</Button>
 					</NavRight>
 				</Navbar>
@@ -54,7 +65,7 @@ export default class Notes extends React.Component {
 				<Block className={`textarea ${edit ? 'edit' : 'hide'}`}>
 					<textarea
 						type="text"
-						defaultValue={currentNote.text}
+						value={currentNote}
 						onChange={e => this.handleCurrentNoteUpdate(e.target.value)}
 					/>
 				</Block>
@@ -63,7 +74,7 @@ export default class Notes extends React.Component {
 				>
 					<Markdown
 						escapeHtml={true}
-						source={currentNote.text}
+						source={currentNote}
 					/>
 				</Block>
 			</Page>

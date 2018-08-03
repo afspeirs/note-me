@@ -5,12 +5,21 @@ export default class Home extends React.Component {
 	constructor() {
 		super();
 
-		this.state = this.$f7.methods.getGlobalState();
-		// console.log(this.state);
+		this.state = { notes: [] };
+	}
+
+	componentWillMount() {
+		const table = this.$f7.methods.getTable();
+		table
+			.toArray()
+			.then((notes) => {
+				this.setState({ notes });
+			});
 	}
 
 	render() {
 		const { notes } = this.state;
+		// console.log(notes);
 
 		return (
 			<Page>
@@ -18,14 +27,14 @@ export default class Home extends React.Component {
 
 				<List>
 					{notes.length === 0 ? <ListItem title="No notes"></ListItem> : null}
-					{notes.map((note, index) => (
+					{notes.map((note) => (
 						<ListItem
-							key={`note-${index}`}
-							link={`/notes/?indexOfNote=${index}`}
+							key={`note-${note.id}`}
+							link={`/notes/?keyOfNote=${note.id}`}
 							title={note.text ? note.text.split('\n')[0] : 'Untitled'}
 							after={note.date ? note.date : 'No Date Provided'}
 							swipeout
-							onSwipeoutDeleted={() => this.$f7.methods.handleNoteDelete(index)}
+							onSwipeoutDeleted={() => this.$f7.methods.handleNoteDelete(note.id)}
 						>
 							<SwipeoutActions right>
 								<SwipeoutButton delete>Delete</SwipeoutButton>
@@ -34,7 +43,7 @@ export default class Home extends React.Component {
 					))}
 				</List>
 
-				<Fab position="right-bottom" href={`/notes/?indexOfNote=${notes.length}`} slot="fixed">
+				<Fab position="right-bottom" href={'/notes/?newNote=true'} slot="fixed">
 					<Icon ios="f7:add" md="material:add"></Icon>
 				</Fab>
 			</Page>

@@ -2,6 +2,7 @@ import React from 'react';
 import { App, View, Statusbar } from 'framework7-react';
 import 'framework7/css/framework7.min.css';
 import f7Settings from './data/f7Settings';
+import db from './myDB';
 
 // import CreateNoteButton from "./components/CreateNoteButton/CreateNoteButton";
 // import Home from "./components/Home/Home";
@@ -12,23 +13,29 @@ export default class MainApp extends React.Component {
 	f7Params = {
 		...f7Settings,
 		methods: {
-			handleNoteUpdate: (index, note) => {
-				const notes = this.state.notes;
-
-				if (!notes[index]) {
-					notes.push({});
-				}
-
-				notes[index] = note;
-
-				localStorage.setItem('notes', JSON.stringify(notes));
-				this.setState({ notes });
+			handleNoteAdd: (text) => {
+				const note = {
+					text,
+					date: new Date().toLocaleString(),
+				};
+				const that = this;
+				db.table('notes').add(note)
+					.then((id) => {
+						that.$f7.views.main.router.navigate(`/notes/?keyOfNote=${id}`, { animate: false, reloadCurrent: true });
+					});
 			},
-			handleNoteDelete: (index) => {
-				const notes = this.state.notes;
-				notes.splice(index, 1);
-				localStorage.setItem('notes', JSON.stringify(notes));
-				// this.setState({ notes });
+			handleNoteUpdate: (key, text) => {
+				const note = {
+					text,
+					date: new Date().toLocaleString(),
+				};
+				db.table('notes').update(key, note);
+			},
+			handleNoteDelete: (key) => {
+				db.table('notes').delete(key);
+			},
+			getTable: () => {
+				return db.notes;
 			},
 			getGlobalState: () => this.state,
 		},
@@ -37,13 +44,7 @@ export default class MainApp extends React.Component {
 	constructor(props) {
 		super(props);
 
-		// this.f7Params.methods.handleEditToggle = this.f7Params.methods.handleEditToggle.bind(this);
-		// this.f7Params.methods.handleNoteUpdate = this.f7Params.methods.handleNoteUpdate.bind(this);
-
-		this.state = {
-			edit: false,
-			notes: JSON.parse(localStorage.getItem('notes')) || []
-		};
+		this.state = { edit: false };
 	}
 	componentDidMount() {
 		// ServiceWorker events

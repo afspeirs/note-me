@@ -98,3 +98,7 @@ textarea {
 textarea:focus {
 	outline: none;
 }
+
+html:not(.ios) .ios-only {
+	display: none;
+}
