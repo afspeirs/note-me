@@ -11,10 +11,10 @@ export default class Home extends React.Component {
 	componentWillMount() {
 		const table = this.$f7.methods.getTable();
 		table
+			.orderBy('date')
+			.reverse()
 			.toArray()
-			.then((notes) => {
-				this.setState({ notes });
-			});
+			.then((notes) => { this.setState({ notes }); });
 	}
 
 	render() {
