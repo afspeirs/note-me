@@ -18,7 +18,9 @@ export default class MainApp extends React.Component {
 					text,
 					date: new Date().toLocaleString(),
 				};
-				db.table('notes').add(note);
+				const that = this;
+				db.table('notes').add(note)
+					.then((id) => that.$f7.views.main.router.navigate(`/notes/?keyOfNote=${id}`, { animate: false }));
 			},
 			handleNoteUpdate: (key, text) => {
 				const note = {

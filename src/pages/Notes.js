@@ -26,7 +26,6 @@ export default class Notes extends React.Component {
 	}
 
 	handleEditToggle = () => {
-		// const { edit } = this.state;
 		const { edit, keyOfNote, currentNote } = this.state;
 
 		if (edit && keyOfNote) {
