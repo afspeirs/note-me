@@ -37,7 +37,7 @@ export default class Home extends React.Component {
 							onSwipeoutDeleted={() => this.$f7.methods.handleNoteDelete(note.id)}
 						>
 							<SwipeoutActions right>
-								<SwipeoutButton delete><Icon material="delete"></Icon></SwipeoutButton>
+								<SwipeoutButton close delete confirmText="Are you sure you want to delete this note?"><Icon material="delete"></Icon></SwipeoutButton>
 							</SwipeoutActions>
 						</ListItem>
 					))}
