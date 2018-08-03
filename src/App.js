@@ -20,7 +20,9 @@ export default class MainApp extends React.Component {
 				};
 				const that = this;
 				db.table('notes').add(note)
-					.then((id) => that.$f7.views.main.router.navigate(`/notes/?keyOfNote=${id}`, { animate: false }));
+					.then((id) => {
+						that.$f7.views.main.router.navigate(`/notes/?keyOfNote=${id}`, { animate: false, reloadCurrent: true });
+					});
 			},
 			handleNoteUpdate: (key, text) => {
 				const note = {
