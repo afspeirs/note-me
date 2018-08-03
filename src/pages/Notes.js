@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Markdown from 'react-markdown';
-import { Page, Navbar, NavRight, Button, Block } from 'framework7-react';
+import { Page, Navbar, NavLeft, NavTitle, NavRight, Link, Icon, Button, Block } from 'framework7-react';
 
 export default class Notes extends React.Component {
 	constructor(props) {
@@ -48,7 +48,14 @@ export default class Notes extends React.Component {
 
 		return (
 			<Page>
-				<Navbar title="Notes" backLink="Back">
+				<Navbar>
+					<NavLeft>
+						<Link back force>
+							<Icon icon="icon-back"></Icon>
+							<span className="ios-only">Back</span>
+						</Link>
+					</NavLeft>
+					<NavTitle>Notes</NavTitle>
 					<NavRight>
 						<Button onClick={this.handleEditToggle}>
 							{edit ? 'Save' : 'Edit'}
