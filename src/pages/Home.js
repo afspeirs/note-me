@@ -37,14 +37,14 @@ export default class Home extends React.Component {
 							onSwipeoutDeleted={() => this.$f7.methods.handleNoteDelete(note.id)}
 						>
 							<SwipeoutActions right>
-								<SwipeoutButton delete>Delete</SwipeoutButton>
+								<SwipeoutButton delete><Icon material="delete"></Icon></SwipeoutButton>
 							</SwipeoutActions>
 						</ListItem>
 					))}
 				</List>
 
 				<Fab position="right-bottom" href={'/notes/?newNote=true'} slot="fixed">
-					<Icon ios="f7:add" md="material:add"></Icon>
+					<Icon material="add"></Icon>
 				</Fab>
 			</Page>
 		);
