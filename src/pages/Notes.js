@@ -21,7 +21,7 @@ export default class Notes extends React.Component {
 			const table = that.$f7.methods.getTable();
 			table.get(parseInt(keyOfNote, 10), (note) => that.setState({ currentNote: note.text, keyOfNote: parseInt(keyOfNote, 10) }));
 		} else {
-			this.setState({ currentNote: '' });
+			this.setState({ currentNote: '', edit: true });
 		}
 	}
 
