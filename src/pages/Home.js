@@ -32,11 +32,11 @@ export default class Home extends React.Component {
 							key={`note-${note.id}`}
 							link={`/notes/?keyOfNote=${note.id}`}
 							title={note.text ? note.text.split('\n')[0] : 'Untitled'}
-							after={note.date ? note.date : 'No Date Provided'}
 							swipeout
 							onSwipeoutDeleted={() => this.$f7.methods.handleNoteDelete(note.id)}
 						>
 							<SwipeoutActions right>
+								<SwipeoutButton close>{note.date}</SwipeoutButton>
 								<SwipeoutButton close delete confirmText="Are you sure you want to delete this note?"><Icon material="delete"></Icon></SwipeoutButton>
 							</SwipeoutActions>
 						</ListItem>
