@@ -57,7 +57,7 @@ export default class Notes extends React.Component {
 					<NavTitle>Notes</NavTitle>
 					<NavRight>
 						<Button onClick={this.handleEditToggle}>
-							{edit ? 'Save' : 'Edit'}
+							<Icon material={edit ? 'save' : 'edit'}></Icon>
 						</Button>
 					</NavRight>
 				</Navbar>
