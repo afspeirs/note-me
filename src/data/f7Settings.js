@@ -2,7 +2,7 @@ import routes from './routes';
 
 let f7Settings = {
 	name: 'Note Me',
-	version: '0.1.1',
+	version: '0.1.2',
 	routes,
 	theme: 'auto',
 	view: {

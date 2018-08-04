@@ -8,6 +8,12 @@ export default class Home extends React.Component {
 		this.state = { notes: [] };
 	}
 
+	styles = {
+		listOfNotes: {
+			marginBottom: '80px'
+		}
+	}
+
 	componentWillMount() {
 		const table = this.$f7.methods.getTable();
 		table
@@ -29,7 +35,7 @@ export default class Home extends React.Component {
 					</NavRight>
 				</Navbar>
 
-				<List>
+				<List style={this.styles.listOfNotes}>
 					{notes.length === 0 ? <ListItem title="No notes"></ListItem> : null}
 					{notes.map((note) => (
 						<ListItem
