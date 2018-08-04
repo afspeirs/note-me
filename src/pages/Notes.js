@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Markdown from 'react-markdown';
-import { Page, Navbar, NavLeft, NavTitle, NavRight, Link, Icon, Button, Block } from 'framework7-react';
+import { Page, Navbar, NavLeft, NavTitle, NavRight, Link, Icon, Block } from 'framework7-react';
 
 export default class Notes extends React.Component {
 	constructor(props) {
@@ -56,9 +56,9 @@ export default class Notes extends React.Component {
 					</NavLeft>
 					<NavTitle>Notes</NavTitle>
 					<NavRight>
-						<Button onClick={this.handleEditToggle}>
+						<Link iconOnly onClick={this.handleEditToggle}>
 							<Icon material={edit ? 'save' : 'edit'}></Icon>
-						</Button>
+						</Link>
 					</NavRight>
 				</Navbar>
 
@@ -69,9 +69,7 @@ export default class Notes extends React.Component {
 						onChange={e => this.handleCurrentNoteUpdate(e.target.value)}
 					/>
 				</Block>
-				<Block
-					className={`markdown ${!edit ? 'edit' : 'hide'}`}
-				>
+				<Block className={`markdown ${!edit ? 'edit' : 'hide'}`}>
 					<Markdown
 						escapeHtml={true}
 						source={currentNote}
