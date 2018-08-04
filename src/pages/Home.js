@@ -1,5 +1,5 @@
 import React from 'react';
-import { Page, Navbar, List, ListItem, Fab, Icon, SwipeoutActions, SwipeoutButton } from 'framework7-react';
+import { Page, Navbar, NavRight, Link, List, ListItem, Fab, Icon, SwipeoutActions, SwipeoutButton } from 'framework7-react';
 
 export default class Home extends React.Component {
 	constructor() {
@@ -23,7 +23,11 @@ export default class Home extends React.Component {
 
 		return (
 			<Page>
-				<Navbar title="Note Me"></Navbar>
+				<Navbar title="Note Me">
+					<NavRight>
+						<Link href="/settings/" iconMaterial="settings"></Link>
+					</NavRight>
+				</Navbar>
 
 				<List>
 					{notes.length === 0 ? <ListItem title="No notes"></ListItem> : null}
