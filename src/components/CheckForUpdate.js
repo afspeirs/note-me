@@ -2,8 +2,8 @@ import React from 'react';
 import { ListItem, Icon, Preloader } from 'framework7-react';
 
 export default class CheckForUpdate extends React.Component {
-	constructor(props) {
-		super(props);
+	constructor() {
+		super();
 
 		this.state = {
 			showUpdatePreloader: false
