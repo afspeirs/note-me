@@ -33,7 +33,7 @@ export default class CheckForUpdate extends React.Component {
 		// console.log(showUpdatePreloader);
 
 		return (
-			<ListItem title="Check for update" onClick={this.updateServiceWorker}>
+			<ListItem title={`Check${showUpdatePreloader ? 'ing' : ''} for update`} onClick={this.updateServiceWorker}>
 				<Icon material="refresh" style={{ display: !showUpdatePreloader ? 'block' : 'none' }}></Icon>
 				<Preloader size={22} style={{ display: showUpdatePreloader ? 'block' : 'none' }}></Preloader>
 			</ListItem>
