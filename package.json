@@ -1,24 +1,30 @@
 {
-	"name": "note-me",
-	"version": "0.1.0",
-	"private": true,
-	"dependencies": {
-		"babel-cli": "^6.26.0",
-		"babel-plugin-transform-class-properties": "^6.24.1",
-		"dexie": "^2.0.4",
-		"framework7": "^3.1.1",
-		"framework7-react": "^3.1.1",
-		"react": "^16.4.1",
-		"react-dom": "^16.4.1",
-		"react-markdown": "^3.3.0",
-		"react-scripts": "1.1.4"
-	},
-	"scripts": {
-		"start": "react-scripts start",
-		"build": "react-scripts build",
-		"es6toes5-f7": "babel ./node_modules/framework7 --presets babel-preset-env --plugins transform-class-properties --out-dir ./node_modules/framework7",
-		"es6toes5-f7r": "babel ./node_modules/framework7-react --presets babel-preset-env --plugins transform-class-properties --out-dir ./node_modules/framework7-react",
-		"es6toes5-dom7": "babel ./node_modules/dom7 --presets babel-preset-env --plugins transform-class-properties --out-dir ./node_modules/dom7",
-		"es6toes5-template7": "babel ./node_modules/template7 --presets babel-preset-env --plugins transform-class-properties --out-dir ./node_modules/template7"
-	}
+  "name": "note-me",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "dexie": "^2.0.4",
+    "framework7": "^3.1.1",
+    "framework7-react": "^3.1.1",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
+    "react-markdown": "^3.3.0",
+    "react-scripts": "^2.1.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "es6toes5-f7": "babel ./node_modules/framework7 --presets babel-preset-env --plugins transform-class-properties --out-dir ./node_modules/framework7",
+    "es6toes5-f7r": "babel ./node_modules/framework7-react --presets babel-preset-env --plugins transform-class-properties --out-dir ./node_modules/framework7-react",
+    "es6toes5-dom7": "babel ./node_modules/dom7 --presets babel-preset-env --plugins transform-class-properties --out-dir ./node_modules/dom7",
+    "es6toes5-template7": "babel ./node_modules/template7 --presets babel-preset-env --plugins transform-class-properties --out-dir ./node_modules/template7"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }
