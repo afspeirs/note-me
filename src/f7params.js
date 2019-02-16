@@ -1,10 +1,9 @@
 import routes from './routes';
 
-let f7Settings = {
-	name: 'Note Me',
-	version: '0.1.4',
-	routes,
+export default {
+	name: 'NoteMe',
 	theme: 'auto',
+	routes,
 	view: {
 		pushState: true,
 		iosSwipeBack: false,
@@ -19,14 +18,16 @@ let f7Settings = {
 	dialog: {
 		title: 'Warning',
 	},
+	serviceWorker: {
+		path: './service-worker.js',
+		scope: '/',
+	},
 	toast: {
 		closeButton: true,
 		closeButtonColor: 'yellow',
 		closeTimeout: 5000,
 	},
 	touch: {
-		disableContextMenu: !(!process.env.NODE_ENV || process.env.NODE_ENV === 'development')
+		disableContextMenu: !(!process.env.NODE_ENV || process.env.NODE_ENV === 'development'),
 	},
 };
-
-export default f7Settings;
