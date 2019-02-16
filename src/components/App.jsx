@@ -1,8 +1,12 @@
 import React from 'react';
-import { App, View, Statusbar } from 'framework7-react';
-import 'framework7/css/framework7.min.css';
-import f7Settings from './data/f7Settings';
-import db from './myDB';
+import {
+	App,
+	View,
+	Statusbar,
+} from 'framework7-react';
+
+import db from '../myDB';
+import f7Settings from '../f7params';
 
 export default class MainApp extends React.Component {
 	f7Params = {
@@ -16,7 +20,10 @@ export default class MainApp extends React.Component {
 				const that = this;
 				db.table('notes').add(note)
 					.then((id) => {
-						that.$f7.views.main.router.navigate(`/notes/?keyOfNote=${id}`, { animate: false, reloadCurrent: true });
+						that.$f7.views.main.router.navigate(`/notes/?keyOfNote=${id}`, {
+							animate: false,
+							reloadCurrent: true,
+						});
 					});
 			},
 			handleNoteUpdate: (key, text) => {
@@ -29,18 +36,11 @@ export default class MainApp extends React.Component {
 			handleNoteDelete: (key) => {
 				db.table('notes').delete(key);
 			},
-			getTable: () => {
-				return db.notes;
-			},
+			getTable: () => db.notes,
 			getGlobalState: () => this.state,
 		},
 	}
 
-	constructor(props) {
-		super(props);
-
-		this.state = { edit: false };
-	}
 	componentDidMount() {
 		// ServiceWorker events
 		window.addEventListener('swNewContentAvailable', () => {
@@ -48,10 +48,10 @@ export default class MainApp extends React.Component {
 				text: 'A new version is available',
 				closeButtonText: 'Refresh',
 				on: {
-					close: function () {
+					close() {
 						window.location.reload(window.location.href);
 					},
-				}
+				},
 			}).open();
 		});
 		window.addEventListener('swContentCached', () => {
@@ -66,7 +66,7 @@ export default class MainApp extends React.Component {
 			<App params={this.f7Params} colorTheme="orange">
 				<Statusbar />
 				<View url="/" main className="ios-edges" />
-			</App >
+			</App>
 		);
 	}
 }
