@@ -9,7 +9,7 @@ import {
 	SwipeoutButton,
 } from 'framework7-react';
 
-import firebase, { auth } from '../firebase';
+import { auth, db } from '../firebase';
 
 import Navbar from '../components/Navbar';
 
@@ -25,23 +25,19 @@ export default class HomePage extends React.Component {
 		},
 	}
 
-	constructor() {
-		super();
-
-		const table = this.$f7.methods.getTable();
-		table
-			.orderBy('date')
-			.reverse()
-			.toArray()
-			.then((notes) => { this.setState({ notes }); });
-	}
-
 	componentDidMount() {
 		auth.onAuthStateChanged((user) => {
 			if (user) {
 				this.setState({ user });
 			}
 		});
+
+		db.collection('notes')
+			.get()
+			.then((collection) => {
+				const notes = collection.docs.map(doc => doc.data());
+				this.setState({ notes });
+			});
 	}
 
 	render() {

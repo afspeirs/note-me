@@ -5,7 +5,7 @@ import {
 	Statusbar,
 } from 'framework7-react';
 
-import db from '../myDB';
+import { db } from '../firebase';
 import f7Settings from '../f7params';
 
 export default class MainApp extends React.Component {
@@ -18,7 +18,8 @@ export default class MainApp extends React.Component {
 					date: new Date().toLocaleString(),
 				};
 				const that = this;
-				db.table('notes').add(note)
+				db.collection('notes')
+					.add(note)
 					.then((id) => {
 						that.$f7.views.main.router.navigate(`/notes/?keyOfNote=${id}`, {
 							animate: false,

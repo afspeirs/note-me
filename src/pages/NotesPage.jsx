@@ -12,7 +12,7 @@ import {
 	Page,
 } from 'framework7-react';
 
-export default class Notes extends React.Component {
+export default class NotesPage extends React.Component {
 	state = {
 		currentNote: '',
 		edit: false,
@@ -22,19 +22,19 @@ export default class Notes extends React.Component {
 		const { f7route } = this.props;
 		const { keyOfNote } = f7route.query;
 
-		if (keyOfNote) {
-			const that = this;
-			const table = that.$f7.methods.getTable();
-			table.get(parseInt(keyOfNote, 10), note => that.setState({
-				currentNote: note.text,
-				keyOfNote: parseInt(keyOfNote, 10),
-			}));
-		} else {
-			this.setState({
-				currentNote: '',
-				edit: true,
-			});
-		}
+		// if (keyOfNote) {
+		// 	const that = this;
+		// 	const table = that.$f7.methods.getTable();
+		// 	table.get(parseInt(keyOfNote, 10), note => that.setState({
+		// 		currentNote: note.text,
+		// 		keyOfNote: parseInt(keyOfNote, 10),
+		// 	}));
+		// } else {
+		// 	this.setState({
+		// 		currentNote: '',
+		// 		edit: true,
+		// 	});
+		// }
 	}
 
 	handleEditToggle = () => {
@@ -96,6 +96,6 @@ export default class Notes extends React.Component {
 	}
 }
 
-Notes.propTypes = {
+NotesPage.propTypes = {
 	f7route: PropTypes.object,
 };
