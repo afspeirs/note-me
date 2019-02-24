@@ -12,44 +12,53 @@ import {
 	Page,
 } from 'framework7-react';
 
-import { db } from '../firebase';
+import { auth, db } from '../firebase';
 
 
 export default class NotesPage extends React.Component {
 	state = {
 		currentNote: '',
 		edit: false,
+		user: null,
 	};
 
 	componentWillMount() {
 		const { f7route } = this.props;
 		const { keyOfNote } = f7route.query;
 
-		if (keyOfNote) {
-			db.collection('notes')
-				.doc(keyOfNote)
-				.get()
-				.then((doc) => {
-					if (doc.exists) {
-						this.setState({
-							currentNote: doc.data().text,
-							keyOfNote,
+		auth.onAuthStateChanged((user) => {
+			if (user) {
+				this.setState({ user });
+
+				if (keyOfNote) {
+					db.collection(user.uid)
+						.doc(keyOfNote)
+						.get()
+						.then((doc) => {
+							if (doc.exists) {
+								this.setState({
+									currentNote: doc.data().text,
+									keyOfNote,
+								});
+							} else {
+								console.log('No such document!');
+							}
 						});
-					} else {
-						console.log('No such document!');
-					}
-				});
-		} else {
-			this.setState({
-				currentNote: '',
-				edit: true,
-			});
-		}
+				} else {
+					this.setState({
+						currentNote: '',
+						edit: true,
+					});
+				}
+			}
+		});
 	}
 
 	handleNoteAdd = (text) => {
+		const { user } = this.state;
+
 		const that = this;
-		const newNote = db.collection('notes').doc();
+		const newNote = db.collection(user.uid).doc();
 
 		newNote
 			.set({
@@ -66,7 +75,9 @@ export default class NotesPage extends React.Component {
 	};
 
 	handleNoteUpdate = (id, text) => {
-		db.collection('notes')
+		const { user } = this.state;
+
+		db.collection(user.uid)
 			.doc(id)
 			.set({
 				text,

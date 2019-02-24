@@ -10,8 +10,8 @@ import {
 } from 'framework7-react';
 
 import { auth, db } from '../firebase';
-
 import Navbar from '../components/Navbar';
+
 
 export default class HomePage extends React.Component {
 	state = {
@@ -29,27 +29,26 @@ export default class HomePage extends React.Component {
 		auth.onAuthStateChanged((user) => {
 			if (user) {
 				this.setState({ user });
+				db.collection(user.uid)
+					.get()
+					.then((collection) => {
+						const notes = collection.docs.map(doc => doc.data());
+						this.setState({ notes });
+					});
 			}
 		});
-
-		db.collection('notes')
-			.get()
-			.then((collection) => {
-				const notes = collection.docs.map(doc => doc.data());
-				this.setState({ notes });
-			});
 	}
 
 	handleNoteDelete = (id) => {
-		db.collection('notes')
+		const { user } = this.state;
+
+		db.collection(user.uid)
 			.doc(id)
 			.delete();
 	};
 
 	render() {
 		const { notes, user } = this.state;
-
-		console.log(user && user.uid);
 
 		return (
 			<Page>
@@ -75,13 +74,15 @@ export default class HomePage extends React.Component {
 					))}
 				</List>
 
-				<Fab
-					href="/notes/?newNote=true"
-					position="right-bottom"
-					slot="fixed"
-				>
-					<Icon material="add" />
-				</Fab>
+				{user && (
+					<Fab
+						href="/notes/?newNote=true"
+						position="right-bottom"
+						slot="fixed"
+					>
+						<Icon material="add" />
+					</Fab>
+				)}
 			</Page>
 		);
 	}
