@@ -49,8 +49,7 @@ export default class HomePage extends React.Component {
 
 	render() {
 		const { user } = this.state;
-
-		console.log(user);
+		// console.log(user);
 
 		return (
 			<Page>
