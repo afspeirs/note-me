@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
+	Link,
 	Navbar,
 	NavLeft,
 	NavRight,
 	NavTitle,
-	Link,
 } from 'framework7-react';
 
 const Navigation = ({

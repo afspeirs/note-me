@@ -9,11 +9,14 @@ import {
 	SwipeoutButton,
 } from 'framework7-react';
 
+import firebase, { auth } from '../firebase';
+
 import Navbar from '../components/Navbar';
 
 export default class HomePage extends React.Component {
 	state = {
 		notes: [],
+		user: null,
 	};
 
 	styles = {
@@ -33,8 +36,18 @@ export default class HomePage extends React.Component {
 			.then((notes) => { this.setState({ notes }); });
 	}
 
+	componentDidMount() {
+		auth.onAuthStateChanged((user) => {
+			if (user) {
+				this.setState({ user });
+			}
+		});
+	}
+
 	render() {
-		const { notes } = this.state;
+		const { notes, user } = this.state;
+
+		console.log(user && user.uid);
 
 		return (
 			<Page>
