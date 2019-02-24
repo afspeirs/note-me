@@ -37,6 +37,8 @@ export default class HomePage extends React.Component {
 	logout = () => {
 		auth.signOut()
 			.then(() => this.setState({ user: null }));
+
+		this.$f7router.clearPreviousPages();
 	}
 
 	login = () => {
