@@ -1,46 +1,13 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {
 	App,
 	View,
 	Statusbar,
 } from 'framework7-react';
 
-import db from '../myDB';
-import f7Settings from '../f7params';
+import f7Params from '../f7params';
 
-export default class MainApp extends React.Component {
-	f7Params = {
-		...f7Settings,
-		methods: {
-			handleNoteAdd: (text) => {
-				const note = {
-					text,
-					date: new Date().toLocaleString(),
-				};
-				const that = this;
-				db.table('notes').add(note)
-					.then((id) => {
-						that.$f7.views.main.router.navigate(`/notes/?keyOfNote=${id}`, {
-							animate: false,
-							reloadCurrent: true,
-						});
-					});
-			},
-			handleNoteUpdate: (key, text) => {
-				const note = {
-					text,
-					date: new Date().toLocaleString(),
-				};
-				db.table('notes').update(key, note);
-			},
-			handleNoteDelete: (key) => {
-				db.table('notes').delete(key);
-			},
-			getTable: () => db.notes,
-			getGlobalState: () => this.state,
-		},
-	}
-
+export default class MainApp extends Component {
 	componentDidMount() {
 		// ServiceWorker events
 		window.addEventListener('swNewContentAvailable', () => {
@@ -63,7 +30,7 @@ export default class MainApp extends React.Component {
 
 	render() {
 		return (
-			<App params={this.f7Params} colorTheme="orange">
+			<App params={f7Params} colorTheme="orange">
 				<Statusbar />
 				<View url="/" main className="ios-edges" />
 			</App>

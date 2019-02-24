@@ -12,38 +12,87 @@ import {
 	Page,
 } from 'framework7-react';
 
-export default class Notes extends React.Component {
+import { auth, db } from '../firebase';
+
+
+export default class NotesPage extends React.Component {
 	state = {
 		currentNote: '',
 		edit: false,
+		user: null,
 	};
 
 	componentWillMount() {
 		const { f7route } = this.props;
 		const { keyOfNote } = f7route.query;
 
-		if (keyOfNote) {
-			const that = this;
-			const table = that.$f7.methods.getTable();
-			table.get(parseInt(keyOfNote, 10), note => that.setState({
-				currentNote: note.text,
-				keyOfNote: parseInt(keyOfNote, 10),
-			}));
-		} else {
-			this.setState({
-				currentNote: '',
-				edit: true,
-			});
-		}
+		auth.onAuthStateChanged((user) => {
+			if (user) {
+				this.setState({ user });
+
+				if (keyOfNote) {
+					db.collection(user.uid)
+						.doc(keyOfNote)
+						.get()
+						.then((doc) => {
+							if (doc.exists) {
+								this.setState({
+									currentNote: doc.data().text,
+									keyOfNote,
+								});
+							} else {
+								console.log('No such document!');
+							}
+						});
+				} else {
+					this.setState({
+						currentNote: '',
+						edit: true,
+					});
+				}
+			}
+		});
 	}
+
+	handleNoteAdd = (text) => {
+		const { user } = this.state;
+
+		const that = this;
+		const newNote = db.collection(user.uid).doc();
+
+		newNote
+			.set({
+				text,
+				date: new Date().toLocaleString(),
+				id: newNote.id,
+			})
+			.then(() => {
+				that.$f7.views.main.router.navigate(`/notes/?keyOfNote=${newNote.id}`, {
+					animate: false,
+					reloadCurrent: true,
+				});
+			});
+	};
+
+	handleNoteUpdate = (id, text) => {
+		const { user } = this.state;
+
+		db.collection(user.uid)
+			.doc(id)
+			.set({
+				text,
+				date: new Date().toLocaleString(),
+				id,
+			});
+	};
 
 	handleEditToggle = () => {
 		const { edit, keyOfNote, currentNote } = this.state;
 
 		if (edit && keyOfNote) {
-			this.$f7.methods.handleNoteUpdate(keyOfNote, currentNote);
+			this.handleNoteUpdate(keyOfNote, currentNote);
 		} else if (edit) {
-			this.$f7.methods.handleNoteAdd(currentNote);
+			this.handleNoteAdd(currentNote);
 		}
 
 		this.setState({ edit: !edit });
@@ -75,27 +124,25 @@ export default class Notes extends React.Component {
 					</NavRight>
 				</Navbar>
 
-				{edit ? (
-					<Block className="textarea">
+				<Block className={edit ? 'textarea' : 'markdown'}>
+					{edit ? (
 						<textarea
 							type="text"
 							value={currentNote}
-							onChange={e => this.handleCurrentNoteUpdate(e.target.value)}
+							onChange={event => this.handleCurrentNoteUpdate(event.target.value)}
 						/>
-					</Block>
-				) : (
-					<Block className="markdown">
+					) : (
 						<Markdown
 							escapeHtml
 							source={currentNote}
 						/>
-					</Block>
-				)}
+					)}
+				</Block>
 			</Page>
 		);
 	}
 }
 
-Notes.propTypes = {
+NotesPage.propTypes = {
 	f7route: PropTypes.object,
 };

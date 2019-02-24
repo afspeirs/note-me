@@ -9,11 +9,14 @@ import {
 	SwipeoutButton,
 } from 'framework7-react';
 
+import { auth, db } from '../firebase';
 import Navbar from '../components/Navbar';
+
 
 export default class HomePage extends React.Component {
 	state = {
 		notes: [],
+		user: null,
 	};
 
 	styles = {
@@ -22,19 +25,30 @@ export default class HomePage extends React.Component {
 		},
 	}
 
-	constructor() {
-		super();
-
-		const table = this.$f7.methods.getTable();
-		table
-			.orderBy('date')
-			.reverse()
-			.toArray()
-			.then((notes) => { this.setState({ notes }); });
+	componentDidMount() {
+		auth.onAuthStateChanged((user) => {
+			if (user) {
+				this.setState({ user });
+				db.collection(user.uid)
+					.get()
+					.then((collection) => {
+						const notes = collection.docs.map(doc => doc.data());
+						this.setState({ notes });
+					});
+			}
+		});
 	}
 
+	handleNoteDelete = (id) => {
+		const { user } = this.state;
+
+		db.collection(user.uid)
+			.doc(id)
+			.delete();
+	};
+
 	render() {
-		const { notes } = this.state;
+		const { notes, user } = this.state;
 
 		return (
 			<Page>
@@ -48,7 +62,7 @@ export default class HomePage extends React.Component {
 							link={`/notes/?keyOfNote=${note.id}`}
 							title={note.text ? note.text.split('\n')[0] : 'Untitled'}
 							swipeout
-							onSwipeoutDeleted={() => this.$f7.methods.handleNoteDelete(note.id)}
+							onSwipeoutDeleted={() => this.handleNoteDelete(note.id)}
 						>
 							<SwipeoutActions right>
 								<SwipeoutButton close>{note.date}</SwipeoutButton>
@@ -60,13 +74,15 @@ export default class HomePage extends React.Component {
 					))}
 				</List>
 
-				<Fab
-					href="/notes/?newNote=true"
-					position="right-bottom"
-					slot="fixed"
-				>
-					<Icon material="add" />
-				</Fab>
+				{user && (
+					<Fab
+						href="/notes/?newNote=true"
+						position="right-bottom"
+						slot="fixed"
+					>
+						<Icon material="add" />
+					</Fab>
+				)}
 			</Page>
 		);
 	}
