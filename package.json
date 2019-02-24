@@ -1,6 +1,6 @@
 {
   "name": "note-me",
-  "version": "0.3.0",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "firebase": "^5.8.4",
