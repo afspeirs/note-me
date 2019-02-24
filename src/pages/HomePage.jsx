@@ -40,6 +40,12 @@ export default class HomePage extends React.Component {
 			});
 	}
 
+	handleNoteDelete = (id) => {
+		db.collection('notes')
+			.doc(id)
+			.delete();
+	};
+
 	render() {
 		const { notes, user } = this.state;
 
@@ -57,7 +63,7 @@ export default class HomePage extends React.Component {
 							link={`/notes/?keyOfNote=${note.id}`}
 							title={note.text ? note.text.split('\n')[0] : 'Untitled'}
 							swipeout
-							onSwipeoutDeleted={() => this.$f7.methods.handleNoteDelete(note.id)}
+							onSwipeoutDeleted={() => this.handleNoteDelete(note.id)}
 						>
 							<SwipeoutActions right>
 								<SwipeoutButton close>{note.date}</SwipeoutButton>

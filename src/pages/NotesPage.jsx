@@ -12,6 +12,9 @@ import {
 	Page,
 } from 'framework7-react';
 
+import { db } from '../firebase';
+
+
 export default class NotesPage extends React.Component {
 	state = {
 		currentNote: '',
@@ -22,28 +25,63 @@ export default class NotesPage extends React.Component {
 		const { f7route } = this.props;
 		const { keyOfNote } = f7route.query;
 
-		// if (keyOfNote) {
-		// 	const that = this;
-		// 	const table = that.$f7.methods.getTable();
-		// 	table.get(parseInt(keyOfNote, 10), note => that.setState({
-		// 		currentNote: note.text,
-		// 		keyOfNote: parseInt(keyOfNote, 10),
-		// 	}));
-		// } else {
-		// 	this.setState({
-		// 		currentNote: '',
-		// 		edit: true,
-		// 	});
-		// }
+		if (keyOfNote) {
+			db.collection('notes')
+				.doc(keyOfNote)
+				.get()
+				.then((doc) => {
+					if (doc.exists) {
+						this.setState({
+							currentNote: doc.data().text,
+							keyOfNote,
+						});
+					} else {
+						console.log('No such document!');
+					}
+				});
+		} else {
+			this.setState({
+				currentNote: '',
+				edit: true,
+			});
+		}
 	}
+
+	handleNoteAdd = (text) => {
+		const that = this;
+		const newNote = db.collection('notes').doc();
+
+		newNote
+			.set({
+				text,
+				date: new Date().toLocaleString(),
+				id: newNote.id,
+			})
+			.then(() => {
+				that.$f7.views.main.router.navigate(`/notes/?keyOfNote=${newNote.id}`, {
+					animate: false,
+					reloadCurrent: true,
+				});
+			});
+	};
+
+	handleNoteUpdate = (id, text) => {
+		db.collection('notes')
+			.doc(id)
+			.set({
+				text,
+				date: new Date().toLocaleString(),
+				id,
+			});
+	};
 
 	handleEditToggle = () => {
 		const { edit, keyOfNote, currentNote } = this.state;
 
 		if (edit && keyOfNote) {
-			this.$f7.methods.handleNoteUpdate(keyOfNote, currentNote);
+			this.handleNoteUpdate(keyOfNote, currentNote);
 		} else if (edit) {
-			this.$f7.methods.handleNoteAdd(currentNote);
+			this.handleNoteAdd(currentNote);
 		}
 
 		this.setState({ edit: !edit });
