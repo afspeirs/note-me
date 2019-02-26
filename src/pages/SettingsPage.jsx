@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-	Block,
 	Page,
 	List,
 	ListButton,
@@ -18,13 +17,6 @@ export default class HomePage extends React.Component {
 	state = {
 		user: null,
 	};
-
-	styles = {
-		listOfNotes: {
-			marginBottom: '80px',
-		},
-	}
-
 
 	componentDidMount() {
 		auth.onAuthStateChanged((user) => {
@@ -57,12 +49,22 @@ export default class HomePage extends React.Component {
 			<Page>
 				<Navbar title="Settings" backLink="Back" />
 
-				<Block className="display-flex justify-content-center align-items-center">
-					{user
-						? <img className="user-photo" src={user.photoURL} alt="user" />
-						: <img className="user-photo" src={blankUserPhoto} alt="user" />
-					}
-				</Block>
+				<List>
+					<ListGroup>
+						<ListItem title={user ? user.email : 'Please log in'}>
+							{user
+								? <img slot="media" className="user-photo" src={user.photoURL} alt="user" />
+								: <img slot="media" className="user-photo" src={blankUserPhoto} alt="user" />
+							}
+						</ListItem>
+					</ListGroup>
+					<ListGroup>
+						{user
+							? <ListButton onClick={this.logout} title="Log Out" color="red" />
+							: <ListButton onClick={this.login} title="Log In" />
+						}
+					</ListGroup>
+				</List>
 
 				<List>
 					<ListGroup>
@@ -73,13 +75,6 @@ export default class HomePage extends React.Component {
 					<ListGroup>
 						<CheckForUpdate />
 					</ListGroup>
-				</List>
-
-				<List>
-					{user
-						? <ListButton onClick={this.logout} title="Log Out" color="red" />
-						: <ListButton onClick={this.login} title="Log In" />
-					}
 				</List>
 			</Page>
 		);

@@ -10,8 +10,6 @@ html:not(.ios) .ios-only {
 }
 
 .user-photo {
-	width: 60%;
-	max-width: 400px;
+	height: 32px;
 	border-radius: 50%;
-	object-fit: cover;
 }
