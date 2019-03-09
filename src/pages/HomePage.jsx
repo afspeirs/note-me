@@ -28,12 +28,11 @@ export default class HomePage extends React.Component {
 	componentDidMount() {
 		auth.onAuthStateChanged((user) => {
 			if (user) {
-				this.setState({ user });
 				db.collection(user.uid)
 					.get()
 					.then((collection) => {
 						const notes = collection.docs.map(doc => doc.data());
-						this.setState({ notes });
+						this.setState({ notes, user });
 					});
 			}
 		});

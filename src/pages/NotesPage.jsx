@@ -22,7 +22,7 @@ export default class NotesPage extends React.Component {
 		user: null,
 	};
 
-	componentWillMount() {
+	componentDidMount() {
 		const { f7route } = this.props;
 		const { keyOfNote } = f7route.query;
 
@@ -45,10 +45,7 @@ export default class NotesPage extends React.Component {
 							}
 						});
 				} else {
-					this.setState({
-						currentNote: '',
-						edit: true,
-					});
+					this.setState({ edit: true });
 				}
 			}
 		});

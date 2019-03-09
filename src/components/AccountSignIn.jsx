@@ -25,8 +25,6 @@ export default class AccountSignIn extends React.Component {
 	signOut = () => {
 		auth.signOut()
 			.then(() => this.setState({ user: null }));
-
-		this.$f7router.clearPreviousPages();
 	}
 
 	signIn = () => {
