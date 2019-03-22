@@ -121,20 +121,21 @@ export default class NotesPage extends React.Component {
 					</NavRight>
 				</Navbar>
 
-				<Block className={edit ? 'textarea' : 'markdown'}>
-					{edit ? (
-						<textarea
-							type="text"
-							value={currentNote}
-							onChange={event => this.handleCurrentNoteUpdate(event.target.value)}
-						/>
-					) : (
+				{edit ? (
+					<textarea
+						type="text"
+						className="textarea"
+						value={currentNote}
+						onChange={event => this.handleCurrentNoteUpdate(event.target.value)}
+					/>
+				) : (
+					<Block className="markdown">
 						<Markdown
 							escapeHtml
 							source={currentNote}
 						/>
-					)}
-				</Block>
+					</Block>
+				)}
 			</Page>
 		);
 	}
