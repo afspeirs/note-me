@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import Markdown from 'react-markdown';
 import {
 	Block,
-	Icon,
 	Link,
 	Navbar,
 	NavLeft,
@@ -108,16 +107,16 @@ export default class NotesPage extends React.Component {
 			<Page>
 				<Navbar>
 					<NavLeft>
-						<Link back force>
-							<Icon icon="icon-back" />
-							<span className="ios-only">Back</span>
-						</Link>
+						<Link back force icon="icon-back" />
 					</NavLeft>
 					<NavTitle>Notes</NavTitle>
 					<NavRight>
-						<Link iconOnly onClick={this.handleEditToggle} tooltip={edit ? 'Save' : 'Edit'}>
-							<Icon material={edit ? 'save' : 'edit'} />
-						</Link>
+						<Link
+							iconOnly
+							onClick={this.handleEditToggle}
+							tooltip={edit ? 'Save' : 'Edit'}
+							iconMaterial={edit ? 'save' : 'edit'}
+						/>
 					</NavRight>
 				</Navbar>
 
