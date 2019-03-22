@@ -13,3 +13,8 @@ html:not(.ios) .ios-only {
 	height: 32px;
 	border-radius: 50%;
 }
+
+/* Not sure if I should be forcing the scrollbar to hide */
+::-webkit-scrollbar {
+	display: none;
+}
