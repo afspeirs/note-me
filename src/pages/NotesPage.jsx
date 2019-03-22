@@ -116,7 +116,10 @@ export default class NotesPage extends React.Component {
 					<NavTitle>Notes</NavTitle>
 					<NavRight>
 						<Link iconOnly onClick={this.handleEditToggle}>
-							<Icon material={edit ? 'save' : 'edit'} />
+							<Icon
+								material={edit ? 'save' : 'edit'}
+								tooltip={edit ? 'Save' : 'Edit'}
+							/>
 						</Link>
 					</NavRight>
 				</Navbar>
