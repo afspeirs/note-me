@@ -48,6 +48,12 @@ export default class NotesPage extends React.Component {
 				}
 			}
 		});
+
+		document.addEventListener('keydown', this.handleKeyDown);
+	}
+
+	componentWillUnmount() {
+		document.removeEventListener('keydown', this.handleKeyDown);
 	}
 
 	handleNoteAdd = (text) => {
@@ -99,6 +105,14 @@ export default class NotesPage extends React.Component {
 		currentNote = text;
 		this.setState({ currentNote });
 	};
+
+	handleKeyDown = (event) => {
+		// CTRL + S = Toggle edit mode
+		if (event.ctrlKey && event.key === 's') {
+			event.preventDefault();
+			this.handleEditToggle();
+		}
+	}
 
 	render() {
 		const { edit, currentNote } = this.state;
