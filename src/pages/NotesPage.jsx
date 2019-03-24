@@ -100,11 +100,7 @@ export default class NotesPage extends React.Component {
 		this.setState({ edit: !edit });
 	};
 
-	handleCurrentNoteUpdate = (text) => {
-		let { currentNote } = this.state;
-		currentNote = text;
-		this.setState({ currentNote });
-	};
+	handleCurrentNoteUpdate = text => this.setState({ currentNote: text });
 
 	handleKeyDown = (event) => {
 		// CTRL + S = Toggle edit mode
