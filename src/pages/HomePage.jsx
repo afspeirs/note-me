@@ -32,6 +32,7 @@ export default class HomePage extends React.Component {
 					.get()
 					.then((collection) => {
 						const notes = collection.docs.map(doc => doc.data());
+						notes.sort((a, b) => new Date(b.date) - new Date(a.date));
 						this.setState({ notes, user });
 					});
 			}
