@@ -32,6 +32,7 @@ export default class HomePage extends React.Component {
 					.get()
 					.then((collection) => {
 						const notes = collection.docs.map(doc => doc.data());
+						notes.sort((a, b) => new Date(b.date) - new Date(a.date));
 						this.setState({ notes, user });
 					});
 			}
@@ -55,22 +56,28 @@ export default class HomePage extends React.Component {
 
 				<List style={this.styles.listOfNotes}>
 					{notes.length === 0 && <ListItem title="No notes" />}
-					{notes.map(note => (
-						<ListItem
-							key={`note-${note.id}`}
-							link={`/notes/?keyOfNote=${note.id}`}
-							title={note.text ? note.text.split('\n')[0] : 'Untitled'}
-							swipeout
-							onSwipeoutDeleted={() => this.handleNoteDelete(note.id)}
-						>
-							<SwipeoutActions right>
-								<SwipeoutButton close>{note.date}</SwipeoutButton>
-								<SwipeoutButton close delete confirmText="Are you sure you want to delete this note?">
-									<Icon material="delete" />
-								</SwipeoutButton>
-							</SwipeoutActions>
-						</ListItem>
-					))}
+					{notes.map((note) => {
+						const title = note.text
+							? note.text.split('\n')[0].replace(/#+ /g, '')
+							: 'Untitled';
+
+						return (
+							<ListItem
+								key={`note-${note.id}`}
+								link={`/notes/?keyOfNote=${note.id}`}
+								title={title}
+								swipeout
+								onSwipeoutDeleted={() => this.handleNoteDelete(note.id)}
+							>
+								<SwipeoutActions right>
+									<SwipeoutButton close>{note.date}</SwipeoutButton>
+									<SwipeoutButton close delete confirmText={`Are you sure you want to delete this note: <em>"${title}"</em>?`}>
+										<Icon material="delete" />
+									</SwipeoutButton>
+								</SwipeoutActions>
+							</ListItem>
+						);
+					})}
 				</List>
 
 				{user && (
