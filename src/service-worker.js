@@ -76,6 +76,10 @@ function registerValidSW(swUrl, config) {
                   'tabs for this page are closed. See http://bit.ly/CRA-PWA.'
               );
 
+              // New Content Available event
+              const event = new Event('swNewContentAvailable');
+              window.dispatchEvent(event);
+
               // Execute callback
               if (config && config.onUpdate) {
                 config.onUpdate(registration);
@@ -85,6 +89,10 @@ function registerValidSW(swUrl, config) {
               // It's the perfect time to display a
               // "Content is cached for offline use." message.
               console.log('Content is cached for offline use.');
+
+              // Content Cached event
+              const event = new Event('swContentCached');
+              window.dispatchEvent(event);
 
               // Execute callback
               if (config && config.onSuccess) {
