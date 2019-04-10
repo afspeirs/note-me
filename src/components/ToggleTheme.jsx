@@ -7,7 +7,7 @@ import {
 import { ThemeContext } from '../ThemeContext';
 
 // eslint-disable-next-line react/prefer-stateless-function
-class ToggleTheme extends React.Component {
+export default class ToggleTheme extends React.Component {
 	render() {
 		const { settings, toggleTheme } = this.context;
 
@@ -24,5 +24,4 @@ class ToggleTheme extends React.Component {
 	}
 }
 
-export default ToggleTheme;
 ToggleTheme.contextType = ThemeContext;
