@@ -9,6 +9,7 @@ import {
 import AccountSignIn from '../components/AccountSignIn';
 import CheckForUpdate from '../components/CheckForUpdate';
 import Navbar from '../components/Navbar';
+import ToggleTheme from '../components/ToggleTheme';
 
 export default () => (
 	<Page>
@@ -24,6 +25,11 @@ export default () => (
 			</ListGroup>
 			<ListGroup>
 				<CheckForUpdate />
+			</ListGroup>
+		</List>
+		<List>
+			<ListGroup>
+				<ToggleTheme />
 			</ListGroup>
 		</List>
 	</Page>

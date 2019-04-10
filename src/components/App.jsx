@@ -1,3 +1,6 @@
+/* eslint-disable react/no-unused-state */
+// This has been added due the state is being accessed via Context
+
 import React, { Component } from 'react';
 import {
 	App,
@@ -6,8 +9,22 @@ import {
 } from 'framework7-react';
 
 import f7Params from '../f7params';
+import { ThemeContext } from '../ThemeContext';
 
 export default class MainApp extends Component {
+	state = {
+		settings: {
+			themeDark: JSON.parse(localStorage.getItem('themeDark')) || false,
+		},
+		toggleTheme: () => {
+			const { settings } = this.state;
+			settings.themeDark = !settings.themeDark;
+
+			this.setState({ settings });
+			localStorage.setItem('themeDark', settings.themeDark);
+		},
+	};
+
 	componentDidMount() {
 		// ServiceWorker events
 		window.addEventListener('swNewContentAvailable', () => {
@@ -29,11 +46,19 @@ export default class MainApp extends Component {
 	}
 
 	render() {
+		const { settings } = this.state;
+
 		return (
-			<App params={f7Params} colorTheme="orange">
-				<Statusbar />
-				<View url="/" main className="ios-edges" />
-			</App>
+			<ThemeContext.Provider value={this.state}>
+				<App
+					params={f7Params}
+					themeDark={settings.themeDark}
+					colorTheme="orange"
+				>
+					<Statusbar />
+					<View url="/" main className="ios-edges" />
+				</App>
+			</ThemeContext.Provider>
 		);
 	}
 }
