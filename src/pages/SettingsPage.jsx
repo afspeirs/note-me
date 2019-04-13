@@ -2,13 +2,13 @@ import React from 'react';
 import {
 	Page,
 	List,
+	Navbar,
 	ListGroup,
 	ListItem,
 } from 'framework7-react';
 
 import AccountSignIn from '../components/AccountSignIn';
 import CheckForUpdate from '../components/CheckForUpdate';
-import Navbar from '../components/Navbar';
 import ToggleTheme from '../components/ToggleTheme';
 
 export default () => (

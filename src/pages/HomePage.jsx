@@ -1,17 +1,19 @@
 import React from 'react';
 import {
-	Page,
-	List,
-	ListItem,
 	Fab,
 	Icon,
+	Link,
+	List,
+	ListItem,
+	NavRight,
+	Navbar,
+	Page,
+	Searchbar,
 	SwipeoutActions,
 	SwipeoutButton,
 } from 'framework7-react';
 
 import { auth, db } from '../firebase';
-import Navbar from '../components/Navbar';
-
 
 export default class HomePage extends React.Component {
 	state = {
@@ -52,9 +54,27 @@ export default class HomePage extends React.Component {
 
 		return (
 			<Page>
-				<Navbar title="NoteMe" settings />
+				<Navbar title="Note Me">
+					<NavRight>
+						<Link searchbarEnable=".searchbar-components" iconIos="f7:search_strong" iconMd="material:search" />
+						<Link href="/settings/" iconMaterial="settings" />
+					</NavRight>
+					<Searchbar
+						className="searchbar-components"
+						searchContainer=".search-list"
+						searchIn=".item-title"
+						expandable
+					/>
+				</Navbar>
 
-				<List style={this.styles.listOfNotes}>
+				<List className="searchbar-not-found">
+					<ListItem title="Nothing found" />
+				</List>
+
+				<List
+					style={this.styles.listOfNotes}
+					className="search-list searchbar-found"
+				>
 					{notes.length === 0 && <ListItem title="No notes" />}
 					{notes.map((note) => {
 						const title = note.text
