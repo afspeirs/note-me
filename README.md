@@ -1,4 +1,4 @@
-# NoteMe [![pipeline status](https://gitlab.com/AFSpeirs/note-me/badges/master/pipeline.svg)](https://gitlab.com/AFSpeirs/note-me/commits/master)
+# NoteMe [![Netlify Status](https://api.netlify.com/api/v1/badges/5c3fcfd1-3410-451b-ae2c-82cd72888332/deploy-status)](https://app.netlify.com/sites/noteme/deploys)
 
 
 # Configuration
