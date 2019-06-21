@@ -92,13 +92,27 @@ export default class ContextMenu extends React.Component {
 		if (visible) this.setState({ visible: false });
 	};
 
+	handleDeletePress = (id, title) => {
+		const { handleNoteDelete, selectedNote } = this.props;
+
+		this.$f7.dialog.confirm(
+			`Are you sure you want to delete this note: <em>"${title}"</em>?`,
+			() => handleNoteDelete(id, selectedNote),
+		);
+	}
+
 	render() {
 		const { visible } = this.state;
 		const {
 			getTitle,
-			handleNoteDelete,
 			selectedNote,
 		} = this.props;
+
+		let title = null;
+
+		if (selectedNote) {
+			title = getTitle(selectedNote.text);
+		}
 
 		return ReactDOM.createPortal(
 			(visible && selectedNote) && (
@@ -110,8 +124,8 @@ export default class ContextMenu extends React.Component {
 						<ListItem
 							link
 							noChevron
-							title={`Delete "${getTitle(selectedNote.text)}"`}
-							onClick={() => handleNoteDelete(selectedNote.id, selectedNote)}
+							title={`Delete "${title}"`}
+							onClick={() => this.handleDeletePress(selectedNote.id, title)}
 						>
 							<Icon material="delete" slot="media" textColor="red" />
 						</ListItem>
