@@ -65,7 +65,7 @@ export default class NotesPage extends React.Component {
 		newNote
 			.set({
 				text,
-				date: new Date().toLocaleString(),
+				date: +new Date(),
 				id: newNote.id,
 			})
 			.then(() => {
@@ -83,7 +83,7 @@ export default class NotesPage extends React.Component {
 			.doc(id)
 			.set({
 				text,
-				date: new Date().toLocaleString(),
+				date: +new Date(),
 				id,
 			});
 	};
