@@ -14,6 +14,7 @@ import {
 } from 'framework7-react';
 
 import ContextMenu from '../components/ContextMenu';
+import TimeAgo from '../components/TimeAgo';
 
 import { auth, db } from '../firebase';
 
@@ -102,7 +103,9 @@ export default class HomePage extends React.Component {
 								onSwipeoutDeleted={() => this.handleNoteDelete(note.id)}
 							>
 								<SwipeoutActions right>
-									<SwipeoutButton close>{note.date}</SwipeoutButton>
+									<SwipeoutButton close>
+										<TimeAgo date={note.date / 1000} />
+									</SwipeoutButton>
 									<SwipeoutButton close delete confirmText={`Are you sure you want to delete this note: <em>"${title}"</em>?`}>
 										<Icon material="delete" />
 									</SwipeoutButton>

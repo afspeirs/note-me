@@ -6,6 +6,7 @@ import {
 	ListItem,
 	Icon,
 } from 'framework7-react';
+import TimeAgo from './TimeAgo';
 
 const propTypes = {
 	getTitle: PropTypes.func,
@@ -118,7 +119,8 @@ export default class ContextMenu extends React.Component {
 			(visible && selectedNote) && (
 				<div ref={(ref) => { this.root = ref; }} className="context-menu">
 					<List className="no-margin">
-						<ListItem title={selectedNote.date}>
+						<ListItem>
+							<TimeAgo slot="title" date={selectedNote.date / 1000} />
 							<Icon material="access_time" slot="media" textColor="orange" />
 						</ListItem>
 						<ListItem
