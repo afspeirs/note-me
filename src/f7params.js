@@ -17,6 +17,8 @@ export default {
 	},
 	dialog: {
 		title: 'Warning',
+		buttonOk: 'Yes',
+		buttonCancel: 'No',
 	},
 	serviceWorker: {
 		path: './service-worker.js',

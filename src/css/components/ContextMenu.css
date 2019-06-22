@@ -1,0 +1,11 @@
+#context-menu-container {
+	position: absolute;
+	z-index: 10000;
+}
+
+.context-menu {
+	position: fixed;
+	background: white;
+	box-shadow: 0px 2px 10px #999999;
+	z-index: 1000;
+}

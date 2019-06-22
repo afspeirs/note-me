@@ -13,11 +13,14 @@ import {
 	SwipeoutButton,
 } from 'framework7-react';
 
+import ContextMenu from '../components/ContextMenu';
+
 import { auth, db } from '../firebase';
 
 export default class HomePage extends React.Component {
 	state = {
 		notes: [],
+		selectedNote: null,
 		user: null,
 	};
 
@@ -41,16 +44,26 @@ export default class HomePage extends React.Component {
 		});
 	}
 
-	handleNoteDelete = (id) => {
-		const { user } = this.state;
+	handleNoteDelete = (id, note = null) => {
+		const { user, notes } = this.state;
 
 		db.collection(user.uid)
 			.doc(id)
 			.delete();
+
+		if (note) {
+			const indexOfNote = notes.indexOf(note);
+			notes.splice(indexOfNote, 1);
+			this.setState({ notes });
+		}
 	};
 
+	getTitle = text => text.split('\n')[0].replace(/#+ /g, '');
+
+	updateSelectedNote = selectedNote => this.setState({ selectedNote });
+
 	render() {
-		const { notes, user } = this.state;
+		const { notes, selectedNote, user } = this.state;
 
 		return (
 			<Page>
@@ -76,14 +89,13 @@ export default class HomePage extends React.Component {
 					className="search-list searchbar-found"
 				>
 					{notes.length === 0 && <ListItem title="No notes" />}
-					{notes.map((note) => {
-						const title = note.text
-							? note.text.split('\n')[0].replace(/#+ /g, '')
-							: 'Untitled';
+					{notes.map((note, index) => {
+						const title = note.text ? this.getTitle(note.text) : 'Untitled';
 
 						return (
 							<ListItem
 								key={`note-${note.id}`}
+								id={index}
 								link={`/notes/?keyOfNote=${note.id}`}
 								title={title}
 								swipeout
@@ -99,6 +111,13 @@ export default class HomePage extends React.Component {
 						);
 					})}
 				</List>
+
+				<ContextMenu
+					getTitle={this.getTitle}
+					handleNoteDelete={this.handleNoteDelete}
+					selectedNote={notes[selectedNote]}
+					updateSelectedNote={this.updateSelectedNote}
+				/>
 
 				{user && (
 					<Fab
