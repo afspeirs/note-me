@@ -1,3 +1,6 @@
+/* Components */
+@import './components/ContextMenu.css';
+
 /* Modules */
 @import './modules/theme.css';
 @import './modules/white-space-initial.css';
