@@ -29,3 +29,8 @@
 	--f7-button-text-color: #fff;
 	--f7-button-pressed-bg-color: rgba(255,255,255,0.1);
 }
+
+/* Hover on lists when in desktop */
+.device-desktop .list .item-link:hover:not(.active-state):not(.no-hover) {
+	background: rgba(0, 0, 0, 0.1);
+}
