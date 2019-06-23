@@ -9,3 +9,7 @@
 	box-shadow: 0px 2px 10px #999999;
 	z-index: 1000;
 }
+
+.context-menu .delete {
+	max-width: 95vw;
+}

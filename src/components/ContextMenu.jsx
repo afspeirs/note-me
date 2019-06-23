@@ -63,19 +63,20 @@ export default class ContextMenu extends React.Component {
 			const bottom = !top;
 
 			if (right) {
-				this.root.style.left = `${clickX + 5}px`;
+				this.root.style.left = `${clickX}px`;
 			}
 
 			if (left) {
-				this.root.style.left = `${clickX - rootW - 5}px`;
+				// if the left position is less than 10 set it to 10 or use the calculated value
+				this.root.style.left = `${clickX - rootW < 10 ? 10 : clickX - rootW}px`;
 			}
 
 			if (top) {
-				this.root.style.top = `${clickY + 5}px`;
+				this.root.style.top = `${clickY}px`;
 			}
 
 			if (bottom) {
-				this.root.style.top = `${clickY - rootH - 5}px`;
+				this.root.style.top = `${clickY - rootH}px`;
 			}
 		}
 	};
@@ -126,6 +127,7 @@ export default class ContextMenu extends React.Component {
 						<ListItem
 							link
 							noChevron
+							className="delete"
 							title={`Delete "${title}"`}
 							onClick={() => this.handleDeletePress(selectedNote.id, title)}
 						>
