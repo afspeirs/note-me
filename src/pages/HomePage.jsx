@@ -20,6 +20,7 @@ import { auth, db } from '../firebase';
 
 export default class HomePage extends React.Component {
 	state = {
+		loading: true,
 		notes: [],
 		selectedNote: null,
 		user: null,
@@ -39,8 +40,10 @@ export default class HomePage extends React.Component {
 					.then((collection) => {
 						const notes = collection.docs.map(doc => doc.data());
 						notes.sort((a, b) => new Date(b.date) - new Date(a.date));
-						this.setState({ notes, user });
+						this.setState({ loading: false, notes, user });
 					});
+			} else {
+				this.setState({ loading: false });
 			}
 		});
 	}
@@ -64,7 +67,12 @@ export default class HomePage extends React.Component {
 	updateSelectedNote = selectedNote => this.setState({ selectedNote });
 
 	render() {
-		const { notes, selectedNote, user } = this.state;
+		const {
+			loading,
+			notes,
+			selectedNote,
+			user,
+		} = this.state;
 
 		return (
 			<Page>
@@ -89,7 +97,8 @@ export default class HomePage extends React.Component {
 					style={this.styles.listOfNotes}
 					className="search-list searchbar-found"
 				>
-					{notes.length === 0 && <ListItem title="No notes" />}
+					{notes.length === 0 && loading === false && <ListItem title="No notes" />}
+					{loading && <ListItem title="Loading, please wait while we gather your notes" />}
 					{notes.map((note, index) => {
 						const title = note.text ? this.getTitle(note.text) : 'Untitled';
 
