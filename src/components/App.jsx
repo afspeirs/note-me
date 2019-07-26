@@ -26,23 +26,51 @@ export default class MainApp extends Component {
 	};
 
 	componentDidMount() {
-		// ServiceWorker events
-		window.addEventListener('swNewContentAvailable', () => {
-			this.$f7.toast.create({
-				text: 'A new version is available',
-				closeButtonText: 'Refresh',
-				on: {
-					close() {
-						window.location.reload(window.location.href);
-					},
+		// Firebase Events
+		window.addEventListener('firebasePersistenceFailedPrecondition', this.firebasePersistenceFailedPrecondition);
+		window.addEventListener('firebasePersistenceUnimplemented', this.firebasePersistenceUnimplemented);
+		// ServiceWorker Events
+		window.addEventListener('swContentCached', this.swContentCached);
+		window.addEventListener('swNewContentAvailable', this.swNewContentAvailable);
+	}
+
+	firebasePersistenceFailedPrecondition = () => {
+		this.$f7.toast.create({
+			text: 'Please close other tabs to allow the app to work offline',
+		}).open();
+	}
+
+	firebasePersistenceUnimplemented = () => {
+		this.$f7.toast.create({
+			text: 'Offline support is not supported in this browser',
+		}).open();
+	}
+
+	swContentCached = () => {
+		this.$f7.toast.create({
+			text: 'Caching complete! Now available offline',
+		}).open();
+	}
+
+	swNewContentAvailable = () => {
+		this.$f7.toast.create({
+			text: 'A new version is available',
+			closeButtonText: 'Refresh',
+			on: {
+				close() {
+					window.location.reload(window.location.href);
 				},
-			}).open();
-		});
-		window.addEventListener('swContentCached', () => {
-			this.$f7.toast.create({
-				text: 'Caching complete! Now available offline',
-			}).open();
-		});
+			},
+		}).open();
+	}
+
+	componentDidUnMount() {
+		// Firebase Events
+		window.removeEventListener('firebasePersistenceFailedPrecondition', this.firebasePersistenceFailedPrecondition);
+		window.removeEventListener('firebasePersistenceUnimplemented', this.firebasePersistenceUnimplemented);
+		// ServiceWorker Events
+		window.removeEventListener('swContentCached', this.swContentCached);
+		window.removeEventListener('swNewContentAvailable', this.swNewContentAvailable);
 	}
 
 	render() {
