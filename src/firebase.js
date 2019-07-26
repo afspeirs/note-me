@@ -35,12 +35,12 @@ firebase.firestore()
 		if (error.code === 'failed-precondition') {
 			// Multiple tabs open, persistence can only be enabled
 			// in one tab at a a time.
-			// ...
-			console.log('Please close other tabs to allow the app to work offline');
+			const event = new Event('firebasePersistenceFailedPrecondition');
+			window.dispatchEvent(event);
 		} else if (error.code === 'unimplemented') {
 			// The current browser does not support all of the
 			// features required to enable persistence
-			// ...
-			console.log('Offline support is not supported in this browser');
+			const event = new Event('firebasePersistenceUnimplemented');
+			window.dispatchEvent(event);
 		}
 	});
