@@ -32,7 +32,7 @@ const NotesList = ({
 		{notes.map(note => (
 			<ListItemLink
 				key={`note-${note.id}`}
-				to={`/note/?${note.id}`}
+				to={`/note/${note.id}`}
 				activeClassName="active"
 				primary={note.text ? getTitle(note.text) : 'Untitled'}
 			/>

@@ -8,6 +8,7 @@ import theme from '../../theme';
 
 import { auth, db, provider } from '../../firebase';
 import HomePage from '../../pages/HomePage';
+import NotePage from '../../pages/NotePage';
 import NoPage from '../../pages/NoPage';
 
 export default class App extends Component {
@@ -82,7 +83,7 @@ export default class App extends Component {
 									path="/"
 									render={() => <HomePage loading={loading} notes={notes} />}
 								/>
-								{/* <Route path="/note" component={NotePage} /> */}
+								<Route path="/note/:id" component={NotePage} />
 								<Route component={NoPage} />
 							</Switch>
 						</Header>
