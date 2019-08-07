@@ -10,10 +10,14 @@ import {
 
 import { AvatarStyled, MenuStyled } from './Account.styled';
 
+const defaultProps = {
+	user: null,
+};
+
 const propTypes = {
 	signIn: PropTypes.func.isRequired,
 	signOut: PropTypes.func.isRequired,
-	user: PropTypes.instanceOf(Object).isRequired,
+	user: PropTypes.instanceOf(Object),
 };
 
 const Account = ({
@@ -74,6 +78,7 @@ const Account = ({
 	);
 };
 
+Account.propTypes = defaultProps;
 Account.propTypes = propTypes;
 
 export default Account;

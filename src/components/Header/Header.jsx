@@ -21,6 +21,10 @@ import {
 import Account from '../Account';
 import DrawerContent from '../DrawerContent';
 
+const defaultProps = {
+	user: null,
+};
+
 const propTypes = {
 	children: PropTypes.oneOfType([
 		PropTypes.arrayOf(PropTypes.node),
@@ -30,7 +34,7 @@ const propTypes = {
 	notes: PropTypes.instanceOf(Array).isRequired,
 	signIn: PropTypes.func.isRequired,
 	signOut: PropTypes.func.isRequired,
-	user: PropTypes.instanceOf(Object).isRequired,
+	user: PropTypes.instanceOf(Object),
 };
 
 const Header = ({
@@ -89,6 +93,7 @@ const Header = ({
 	);
 };
 
+Header.defaultProps = defaultProps;
 Header.propTypes = propTypes;
 
 export default Header;
