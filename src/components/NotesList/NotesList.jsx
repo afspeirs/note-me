@@ -5,6 +5,7 @@ import {
 	ListItem,
 } from '@material-ui/core';
 
+import ListItemLink from './ListItemLink';
 import { ListItemTextStyled } from './NotesList.styled';
 import { getTitle } from '../../ultils';
 
@@ -29,14 +30,12 @@ const NotesList = ({
 			</ListItem>
 		)}
 		{notes.map(note => (
-			<ListItem
-				button
+			<ListItemLink
 				key={`note-${note.id}`}
-				// id={index}
-				// link={`/notes/?keyOfNote=${note.id}`}
-			>
-				<ListItemTextStyled primary={note.text ? getTitle(note.text) : 'Untitled'} />
-			</ListItem>
+				to={`/note/?${note.id}`}
+				activeClassName="active"
+				primary={note.text ? getTitle(note.text) : 'Untitled'}
+			/>
 		))}
 	</List>
 );

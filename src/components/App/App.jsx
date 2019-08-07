@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Route, Switch } from 'react-router-dom';
 import { StylesProvider, ThemeProvider } from '@material-ui/styles';
 
 import { Container } from './App.styled';
@@ -7,6 +8,7 @@ import theme from '../../theme';
 
 import { auth, db, provider } from '../../firebase';
 import HomePage from '../../pages/HomePage';
+import NoPage from '../../pages/NoPage';
 
 export default class App extends Component {
 	state = {
@@ -74,10 +76,15 @@ export default class App extends Component {
 							signIn={this.signIn}
 							signOut={this.signOut}
 						>
-							<HomePage
-								loading={loading}
-								notes={notes}
-							/>
+							<Switch>
+								<Route
+									exact
+									path="/"
+									render={() => <HomePage loading={loading} notes={notes} />}
+								/>
+								{/* <Route path="/note" component={NotePage} /> */}
+								<Route component={NoPage} />
+							</Switch>
 						</Header>
 					</Container>
 				</StylesProvider>
