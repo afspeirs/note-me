@@ -78,7 +78,7 @@ const Account = ({
 	);
 };
 
-Account.propTypes = defaultProps;
+Account.defaultProps = defaultProps;
 Account.propTypes = propTypes;
 
 export default Account;

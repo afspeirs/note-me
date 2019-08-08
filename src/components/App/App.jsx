@@ -83,7 +83,10 @@ export default class App extends Component {
 									path="/"
 									render={() => <HomePage loading={loading} notes={notes} />}
 								/>
-								<Route path="/note/:id" component={NotePage} />
+								<Route
+									path="/note/:id"
+									render={props => <NotePage {...props} user={user} />}
+								/>
 								<Route component={NoPage} />
 							</Switch>
 						</Header>
