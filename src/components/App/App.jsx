@@ -16,6 +16,7 @@ export default class App extends Component {
 		// settings: {
 		// 	themeDark: JSON.parse(localStorage.getItem('themeDark')) || false,
 		// },
+		edit: false,
 		loading: true,
 		notes: [],
 		user: null,
@@ -45,6 +46,8 @@ export default class App extends Component {
 	signIn = () => auth.signInWithPopup(provider)
 		.then(({ user }) => this.setState({ user }));
 
+	setEdit = edit => this.setState({ edit });
+
 	handleNoteDelete = (id, note = null) => {
 		const { user, notes } = this.state;
 
@@ -61,6 +64,7 @@ export default class App extends Component {
 
 	render() {
 		const {
+			edit,
 			loading,
 			notes,
 			user,
@@ -71,11 +75,13 @@ export default class App extends Component {
 				<StylesProvider injectFirst>
 					<Container>
 						<Header
+							edit={edit}
 							loading={loading}
 							notes={notes}
-							user={user}
+							setEdit={this.setEdit}
 							signIn={this.signIn}
 							signOut={this.signOut}
+							user={user}
 						>
 							<Switch>
 								<Route
@@ -85,7 +91,7 @@ export default class App extends Component {
 								/>
 								<Route
 									path="/note/:id"
-									render={props => <NotePage {...props} user={user} />}
+									render={props => <NotePage {...props} edit={edit} user={user} />}
 								/>
 								<Route component={NoPage} />
 							</Switch>

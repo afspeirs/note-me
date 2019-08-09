@@ -10,11 +10,12 @@ const defaultProps = {
 };
 
 const propTypes = {
+	edit: PropTypes.bool.isRequired,
 	match: PropTypes.instanceOf(Object).isRequired,
 	user: PropTypes.instanceOf(Object),
 };
 
-const NotePage = ({ match, user }) => {
+const NotePage = ({ edit, match, user }) => {
 	const [note, setNote] = useState('Loading...');
 	const { id } = match.params;
 
@@ -35,18 +36,21 @@ const NotePage = ({ match, user }) => {
 
 	return (
 		<>
-			<Textarea
-				type="text"
-				className="textarea"
-				value={note}
-				onChange={event => setNote(event.target.value)}
-			/>
-			<MarkdownWrapper>
-				<Markdown
-					escapeHtml
-					source={note}
+			{edit ? (
+				<Textarea
+					type="text"
+					className="textarea"
+					value={note}
+					onChange={event => setNote(event.target.value)}
 				/>
-			</MarkdownWrapper>
+			) : (
+				<MarkdownWrapper>
+					<Markdown
+						escapeHtml
+						source={note}
+					/>
+				</MarkdownWrapper>
+			)}
 		</>
 	);
 };
