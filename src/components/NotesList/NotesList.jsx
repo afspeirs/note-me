@@ -14,10 +14,7 @@ const propTypes = {
 	notes: PropTypes.instanceOf(Array).isRequired,
 };
 
-const NotesList = ({
-	loading,
-	notes,
-}) => (
+const NotesList = ({ loading, notes }) => (
 	<List>
 		{notes.length === 0 && loading === false && (
 			<ListItem>
