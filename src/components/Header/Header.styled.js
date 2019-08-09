@@ -23,6 +23,8 @@ export const Content = styled.main`
 		duration: theme.transitions.duration.leavingScreen,
 	})};
 	margin-left: -${drawerWidth}px;
+	display: flex;
+	flex-direction: column;
 
 	${props => props.open && css`
 		transition: ${theme.transitions.create('margin',

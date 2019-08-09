@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-import { db } from '../firebase';
+import { db } from '../../firebase';
+import { Textarea } from './NotePage.styled';
 
 const defaultProps = {
 	user: null,
@@ -32,14 +33,14 @@ const NotePage = ({ match, user }) => {
 	}, [user, id]);
 
 	return (
-		<div>
-			<textarea
+		<>
+			<Textarea
 				type="text"
 				className="textarea"
 				value={note}
 				onChange={event => setNote(event.target.value)}
 			/>
-		</div>
+		</>
 	);
 };
 
