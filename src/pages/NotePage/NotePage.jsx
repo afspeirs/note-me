@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import Markdown from 'react-markdown';
 
 import { db } from '../../firebase';
-import { Textarea } from './NotePage.styled';
+import { MarkdownWrapper, Textarea } from './NotePage.styled';
 
 const defaultProps = {
 	user: null,
@@ -40,6 +41,12 @@ const NotePage = ({ match, user }) => {
 				value={note}
 				onChange={event => setNote(event.target.value)}
 			/>
+			<MarkdownWrapper>
+				<Markdown
+					escapeHtml
+					source={note}
+				/>
+			</MarkdownWrapper>
 		</>
 	);
 };
