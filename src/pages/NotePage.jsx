@@ -29,11 +29,16 @@ const NotePage = ({ match, user }) => {
 					}
 				});
 		}
-	});
+	}, [user, id]);
 
 	return (
 		<div>
-			{note}
+			<textarea
+				type="text"
+				className="textarea"
+				value={note}
+				onChange={event => setNote(event.target.value)}
+			/>
 		</div>
 	);
 };
