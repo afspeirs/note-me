@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link as RouterLink } from 'react-router-dom';
 import { ListItem } from '@material-ui/core';
 
-import { ListItemTextStyled } from './NotesList.styled';
+import { ListItemTextStyled, NavLinkStyled } from './NotesList.styled';
 
 const propTypes = {
 	primary: PropTypes.string.isRequired,
@@ -13,7 +12,7 @@ const propTypes = {
 const ListItemLink = ({ primary, to }) => {
 	const renderLink = React.useMemo(
 		() => React.forwardRef((itemProps, ref) => (
-			<RouterLink to={to} {...itemProps} ref={ref} />
+			<NavLinkStyled to={to} {...itemProps} innerRef={ref} />
 		)),
 		[to],
 	);
