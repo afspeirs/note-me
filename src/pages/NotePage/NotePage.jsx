@@ -7,20 +7,29 @@ import { MarkdownWrapper, Textarea } from './NotePage.styled';
 
 const defaultProps = {
 	note: null,
+	newNote: false,
+	handleNoteAdd: () => {},
+	handleNoteUpdate: () => {},
 };
 
 const propTypes = {
 	edit: PropTypes.bool.isRequired,
-	handleNoteUpdate: PropTypes.func.isRequired,
+	handleNoteAdd: PropTypes.func,
+	handleNoteUpdate: PropTypes.func,
 	match: PropTypes.instanceOf(Object).isRequired,
+	history: PropTypes.instanceOf(Object).isRequired,
+	newNote: PropTypes.bool,
 	note: PropTypes.instanceOf(Object),
 	setEdit: PropTypes.func.isRequired,
 };
 
 const NotePage = ({
 	edit,
+	handleNoteAdd,
 	handleNoteUpdate,
 	match,
+	history,
+	newNote,
 	note,
 	setEdit,
 }) => {
@@ -30,16 +39,20 @@ const NotePage = ({
 	useEffect(() => {
 		if (note !== null) {
 			setLocalNote(note.text);
+			setEdit(false);
 		}
-		setEdit(false);
+		if (newNote) {
+			setLocalNote('');
+			setEdit(true);
+		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [note]);
 
 	useEffect(() => {
-		// console.log(edit);
-
 		if (localNote !== null && !edit && id) {
 			handleNoteUpdate(id, localNote);
+		} else if (localNote !== null && !edit) {
+			handleNoteAdd(localNote, history);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [edit]);

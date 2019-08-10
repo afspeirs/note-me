@@ -48,6 +48,22 @@ export default class App extends Component {
 
 	setEdit = edit => this.setState({ edit });
 
+	handleNoteAdd = (text, history) => {
+		const { user, notes } = this.state;
+		const newNote = db.collection(user.uid).doc();
+		const value = {
+			text,
+			date: +new Date(),
+			id: newNote.id,
+		};
+
+		notes.push(value);
+		this.setState({ notes });
+
+		newNote.set(value)
+			.then(() => history.push(`/note/${value.id}`));
+	};
+
 	handleNoteDelete = (id, note = null) => {
 		const { user, notes } = this.state;
 
@@ -114,6 +130,18 @@ export default class App extends Component {
 											handleNoteUpdate={this.handleNoteUpdate}
 											note={notes.find(note => note.id === props.match.params.id)}
 											setEdit={this.setEdit}
+										/>
+									)}
+								/>
+								<Route
+									path="/note/"
+									render={props => (
+										<NotePage
+											{...props}
+											edit={edit}
+											handleNoteAdd={this.handleNoteAdd}
+											setEdit={this.setEdit}
+											newNote
 										/>
 									)}
 								/>

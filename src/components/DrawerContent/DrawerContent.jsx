@@ -1,16 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import {
-// 	Divider,
-// 	List,
-// 	ListItem,
-// 	ListItemText,
-// 	Typography,
-// } from '@material-ui/core';
+import { Link } from 'react-router-dom';
+import { Button } from '@material-ui/core';
+import { Add as AddIcon } from '@material-ui/icons';
 
 import NotesList from '../NotesList';
-// import { ListStyled } from './DrawerContent.styled';
-// import ContextMenu from '../ContextMenu';
+
+const AdapterLink = React.forwardRef((props, ref) => <Link innerRef={ref} {...props} />);
 
 const propTypes = {
 	loading: PropTypes.bool.isRequired,
@@ -32,6 +28,10 @@ const DrawerContent = ({
 				loading={loading}
 				notes={notes}
 			/>
+			<Button component={AdapterLink} to="/note/">
+				{/* eslint-disable-next-line react/jsx-one-expression-per-line */}
+				<AddIcon />&nbsp;&nbsp;Create Note
+			</Button>
 		</>
 	);
 };
