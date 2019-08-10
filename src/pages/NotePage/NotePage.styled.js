@@ -14,7 +14,7 @@ export const Textarea = styled.textarea`
 	padding: ${theme.spacing(2)}px;
 	resize: none;
 	border: none;
-	font-size: 1.3em;
+	font-size: 1.2em;
 
 	:focus {
 		outline: none;
