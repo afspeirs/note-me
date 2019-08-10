@@ -32,6 +32,7 @@ const NotePage = ({
 			setLocalNote(note.text);
 		}
 		setEdit(false);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [note]);
 
 	useEffect(() => {
