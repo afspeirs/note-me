@@ -12,3 +12,24 @@ body {
 *:after {
 	box-sizing: border-box;
 }
+
+::-webkit-scrollbar {
+	max-width: 8px;
+	border-bottom: 1px #ccc solid;
+}
+::-webkit-scrollbar-track {
+	background: #fff;
+}
+::-webkit-scrollbar-thumb {
+	background: #ccc;
+}
+::-webkit-scrollbar-thumb:hover {
+	background: #aaa;
+}
+::-webkit-scrollbar-thumb:active {
+	background: #888;
+}
+::-webkit-scrollbar-button {
+	background: #ccc;
+	height: 1px;
+}

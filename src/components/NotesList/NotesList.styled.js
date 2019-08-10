@@ -4,7 +4,7 @@ import { List, ListItemText } from '@material-ui/core';
 
 export const ListStyled = styled(List)`
 	flex-grow: 1;
-	overflow-y: scroll;
+	overflow-y: auto;
 `;
 
 export const ListItemTextStyled = styled(ListItemText)`
