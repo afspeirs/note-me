@@ -13,6 +13,7 @@ const propTypes = {
 	handleNoteUpdate: PropTypes.func.isRequired,
 	match: PropTypes.instanceOf(Object).isRequired,
 	note: PropTypes.instanceOf(Object),
+	setEdit: PropTypes.func.isRequired,
 };
 
 const NotePage = ({
@@ -20,6 +21,7 @@ const NotePage = ({
 	handleNoteUpdate,
 	match,
 	note,
+	setEdit,
 }) => {
 	const [localNote, setLocalNote] = useState(null);
 	const { id } = match.params;
@@ -28,6 +30,7 @@ const NotePage = ({
 		if (note !== null) {
 			setLocalNote(note.text);
 		}
+		setEdit(false);
 	}, [note]);
 
 	useEffect(() => {

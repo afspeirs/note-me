@@ -113,6 +113,7 @@ export default class App extends Component {
 											edit={edit}
 											handleNoteUpdate={this.handleNoteUpdate}
 											note={notes.find(note => note.id === props.match.params.id)}
+											setEdit={this.setEdit}
 										/>
 									)}
 								/>
