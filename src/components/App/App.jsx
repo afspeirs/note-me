@@ -62,6 +62,22 @@ export default class App extends Component {
 		}
 	};
 
+	handleNoteUpdate = (id, text) => {
+		const { user, notes } = this.state;
+		const value = {
+			text,
+			date: +new Date(),
+			id,
+		};
+
+		db.collection(user.uid)
+			.doc(id)
+			.set(value);
+
+		notes[notes.findIndex(note => note.id === id)] = value;
+		this.setState({ notes });
+	};
+
 	render() {
 		const {
 			edit,
@@ -91,7 +107,14 @@ export default class App extends Component {
 								/>
 								<Route
 									path="/note/:id"
-									render={props => <NotePage {...props} edit={edit} user={user} />}
+									render={props => (
+										<NotePage
+											{...props}
+											edit={edit}
+											handleNoteUpdate={this.handleNoteUpdate}
+											note={notes.find(note => note.id === props.match.params.id)}
+										/>
+									)}
 								/>
 								<Route component={NoPage} />
 							</Switch>

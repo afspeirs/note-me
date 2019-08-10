@@ -2,37 +2,42 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Markdown from 'react-markdown';
 
-import { db } from '../../firebase';
 import { MarkdownWrapper, Textarea } from './NotePage.styled';
 
 const defaultProps = {
-	user: null,
+	note: null,
 };
 
 const propTypes = {
 	edit: PropTypes.bool.isRequired,
+	handleNoteUpdate: PropTypes.func.isRequired,
 	match: PropTypes.instanceOf(Object).isRequired,
-	user: PropTypes.instanceOf(Object),
+	note: PropTypes.instanceOf(Object),
 };
 
-const NotePage = ({ edit, match, user }) => {
-	const [note, setNote] = useState('Loading...');
+const NotePage = ({
+	edit,
+	handleNoteUpdate,
+	match,
+	note,
+}) => {
+	const [localNote, setLocalNote] = useState(null);
 	const { id } = match.params;
 
 	useEffect(() => {
-		if (user && id) {
-			db.collection(user.uid)
-				.doc(id)
-				.get()
-				.then((doc) => {
-					if (doc.exists) {
-						setNote(doc.data().text);
-					} else {
-						setNote('Note does not exist :(');
-					}
-				});
+		if (note !== null) {
+			setLocalNote(note.text);
 		}
-	}, [user, id]);
+	}, [note]);
+
+	useEffect(() => {
+		// console.log(edit);
+
+		if (localNote !== null && !edit && id) {
+			handleNoteUpdate(id, localNote);
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [edit]);
 
 	return (
 		<>
@@ -40,14 +45,14 @@ const NotePage = ({ edit, match, user }) => {
 				<Textarea
 					type="text"
 					className="textarea"
-					value={note}
-					onChange={event => setNote(event.target.value)}
+					value={localNote}
+					onChange={event => setLocalNote(event.target.value)}
 				/>
 			) : (
 				<MarkdownWrapper>
 					<Markdown
 						escapeHtml
-						source={note}
+						source={localNote}
 					/>
 				</MarkdownWrapper>
 			)}
