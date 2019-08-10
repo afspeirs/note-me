@@ -57,7 +57,9 @@ const Header = ({
 	const [open, setOpen] = React.useState(false);
 	const matches = useMediaQuery('(min-width:600px)');
 
-	const handleDrawerToggle = () => setOpen(!open);
+	const handleDrawerToggle = (toggle = false) => {
+		if ((toggle === true) || !matches) setOpen(!open);
+	};
 
 	return (
 		<Container>
@@ -67,7 +69,7 @@ const Header = ({
 						color="inherit"
 						aria-label="Open drawer"
 						edge="start"
-						onClick={handleDrawerToggle}
+						onClick={() => handleDrawerToggle(true)}
 					>
 						<MenuIcon />
 					</MenuButtonStyled>
@@ -98,6 +100,7 @@ const Header = ({
 			>
 				<DrawerHeader />
 				<DrawerContent
+					handleDrawerToggle={handleDrawerToggle}
 					handleNoteDelete={handleNoteDelete}
 					loading={loading}
 					notes={notes}

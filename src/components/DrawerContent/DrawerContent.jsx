@@ -9,35 +9,35 @@ import NotesList from '../NotesList';
 const AdapterLink = React.forwardRef((props, ref) => <Link innerRef={ref} {...props} />);
 
 const propTypes = {
+	handleDrawerToggle: PropTypes.func.isRequired,
 	handleNoteDelete: PropTypes.func.isRequired,
 	loading: PropTypes.bool.isRequired,
 	notes: PropTypes.instanceOf(Array).isRequired,
 };
 
 const DrawerContent = ({
+	handleDrawerToggle,
 	handleNoteDelete,
 	loading,
 	notes,
-}) => {
-	// const locationClick = (index) => {
-	// 	updateActiveLocation(index);
-	// 	if (!matches) handleDrawerToggle();
-	// };
-
-	return (
-		<>
-			<NotesList
-				handleNoteDelete={handleNoteDelete}
-				loading={loading}
-				notes={notes}
-			/>
-			<Button component={AdapterLink} to="/note/">
-				{/* eslint-disable-next-line react/jsx-one-expression-per-line */}
-				<AddIcon />&nbsp;&nbsp;Create Note
-			</Button>
-		</>
-	);
-};
+}) => (
+	<>
+		<NotesList
+			handleDrawerToggle={handleDrawerToggle}
+			handleNoteDelete={handleNoteDelete}
+			loading={loading}
+			notes={notes}
+		/>
+		<Button
+			component={AdapterLink}
+			to="/note/"
+			onClick={handleDrawerToggle}
+		>
+			{/* eslint-disable-next-line react/jsx-one-expression-per-line */}
+			<AddIcon />&nbsp;&nbsp;Create Note
+		</Button>
+	</>
+);
 
 DrawerContent.propTypes = propTypes;
 

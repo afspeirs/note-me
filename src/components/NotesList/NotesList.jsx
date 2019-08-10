@@ -10,12 +10,14 @@ import { ListStyled, ListItemTextStyled } from './NotesList.styled';
 import { getTitle } from '../../ultils';
 
 const propTypes = {
+	handleDrawerToggle: PropTypes.func.isRequired,
 	handleNoteDelete: PropTypes.func.isRequired,
 	loading: PropTypes.bool.isRequired,
 	notes: PropTypes.instanceOf(Array).isRequired,
 };
 
 const NotesList = ({
+	handleDrawerToggle,
 	handleNoteDelete,
 	loading,
 	notes,
@@ -38,6 +40,7 @@ const NotesList = ({
 					to={`/note/${note.id}`}
 					className="context-menu-select"
 					id={note.id}
+					onClick={handleDrawerToggle}
 					primary={note.text ? getTitle(note.text) : 'Untitled'}
 				/>
 			))}
