@@ -8,8 +8,10 @@ import {
 	ListItemText,
 } from '@material-ui/core';
 import {
+	Alarm as AlarmIcon,
 	Delete as DeleteIcon,
 } from '@material-ui/icons';
+import TimeAgo from '../TimeAgo';
 
 import { ContextMenuStyled } from './ContextMenu.styled';
 
@@ -113,7 +115,16 @@ export default class ContextMenu extends React.Component {
 			(visible && currentItem) && (
 				<ContextMenuStyled ref={(ref) => { this.root = ref; }} className="context-menu">
 					<List>
-						<ListItem button onClick={() => handleRemoveClick(closestContextMenuOption, currentItem)}>
+						<ListItem>
+							<ListItemIcon>
+								<AlarmIcon color="primary" />
+							</ListItemIcon>
+							<ListItemText primary={<TimeAgo slot="title" date={currentItem.date / 1000} />} />
+						</ListItem>
+						<ListItem
+							button
+							onClick={() => handleRemoveClick(closestContextMenuOption, currentItem)}
+						>
 							<ListItemIcon>
 								<DeleteIcon color="error" />
 							</ListItemIcon>
