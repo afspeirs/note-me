@@ -108,6 +108,7 @@ export default class App extends Component {
 					<Container>
 						<Header
 							edit={edit}
+							handleNoteDelete={this.handleNoteDelete}
 							loading={loading}
 							notes={notes}
 							setEdit={this.setEdit}

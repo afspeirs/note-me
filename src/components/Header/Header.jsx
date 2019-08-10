@@ -34,6 +34,7 @@ const propTypes = {
 		PropTypes.node,
 	]).isRequired,
 	edit: PropTypes.bool.isRequired,
+	handleNoteDelete: PropTypes.func.isRequired,
 	loading: PropTypes.bool.isRequired,
 	notes: PropTypes.instanceOf(Array).isRequired,
 	setEdit: PropTypes.func.isRequired,
@@ -45,6 +46,7 @@ const propTypes = {
 const Header = ({
 	children,
 	edit,
+	handleNoteDelete,
 	loading,
 	notes,
 	setEdit,
@@ -96,6 +98,7 @@ const Header = ({
 			>
 				<DrawerHeader />
 				<DrawerContent
+					handleNoteDelete={handleNoteDelete}
 					loading={loading}
 					notes={notes}
 				/>

@@ -9,11 +9,13 @@ import NotesList from '../NotesList';
 const AdapterLink = React.forwardRef((props, ref) => <Link innerRef={ref} {...props} />);
 
 const propTypes = {
+	handleNoteDelete: PropTypes.func.isRequired,
 	loading: PropTypes.bool.isRequired,
 	notes: PropTypes.instanceOf(Array).isRequired,
 };
 
 const DrawerContent = ({
+	handleNoteDelete,
 	loading,
 	notes,
 }) => {
@@ -25,6 +27,7 @@ const DrawerContent = ({
 	return (
 		<>
 			<NotesList
+				handleNoteDelete={handleNoteDelete}
 				loading={loading}
 				notes={notes}
 			/>
