@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { Prompt } from 'react-router-dom';
 import Markdown from 'react-markdown';
 
 import { MarkdownWrapper, Textarea } from './NotePage.styled';
@@ -58,6 +59,13 @@ const NotePage = ({
 						source={localNote}
 					/>
 				</MarkdownWrapper>
+			)}
+
+			{note && (
+				<Prompt
+					when={localNote !== note.text}
+					message="Are you sure you want to leave without saving?"
+				/>
 			)}
 		</>
 	);
