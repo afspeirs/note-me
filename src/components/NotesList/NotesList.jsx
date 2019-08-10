@@ -1,12 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-	List,
 	ListItem,
 } from '@material-ui/core';
 
 import ListItemLink from './ListItemLink';
-import { ListItemTextStyled } from './NotesList.styled';
+import { ListStyled, ListItemTextStyled } from './NotesList.styled';
 import { getTitle } from '../../ultils';
 
 const propTypes = {
@@ -15,7 +14,7 @@ const propTypes = {
 };
 
 const NotesList = ({ loading, notes }) => (
-	<List>
+	<ListStyled>
 		{notes.length === 0 && loading === false && (
 			<ListItem>
 				<ListItemTextStyled primary="No notes" />
@@ -34,7 +33,7 @@ const NotesList = ({ loading, notes }) => (
 				primary={note.text ? getTitle(note.text) : 'Untitled'}
 			/>
 		))}
-	</List>
+	</ListStyled>
 );
 
 NotesList.propTypes = propTypes;
