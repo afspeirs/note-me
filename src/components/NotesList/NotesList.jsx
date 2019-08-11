@@ -4,21 +4,22 @@ import {
 	ListItem,
 } from '@material-ui/core';
 
-import ContextMenu from '../ContextMenu';
 import ListItemLink from './ListItemLink';
 import { ListStyled, ListItemTextStyled } from './NotesList.styled';
 import { getTitle } from '../../ultils';
 
+const defaultProps = {
+	handleDrawerToggle: () => {},
+};
+
 const propTypes = {
-	handleDrawerToggle: PropTypes.func.isRequired,
-	handleNoteDelete: PropTypes.func.isRequired,
+	handleDrawerToggle: PropTypes.func,
 	loading: PropTypes.bool.isRequired,
 	notes: PropTypes.instanceOf(Array).isRequired,
 };
 
 const NotesList = ({
 	handleDrawerToggle,
-	handleNoteDelete,
 	loading,
 	notes,
 }) => (
@@ -45,16 +46,10 @@ const NotesList = ({
 				/>
 			))}
 		</ListStyled>
-
-
-		<ContextMenu
-			closestElement=".context-menu-select"
-			arrayOfObjects={notes}
-			handleRemoveClick={handleNoteDelete}
-		/>
 	</>
 );
 
+NotesList.defaultProps = defaultProps;
 NotesList.propTypes = propTypes;
 
 export default NotesList;

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Button } from '@material-ui/core';
 import { Add as AddIcon } from '@material-ui/icons';
 
+import ContextMenu from '../ContextMenu';
 import NotesList from '../NotesList';
 
 const AdapterLink = React.forwardRef((props, ref) => <Link innerRef={ref} {...props} />);
@@ -36,6 +37,12 @@ const DrawerContent = ({
 			{/* eslint-disable-next-line react/jsx-one-expression-per-line */}
 			<AddIcon />&nbsp;&nbsp;Create Note
 		</Button>
+
+		<ContextMenu
+			closestElement=".context-menu-select"
+			arrayOfObjects={notes}
+			handleRemoveClick={handleNoteDelete}
+		/>
 	</>
 );
 
