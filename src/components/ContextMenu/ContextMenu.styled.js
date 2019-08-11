@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { List, ListItemText } from '@material-ui/core';
 
 export const ContextMenuStyled = styled.div`
 	position: fixed;
@@ -7,4 +8,12 @@ export const ContextMenuStyled = styled.div`
 	z-index: 1000;
 `;
 
-export default ContextMenuStyled;
+export const ListStyled = styled(List)`
+	max-width: 94vw;
+`;
+
+export const ListItemTextStyled = styled(ListItemText)`
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+`;

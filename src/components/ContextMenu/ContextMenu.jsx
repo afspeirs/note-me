@@ -2,10 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import {
-	List,
 	ListItem,
 	ListItemIcon,
-	ListItemText,
 } from '@material-ui/core';
 import {
 	Alarm as AlarmIcon,
@@ -13,7 +11,7 @@ import {
 } from '@material-ui/icons';
 import TimeAgo from '../TimeAgo';
 
-import { ContextMenuStyled } from './ContextMenu.styled';
+import { ContextMenuStyled, ListStyled, ListItemTextStyled } from './ContextMenu.styled';
 
 const propTypes = {
 	closestElement: PropTypes.string.isRequired,
@@ -114,12 +112,12 @@ export default class ContextMenu extends React.Component {
 		return ReactDOM.createPortal(
 			(visible && currentItem) && (
 				<ContextMenuStyled ref={(ref) => { this.root = ref; }} className="context-menu">
-					<List>
+					<ListStyled>
 						<ListItem>
 							<ListItemIcon>
 								<AlarmIcon color="primary" />
 							</ListItemIcon>
-							<ListItemText primary={<TimeAgo slot="title" date={currentItem.date / 1000} />} />
+							<ListItemTextStyled primary={<TimeAgo slot="title" date={currentItem.date / 1000} />} />
 						</ListItem>
 						<ListItem
 							button
@@ -128,9 +126,9 @@ export default class ContextMenu extends React.Component {
 							<ListItemIcon>
 								<DeleteIcon color="error" />
 							</ListItemIcon>
-							<ListItemText primary={`Remove "${currentItem.text}"`} />
+							<ListItemTextStyled primary={`Remove "${currentItem.text}"`} />
 						</ListItem>
-					</List>
+					</ListStyled>
 				</ContextMenuStyled>
 			),
 			document.getElementById('context-menu-container'),
