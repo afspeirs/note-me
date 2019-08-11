@@ -21,7 +21,7 @@ import {
 	MenuButtonStyled,
 	Title,
 } from './Header.styled';
-import Account from '../Account';
+import Settings from '../Settings';
 import DrawerContent from '../DrawerContent';
 
 const defaultProps = {
@@ -82,10 +82,11 @@ const Header = ({
 					>
 						{edit ? <SaveIcon /> : <EditIcon />}
 					</IconButton>
-					<Account
-						user={user}
+					<Settings
+						fullScreen={!matches}
 						signIn={signIn}
 						signOut={signOut}
+						user={user}
 					/>
 				</Toolbar>
 			</AppBar>
