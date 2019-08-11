@@ -61,8 +61,8 @@ const NotePage = ({
 		<>
 			{edit ? (
 				<Textarea
+					autoFocus
 					type="text"
-					className="textarea"
 					value={localNote}
 					onChange={event => setLocalNote(event.target.value)}
 				/>
