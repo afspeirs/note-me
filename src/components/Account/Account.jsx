@@ -45,8 +45,9 @@ const Account = ({
 				aria-label="account of current user"
 				aria-controls="menu-appbar"
 				aria-haspopup="true"
-				onClick={handleMenu}
 				color="inherit"
+				edge="end"
+				onClick={handleMenu}
 			>
 				{user
 					? <AvatarStyled alt={user.displayName} src={user.photoURL} />
