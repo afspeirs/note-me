@@ -9,9 +9,10 @@ import {
 	Alarm as AlarmIcon,
 	Delete as DeleteIcon,
 } from '@material-ui/icons';
-import TimeAgo from '../TimeAgo';
 
 import { ContextMenuStyled, ListStyled, ListItemTextStyled } from './ContextMenu.styled';
+import { getTitle } from '../../ultils';
+import TimeAgo from '../TimeAgo';
 
 const propTypes = {
 	closestElement: PropTypes.string.isRequired,
@@ -126,7 +127,7 @@ export default class ContextMenu extends React.Component {
 							<ListItemIcon>
 								<DeleteIcon color="error" />
 							</ListItemIcon>
-							<ListItemTextStyled primary={`Remove "${currentItem.text}"`} />
+							<ListItemTextStyled primary={`Remove "${getTitle(currentItem.text)}"`} />
 						</ListItem>
 					</ListStyled>
 				</ContextMenuStyled>
