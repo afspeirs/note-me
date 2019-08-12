@@ -49,9 +49,11 @@ const NotePage = ({
 	}, [note]);
 
 	useEffect(() => {
-		if (localNote !== null && !edit && id) {
+		const compare = localNote !== null && !edit;
+
+		if (compare && id && localNote !== note.text) {
 			handleNoteUpdate(id, localNote);
-		} else if (localNote !== null && !edit) {
+		} else if (compare) {
 			handleNoteAdd(localNote, history);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
