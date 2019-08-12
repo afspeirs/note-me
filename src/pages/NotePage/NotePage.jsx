@@ -53,7 +53,7 @@ const NotePage = ({
 
 		if (compare && id && localNote !== note.text) {
 			handleNoteUpdate(id, localNote);
-		} else if (compare) {
+		} else if (compare && localNote !== '') {
 			handleNoteAdd(localNote, history);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
