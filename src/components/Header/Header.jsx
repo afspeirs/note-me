@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Route } from 'react-router-dom';
 import {
 	AppBar,
 	IconButton,
@@ -74,14 +75,18 @@ const Header = ({
 						<MenuIcon />
 					</MenuButtonStyled>
 					<Title variant="h6">NoteMe</Title>
-					<IconButton
-						color="inherit"
-						aria-label={edit ? 'Save' : 'Edit'}
-						edge="start"
-						onClick={() => setEdit(!edit)}
-					>
-						{edit ? <SaveIcon /> : <EditIcon />}
-					</IconButton>
+					<Route
+						path="/note"
+						render={() => (
+							<IconButton
+								color="inherit"
+								aria-label={edit ? 'Save' : 'Edit'}
+								onClick={() => setEdit(!edit)}
+							>
+								{edit ? <SaveIcon /> : <EditIcon />}
+							</IconButton>
+						)}
+					/>
 					<Settings
 						fullScreen={!matches}
 						signIn={signIn}
