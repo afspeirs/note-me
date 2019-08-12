@@ -1,17 +1,19 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import theme from '../../theme';
 
-export const MarkdownWrapper = styled.div`
-	width: 100%;
+const page = css`
+	width: inherit;
 	flex-grow: 1;
 	padding: ${theme.spacing(2)}px;
 `;
 
+export const MarkdownWrapper = styled.div`
+	${page}
+`;
+
 export const Textarea = styled.textarea`
-	width: 100%;
-	flex-grow: 1;
-	padding: ${theme.spacing(2)}px;
+	${page}
 	resize: none;
 	border: none;
 	font-size: 1.2em;

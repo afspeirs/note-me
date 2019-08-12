@@ -25,6 +25,7 @@ export const Content = styled.main`
 	margin-left: -${drawerWidth}px;
 	display: flex;
 	flex-direction: column;
+	width: 100%;
 
 	${props => props.open && css`
 		transition: ${theme.transitions.create('margin',
