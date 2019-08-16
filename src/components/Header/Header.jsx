@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Route } from 'react-router-dom';
+import { Link, Route } from 'react-router-dom';
 import {
 	AppBar,
 	IconButton,
@@ -9,6 +9,7 @@ import {
 } from '@material-ui/core';
 import {
 	Edit as EditIcon,
+	Home as HomeIcon,
 	Menu as MenuIcon,
 	Save as SaveIcon,
 } from '@material-ui/icons';
@@ -58,6 +59,8 @@ const Header = ({
 	const [open, setOpen] = React.useState(false);
 	const matches = useMediaQuery('(min-width:600px)');
 
+	const AdapterLink = React.forwardRef((props, ref) => <Link innerRef={ref} {...props} />);
+
 	const handleDrawerToggle = (toggle = false) => {
 		if ((toggle === true) || !matches) setOpen(!open);
 	};
@@ -78,13 +81,23 @@ const Header = ({
 					<Route
 						path="/note"
 						render={() => (
-							<IconButton
-								color="inherit"
-								aria-label={edit ? 'Save' : 'Edit'}
-								onClick={() => setEdit(!edit)}
-							>
-								{edit ? <SaveIcon /> : <EditIcon />}
-							</IconButton>
+							<>
+								<IconButton
+									color="inherit"
+									aria-label={edit ? 'Save' : 'Edit'}
+									onClick={() => setEdit(!edit)}
+								>
+									{edit ? <SaveIcon /> : <EditIcon />}
+								</IconButton>
+								<IconButton
+									component={AdapterLink}
+									to="/"
+									color="inherit"
+									aria-label="Home"
+								>
+									<HomeIcon />
+								</IconButton>
+							</>
 						)}
 					/>
 					<Settings
