@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { StylesProvider, ThemeProvider } from '@material-ui/styles';
 
-import { Container } from './App.styled';
-import Header from '../Header';
+import Container from '../Container';
 import theme from '../../theme';
 
 import { auth, db, provider } from '../../firebase';
@@ -105,50 +104,48 @@ export default class App extends Component {
 		return (
 			<ThemeProvider theme={theme}>
 				<StylesProvider injectFirst>
-					<Container>
-						<Header
-							edit={edit}
-							handleNoteDelete={this.handleNoteDelete}
-							loading={loading}
-							notes={notes}
-							setEdit={this.setEdit}
-							signIn={this.signIn}
-							signOut={this.signOut}
-							user={user}
-						>
-							<Switch>
-								<Route
-									exact
-									path="/"
-									render={() => <HomePage loading={loading} notes={notes} />}
-								/>
-								<Route
-									path="/note/:id"
-									render={props => (
-										<NotePage
-											{...props}
-											edit={edit}
-											handleNoteUpdate={this.handleNoteUpdate}
-											note={notes.find(note => note.id === props.match.params.id)}
-											setEdit={this.setEdit}
-										/>
-									)}
-								/>
-								<Route
-									path="/note/"
-									render={props => (
-										<NotePage
-											{...props}
-											edit={edit}
-											handleNoteAdd={this.handleNoteAdd}
-											setEdit={this.setEdit}
-											newNote
-										/>
-									)}
-								/>
-								<Route component={NoPage} />
-							</Switch>
-						</Header>
+					<Container
+						edit={edit}
+						handleNoteDelete={this.handleNoteDelete}
+						loading={loading}
+						notes={notes}
+						setEdit={this.setEdit}
+						signIn={this.signIn}
+						signOut={this.signOut}
+						user={user}
+					>
+						<Switch>
+							<Route
+								exact
+								path="/"
+								render={() => <HomePage loading={loading} notes={notes} />}
+							/>
+							<Route
+								path="/note/:id"
+								render={props => (
+									<NotePage
+										{...props}
+										edit={edit}
+										handleNoteUpdate={this.handleNoteUpdate}
+										note={notes.find(note => note.id === props.match.params.id)}
+										setEdit={this.setEdit}
+									/>
+								)}
+							/>
+							<Route
+								path="/note/"
+								render={props => (
+									<NotePage
+										{...props}
+										edit={edit}
+										handleNoteAdd={this.handleNoteAdd}
+										setEdit={this.setEdit}
+										newNote
+									/>
+								)}
+							/>
+							<Route component={NoPage} />
+						</Switch>
 					</Container>
 				</StylesProvider>
 			</ThemeProvider>

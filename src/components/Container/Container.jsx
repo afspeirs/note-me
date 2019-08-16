@@ -15,14 +15,14 @@ import {
 } from '@material-ui/icons';
 
 import {
-	Container,
+	ContainerStyled,
 	Content,
 	DrawerHeader,
 	DrawerPlaceholder,
 	DrawerStyled,
 	MenuButtonStyled,
 	Title,
-} from './Header.styled';
+} from './Container.styled';
 import Settings from '../Settings';
 import DrawerContent from '../DrawerContent';
 
@@ -45,7 +45,7 @@ const propTypes = {
 	user: PropTypes.instanceOf(Object),
 };
 
-const Header = ({
+const Container = ({
 	children,
 	edit,
 	handleNoteDelete,
@@ -66,7 +66,7 @@ const Header = ({
 	};
 
 	return (
-		<Container>
+		<ContainerStyled>
 			<AppBar position="fixed">
 				<Toolbar>
 					<MenuButtonStyled
@@ -129,11 +129,11 @@ const Header = ({
 				<DrawerHeader />
 				{children}
 			</Content>
-		</Container>
+		</ContainerStyled>
 	);
 };
 
-Header.defaultProps = defaultProps;
-Header.propTypes = propTypes;
+Container.defaultProps = defaultProps;
+Container.propTypes = propTypes;
 
-export default Header;
+export default Container;

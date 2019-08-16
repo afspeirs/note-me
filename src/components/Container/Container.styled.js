@@ -10,9 +10,13 @@ import theme from '../../theme';
 
 const drawerWidth = 256;
 
-export const Container = styled.div`
-	display: flex;
+export const ContainerStyled = styled.div`
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
 	height: 100%;
+	display: flex;
 `;
 
 export const Content = styled.main`
