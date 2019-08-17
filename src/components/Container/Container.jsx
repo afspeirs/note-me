@@ -1,29 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Route } from 'react-router-dom';
 import {
 	AppBar,
-	IconButton,
 	Toolbar,
 	useMediaQuery,
 } from '@material-ui/core';
 import {
-	Edit as EditIcon,
 	Menu as MenuIcon,
-	Save as SaveIcon,
 } from '@material-ui/icons';
 
 import {
-	Container,
+	ContainerStyled,
 	Content,
 	DrawerHeader,
 	DrawerPlaceholder,
 	DrawerStyled,
 	MenuButtonStyled,
 	Title,
-} from './Header.styled';
-import Settings from '../Settings';
+} from './Container.styled';
 import DrawerContent from '../DrawerContent';
+import HeaderIcons from '../HeaderContent';
 
 const defaultProps = {
 	user: null,
@@ -44,7 +40,7 @@ const propTypes = {
 	user: PropTypes.instanceOf(Object),
 };
 
-const Header = ({
+const Container = ({
 	children,
 	edit,
 	handleNoteDelete,
@@ -63,7 +59,7 @@ const Header = ({
 	};
 
 	return (
-		<Container>
+		<ContainerStyled>
 			<AppBar position="fixed">
 				<Toolbar>
 					<MenuButtonStyled
@@ -75,20 +71,10 @@ const Header = ({
 						<MenuIcon />
 					</MenuButtonStyled>
 					<Title variant="h6">NoteMe</Title>
-					<Route
-						path="/note"
-						render={() => (
-							<IconButton
-								color="inherit"
-								aria-label={edit ? 'Save' : 'Edit'}
-								onClick={() => setEdit(!edit)}
-							>
-								{edit ? <SaveIcon /> : <EditIcon />}
-							</IconButton>
-						)}
-					/>
-					<Settings
+					<HeaderIcons
+						edit={edit}
 						fullScreen={!matches}
+						setEdit={setEdit}
 						signIn={signIn}
 						signOut={signOut}
 						user={user}
@@ -116,11 +102,11 @@ const Header = ({
 				<DrawerHeader />
 				{children}
 			</Content>
-		</Container>
+		</ContainerStyled>
 	);
 };
 
-Header.defaultProps = defaultProps;
-Header.propTypes = propTypes;
+Container.defaultProps = defaultProps;
+Container.propTypes = propTypes;
 
-export default Header;
+export default Container;

@@ -23,30 +23,28 @@ const NotesList = ({
 	loading,
 	notes,
 }) => (
-	<>
-		<ListStyled>
-			{notes.length === 0 && loading === false && (
-				<ListItem>
-					<ListItemTextStyled primary="No notes" />
-				</ListItem>
-			)}
-			{loading && (
-				<ListItem>
-					<ListItemTextStyled primary="Loading, please wait while we gather your notes" />
-				</ListItem>
-			)}
-			{notes.map(note => (
-				<ListItemLink
-					key={`note-${note.id}`}
-					to={`/note/${note.id}`}
-					className="context-menu-select"
-					id={note.id}
-					onClick={handleDrawerToggle}
-					primary={note.text ? getTitle(note.text) : 'Untitled'}
-				/>
-			))}
-		</ListStyled>
-	</>
+	<ListStyled>
+		{notes.length === 0 && loading === false && (
+			<ListItem>
+				<ListItemTextStyled primary="No notes" />
+			</ListItem>
+		)}
+		{loading && (
+			<ListItem>
+				<ListItemTextStyled primary="Loading, please wait while we gather your notes" />
+			</ListItem>
+		)}
+		{notes.map(note => (
+			<ListItemLink
+				key={`note-${note.id}`}
+				to={`/note/${note.id}`}
+				className="context-menu-select"
+				id={note.id}
+				onClick={handleDrawerToggle}
+				primary={note.text ? getTitle(note.text) : 'Untitled'}
+			/>
+		))}
+	</ListStyled>
 );
 
 NotesList.defaultProps = defaultProps;

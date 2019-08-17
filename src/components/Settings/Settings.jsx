@@ -10,6 +10,7 @@ import {
 	ListItemAvatar,
 	ListItemSecondaryAction,
 	ListItemText,
+	MenuItem,
 	Slide,
 	Toolbar,
 	Typography,
@@ -27,11 +28,13 @@ const Transition = React.forwardRef((props, ref) => <Slide direction="up" ref={r
 
 const defaultProps = {
 	user: null,
+	handleMenuClose: () => {},
 	fullScreen: false,
 };
 
 const propTypes = {
 	fullScreen: PropTypes.bool,
+	handleMenuClose: PropTypes.func,
 	signIn: PropTypes.func.isRequired,
 	signOut: PropTypes.func.isRequired,
 	user: PropTypes.instanceOf(Object),
@@ -48,6 +51,7 @@ const useStyles = makeStyles(() => ({
 
 const Settings = ({
 	fullScreen,
+	handleMenuClose,
 	signIn,
 	signOut,
 	user,
@@ -55,21 +59,26 @@ const Settings = ({
 	const classes = useStyles();
 	const [open, setOpen] = React.useState(false);
 
-	const handleOpen = () => setOpen(true);
+	const handleOpen = () => {
+		handleMenuClose();
+		setOpen(true);
+	};
+
 	const handleClose = () => setOpen(false);
 
 	return (
 		<>
-			<IconButton
-				aria-label="account of current user"
-				aria-controls="menu-appbar"
-				aria-haspopup="true"
-				color="inherit"
-				edge="end"
-				onClick={handleOpen}
-			>
-				<SettingsIcon />
-			</IconButton>
+			<MenuItem onClick={handleOpen}>
+				<IconButton
+					aria-label="setting"
+					color="inherit"
+					edge="start"
+				>
+					<SettingsIcon />
+				</IconButton>
+				<span>Settings</span>
+			</MenuItem>
+
 			<DialogStyled
 				fullWidth
 				fullScreen={fullScreen}
