@@ -19,7 +19,7 @@ import {
 	Title,
 } from './Container.styled';
 import DrawerContent from '../DrawerContent';
-import HeaderIcons from '../HeaderIcons';
+import HeaderIcons from '../HeaderContent';
 
 const defaultProps = {
 	user: null,

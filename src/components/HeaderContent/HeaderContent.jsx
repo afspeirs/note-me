@@ -13,7 +13,7 @@ import {
 	MoreVert as MoreIcon,
 } from '@material-ui/icons';
 
-import { MenuStyled } from './HeaderIcons.styled';
+import { MenuStyled } from './HeaderContent.styled';
 import Settings from '../Settings';
 
 const defaultProps = {
