@@ -1,17 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link, Route } from 'react-router-dom';
 import {
 	AppBar,
-	IconButton,
 	Toolbar,
 	useMediaQuery,
 } from '@material-ui/core';
 import {
-	Edit as EditIcon,
-	Home as HomeIcon,
 	Menu as MenuIcon,
-	Save as SaveIcon,
 } from '@material-ui/icons';
 
 import {
@@ -23,8 +18,8 @@ import {
 	MenuButtonStyled,
 	Title,
 } from './Container.styled';
-import Settings from '../Settings';
 import DrawerContent from '../DrawerContent';
+import HeaderIcons from '../HeaderIcons';
 
 const defaultProps = {
 	user: null,
@@ -59,8 +54,6 @@ const Container = ({
 	const [open, setOpen] = React.useState(false);
 	const matches = useMediaQuery('(min-width:600px)');
 
-	const AdapterLink = React.forwardRef((props, ref) => <Link innerRef={ref} {...props} />);
-
 	const handleDrawerToggle = (toggle = false) => {
 		if ((toggle === true) || !matches) setOpen(!open);
 	};
@@ -78,30 +71,10 @@ const Container = ({
 						<MenuIcon />
 					</MenuButtonStyled>
 					<Title variant="h6">NoteMe</Title>
-					<Route
-						path="/note"
-						render={() => (
-							<>
-								<IconButton
-									color="inherit"
-									aria-label={edit ? 'Save' : 'Edit'}
-									onClick={() => setEdit(!edit)}
-								>
-									{edit ? <SaveIcon /> : <EditIcon />}
-								</IconButton>
-								<IconButton
-									component={AdapterLink}
-									to="/"
-									color="inherit"
-									aria-label="Home"
-								>
-									<HomeIcon />
-								</IconButton>
-							</>
-						)}
-					/>
-					<Settings
+					<HeaderIcons
+						edit={edit}
 						fullScreen={!matches}
+						setEdit={setEdit}
 						signIn={signIn}
 						signOut={signOut}
 						user={user}
