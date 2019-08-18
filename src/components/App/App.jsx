@@ -118,7 +118,13 @@ export default class App extends Component {
 							<Route
 								exact
 								path="/"
-								render={() => <HomePage loading={loading} notes={notes} />}
+								render={() => (
+									<HomePage
+										handleNoteDelete={this.handleNoteDelete}
+										loading={loading}
+										notes={notes}
+									/>
+								)}
 							/>
 							<Route
 								path="/note/:id"
