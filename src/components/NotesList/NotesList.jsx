@@ -5,6 +5,7 @@ import 'rc-swipeout/dist/rc-swipeout.css';
 import { ListItem } from '@material-ui/core';
 import { Delete as DeleteIcon } from '@material-ui/icons';
 
+import ContextMenu from '../ContextMenu';
 import DeleteConfirmationDialog from '../DeleteConfirmationDialog';
 import ListItemLink from './ListItemLink';
 import TimeAgo from '../TimeAgo';
@@ -90,6 +91,11 @@ const NotesList = ({
 				))}
 			</ListStyled>
 
+			<ContextMenu
+				closestElement=".context-menu-select"
+				arrayOfObjects={notes}
+				handleRemoveClick={handleOpen}
+			/>
 			<DeleteConfirmationDialog
 				open={open}
 				onClose={handleClose}
