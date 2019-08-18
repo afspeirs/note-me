@@ -8,5 +8,6 @@ export default createMuiTheme({
 	},
 	zIndex: {
 		appBar: 1350,
+		modal: 1400,
 	},
 });
