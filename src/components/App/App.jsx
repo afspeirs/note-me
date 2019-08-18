@@ -56,7 +56,7 @@ export default class App extends Component {
 			id: newNote.id,
 		};
 
-		notes.push(value);
+		notes.unshift(value);
 		this.setState({ notes });
 
 		newNote.set(value)
