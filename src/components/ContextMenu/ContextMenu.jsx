@@ -122,7 +122,7 @@ export default class ContextMenu extends React.Component {
 						</ListItem>
 						<ListItem
 							button
-							onClick={() => handleRemoveClick(closestContextMenuOption, currentItem)}
+							onClick={() => handleRemoveClick(currentItem)}
 						>
 							<ListItemIcon>
 								<DeleteIcon color="error" />
