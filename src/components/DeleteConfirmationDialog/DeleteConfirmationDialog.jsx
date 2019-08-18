@@ -7,6 +7,8 @@ import {
 	DialogTitle,
 } from '@material-ui/core';
 
+import { getTitle } from '../../ultils';
+
 const defaultProps = {
 	value: null,
 };
@@ -31,7 +33,7 @@ const DeleteConfirmationDialog = ({
 			open={open}
 			onClose={onClose}
 		>
-			<DialogTitle id="confirmation-dialog-title">{`Are you sure you want to delete "${value && value.text}"?`}</DialogTitle>
+			<DialogTitle id="confirmation-dialog-title">{`Are you sure you want to delete "${value && getTitle(value.text)}"?`}</DialogTitle>
 			<DialogActions>
 				<Button onClick={onClose} color="primary" autoFocus>Cancel</Button>
 				<Button onClick={() => handleConfirm(value)} color="secondary">Delete</Button>
