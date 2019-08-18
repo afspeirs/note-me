@@ -60,7 +60,7 @@ export default class App extends Component {
 		this.setState({ notes });
 
 		newNote.set(value)
-			.then(() => history.push(`/note/${value.id}`));
+			.then(() => history.replace(`/note/${value.id}`));
 	};
 
 	handleNoteDelete = (id, note = null) => {
