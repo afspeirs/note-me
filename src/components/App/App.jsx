@@ -17,7 +17,7 @@ export default class App extends Component {
 		loading: true,
 		notes: [],
 		settings: {
-			sort: 'date-asc',
+			sort: localStorage.getItem('changeSort') || 'date-asc',
 			// themeDark: JSON.parse(localStorage.getItem('themeDark')) || false,
 		},
 		user: null,
@@ -42,6 +42,7 @@ export default class App extends Component {
 	}
 
 	reducer = (state, action) => {
+		localStorage.setItem(action.type, action.value);
 		switch (action.type) {
 			case 'changeSort':
 				return {
