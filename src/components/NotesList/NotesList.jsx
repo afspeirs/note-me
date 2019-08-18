@@ -10,6 +10,7 @@ import DeleteConfirmationDialog from '../DeleteConfirmationDialog';
 import ListItemLink from './ListItemLink';
 import TimeAgo from '../TimeAgo';
 import { ListStyled, ListItemTextStyled } from './NotesList.styled';
+import { useStateValue } from '../StateContext';
 import { getTitle } from '../../ultils';
 
 const defaultProps = {
@@ -31,6 +32,14 @@ const NotesList = ({
 }) => {
 	const [open, setOpen] = React.useState(false);
 	const [value, setValue] = React.useState(null);
+	const [{ sort }] = useStateValue();
+
+	const sortFunction = {
+		'date-asc': (a, b) => b.date - a.date,
+		'date-dsc': (a, b) => a.date - b.date,
+		'title-asc': (a, b) => b.text - a.text,
+		'title-dsc': (a, b) => a.text - b.text,
+	}[sort];
 
 	const handleClose = (note = null) => {
 		if (note && note.id) handleNoteDelete(note.id, note);
@@ -56,7 +65,7 @@ const NotesList = ({
 						<ListItemTextStyled primary="Loading, please wait while we gather your notes" />
 					</ListItem>
 				)}
-				{notes.map(note => (
+				{notes.sort(sortFunction).map(note => (
 					<Swipeout
 						key={`note-${note.id}`}
 						left={[
