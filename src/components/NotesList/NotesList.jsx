@@ -37,8 +37,8 @@ const NotesList = ({
 	const sortFunction = {
 		'date-asc': (a, b) => b.date - a.date,
 		'date-dsc': (a, b) => a.date - b.date,
-		'title-asc': (a, b) => b.text - a.text,
-		'title-dsc': (a, b) => a.text - b.text,
+		'title-asc': (a, b) => a.text.localeCompare(b.text),
+		'title-dsc': (a, b) => b.text.localeCompare(a.text),
 	}[sort];
 
 	const handleClose = (note = null) => {
