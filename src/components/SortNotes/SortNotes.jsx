@@ -23,10 +23,10 @@ const SortNotes = () => {
 	};
 
 	const values = [
-		{ text: 'Date: Ascending', value: 'date-asc' },
-		{ text: 'Date: Descending', value: 'date-dsc' },
-		{ text: 'Title: Descending', value: 'title-asc' },
-		{ text: 'Title: Descending', value: 'title-dsc' },
+		{ text: 'Date: Last Updated', value: 'date-asc' },
+		{ text: 'Date: Oldest', value: 'date-dsc' },
+		{ text: 'Title: A-Z', value: 'title-asc' },
+		{ text: 'Title: Z-A', value: 'title-dsc' },
 	];
 
 	return (
@@ -44,7 +44,9 @@ const SortNotes = () => {
 							}}
 						>
 							{values.map(item => (
-								<MenuItem key={item.value} value={item.value}>{item.text}</MenuItem>
+								<MenuItem key={item.value} value={item.value}>
+									{item.text}
+								</MenuItem>
 							))}
 						</Select>
 					</FormControl>
