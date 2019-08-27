@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import {
 	ListItem,
 	ListItemIcon,
@@ -19,7 +20,15 @@ const options = [
 	{ text: 'Title: Z-A', value: 'title-dsc' },
 ];
 
-const SortNotes = () => {
+const defaultProps = {
+	icon: false,
+};
+
+const propTypes = {
+	icon: PropTypes.bool,
+};
+
+const SortNotes = ({ icon }) => {
 	const [{ sort }, dispatch] = useStateValue();
 	const [value, setValue] = useState(sort);
 	const [anchorEl, setAnchorEl] = React.useState(null);
@@ -50,9 +59,11 @@ const SortNotes = () => {
 				aria-label="sort notes"
 				onClick={handleClickListItem}
 			>
-				<ListItemIcon>
-					<SortIcon />
-				</ListItemIcon>
+				{icon && (
+					<ListItemIcon>
+						<SortIcon />
+					</ListItemIcon>
+				)}
 				<ListItemText
 					primary="Sort Notes"
 					secondary={options[selectedIndex].text}
@@ -79,5 +90,8 @@ const SortNotes = () => {
 		</>
 	);
 };
+
+SortNotes.defaultProps = defaultProps;
+SortNotes.propTypes = propTypes;
 
 export default SortNotes;
