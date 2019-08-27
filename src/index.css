@@ -20,6 +20,7 @@ body {
 
 ::-webkit-scrollbar {
 	max-width: 8px;
+	max-height: 8px;
 	border-bottom: 1px #ccc solid;
 }
 ::-webkit-scrollbar-track {
@@ -37,4 +38,5 @@ body {
 ::-webkit-scrollbar-button {
 	background: #ccc;
 	height: 1px;
+	width: 1px;
 }

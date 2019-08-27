@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { Page } from './HomePage.styled';
 import NotesList from '../../components/NotesList';
 
 const propTypes = {
@@ -14,13 +15,13 @@ const HomePage = ({
 	loading,
 	notes,
 }) => (
-	<div>
+	<Page>
 		<NotesList
 			handleNoteDelete={handleNoteDelete}
 			loading={loading}
 			notes={notes}
 		/>
-	</div>
+	</Page>
 );
 
 HomePage.propTypes = propTypes;

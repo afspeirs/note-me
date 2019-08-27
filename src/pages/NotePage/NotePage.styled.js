@@ -6,6 +6,7 @@ const page = css`
 	width: inherit;
 	flex-grow: 1;
 	padding: ${theme.spacing(2)}px;
+	overflow-y: scroll;
 `;
 
 export const MarkdownWrapper = styled.div`
