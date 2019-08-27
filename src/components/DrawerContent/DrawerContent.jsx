@@ -10,10 +10,10 @@ import {
 } from '@material-ui/core';
 import {
 	Add as AddIcon,
-	FilterList as FilterListIcon,
 } from '@material-ui/icons';
 
 import NotesList from '../NotesList';
+import SortNotes from '../SortNotes';
 
 const AdapterLink = React.forwardRef((props, ref) => <Link innerRef={ref} {...props} />);
 
@@ -41,15 +41,7 @@ const DrawerContent = ({
 		<Divider />
 
 		<List disablePadding>
-			<ListItem
-				button
-				onClick={handleDrawerToggle}
-			>
-				<ListItemIcon>
-					<FilterListIcon />
-				</ListItemIcon>
-				<ListItemText primary="Filter" />
-			</ListItem>
+			<SortNotes />
 			<ListItem
 				button
 				component={AdapterLink}
