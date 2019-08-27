@@ -16,14 +16,16 @@ import {
 	Typography,
 } from '@material-ui/core';
 import {
+	ArrowBack as ArrowBackIcon,
 	Close as CloseIcon,
 	Settings as SettingsIcon,
+	ExitToApp as ExitToAppIcon,
 } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
 
 import SortNotes from '../SortNotes';
 import blankUserPhoto from '../../img/blank-user-photo.png';
-import { AccountIcon, DialogStyled } from './Settings.styled';
+import { AccountIcon, DialogStyled, MenuButtonStyled } from './Settings.styled';
 
 const Transition = React.forwardRef((props, ref) => <Slide direction="up" ref={ref} {...props} />);
 
@@ -89,10 +91,27 @@ const Settings = ({
 			>
 				<AppBar className={classes.appBar}>
 					<Toolbar>
+						{fullScreen && (
+							<MenuButtonStyled
+								aria-label="close"
+								color="inherit"
+								edge="start"
+								onClick={handleClose}
+							>
+								<ArrowBackIcon />
+							</MenuButtonStyled>
+						)}
 						<Typography variant="h6" className={classes.title}>Settings</Typography>
-						<IconButton edge="end" color="inherit" onClick={handleClose} aria-label="close">
-							<CloseIcon />
-						</IconButton>
+						{!fullScreen && (
+							<IconButton
+								aria-label="close"
+								color="inherit"
+								edge="end"
+								onClick={handleClose}
+							>
+								<CloseIcon />
+							</IconButton>
+						)}
 					</Toolbar>
 				</AppBar>
 				<List>
@@ -102,6 +121,16 @@ const Settings = ({
 								<Avatar alt={user.displayName} src={user.photoURL} />
 							</ListItemAvatar>
 							<ListItemText primary={user.displayName} secondary={user.email} />
+							<ListItemSecondaryAction>
+								<IconButton
+									aria-label="sign out"
+									color="inherit"
+									edge="end"
+									onClick={signOut}
+								>
+									<ExitToAppIcon />
+								</IconButton>
+							</ListItemSecondaryAction>
 						</ListItem>
 					) : (
 						<ListItem button onClick={signIn}>
@@ -113,20 +142,15 @@ const Settings = ({
 							<ListItemText primary="Sign In" secondary="Using your Google Account" />
 						</ListItem>
 					)}
-					{user && (
-						<ListItem button onClick={signOut}>
-							<ListItemText primary="Sign Out" />
-						</ListItem>
-					)}
-					<Divider />
 					<ListItem>
 						<ListItemText primary="App version:" />
 						<ListItemSecondaryAction>
 							{`v${process.env.REACT_APP_VERSION}`}
 						</ListItemSecondaryAction>
 					</ListItem>
-					{/* TODO - add Update app button */}
+					<Divider />
 					<SortNotes />
+					{/* TODO - add Update app button */}
 				</List>
 			</DialogStyled>
 		</>
