@@ -13,7 +13,6 @@ import {
 } from '@material-ui/icons';
 
 import NotesList from '../NotesList';
-import SortNotes from '../SortNotes';
 
 const AdapterLink = React.forwardRef((props, ref) => <Link innerRef={ref} {...props} />);
 
@@ -41,7 +40,6 @@ const DrawerContent = ({
 		<Divider />
 
 		<List disablePadding>
-			<SortNotes />
 			<ListItem
 				button
 				component={AdapterLink}
