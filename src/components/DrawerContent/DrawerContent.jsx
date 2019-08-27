@@ -1,8 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Button } from '@material-ui/core';
-import { Add as AddIcon } from '@material-ui/icons';
+import {
+	Divider,
+	List,
+	ListItem,
+	ListItemIcon,
+	ListItemText,
+} from '@material-ui/core';
+import {
+	Add as AddIcon,
+} from '@material-ui/icons';
 
 import NotesList from '../NotesList';
 
@@ -29,14 +37,21 @@ const DrawerContent = ({
 			notes={notes}
 		/>
 
-		<Button
-			component={AdapterLink}
-			to="/note/"
-			onClick={handleDrawerToggle}
-		>
-			{/* eslint-disable-next-line react/jsx-one-expression-per-line */}
-			<AddIcon />&nbsp;&nbsp;Create Note
-		</Button>
+		<Divider />
+
+		<List disablePadding>
+			<ListItem
+				button
+				component={AdapterLink}
+				to="/note/"
+				onClick={handleDrawerToggle}
+			>
+				<ListItemIcon>
+					<AddIcon />
+				</ListItemIcon>
+				<ListItemText primary="New Note" />
+			</ListItem>
+		</List>
 	</>
 );
 

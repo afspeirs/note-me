@@ -4,6 +4,7 @@ import { StylesProvider, ThemeProvider } from '@material-ui/styles';
 
 import Container from '../Container';
 import theme from '../../theme';
+import { StateProvider } from '../StateContext';
 
 import { auth, db, provider } from '../../firebase';
 import HomePage from '../../pages/HomePage';
@@ -12,12 +13,13 @@ import NoPage from '../../pages/NoPage';
 
 export default class App extends Component {
 	state = {
-		// settings: {
-		// 	themeDark: JSON.parse(localStorage.getItem('themeDark')) || false,
-		// },
 		edit: false,
 		loading: true,
 		notes: [],
+		settings: {
+			sort: localStorage.getItem('changeSort') || 'date-asc',
+			// themeDark: JSON.parse(localStorage.getItem('themeDark')) || false,
+		},
 		user: null,
 	}
 
@@ -38,6 +40,24 @@ export default class App extends Component {
 			}
 		});
 	}
+
+	reducer = (state, action) => {
+		localStorage.setItem(action.type, action.value);
+		switch (action.type) {
+			case 'changeSort':
+				return {
+					...state,
+					sort: action.value,
+				};
+			case 'changeTheme':
+				return {
+					...state,
+					theme: action.value,
+				};
+			default:
+				return state;
+		}
+	};
 
 	signOut = () => auth.signOut()
 		.then(() => this.setState({ user: null }));
@@ -98,61 +118,64 @@ export default class App extends Component {
 			edit,
 			loading,
 			notes,
+			settings,
 			user,
 		} = this.state;
 
 		return (
 			<ThemeProvider theme={theme}>
 				<StylesProvider injectFirst>
-					<Container
-						edit={edit}
-						handleNoteDelete={this.handleNoteDelete}
-						loading={loading}
-						notes={notes}
-						setEdit={this.setEdit}
-						signIn={this.signIn}
-						signOut={this.signOut}
-						user={user}
-					>
-						<Switch>
-							<Route
-								exact
-								path="/"
-								render={() => (
-									<HomePage
-										handleNoteDelete={this.handleNoteDelete}
-										loading={loading}
-										notes={notes}
-									/>
-								)}
-							/>
-							<Route
-								path="/note/:id"
-								render={props => (
-									<NotePage
-										{...props}
-										edit={edit}
-										handleNoteUpdate={this.handleNoteUpdate}
-										note={notes.find(note => note.id === props.match.params.id)}
-										setEdit={this.setEdit}
-									/>
-								)}
-							/>
-							<Route
-								path="/note/"
-								render={props => (
-									<NotePage
-										{...props}
-										edit={edit}
-										handleNoteAdd={this.handleNoteAdd}
-										setEdit={this.setEdit}
-										newNote
-									/>
-								)}
-							/>
-							<Route component={NoPage} />
-						</Switch>
-					</Container>
+					<StateProvider initialState={settings} reducer={this.reducer}>
+						<Container
+							edit={edit}
+							handleNoteDelete={this.handleNoteDelete}
+							loading={loading}
+							notes={notes}
+							setEdit={this.setEdit}
+							signIn={this.signIn}
+							signOut={this.signOut}
+							user={user}
+						>
+							<Switch>
+								<Route
+									exact
+									path="/"
+									render={() => (
+										<HomePage
+											handleNoteDelete={this.handleNoteDelete}
+											loading={loading}
+											notes={notes}
+										/>
+									)}
+								/>
+								<Route
+									path="/note/:id"
+									render={props => (
+										<NotePage
+											{...props}
+											edit={edit}
+											handleNoteUpdate={this.handleNoteUpdate}
+											note={notes.find(note => note.id === props.match.params.id)}
+											setEdit={this.setEdit}
+										/>
+									)}
+								/>
+								<Route
+									path="/note/"
+									render={props => (
+										<NotePage
+											{...props}
+											edit={edit}
+											handleNoteAdd={this.handleNoteAdd}
+											setEdit={this.setEdit}
+											newNote
+										/>
+									)}
+								/>
+								<Route component={NoPage} />
+							</Switch>
+						</Container>
+					</StateProvider>
 				</StylesProvider>
 			</ThemeProvider>
 		);

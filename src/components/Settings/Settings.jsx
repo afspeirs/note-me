@@ -21,6 +21,7 @@ import {
 } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
 
+import SortNotes from '../SortNotes';
 import blankUserPhoto from '../../img/blank-user-photo.png';
 import { AccountIcon, DialogStyled } from './Settings.styled';
 
@@ -118,8 +119,6 @@ const Settings = ({
 						</ListItem>
 					)}
 					<Divider />
-				</List>
-				<List>
 					<ListItem>
 						<ListItemText primary="App version:" />
 						<ListItemSecondaryAction>
@@ -127,6 +126,7 @@ const Settings = ({
 						</ListItemSecondaryAction>
 					</ListItem>
 					{/* TODO - add Update app button */}
+					<SortNotes />
 				</List>
 			</DialogStyled>
 		</>
