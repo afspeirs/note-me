@@ -22,14 +22,15 @@ export const ContainerStyled = styled.div`
 export const Content = styled.main`
 	position: relative;
 	flex-grow: 1;
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	margin-left: -${drawerWidth}px;
+	overflow-x: hidden;
 	transition: ${theme.transitions.create('margin', {
 		easing: theme.transitions.easing.sharp,
 		duration: theme.transitions.duration.leavingScreen,
 	})};
-	margin-left: -${drawerWidth}px;
-	display: flex;
-	flex-direction: column;
-	width: 100%;
 
 	${props => props.open && css`
 		transition: ${theme.transitions.create('margin',
