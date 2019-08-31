@@ -9,7 +9,7 @@ export const ListStyled = styled(List)`
 	overflow-y: auto;
 `;
 
-export const Searchbar = styled.div`
+export const SearchBarWrapper = styled.div`
 	position: relative;
 	border-radius: ${theme.shape.borderRadius}px;
 	background-color: ${fade(theme.palette.common.black, 0.10)};

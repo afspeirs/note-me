@@ -5,7 +5,7 @@ import SearchIcon from '@material-ui/icons/Search';
 
 import {
 	ListStyled,
-	Searchbar,
+	SearchBarWrapper,
 	SearchIconWrapper,
 	SearchInput,
 } from './NotesSearch.styled';
@@ -35,7 +35,7 @@ const SearchBar = ({
 	return (
 		<ListStyled>
 			<ListItem>
-				<Searchbar>
+				<SearchBarWrapper>
 					<SearchIconWrapper>
 						<SearchIcon />
 					</SearchIconWrapper>
@@ -44,7 +44,7 @@ const SearchBar = ({
 						inputProps={{ 'aria-label': 'search' }}
 						onChange={filterList}
 					/>
-				</Searchbar>
+				</SearchBarWrapper>
 			</ListItem>
 
 			<NotesList
