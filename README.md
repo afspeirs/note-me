@@ -38,4 +38,6 @@ Builds the app for production to the `build` folder.
 
 ## More information
 
-You can find the most recent version of the Create React App guide [here](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md) for more information on how to perform common tasks.
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+
+To learn React, check out the [React documentation](https://reactjs.org/).

@@ -13,6 +13,5 @@
 		"react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
 		"react/jsx-indent-props": "tab",
 		"react/jsx-indent": "tab",
-		"react/require-default-props": "off"
 	}
 }
