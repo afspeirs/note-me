@@ -2,14 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Swipeout from 'rc-swipeout';
 import 'rc-swipeout/dist/rc-swipeout.css';
-import { ListItem } from '@material-ui/core';
+import { List, ListItem } from '@material-ui/core';
 import { Delete as DeleteIcon } from '@material-ui/icons';
 
 import ContextMenu from '../ContextMenu';
 import DeleteConfirmationDialog from '../DeleteConfirmationDialog';
 import ListItemLink from './ListItemLink';
 import TimeAgo from '../TimeAgo';
-import { ListStyled, ListItemTextStyled } from './NotesList.styled';
+import { ListItemTextStyled } from './NotesList.styled';
 import { useStateValue } from '../StateContext';
 import { getTitle } from '../../ultils';
 
@@ -54,7 +54,7 @@ const NotesList = ({
 
 	return (
 		<>
-			<ListStyled>
+			<List>
 				{notes.length === 0 && loading === false && (
 					<ListItem>
 						<ListItemTextStyled primary="No notes" />
@@ -98,7 +98,7 @@ const NotesList = ({
 						/>
 					</Swipeout>
 				))}
-			</ListStyled>
+			</List>
 
 			<ContextMenu
 				closestElement=".context-menu-select"
