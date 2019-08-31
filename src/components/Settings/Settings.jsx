@@ -12,6 +12,7 @@ import {
 	MenuItem,
 	Slide,
 	Toolbar,
+	Tooltip,
 } from '@material-ui/core';
 import {
 	ArrowBack as ArrowBackIcon,
@@ -115,14 +116,16 @@ const Settings = ({
 							</ListItemAvatar>
 							<ListItemText primary={user.displayName} secondary={user.email} />
 							<ListItemSecondaryAction>
-								<IconButton
-									aria-label="sign out"
-									color="inherit"
-									edge="end"
-									onClick={signOut}
-								>
-									<ExitToAppIcon />
-								</IconButton>
+								<Tooltip title="Sign Out" placement="left">
+									<IconButton
+										aria-label="sign out"
+										color="inherit"
+										edge="end"
+										onClick={signOut}
+									>
+										<ExitToAppIcon />
+									</IconButton>
+								</Tooltip>
 							</ListItemSecondaryAction>
 						</ListItem>
 					) : (
