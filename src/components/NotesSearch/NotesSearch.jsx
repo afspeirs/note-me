@@ -5,7 +5,7 @@ import {
 	TextField,
 } from '@material-ui/core';
 
-import { ListStyled } from './SearchBar.styled';
+import { ListStyled } from './NotesSearch.styled';
 import NotesList from '../NotesList';
 
 const propTypes = {

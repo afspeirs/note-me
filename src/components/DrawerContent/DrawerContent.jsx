@@ -12,7 +12,7 @@ import {
 	Add as AddIcon,
 } from '@material-ui/icons';
 
-import SearchBar from '../SearchBar';
+import NotesSearch from '../NotesSearch';
 
 const AdapterLink = React.forwardRef((props, ref) => <Link innerRef={ref} {...props} />);
 
@@ -30,7 +30,7 @@ const DrawerContent = ({
 	notes,
 }) => (
 	<>
-		<SearchBar
+		<NotesSearch
 			handleDrawerToggle={handleDrawerToggle}
 			handleNoteDelete={handleNoteDelete}
 			loading={loading}
