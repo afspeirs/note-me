@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-	AppBar,
 	Avatar,
 	Divider,
 	IconButton,
@@ -13,7 +12,6 @@ import {
 	MenuItem,
 	Slide,
 	Toolbar,
-	Typography,
 } from '@material-ui/core';
 import {
 	ArrowBack as ArrowBackIcon,
@@ -21,11 +19,16 @@ import {
 	Settings as SettingsIcon,
 	ExitToApp as ExitToAppIcon,
 } from '@material-ui/icons';
-import { makeStyles } from '@material-ui/core/styles';
 
+import {
+	AccountIcon,
+	AppBarStyled,
+	DialogStyled,
+	MenuButtonStyled,
+	Title,
+} from './Settings.styled';
 import SortNotes from '../SortNotes';
 import blankUserPhoto from '../../img/blank-user-photo.png';
-import { AccountIcon, DialogStyled, MenuButtonStyled } from './Settings.styled';
 
 const Transition = React.forwardRef((props, ref) => <Slide direction="up" ref={ref} {...props} />);
 
@@ -43,15 +46,6 @@ const propTypes = {
 	user: PropTypes.instanceOf(Object),
 };
 
-const useStyles = makeStyles(() => ({
-	appBar: {
-		position: 'relative',
-	},
-	title: {
-		flex: 1,
-	},
-}));
-
 const Settings = ({
 	fullScreen,
 	handleMenuClose,
@@ -59,7 +53,6 @@ const Settings = ({
 	signOut,
 	user,
 }) => {
-	const classes = useStyles();
 	const [open, setOpen] = React.useState(false);
 
 	const handleOpen = () => {
@@ -89,7 +82,7 @@ const Settings = ({
 				onClose={handleClose}
 				TransitionComponent={Transition}
 			>
-				<AppBar className={classes.appBar}>
+				<AppBarStyled>
 					<Toolbar>
 						{fullScreen && (
 							<MenuButtonStyled
@@ -101,7 +94,7 @@ const Settings = ({
 								<ArrowBackIcon />
 							</MenuButtonStyled>
 						)}
-						<Typography variant="h6" className={classes.title}>Settings</Typography>
+						<Title variant="h6">Settings</Title>
 						{!fullScreen && (
 							<IconButton
 								aria-label="close"
@@ -113,7 +106,7 @@ const Settings = ({
 							</IconButton>
 						)}
 					</Toolbar>
-				</AppBar>
+				</AppBarStyled>
 				<List>
 					{user ? (
 						<ListItem>
