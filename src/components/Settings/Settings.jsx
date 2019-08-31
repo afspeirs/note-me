@@ -28,6 +28,7 @@ import {
 	MenuButtonStyled,
 	Title,
 } from './Settings.styled';
+import PerformanceMode from '../PerformanceMode';
 import SortNotes from '../SortNotes';
 import blankUserPhoto from '../../img/blank-user-photo.png';
 
@@ -145,6 +146,7 @@ const Settings = ({
 						</ListItemSecondaryAction>
 					</ListItem>
 					<Divider />
+					<PerformanceMode />
 					<SortNotes />
 					{/* TODO - add Update app button */}
 				</List>

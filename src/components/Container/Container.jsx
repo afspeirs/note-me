@@ -20,6 +20,7 @@ import {
 } from './Container.styled';
 import DrawerContent from '../DrawerContent';
 import HeaderIcons from '../HeaderContent';
+import { useStateValue } from '../StateContext';
 
 const defaultProps = {
 	user: null,
@@ -53,6 +54,7 @@ const Container = ({
 }) => {
 	const [open, setOpen] = React.useState(false);
 	const matches = useMediaQuery('(min-width:600px)');
+	const [{ performance }] = useStateValue();
 
 	const handleDrawerToggle = (toggle = false) => {
 		if ((toggle === true) || !matches) setOpen(!open);
@@ -89,6 +91,7 @@ const Container = ({
 				onOpen={handleDrawerToggle}
 				onClose={handleDrawerToggle}
 				ModalProps={{ keepMounted: true }}
+				disableBackdropTransition={performance}
 			>
 				<DrawerHeader />
 				<DrawerContent

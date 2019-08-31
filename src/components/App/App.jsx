@@ -18,6 +18,7 @@ export default class App extends Component {
 		notes: [],
 		settings: {
 			sort: localStorage.getItem('changeSort') || 'date-asc',
+			performance: JSON.parse(localStorage.getItem('changePerformance')) || false,
 			// themeDark: JSON.parse(localStorage.getItem('themeDark')) || false,
 		},
 		user: null,
@@ -49,10 +50,10 @@ export default class App extends Component {
 					...state,
 					sort: action.value,
 				};
-			case 'changeTheme':
+			case 'changePerformance':
 				return {
 					...state,
-					theme: action.value,
+					performance: action.value,
 				};
 			default:
 				return state;
