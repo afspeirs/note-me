@@ -1,58 +1,55 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import {
-	List,
 	ListItem,
-	ListItemText,
 	TextField,
 } from '@material-ui/core';
 
-export default class SearchBar extends Component {
-	state = {
-		initialItems: [
-			'Apples',
-			'Broccoli',
-			'Chicken',
-			'Bacon',
-			'Eggs',
-			'Salmon',
-			'Granola',
-			'Bananas',
-			'Beer',
-			'Wine',
-			'Yogurt',
-		],
-		items: [],
-	}
+import { ListStyled } from './SearchBar.styled';
+import NotesList from '../NotesList';
 
-	filterList = (event) => {
-		const { initialItems } = this.state;
-		this.setState({
-			items: initialItems
-				.filter(item => item.toLowerCase().search(event.target.value.toLowerCase()) !== -1),
-		});
-	}
+const propTypes = {
+	handleDrawerToggle: PropTypes.func.isRequired,
+	handleNoteDelete: PropTypes.func.isRequired,
+	loading: PropTypes.bool.isRequired,
+	notes: PropTypes.instanceOf(Array).isRequired,
+};
 
-	componentWillMount = () => this.setState(prevState => ({ items: prevState.initialItems }));
+const SearchBar = ({
+	handleDrawerToggle,
+	handleNoteDelete,
+	loading,
+	notes,
+}) => {
+	const [items, setItems] = useState(notes);
 
-	render() {
-		const { items } = this.state;
+	const filterList = event => setItems(
+		notes.filter(item => item.text.toLowerCase().search(event.target.value.toLowerCase()) !== -1),
+	);
 
-		return (
-			<List>
-				<ListItem>
-					<TextField
-						id="search-notes"
-						variant="outlined"
-						placeholder="Search Notes"
-						onChange={this.filterList}
-					/>
-				</ListItem>
-				{items.map(item => (
-					<ListItem key={item}>
-						<ListItemText primary={item} />
-					</ListItem>
-				))}
-			</List>
-		);
-	}
-}
+	useEffect(() => setItems(notes), [notes]);
+
+	return (
+		<ListStyled>
+			<ListItem>
+				<TextField
+					id="search-notes"
+					variant="outlined"
+					placeholder="Search Notes"
+					onChange={filterList}
+				/>
+			</ListItem>
+
+			<NotesList
+				handleDrawerToggle={handleDrawerToggle}
+				handleNoteDelete={handleNoteDelete}
+				loading={loading}
+				notes={items}
+			/>
+		</ListStyled>
+	);
+};
+
+SearchBar.propTypes = propTypes;
+
+export default SearchBar;
