@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import {
-	ListItem,
-	TextField,
-} from '@material-ui/core';
+import { ListItem } from '@material-ui/core';
+import SearchIcon from '@material-ui/icons/Search';
 
-import { ListStyled } from './NotesSearch.styled';
+import {
+	ListStyled,
+	Searchbar,
+	SearchIconWrapper,
+	SearchInput,
+} from './NotesSearch.styled';
 import NotesList from '../NotesList';
 
 const propTypes = {
@@ -32,12 +35,16 @@ const SearchBar = ({
 	return (
 		<ListStyled>
 			<ListItem>
-				<TextField
-					id="search-notes"
-					variant="outlined"
-					placeholder="Search Notes"
-					onChange={filterList}
-				/>
+				<Searchbar>
+					<SearchIconWrapper>
+						<SearchIcon />
+					</SearchIconWrapper>
+					<SearchInput
+						placeholder="Search Notes"
+						inputProps={{ 'aria-label': 'search' }}
+						onChange={filterList}
+					/>
+				</Searchbar>
 			</ListItem>
 
 			<NotesList
