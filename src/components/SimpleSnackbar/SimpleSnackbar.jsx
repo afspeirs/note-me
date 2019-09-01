@@ -13,7 +13,7 @@ import {
 const defaultProps = {
 	onSecondaryClose: () => {},
 	secondaryText: null,
-	text: 'no text provided',
+	text: null,
 };
 
 const propTypes = {
