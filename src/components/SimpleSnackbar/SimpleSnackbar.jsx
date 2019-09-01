@@ -1,9 +1,25 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import Snackbar from '@material-ui/core/Snackbar';
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
+import {
+	Button,
+	IconButton,
+	Snackbar,
+} from '@material-ui/core';
+import {
+	Close as CloseIcon,
+} from '@material-ui/icons';
+
+const defaultProps = {
+	onClose: () => {},
+	secondaryText: null,
+};
+
+const propTypes = {
+	onClose: PropTypes.func,
+	secondaryText: PropTypes.string,
+	text: PropTypes.string.isRequired,
+};
 
 const useStyles = makeStyles(theme => ({
 	close: {
@@ -11,11 +27,18 @@ const useStyles = makeStyles(theme => ({
 	},
 }));
 
-const SimpleSnackbar = () => {
+const SimpleSnackbar = ({
+	onClose,
+	secondaryText,
+	text,
+}) => {
 	const classes = useStyles();
-	const [open, setOpen] = React.useState(false);
+	const [open, setOpen] = React.useState(Boolean(text));
 
-	const handleClick = () => setOpen(true);
+	const handleSecondaryClick = () => {
+		onClose();
+		setOpen(false);
+	};
 
 	const handleClose = (event, reason) => {
 		if (reason === 'clickaway') {
@@ -26,41 +49,43 @@ const SimpleSnackbar = () => {
 	};
 
 	return (
-		<div>
-			<Button onClick={handleClick}>Open simple snackbar</Button>
-			<Snackbar
-				anchorOrigin={{
-					vertical: 'bottom',
-					horizontal: 'left',
-				}}
-				open={open}
-				autoHideDuration={6000}
-				onClose={handleClose}
-				ContentProps={{ 'aria-describedby': 'message-id' }}
-				message={<span id="message-id">Note archived</span>}
-				action={[
+		<Snackbar
+			anchorOrigin={{
+				vertical: 'bottom',
+				horizontal: 'left',
+			}}
+			open={open}
+			autoHideDuration={6000}
+			onClose={handleClose}
+			ContentProps={{ 'aria-describedby': 'message-id' }}
+			message={<span id="message-id">{text}</span>}
+			action={[
+				secondaryText && (
 					<Button
-						key="undo"
-						color="secondary"
+						key="update"
+						color="primary"
 						size="small"
-						onClick={handleClose}
+						onClick={handleSecondaryClick}
 					>
 						{/* eslint-disable-line react/jsx-one-expression-per-line */}
-						Update
-					</Button>,
-					<IconButton
-						key="close"
-						aria-label="close"
-						color="inherit"
-						className={classes.close}
-						onClick={handleClose}
-					>
-						<CloseIcon />
-					</IconButton>,
-				]}
-			/>
-		</div>
+						{secondaryText}
+					</Button>
+				),
+				<IconButton
+					key="close"
+					aria-label="close"
+					color="inherit"
+					className={classes.close}
+					onClick={handleClose}
+				>
+					<CloseIcon />
+				</IconButton>,
+			]}
+		/>
 	);
 };
+
+SimpleSnackbar.defaultProps = defaultProps;
+SimpleSnackbar.propTypes = propTypes;
 
 export default SimpleSnackbar;

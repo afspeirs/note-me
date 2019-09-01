@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import { StylesProvider, ThemeProvider } from '@material-ui/styles';
 
 import Container from '../Container';
+import SimpleSnackbar from '../SimpleSnackbar';
 import theme from '../../theme';
 import { StateProvider } from '../StateContext';
 
@@ -176,6 +177,12 @@ export default class App extends Component {
 								<Route component={NoPage} />
 							</Switch>
 						</Container>
+
+						<SimpleSnackbar
+							onClose={() => {}}
+							secondaryText="Update"
+							text="woop"
+						/>
 					</StateProvider>
 				</StylesProvider>
 			</ThemeProvider>
