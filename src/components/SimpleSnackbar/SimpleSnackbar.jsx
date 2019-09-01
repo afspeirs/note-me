@@ -11,14 +11,16 @@ import {
 } from '@material-ui/icons';
 
 const defaultProps = {
-	onClose: () => {},
+	onSecondaryClose: () => {},
 	secondaryText: null,
+	text: 'no text provided',
 };
 
 const propTypes = {
-	onClose: PropTypes.func,
+	onClose: PropTypes.func.isRequired,
+	onSecondaryClose: PropTypes.func,
 	secondaryText: PropTypes.string,
-	text: PropTypes.string.isRequired,
+	text: PropTypes.string,
 };
 
 const useStyles = makeStyles(theme => ({
@@ -29,15 +31,16 @@ const useStyles = makeStyles(theme => ({
 
 const SimpleSnackbar = ({
 	onClose,
+	onSecondaryClose,
 	secondaryText,
 	text,
 }) => {
 	const classes = useStyles();
-	const [open, setOpen] = React.useState(Boolean(text));
+	const open = Boolean(text);
 
 	const handleSecondaryClick = () => {
+		onSecondaryClose();
 		onClose();
-		setOpen(false);
 	};
 
 	const handleClose = (event, reason) => {
@@ -45,7 +48,7 @@ const SimpleSnackbar = ({
 			return;
 		}
 
-		setOpen(false);
+		onClose();
 	};
 
 	return (

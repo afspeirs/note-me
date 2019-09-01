@@ -22,6 +22,7 @@ export default class App extends Component {
 			performance: JSON.parse(localStorage.getItem('changePerformance')) || false,
 			// themeDark: JSON.parse(localStorage.getItem('themeDark')) || false,
 		},
+		swSnackbar: {},
 		user: null,
 	}
 
@@ -41,7 +42,42 @@ export default class App extends Component {
 				this.setState({ loading: false });
 			}
 		});
+
+		window.addEventListener('swNewContentAvailable', this.swNewContentAvailable);
+		window.addEventListener('swContentCached', this.swContentCached);
 	}
+
+	componentWillUnmount() {
+		window.removeEventListener('swNewContentAvailable', this.swNewContentAvailable);
+		window.removeEventListener('swContentCached', this.swContentCached);
+	}
+
+	swNewContentAvailable = () => {
+		const swSnackbar = {
+			onClose: () => window.location.reload(true),
+			secondaryText: 'Update',
+			text: 'A new version is available',
+		};
+		this.setState({ swSnackbar });
+	}
+
+	swContentCached = () => {
+		const swSnackbar = {
+			onClose: () => {},
+			secondaryText: null,
+			text: 'Caching complete! Now available offline',
+		};
+		this.setState({ swSnackbar });
+	};
+
+	swSnackbarReset = () => {
+		const swSnackbar = {
+			onClose: () => {},
+			secondaryText: null,
+			text: null,
+		};
+		this.setState({ swSnackbar });
+	};
 
 	reducer = (state, action) => {
 		localStorage.setItem(action.type, action.value);
@@ -121,6 +157,7 @@ export default class App extends Component {
 			loading,
 			notes,
 			settings,
+			swSnackbar,
 			user,
 		} = this.state;
 
@@ -178,11 +215,14 @@ export default class App extends Component {
 							</Switch>
 						</Container>
 
-						<SimpleSnackbar
-							onClose={() => {}}
-							secondaryText="Update"
-							text="woop"
-						/>
+						{swSnackbar && (
+							<SimpleSnackbar
+								onClose={this.swSnackbarReset}
+								onSecondaryClose={swSnackbar.onClose}
+								secondaryText={swSnackbar.secondaryText}
+								text={swSnackbar.text}
+							/>
+						)}
 					</StateProvider>
 				</StylesProvider>
 			</ThemeProvider>
