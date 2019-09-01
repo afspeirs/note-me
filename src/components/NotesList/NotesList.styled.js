@@ -1,11 +1,6 @@
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
-import { List, ListItemText } from '@material-ui/core';
-
-export const ListStyled = styled(List)`
-	flex-grow: 1;
-	overflow-y: auto;
-`;
+import { ListItemText } from '@material-ui/core';
 
 export const ListItemTextStyled = styled(ListItemText)`
 	overflow: hidden;
