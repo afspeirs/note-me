@@ -2,14 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Swipeout from 'rc-swipeout';
 import 'rc-swipeout/dist/rc-swipeout.css';
-import { List, ListItem } from '@material-ui/core';
+import { List, ListItem, ListItemText } from '@material-ui/core';
 import { Delete as DeleteIcon } from '@material-ui/icons';
 
 import ContextMenu from '../ContextMenu';
 import DeleteConfirmationDialog from '../DeleteConfirmationDialog';
 import ListItemLink from './ListItemLink';
 import TimeAgo from '../TimeAgo';
-import { ListItemTextStyled } from './NotesList.styled';
 import { useStateValue } from '../StateContext';
 import { getTitle } from '../../ultils';
 
@@ -57,12 +56,12 @@ const NotesList = ({
 			<List>
 				{notes.length === 0 && loading === false && (
 					<ListItem>
-						<ListItemTextStyled primary="No notes" />
+						<ListItemText primary="No notes" />
 					</ListItem>
 				)}
 				{loading && (
 					<ListItem>
-						<ListItemTextStyled primary="Loading, please wait while we gather your notes" />
+						<ListItemText primary="Loading, please wait while we gather your notes" />
 					</ListItem>
 				)}
 				{notes.sort(sortFunction).map(note => (
