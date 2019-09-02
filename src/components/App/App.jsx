@@ -112,6 +112,7 @@ export default class App extends Component {
 			text,
 			date: +new Date(),
 			id: newNote.id,
+			created: +new Date(),
 		};
 
 		notes.unshift(value);
@@ -137,17 +138,18 @@ export default class App extends Component {
 
 	handleNoteUpdate = (id, text) => {
 		const { user, notes } = this.state;
+		const index = notes.findIndex(note => note.id === id);
 		const value = {
+			...notes[index],
 			text,
 			date: +new Date(),
-			id,
 		};
 
 		db.collection(user.uid)
 			.doc(id)
 			.set(value);
 
-		notes[notes.findIndex(note => note.id === id)] = value;
+		notes[index] = value;
 		this.setState({ notes });
 	};
 

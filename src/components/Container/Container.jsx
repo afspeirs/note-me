@@ -53,11 +53,11 @@ const Container = ({
 	user,
 }) => {
 	const [open, setOpen] = React.useState(false);
-	const matches = useMediaQuery('(min-width:600px)');
+	const mobile = useMediaQuery('(max-width:600px)');
 	const [{ performance }] = useStateValue();
 
 	const handleDrawerToggle = (toggle = false) => {
-		if ((toggle === true) || !matches) setOpen(!open);
+		if ((toggle === true) || mobile) setOpen(!open);
 	};
 
 	return (
@@ -75,7 +75,7 @@ const Container = ({
 					<Title variant="h6">NoteMe</Title>
 					<HeaderIcons
 						edit={edit}
-						fullScreen={!matches}
+						fullScreen={mobile}
 						setEdit={setEdit}
 						signIn={signIn}
 						signOut={signOut}
@@ -85,7 +85,7 @@ const Container = ({
 			</AppBar>
 			<DrawerPlaceholder smUp implementation="css" />
 			<DrawerStyled
-				variant={matches ? 'persistent' : 'temporary'}
+				variant={mobile ? 'temporary' : 'persistent'}
 				anchor="left"
 				open={open}
 				onOpen={handleDrawerToggle}
