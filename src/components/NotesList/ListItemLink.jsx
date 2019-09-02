@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { ListItem } from '@material-ui/core';
 
-import { ListItemTextStyled, NavLinkStyled } from './NotesList.styled';
+import { ListItemTextStyled, NavLinkStyled } from './ListItemLink.styled';
 
 const defaultProps = {
 	className: '',

@@ -14,10 +14,10 @@ import { useStateValue } from '../StateContext';
 import { MenuStyled } from './SortNotes.styled';
 
 const options = [
-	{ text: 'Date: Last Updated', value: 'date-asc' },
-	{ text: 'Date: Oldest', value: 'date-dsc' },
-	{ text: 'Title: A-Z', value: 'title-asc' },
-	{ text: 'Title: Z-A', value: 'title-dsc' },
+	{ text: 'Modified Date (Newest First)', value: 'date-asc' },
+	{ text: 'Modified Date (Oldest First)', value: 'date-dsc' },
+	{ text: 'Title (A-Z)', value: 'title-asc' },
+	{ text: 'Title (Z-A)', value: 'title-dsc' },
 ];
 
 const defaultProps = {
