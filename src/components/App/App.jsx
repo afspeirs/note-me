@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import { StylesProvider, ThemeProvider } from '@material-ui/styles';
 
 import Container from '../Container';
+import SimpleSnackbar from '../SimpleSnackbar';
 import theme from '../../theme';
 import { StateProvider } from '../StateContext';
 
@@ -21,6 +22,7 @@ export default class App extends Component {
 			performance: JSON.parse(localStorage.getItem('changePerformance')) || false,
 			// themeDark: JSON.parse(localStorage.getItem('themeDark')) || false,
 		},
+		swSnackbar: {},
 		user: null,
 	}
 
@@ -40,7 +42,42 @@ export default class App extends Component {
 				this.setState({ loading: false });
 			}
 		});
+
+		window.addEventListener('swNewContentAvailable', this.swNewContentAvailable);
+		window.addEventListener('swContentCached', this.swContentCached);
 	}
+
+	componentWillUnmount() {
+		window.removeEventListener('swNewContentAvailable', this.swNewContentAvailable);
+		window.removeEventListener('swContentCached', this.swContentCached);
+	}
+
+	swNewContentAvailable = () => {
+		const swSnackbar = {
+			onClose: () => window.location.reload(true),
+			secondaryText: 'Update',
+			text: 'A new version is available',
+		};
+		this.setState({ swSnackbar });
+	}
+
+	swContentCached = () => {
+		const swSnackbar = {
+			onClose: () => {},
+			secondaryText: null,
+			text: 'Caching complete! Now available offline',
+		};
+		this.setState({ swSnackbar });
+	};
+
+	swSnackbarReset = () => {
+		const swSnackbar = {
+			onClose: () => {},
+			secondaryText: null,
+			text: null,
+		};
+		this.setState({ swSnackbar });
+	};
 
 	reducer = (state, action) => {
 		localStorage.setItem(action.type, action.value);
@@ -120,6 +157,7 @@ export default class App extends Component {
 			loading,
 			notes,
 			settings,
+			swSnackbar,
 			user,
 		} = this.state;
 
@@ -176,6 +214,15 @@ export default class App extends Component {
 								<Route component={NoPage} />
 							</Switch>
 						</Container>
+
+						{swSnackbar && (
+							<SimpleSnackbar
+								onClose={this.swSnackbarReset}
+								onSecondaryClose={swSnackbar.onClose}
+								secondaryText={swSnackbar.secondaryText}
+								text={swSnackbar.text}
+							/>
+						)}
 					</StateProvider>
 				</StylesProvider>
 			</ThemeProvider>

@@ -28,6 +28,7 @@ import {
 	MenuButtonStyled,
 	Title,
 } from './Settings.styled';
+import CheckForUpdate from '../CheckForUpdate';
 import PerformanceMode from '../PerformanceMode';
 import SortNotes from '../SortNotes';
 import blankUserPhoto from '../../img/blank-user-photo.png';
@@ -145,6 +146,7 @@ const Settings = ({
 							{`v${process.env.REACT_APP_VERSION}`}
 						</ListItemSecondaryAction>
 					</ListItem>
+					<CheckForUpdate />
 					<Divider />
 					<PerformanceMode />
 					<SortNotes />
