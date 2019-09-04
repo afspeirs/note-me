@@ -28,10 +28,10 @@ import {
 	DialogStyled,
 	MenuButtonStyled,
 	Title,
-} from './Settings.styled';
-import CheckForUpdate from '../CheckForUpdate';
-import PerformanceMode from '../PerformanceMode';
-import SortNotes from '../SortNotes';
+} from './SettingsPage.styled';
+import CheckForUpdate from '../../components/CheckForUpdate';
+import PerformanceMode from '../../components/PerformanceMode';
+import SortNotes from '../../components/SortNotes';
 import blankUserPhoto from '../../img/blank-user-photo.png';
 
 const Transition = React.forwardRef((props, ref) => <Slide direction="up" ref={ref} {...props} />);

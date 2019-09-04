@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { Switch, Route } from 'react-router-dom';
 
 import HomePage from '../../pages/HomePage';
-import NotePage from '../../pages/NotePage';
 import NoPage from '../../pages/NoPage';
-import Settings from '../Settings'; // TODO - Update location of component to pages folder
+import NotePage from '../../pages/NotePage';
+import Settings from '../../pages/SettingsPage';
 
 export default class Routes extends Component {
 	static defaultProps = {
