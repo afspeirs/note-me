@@ -5,18 +5,26 @@ import { Switch, Route } from 'react-router-dom';
 import HomePage from '../../pages/HomePage';
 import NotePage from '../../pages/NotePage';
 import NoPage from '../../pages/NoPage';
+import Settings from '../Settings'; // TODO - Update location of component to pages folder
 
 export default class Routes extends Component {
+	static defaultProps = {
+		user: null,
+	};
+
 	static propTypes = {
 		edit: PropTypes.bool.isRequired,
+		handleNoteAdd: PropTypes.func.isRequired,
+		handleNoteDelete: PropTypes.func.isRequired,
+		handleNoteUpdate: PropTypes.func.isRequired,
 		history: PropTypes.instanceOf(Object).isRequired,
 		loading: PropTypes.bool.isRequired,
 		location: PropTypes.instanceOf(Object).isRequired,
 		notes: PropTypes.instanceOf(Array).isRequired,
 		setEdit: PropTypes.func.isRequired,
-		handleNoteAdd: PropTypes.func.isRequired,
-		handleNoteDelete: PropTypes.func.isRequired,
-		handleNoteUpdate: PropTypes.func.isRequired,
+		signIn: PropTypes.func.isRequired,
+		signOut: PropTypes.func.isRequired,
+		user: PropTypes.instanceOf(Object),
 	}
 
 	previousLocation = this.props.location; // eslint-disable-line react/destructuring-assignment
@@ -34,13 +42,16 @@ export default class Routes extends Component {
 	render() {
 		const {
 			edit,
+			handleNoteAdd,
+			handleNoteDelete,
+			handleNoteUpdate,
 			loading,
 			location,
 			notes,
 			setEdit,
-			handleNoteAdd,
-			handleNoteDelete,
-			handleNoteUpdate,
+			signIn,
+			signOut,
+			user,
 		} = this.props;
 
 		const isModal = !!(
@@ -90,7 +101,18 @@ export default class Routes extends Component {
 					/>
 					<Route component={NoPage} />
 				</Switch>
-				{/* {isModal ? <Route path="/settings/" component={Settings} /> : null} */}
+				{isModal ? (
+					<Route
+						path="/settings/"
+						render={() => (
+							<Settings
+								signIn={signIn}
+								signOut={signOut}
+								user={user}
+							/>
+						)}
+					/>
+				) : null}
 			</>
 		);
 	}

@@ -171,9 +171,6 @@ export default class App extends Component {
 							loading={loading}
 							notes={notes}
 							setEdit={this.setEdit}
-							signIn={this.signIn}
-							signOut={this.signOut}
-							user={user}
 						>
 							<Route
 								render={props => (
@@ -186,6 +183,9 @@ export default class App extends Component {
 										loading={loading}
 										notes={notes}
 										setEdit={this.setEdit}
+										signIn={this.signIn}
+										signOut={this.signOut}
+										user={user}
 									/>
 								)}
 							/>

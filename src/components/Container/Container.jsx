@@ -19,12 +19,8 @@ import {
 	Title,
 } from './Container.styled';
 import DrawerContent from '../DrawerContent';
-import HeaderIcons from '../HeaderContent';
+import HeaderContent from '../HeaderContent';
 import { useStateValue } from '../StateContext';
-
-const defaultProps = {
-	user: null,
-};
 
 const propTypes = {
 	children: PropTypes.oneOfType([
@@ -36,9 +32,6 @@ const propTypes = {
 	loading: PropTypes.bool.isRequired,
 	notes: PropTypes.instanceOf(Array).isRequired,
 	setEdit: PropTypes.func.isRequired,
-	signIn: PropTypes.func.isRequired,
-	signOut: PropTypes.func.isRequired,
-	user: PropTypes.instanceOf(Object),
 };
 
 const Container = ({
@@ -48,9 +41,6 @@ const Container = ({
 	loading,
 	notes,
 	setEdit,
-	signIn,
-	signOut,
-	user,
 }) => {
 	const [open, setOpen] = React.useState(false);
 	const mobile = useMediaQuery('(max-width:600px)');
@@ -73,13 +63,10 @@ const Container = ({
 						<MenuIcon />
 					</MenuButtonStyled>
 					<Title variant="h6">NoteMe</Title>
-					<HeaderIcons
+					<HeaderContent
 						edit={edit}
 						fullScreen={mobile}
 						setEdit={setEdit}
-						signIn={signIn}
-						signOut={signOut}
-						user={user}
 					/>
 				</Toolbar>
 			</AppBar>
@@ -109,7 +96,6 @@ const Container = ({
 	);
 };
 
-Container.defaultProps = defaultProps;
 Container.propTypes = propTypes;
 
 export default Container;

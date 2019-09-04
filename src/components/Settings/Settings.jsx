@@ -13,6 +13,7 @@ import {
 	Slide,
 	Toolbar,
 	Tooltip,
+	useMediaQuery,
 } from '@material-ui/core';
 import {
 	ArrowBack as ArrowBackIcon,
@@ -38,11 +39,9 @@ const Transition = React.forwardRef((props, ref) => <Slide direction="up" ref={r
 const defaultProps = {
 	user: null,
 	handleMenuClose: () => {},
-	fullScreen: false,
 };
 
 const propTypes = {
-	fullScreen: PropTypes.bool,
 	handleMenuClose: PropTypes.func,
 	signIn: PropTypes.func.isRequired,
 	signOut: PropTypes.func.isRequired,
@@ -50,13 +49,13 @@ const propTypes = {
 };
 
 const Settings = ({
-	fullScreen,
 	handleMenuClose,
 	signIn,
 	signOut,
 	user,
 }) => {
 	const [open, setOpen] = React.useState(false);
+	const mobile = useMediaQuery('(max-width:600px)');
 
 	const handleOpen = () => {
 		handleMenuClose();
@@ -80,14 +79,14 @@ const Settings = ({
 
 			<DialogStyled
 				fullWidth
-				fullScreen={fullScreen}
+				fullScreen={mobile}
 				open={open}
 				onClose={handleClose}
 				TransitionComponent={Transition}
 			>
 				<AppBarStyled>
 					<Toolbar>
-						{fullScreen && (
+						{mobile && (
 							<MenuButtonStyled
 								aria-label="close"
 								color="inherit"
@@ -98,7 +97,7 @@ const Settings = ({
 							</MenuButtonStyled>
 						)}
 						<Title variant="h6">Settings</Title>
-						{!fullScreen && (
+						{!mobile && (
 							<IconButton
 								aria-label="close"
 								color="inherit"
