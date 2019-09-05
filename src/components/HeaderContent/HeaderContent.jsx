@@ -104,7 +104,6 @@ const HeaderContent = ({
 					component={AdapterLink}
 					to={{
 						pathname: '/settings/',
-						// this is the trick!
 						state: { modal: true },
 					}}
 				>
