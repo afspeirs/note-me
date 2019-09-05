@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Redirect, Route } from 'react-router-dom';
 
 import HomePage from '../../pages/HomePage';
 import NoPage from '../../pages/NoPage';
@@ -99,20 +99,23 @@ export default class Routes extends Component {
 							/>
 						)}
 					/>
+					<Redirect from="/settings/" to="/" />
 					<Route component={NoPage} />
 				</Switch>
-				{isModal ? (
+
+				{isModal && (
 					<Route
 						path="/settings/"
-						render={() => (
+						render={props => (
 							<Settings
+								{...props}
 								signIn={signIn}
 								signOut={signOut}
 								user={user}
 							/>
 						)}
 					/>
-				) : null}
+				)}
 			</>
 		);
 	}
