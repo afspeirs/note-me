@@ -30,7 +30,7 @@ export default class Routes extends Component {
 	previousLocation = this.props.location; // eslint-disable-line react/destructuring-assignment
 
 	componentWillUpdate({ history, location }) {
-		// set previousLocation if props.location is not modal
+		// Set previousLocation if props.location is not a modal
 		if (
 			history.action !== 'POP'
 			&& (!location.state || !location.state.modal)
@@ -59,7 +59,7 @@ export default class Routes extends Component {
 			&& location.state
 			&& location.state.modal
 			&& this.previousLocation !== location
-		); // not initial render
+		);
 
 		return (
 			<>
