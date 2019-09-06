@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import { StylesProvider, ThemeProvider } from '@material-ui/styles';
 
 import Container from '../Container';
@@ -8,9 +8,7 @@ import theme from '../../theme';
 import { StateProvider } from '../StateContext';
 
 import { auth, db, provider } from '../../firebase';
-import HomePage from '../../pages/HomePage';
-import NotePage from '../../pages/NotePage';
-import NoPage from '../../pages/NoPage';
+import Routes from '../Routes';
 
 export default class App extends Component {
 	state = {
@@ -173,48 +171,24 @@ export default class App extends Component {
 							loading={loading}
 							notes={notes}
 							setEdit={this.setEdit}
-							signIn={this.signIn}
-							signOut={this.signOut}
-							user={user}
 						>
-							<Switch>
-								<Route
-									exact
-									path="/"
-									render={() => (
-										<HomePage
-											handleNoteDelete={this.handleNoteDelete}
-											loading={loading}
-											notes={notes}
-										/>
-									)}
-								/>
-								<Route
-									path="/note/:id"
-									render={props => (
-										<NotePage
-											{...props}
-											edit={edit}
-											handleNoteUpdate={this.handleNoteUpdate}
-											note={notes.find(note => note.id === props.match.params.id)}
-											setEdit={this.setEdit}
-										/>
-									)}
-								/>
-								<Route
-									path="/note/"
-									render={props => (
-										<NotePage
-											{...props}
-											edit={edit}
-											handleNoteAdd={this.handleNoteAdd}
-											setEdit={this.setEdit}
-											newNote
-										/>
-									)}
-								/>
-								<Route component={NoPage} />
-							</Switch>
+							<Route
+								render={props => (
+									<Routes
+										{...props}
+										edit={edit}
+										handleNoteAdd={this.handleNoteAdd}
+										handleNoteDelete={this.handleNoteDelete}
+										handleNoteUpdate={this.handleNoteUpdate}
+										loading={loading}
+										notes={notes}
+										setEdit={this.setEdit}
+										signIn={this.signIn}
+										signOut={this.signOut}
+										user={user}
+									/>
+								)}
+							/>
 						</Container>
 
 						{swSnackbar && (
