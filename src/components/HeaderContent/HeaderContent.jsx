@@ -10,35 +10,22 @@ import {
 	Edit as EditIcon,
 	Home as HomeIcon,
 	Save as SaveIcon,
+	Settings as SettingsIcon,
 	MoreVert as MoreIcon,
 } from '@material-ui/icons';
 
 import { MenuStyled } from './HeaderContent.styled';
-import Settings from '../Settings';
-
-const defaultProps = {
-	user: null,
-	fullScreen: false,
-};
 
 const propTypes = {
 	edit: PropTypes.bool.isRequired,
-	fullScreen: PropTypes.bool,
 	setEdit: PropTypes.func.isRequired,
-	signIn: PropTypes.func.isRequired,
-	signOut: PropTypes.func.isRequired,
-	user: PropTypes.instanceOf(Object),
 };
 
 const AdapterLink = React.forwardRef((props, ref) => <Link innerRef={ref} {...props} />);
 
-const HeaderIcons = ({
+const HeaderContent = ({
 	edit,
-	fullScreen,
 	setEdit,
-	signIn,
-	signOut,
-	user,
 }) => {
 	const [anchorEl, setAnchorEl] = useState(null);
 	const handleClick = event => setAnchorEl(event.currentTarget);
@@ -112,18 +99,28 @@ const HeaderIcons = ({
 					)}
 				/>
 
-				<Settings
-					fullScreen={fullScreen}
-					handleMenuClose={handleClose}
-					signIn={signIn}
-					signOut={signOut}
-					user={user}
-				/>
+				<MenuItem
+					onClick={handleClose}
+					component={AdapterLink}
+					to={{
+						pathname: '/settings/',
+						state: { modal: true },
+					}}
+				>
+					<IconButton
+						aria-label="setting"
+						color="inherit"
+						edge="start"
+					>
+						<SettingsIcon />
+					</IconButton>
+					<span>Settings</span>
+				</MenuItem>
 			</MenuStyled>
 		</>
 	);
 };
-HeaderIcons.defaultProps = defaultProps;
-HeaderIcons.propTypes = propTypes;
 
-export default HeaderIcons;
+HeaderContent.propTypes = propTypes;
+
+export default HeaderContent;
