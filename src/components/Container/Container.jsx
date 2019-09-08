@@ -65,7 +65,7 @@ const Container = ({
 					<Title variant="h6">NoteMe</Title>
 					<HeaderContent
 						edit={edit}
-						fullScreen={mobile}
+						mobile={mobile}
 						setEdit={setEdit}
 					/>
 				</Toolbar>

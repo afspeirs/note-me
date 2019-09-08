@@ -4,6 +4,7 @@ import { Link, Route } from 'react-router-dom';
 import {
 	IconButton,
 	MenuItem,
+	Tooltip,
 } from '@material-ui/core';
 import {
 	Add as AddIcon,
@@ -18,15 +19,13 @@ import { MenuStyled } from './HeaderContent.styled';
 
 const propTypes = {
 	edit: PropTypes.bool.isRequired,
+	mobile: PropTypes.bool.isRequired,
 	setEdit: PropTypes.func.isRequired,
 };
 
 const AdapterLink = React.forwardRef((props, ref) => <Link innerRef={ref} {...props} />);
 
-const HeaderContent = ({
-	edit,
-	setEdit,
-}) => {
+const HeaderContent = ({ edit, mobile, setEdit }) => {
 	const [anchorEl, setAnchorEl] = useState(null);
 	const handleClick = event => setAnchorEl(event.currentTarget);
 	const handleClose = () => setAnchorEl(null);
@@ -34,8 +33,8 @@ const HeaderContent = ({
 	return (
 		<>
 			<Route
-				render={({ location }) => location.pathname !== '/' && (
-					<>
+				render={({ location }) => location.pathname.startsWith('/note/') && (
+					<Tooltip title="Home">
 						<IconButton
 							color="inherit"
 							aria-label={edit ? 'Save' : 'Edit'}
@@ -43,80 +42,130 @@ const HeaderContent = ({
 						>
 							{edit ? <SaveIcon /> : <EditIcon />}
 						</IconButton>
-					</>
+					</Tooltip>
 				)}
 			/>
 
-			<IconButton
-				color="inherit"
-				aria-label="Show more"
-				aria-controls="more-menu"
-				aria-haspopup="true"
-				onClick={handleClick}
-				edge="end"
-			>
-				<MoreIcon />
-			</IconButton>
-
-			<MenuStyled
-				id="more-menu"
-				anchorEl={anchorEl}
-				keepMounted
-				open={Boolean(anchorEl)}
-				onClose={handleClose}
-			>
-				<MenuItem
-					onClick={handleClose}
-					component={AdapterLink}
-					to="/note/"
-				>
+			{mobile ? (
+				<>
 					<IconButton
 						color="inherit"
-						aria-label="Create Note"
-						edge="start"
+						aria-label="Show more"
+						aria-controls="more-menu"
+						aria-haspopup="true"
+						onClick={handleClick}
+						edge="end"
 					>
-						<AddIcon />
+						<MoreIcon />
 					</IconButton>
-					<span>Create Note</span>
-				</MenuItem>
 
-				<Route
-					render={({ location }) => location.pathname !== '/' && (
+					<MenuStyled
+						id="more-menu"
+						anchorEl={anchorEl}
+						keepMounted
+						open={Boolean(anchorEl)}
+						onClose={handleClose}
+					>
 						<MenuItem
 							onClick={handleClose}
 							component={AdapterLink}
-							to="/"
+							to="/note/"
 						>
 							<IconButton
 								color="inherit"
-								aria-label="Home"
+								aria-label="Create Note"
 								edge="start"
 							>
-								<HomeIcon />
+								<AddIcon />
 							</IconButton>
-							<span>Home</span>
+							<span>Create Note</span>
 						</MenuItem>
-					)}
-				/>
 
-				<MenuItem
-					onClick={handleClose}
-					component={AdapterLink}
-					to={{
-						pathname: '/settings/',
-						state: { modal: true },
-					}}
-				>
-					<IconButton
-						aria-label="setting"
-						color="inherit"
-						edge="start"
-					>
-						<SettingsIcon />
-					</IconButton>
-					<span>Settings</span>
-				</MenuItem>
-			</MenuStyled>
+						<Route
+							render={({ location }) => location.pathname !== '/' && (
+								<MenuItem
+									onClick={handleClose}
+									component={AdapterLink}
+									to="/"
+								>
+									<IconButton
+										color="inherit"
+										aria-label="Home"
+										edge="start"
+									>
+										<HomeIcon />
+									</IconButton>
+									<span>Home</span>
+								</MenuItem>
+							)}
+						/>
+
+						<MenuItem
+							onClick={handleClose}
+							component={AdapterLink}
+							to={{
+								pathname: '/settings/',
+								state: { modal: true },
+							}}
+						>
+							<IconButton
+								aria-label="setting"
+								color="inherit"
+								edge="start"
+							>
+								<SettingsIcon />
+							</IconButton>
+							<span>Settings</span>
+						</MenuItem>
+					</MenuStyled>
+				</>
+			) : (
+				<>
+					<Tooltip title="Create Note">
+						<IconButton
+							color="inherit"
+							aria-label="Create Note"
+							onClick={handleClose}
+							component={AdapterLink}
+							to="/note/"
+						>
+							<AddIcon />
+						</IconButton>
+					</Tooltip>
+
+					<Route
+						render={({ location }) => location.pathname !== '/' && (
+							<Tooltip title="Home">
+								<IconButton
+									color="inherit"
+									aria-label="Home"
+									onClick={handleClose}
+									component={AdapterLink}
+									to="/"
+								>
+									<HomeIcon />
+								</IconButton>
+							</Tooltip>
+						)}
+					/>
+
+					<Tooltip title="Settings">
+						<IconButton
+							aria-label="setting"
+							color="inherit"
+							edge="end"
+							onClick={handleClose}
+							component={AdapterLink}
+							to={{
+								pathname: '/settings/',
+								state: { modal: true },
+							}}
+						>
+							<SettingsIcon />
+						</IconButton>
+					</Tooltip>
+				</>
+			)}
 		</>
 	);
 };
