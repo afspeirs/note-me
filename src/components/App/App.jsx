@@ -25,17 +25,25 @@ export default class App extends Component {
 	}
 
 	componentDidMount() {
+		const start = +new Date();
+		console.log(start);
+
 		auth.onAuthStateChanged((user) => {
 			if (user) {
 				this.setState({ user });
 
 				db.collection(user.uid)
-					.get()
-					.then((collection) => {
-						const notes = collection.docs.map(doc => doc.data());
-						notes.sort((a, b) => new Date(b.date) - new Date(a.date));
+					.onSnapshot((snapshot) => {
+						const notes = snapshot.docs.map(doc => doc.data());
 						this.setState({ loading: false, notes, user });
+						console.log(start - +new Date());
 					});
+					// .get()
+					// .then((collection) => {
+					// 	const notes = collection.docs.map(doc => doc.data());
+					// 	this.setState({ loading: false, notes, user });
+					// 	console.log(start - +new Date());
+					// });
 			} else {
 				this.setState({ loading: false });
 			}
