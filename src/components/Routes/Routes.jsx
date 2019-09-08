@@ -27,7 +27,10 @@ export default class Routes extends Component {
 		user: PropTypes.instanceOf(Object),
 	}
 
-	previousLocation = this.props.location; // eslint-disable-line react/destructuring-assignment
+	componentWillMount() {
+		const { location } = this.props;
+		window.previousLocation = location;
+	}
 
 	componentWillUpdate({ history, location }) {
 		// Set previousLocation if props.location is not a modal
@@ -35,7 +38,7 @@ export default class Routes extends Component {
 			history.action !== 'POP'
 			&& (!location.state || !location.state.modal)
 		) {
-			this.previousLocation = location;
+			window.previousLocation = location;
 		}
 	}
 
@@ -58,12 +61,12 @@ export default class Routes extends Component {
 			location
 			&& location.state
 			&& location.state.modal
-			&& this.previousLocation !== location
+			&& window.previousLocation !== location
 		);
 
 		return (
 			<>
-				<Switch location={isModal ? this.previousLocation : location}>
+				<Switch location={isModal ? window.previousLocation : location}>
 					<Route
 						exact
 						path="/"
