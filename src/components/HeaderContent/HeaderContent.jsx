@@ -33,8 +33,13 @@ const HeaderContent = ({ edit, mobile, setEdit }) => {
 	return (
 		<>
 			<Route
-				render={({ location }) => location.pathname.startsWith('/note/') && (
-					<Tooltip title="Home">
+				render={({ location }) => (
+					// If SettingsPage is open and the previousLocation is NotePage
+					// Or if the page is NotePage
+					(location.pathname === '/settings/' && window.previousLocation && window.previousLocation.pathname.startsWith('/note/'))
+					|| location.pathname.startsWith('/note/')
+				) && (
+					<Tooltip title={edit ? 'Save' : 'Edit'}>
 						<IconButton
 							color="inherit"
 							aria-label={edit ? 'Save' : 'Edit'}
@@ -134,7 +139,12 @@ const HeaderContent = ({ edit, mobile, setEdit }) => {
 					</Tooltip>
 
 					<Route
-						render={({ location }) => location.pathname !== '/' && (
+						render={({ location }) => (
+							// If SettingsPage is open and the previousLocation is HomePage
+							// Or if the page is not HomePage
+							!(location.pathname === '/settings/' && window.previousLocation && window.previousLocation.pathname === '/')
+							&& location.pathname !== '/'
+						) && (
 							<Tooltip title="Home">
 								<IconButton
 									color="inherit"
