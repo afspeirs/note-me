@@ -30,14 +30,12 @@ export default class App extends Component {
 				this.setState({ user });
 
 				db.collection(user.uid)
-					.get()
-					.then((collection) => {
-						const notes = collection.docs.map(doc => doc.data());
-						notes.sort((a, b) => new Date(b.date) - new Date(a.date));
+					.onSnapshot((snapshot) => {
+						const notes = snapshot.docs.map(doc => doc.data());
 						this.setState({ loading: false, notes, user });
 					});
 			} else {
-				this.setState({ loading: false });
+				this.setState({ loading: false, notes: [] });
 			}
 		});
 
