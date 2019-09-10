@@ -9,6 +9,7 @@ export const ListItemTextStyled = styled(ListItemText)`
 `;
 
 export const NavLinkStyled = styled(NavLink)`
+	&:hover,
 	&.active {
 		background-color: rgba(0, 0, 0, 0.15);
 	}
