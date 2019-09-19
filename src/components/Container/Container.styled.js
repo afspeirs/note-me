@@ -17,6 +17,8 @@ export const ContainerStyled = styled.div`
 	width: 100%;
 	height: 100%;
 	display: flex;
+	background-color: ${theme.palette.background.paper};
+	color: ${theme.palette.text.primary};
 `;
 
 export const Content = styled.main`

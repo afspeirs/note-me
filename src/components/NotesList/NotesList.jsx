@@ -1,11 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Swipeout from 'rc-swipeout';
 import 'rc-swipeout/dist/rc-swipeout.css';
 import { ListItem, ListItemText } from '@material-ui/core';
 import { Delete as DeleteIcon } from '@material-ui/icons';
 
-import { ListStyled } from './NotesList.styled';
+import { ListStyled, SwipeoutStyled } from './NotesList.styled';
 import ContextMenu from '../ContextMenu';
 import DeleteConfirmationDialog from '../DeleteConfirmationDialog';
 import ListItemLink from './ListItemLink';
@@ -66,7 +65,7 @@ const NotesList = ({
 					</ListItem>
 				)}
 				{notes.sort(sortFunction).map(note => (
-					<Swipeout
+					<SwipeoutStyled
 						key={`note-${note.id}`}
 						left={[
 							{
@@ -96,7 +95,7 @@ const NotesList = ({
 							onClick={handleDrawerToggle}
 							primary={note.text ? getTitle(note.text) : 'Untitled'}
 						/>
-					</Swipeout>
+					</SwipeoutStyled>
 				))}
 			</ListStyled>
 

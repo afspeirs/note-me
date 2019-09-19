@@ -18,6 +18,8 @@ export const Textarea = styled.textarea`
 	resize: none;
 	border: none;
 	font-size: 1.2em;
+	background-color: ${theme.palette.background.paper};
+	color: ${theme.palette.text.primary};
 
 	:focus {
 		outline: none;

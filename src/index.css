@@ -24,7 +24,7 @@ body {
 	border-bottom: 1px #ccc solid;
 }
 ::-webkit-scrollbar-track {
-	background: #fff;
+	background: transparent;
 }
 ::-webkit-scrollbar-thumb {
 	background: #ccc;

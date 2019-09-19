@@ -5,6 +5,7 @@ export default createMuiTheme({
 		primary: {
 			main: '#ee6e00',
 		},
+		type: 'dark',
 	},
 	zIndex: {
 		appBar: 1350,

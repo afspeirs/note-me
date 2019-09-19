@@ -7,6 +7,7 @@ import theme from '../../theme';
 export const ListStyled = styled(List)`
 	flex-grow: 1;
 	overflow-y: auto;
+	overflow-x: hidden;
 `;
 
 export const SearchBarWrapper = styled.div`
