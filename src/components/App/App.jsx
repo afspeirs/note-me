@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
-import { StylesProvider, ThemeProvider } from '@material-ui/styles';
+import { createMuiTheme } from '@material-ui/core/styles';
+import { StylesProvider } from '@material-ui/styles';
+import { ThemeProvider } from 'styled-components';
 
 import Container from '../Container';
 import SimpleSnackbar from '../SimpleSnackbar';
@@ -27,8 +29,6 @@ export default class App extends Component {
 	componentDidMount() {
 		auth.onAuthStateChanged((user) => {
 			if (user) {
-				this.setState({ user });
-
 				db.collection(user.uid)
 					.onSnapshot((snapshot) => {
 						const notes = snapshot.docs.map(doc => doc.data());
@@ -159,8 +159,10 @@ export default class App extends Component {
 			user,
 		} = this.state;
 
+		const muiTheme = createMuiTheme(theme);
+
 		return (
-			<ThemeProvider theme={theme}>
+			<ThemeProvider theme={muiTheme}>
 				<StylesProvider injectFirst>
 					<StateProvider initialState={settings} reducer={this.reducer}>
 						<Container

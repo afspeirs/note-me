@@ -1,11 +1,9 @@
 import styled, { css } from 'styled-components';
 
-import theme from '../../theme';
-
 const page = css`
 	width: inherit;
 	flex-grow: 1;
-	padding: ${theme.spacing(2)}px;
+	padding: ${props => props.theme.spacing(2)}px;
 	overflow-y: scroll;
 `;
 
@@ -18,8 +16,8 @@ export const Textarea = styled.textarea`
 	resize: none;
 	border: none;
 	font-size: 1.2em;
-	background-color: ${theme.palette.background.paper};
-	color: ${theme.palette.text.primary};
+	background-color: ${props => props.theme.palette.background.paper};
+	color: ${props => props.theme.palette.text.primary};
 
 	:focus {
 		outline: none;

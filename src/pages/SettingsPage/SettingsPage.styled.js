@@ -6,8 +6,6 @@ import {
 	Typography,
 } from '@material-ui/core';
 
-import theme from '../../theme';
-
 export const AccountIcon = styled.img`
 	width: 100%;
 	height: 100%;
@@ -19,11 +17,11 @@ export const AppBarStyled = styled(AppBar)`
 
 export const DialogStyled = styled(Dialog)`
 	/* TODO - Remove !important */
-	z-index: ${theme.zIndex.appBar + 10} !important;
+	z-index: ${props => props.theme.zIndex.appBar + 10} !important;
 `;
 
 export const MenuButtonStyled = styled(IconButton)`
-	margin-right: ${theme.spacing(2)}px;
+	margin-right: ${props => props.theme.spacing(2)}px;
 `;
 
 export const Title = styled(Typography)`
