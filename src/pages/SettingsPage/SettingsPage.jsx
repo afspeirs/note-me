@@ -27,6 +27,7 @@ import {
 	MenuButtonStyled,
 	Title,
 } from './SettingsPage.styled';
+import ChangeTheme from '../../components/ChangeTheme';
 import CheckForUpdate from '../../components/CheckForUpdate';
 import PerformanceMode from '../../components/PerformanceMode';
 import SortNotes from '../../components/SortNotes';
@@ -132,6 +133,7 @@ const Settings = ({
 				<CheckForUpdate />
 				<Divider />
 				<PerformanceMode />
+				<ChangeTheme />
 				<SortNotes />
 				{/* TODO - add Update app button */}
 			</List>

@@ -20,7 +20,7 @@ export default class App extends Component {
 		settings: {
 			sort: localStorage.getItem('changeSort') || 'date-asc',
 			performance: JSON.parse(localStorage.getItem('changePerformance')) || false,
-			// themeDark: JSON.parse(localStorage.getItem('themeDark')) || false,
+			darkTheme: JSON.parse(localStorage.getItem('changeDarkTheme')) || false,
 		},
 		swSnackbar: {},
 		user: null,
@@ -87,6 +87,18 @@ export default class App extends Component {
 				return {
 					...state,
 					performance: action.value,
+				};
+			case 'changeDarkTheme':
+				this.setState({
+					settings: {
+						...state,
+						darkTheme: action.value,
+					},
+				});
+
+				return {
+					...state,
+					darkTheme: action.value,
 				};
 			default:
 				return state;
@@ -159,7 +171,15 @@ export default class App extends Component {
 			user,
 		} = this.state;
 
-		const muiTheme = createMuiTheme(theme);
+		const muiTheme = createMuiTheme({
+			...theme,
+			...{
+				palette: {
+					...theme.palette,
+					type: settings.darkTheme === true ? 'dark' : 'light',
+				},
+			},
+		});
 
 		return (
 			<ThemeProvider theme={muiTheme}>
