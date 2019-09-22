@@ -31,7 +31,7 @@ const ListItemLink = ({
 		() => React.forwardRef((props, ref) => (
 			<NavLink to={to} {...props} innerRef={ref} />
 		)),
-		[classes, to],
+		[to],
 	);
 
 	return (
