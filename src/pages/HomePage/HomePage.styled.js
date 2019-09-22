@@ -1,10 +1,12 @@
-import styled from 'styled-components';
+import { makeStyles } from '@material-ui/core/styles';
 
-export const Page = styled.div`
-	display: flex;
-	flex-grow: 1;
-	overflow-y: auto;
-	overflow-x: hidden;
-`;
+const useStyles = makeStyles(() => ({
+	page: {
+		display: 'flex',
+		flexGrow: 1,
+		overflowY: 'auto',
+		overflowX: 'hidden',
+	},
+}));
 
-export default Page;
+export default useStyles;

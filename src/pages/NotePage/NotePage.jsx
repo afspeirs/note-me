@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import clsx from 'clsx';
 import { Prompt } from 'react-router-dom';
 import Markdown from 'react-markdown';
 
-import { MarkdownWrapper, Textarea } from './NotePage.styled';
+import useStyles from './NotePage.styled';
 
 const defaultProps = {
 	note: null,
@@ -33,6 +34,7 @@ const NotePage = ({
 	note,
 	setEdit,
 }) => {
+	const classes = useStyles();
 	const [localNote, setLocalNote] = useState(null);
 	const { id } = match.params;
 
@@ -62,19 +64,18 @@ const NotePage = ({
 	return (
 		<>
 			{edit ? (
-				<Textarea
-					autoFocus
+				<textarea
+					className={clsx(classes.page, classes.textarea)}
 					type="text"
 					value={localNote}
 					onChange={event => setLocalNote(event.target.value)}
 				/>
 			) : (
-				<MarkdownWrapper>
-					<Markdown
-						escapeHtml
-						source={localNote}
-					/>
-				</MarkdownWrapper>
+				<Markdown
+					className={classes.page}
+					escapeHtml
+					source={localNote}
+				/>
 			)}
 
 			{note && (

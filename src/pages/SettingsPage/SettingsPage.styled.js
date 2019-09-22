@@ -1,29 +1,23 @@
-import styled from 'styled-components';
-import {
-	AppBar,
-	Dialog,
-	IconButton,
-	Typography,
-} from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 
-export const AccountIcon = styled.img`
-	width: 100%;
-	height: 100%;
-`;
+const useStyles = makeStyles(theme => ({
+	accountIcon: {
+		width: '100%',
+		height: '100%',
+	},
+	appbar: {
+		position: 'relative',
+	},
+	dialog: {
+		// TODO - Remove !important
+		zIndex: `${theme.zIndex.appBar + 10} !important`,
+	},
+	menuButton: {
+		marginRight: theme.spacing(2),
+	},
+	title: {
+		flex: 1,
+	},
+}));
 
-export const AppBarStyled = styled(AppBar)`
-	position: relative;
-`;
-
-export const DialogStyled = styled(Dialog)`
-	/* TODO - Remove !important */
-	z-index: ${props => props.theme.zIndex.appBar + 10} !important;
-`;
-
-export const MenuButtonStyled = styled(IconButton)`
-	margin-right: ${props => props.theme.spacing(2)}px;
-`;
-
-export const Title = styled(Typography)`
-	flex: 1;
-`;
+export default useStyles;

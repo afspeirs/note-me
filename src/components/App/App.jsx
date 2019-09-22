@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 import { createMuiTheme } from '@material-ui/core/styles';
-import { StylesProvider } from '@material-ui/styles';
-import { ThemeProvider } from 'styled-components';
+import { StylesProvider, ThemeProvider } from '@material-ui/styles';
 
 import Container from '../Container';
 import SimpleSnackbar from '../SimpleSnackbar';

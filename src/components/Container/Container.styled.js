@@ -1,72 +1,60 @@
-import styled, { css } from 'styled-components';
-import {
-	Hidden,
-	IconButton,
-	SwipeableDrawer,
-	Typography,
-} from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 
 const drawerWidth = 256;
 
-export const ContainerStyled = styled.div`
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	display: flex;
-	background-color: ${props => props.theme.palette.background.paper};
-	color: ${props => props.theme.palette.text.primary};
-`;
+const useStyles = makeStyles(theme => ({
+	container: {
+		position: 'absolute',
+		top: 0,
+		left: 0,
+		width: '100%',
+		height: '100%',
+		display: 'flex',
+		backgroundColor: theme.palette.background.paper,
+		color: theme.palette.text.primary,
+	},
+	content: {
+		position: 'relative',
+		flexGrow: 1,
+		display: 'flex',
+		flexDirection: 'column',
+		width: '100%',
+		marginLeft: -drawerWidth,
+		overflowX: 'hidden',
+		transition: theme.transitions.create('margin', {
+			easing: theme.transitions.easing.sharp,
+			duration: theme.transitions.duration.leavingScreen,
+		}),
+	},
+	contentShift: {
+		marginLeft: -drawerWidth,
+		transition: theme.transitions.create('margin', {
+			easing: theme.transitions.easing.easeOut,
+			duration: theme.transitions.duration.enteringScreen,
+		}),
+		[theme.breakpoints.up('sm')]: {
+			marginLeft: 0,
+		},
+	},
+	drawer: {
+		width: drawerWidth,
+		flexShrink: 0,
+	},
+	drawerHeader: {
+		...theme.mixins.toolbar,
+	},
+	drawerPaper: {
+		width: drawerWidth,
+	},
+	menuButton: {
+		marginRight: theme.spacing(2),
+	},
+	placeholder: {
+		width: drawerWidth,
+	},
+	title: {
+		flexGrow: 1,
+	},
+}));
 
-export const Content = styled.main`
-	position: relative;
-	flex-grow: 1;
-	display: flex;
-	flex-direction: column;
-	width: 100%;
-	margin-left: -${drawerWidth}px;
-	overflow-x: hidden;
-	transition: ${props => props.theme.transitions.create('margin', {
-		easing: props.theme.transitions.easing.sharp,
-		duration: props.theme.transitions.duration.leavingScreen,
-	})};
-
-	${props => props.open && css`
-		transition: ${props.theme.transitions.create('margin',
-		{ // I dislike the location of this bracket, but it shuts eslint up
-			easing: props.theme.transitions.easing.easeOut,
-			duration: props.theme.transitions.duration.enteringScreen,
-		})};
-		margin-left: -${drawerWidth}px;
-
-		${props.theme.breakpoints.up('sm')} {
-			margin-left: 0;
-		}
-	`};
-`;
-
-export const MenuButtonStyled = styled(IconButton)`
-	margin-right: ${props => props.theme.spacing(2)}px;
-`;
-
-export const DrawerPlaceholder = styled(Hidden)`
-	width: ${drawerWidth}px;
-`;
-
-export const DrawerStyled = styled(SwipeableDrawer)`
-	width: ${drawerWidth}px;
-	flex-shrink: 0;
-
-	.MuiDrawer-paper {
-		width: ${drawerWidth}px;
-	}
-`;
-
-export const DrawerHeader = styled.div`
-	${props => props.theme.mixins.toolbar}
-`;
-
-export const Title = styled(Typography)`
-	flex-grow: 1;
-`;
+export default useStyles;

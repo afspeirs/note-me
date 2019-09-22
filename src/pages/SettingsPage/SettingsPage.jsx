@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
+	AppBar,
 	Avatar,
+	Dialog,
 	Divider,
 	IconButton,
 	List,
@@ -12,6 +14,7 @@ import {
 	Slide,
 	Toolbar,
 	Tooltip,
+	Typography,
 	useMediaQuery,
 } from '@material-ui/core';
 import {
@@ -20,13 +23,7 @@ import {
 	ExitToApp as ExitToAppIcon,
 } from '@material-ui/icons';
 
-import {
-	AccountIcon,
-	AppBarStyled,
-	DialogStyled,
-	MenuButtonStyled,
-	Title,
-} from './SettingsPage.styled';
+import useStyles from './SettingsPage.styled';
 import ChangeTheme from '../../components/ChangeTheme';
 import CheckForUpdate from '../../components/CheckForUpdate';
 import PerformanceMode from '../../components/PerformanceMode';
@@ -52,6 +49,7 @@ const Settings = ({
 	signOut,
 	user,
 }) => {
+	const classes = useStyles();
 	const [open, setOpen] = React.useState(true);
 	const mobile = useMediaQuery('(max-width:600px)');
 
@@ -62,26 +60,28 @@ const Settings = ({
 	};
 
 	return (
-		<DialogStyled
+		<Dialog
+			className={classes.dialog}
 			fullWidth
 			fullScreen={mobile}
 			open={open}
 			onClose={handleClose}
 			TransitionComponent={Transition}
 		>
-			<AppBarStyled>
+			<AppBar className={classes.appbar}>
 				<Toolbar>
 					{mobile && (
-						<MenuButtonStyled
+						<IconButton
+							className={classes.menuButton}
 							aria-label="close"
 							color="inherit"
 							edge="start"
 							onClick={handleClose}
 						>
 							<ArrowBackIcon />
-						</MenuButtonStyled>
+						</IconButton>
 					)}
-					<Title variant="h6">Settings</Title>
+					<Typography className={classes.title} variant="h6">Settings</Typography>
 					{!mobile && (
 						<IconButton
 							aria-label="close"
@@ -93,7 +93,7 @@ const Settings = ({
 						</IconButton>
 					)}
 				</Toolbar>
-			</AppBarStyled>
+			</AppBar>
 			<List>
 				{user ? (
 					<ListItem>
@@ -118,7 +118,7 @@ const Settings = ({
 					<ListItem button onClick={signIn}>
 						<ListItemAvatar>
 							<Avatar>
-								<AccountIcon src={blankUserPhoto} alt="not signed in" />
+								<img className={classes.accountIcon} src={blankUserPhoto} alt="not signed in" />
 							</Avatar>
 						</ListItemAvatar>
 						<ListItemText primary="Sign In" secondary="Using your Google Account" />
@@ -137,7 +137,7 @@ const Settings = ({
 				<SortNotes />
 				{/* TODO - add Update app button */}
 			</List>
-		</DialogStyled>
+		</Dialog>
 	);
 };
 

@@ -1,9 +1,10 @@
-import styled from 'styled-components';
-import { Menu } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 
-export const MenuStyled = styled(Menu)`
-	/* TODO - Remove !important */
-	z-index: ${props => props.theme.zIndex.appBar + 10} !important;
-`;
+const useStyles = makeStyles(theme => ({
+	menu: {
+		// TODO - Remove !important
+		zIndex: `${theme.zIndex.appBar + 10} !important`,
+	},
+}));
 
-export default MenuStyled;
+export default useStyles;
