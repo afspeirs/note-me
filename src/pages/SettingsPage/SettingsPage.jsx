@@ -26,7 +26,6 @@ import {
 import useStyles from './SettingsPage.styled';
 import ChangeTheme from '../../components/ChangeTheme';
 import CheckForUpdate from '../../components/CheckForUpdate';
-import PerformanceMode from '../../components/PerformanceMode';
 import SortNotes from '../../components/SortNotes';
 import blankUserPhoto from '../../img/blank-user-photo.png';
 
@@ -132,10 +131,8 @@ const Settings = ({
 				</ListItem>
 				<CheckForUpdate />
 				<Divider />
-				<PerformanceMode />
 				<ChangeTheme />
 				<SortNotes />
-				{/* TODO - add Update app button */}
 			</List>
 		</Dialog>
 	);

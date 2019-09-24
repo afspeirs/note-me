@@ -18,7 +18,6 @@ export default class App extends Component {
 		notes: [],
 		settings: {
 			sort: localStorage.getItem('changeSort') || 'date-asc',
-			performance: JSON.parse(localStorage.getItem('changePerformance')) || false,
 			darkTheme: JSON.parse(localStorage.getItem('changeDarkTheme')) || false,
 		},
 		swSnackbar: {},
@@ -81,11 +80,6 @@ export default class App extends Component {
 				return {
 					...state,
 					sort: action.value,
-				};
-			case 'changePerformance':
-				return {
-					...state,
-					performance: action.value,
 				};
 			case 'changeDarkTheme':
 				this.setState({
