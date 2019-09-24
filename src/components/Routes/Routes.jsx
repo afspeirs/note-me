@@ -27,12 +27,12 @@ export default class Routes extends Component {
 		user: PropTypes.instanceOf(Object),
 	}
 
-	componentWillMount() {
+	componentDidMount() {
 		const { location } = this.props;
 		window.previousLocation = location;
 	}
 
-	componentWillUpdate({ history, location }) {
+	componentDidUpdate({ history, location }) {
 		// Set previousLocation if props.location is not a modal
 		if (
 			history.action !== 'POP'
