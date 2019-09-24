@@ -1,6 +1,4 @@
-import { createMuiTheme } from '@material-ui/core/styles';
-
-export default createMuiTheme({
+export default {
 	palette: {
 		primary: {
 			main: '#ee6e00',
@@ -9,4 +7,4 @@ export default createMuiTheme({
 	zIndex: {
 		appBar: 1350,
 	},
-});
+};

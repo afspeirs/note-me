@@ -1,11 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Swipeout from 'rc-swipeout';
-import 'rc-swipeout/dist/rc-swipeout.css';
-import { ListItem, ListItemText } from '@material-ui/core';
+import { List, ListItem, ListItemText } from '@material-ui/core';
 import { Delete as DeleteIcon } from '@material-ui/icons';
 
-import { ListStyled } from './NotesList.styled';
+import useStyles from './NotesList.styled';
 import ContextMenu from '../ContextMenu';
 import DeleteConfirmationDialog from '../DeleteConfirmationDialog';
 import ListItemLink from './ListItemLink';
@@ -30,6 +29,7 @@ const NotesList = ({
 	loading,
 	notes,
 }) => {
+	const classes = useStyles();
 	const [open, setOpen] = React.useState(false);
 	const [value, setValue] = React.useState(null);
 	const [{ sort }] = useStateValue();
@@ -54,7 +54,7 @@ const NotesList = ({
 
 	return (
 		<>
-			<ListStyled>
+			<List className={classes.list}>
 				{notes.length === 0 && loading === false && (
 					<ListItem>
 						<ListItemText primary="No notes" />
@@ -68,6 +68,7 @@ const NotesList = ({
 				{notes.sort(sortFunction).map(note => (
 					<Swipeout
 						key={`note-${note.id}`}
+						className={classes.swipeout}
 						left={[
 							{
 								text: <TimeAgo date={note.date / 1000} />,
@@ -98,7 +99,7 @@ const NotesList = ({
 						/>
 					</Swipeout>
 				))}
-			</ListStyled>
+			</List>
 
 			<ContextMenu
 				closestElement=".context-menu-select"

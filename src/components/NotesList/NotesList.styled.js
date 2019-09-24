@@ -1,8 +1,15 @@
-import styled from 'styled-components';
-import { List } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 
-export const ListStyled = styled(List)`
-	width: 100%;
-`;
+const useStyles = makeStyles(theme => ({
+	list: {
+		width: '100%',
+	},
+	swipeout: {
+		position: 'relative',
+		'& .rc-swipeout-content': {
+			backgroundColor: theme.palette.background.paper,
+		},
+	},
+}));
 
-export default ListStyled;
+export default useStyles;

@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import './index.css';
+import 'rc-swipeout/dist/rc-swipeout.css';
 import App from './components/App';
 import * as serviceWorker from './serviceWorker';
 

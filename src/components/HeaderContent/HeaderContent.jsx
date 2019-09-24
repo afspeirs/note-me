@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Link, Route } from 'react-router-dom';
 import {
 	IconButton,
+	Menu,
 	MenuItem,
 	Tooltip,
 } from '@material-ui/core';
@@ -15,7 +16,7 @@ import {
 	MoreVert as MoreIcon,
 } from '@material-ui/icons';
 
-import { MenuStyled } from './HeaderContent.styled';
+import useStyles from './HeaderContent.styled';
 
 const propTypes = {
 	edit: PropTypes.bool.isRequired,
@@ -26,6 +27,7 @@ const propTypes = {
 const AdapterLink = React.forwardRef((props, ref) => <Link innerRef={ref} {...props} />);
 
 const HeaderContent = ({ edit, mobile, setEdit }) => {
+	const classes = useStyles();
 	const [anchorEl, setAnchorEl] = useState(null);
 	const handleClick = event => setAnchorEl(event.currentTarget);
 	const handleClose = () => setAnchorEl(null);
@@ -64,8 +66,9 @@ const HeaderContent = ({ edit, mobile, setEdit }) => {
 						<MoreIcon />
 					</IconButton>
 
-					<MenuStyled
+					<Menu
 						id="more-menu"
+						className={classes.menu}
 						anchorEl={anchorEl}
 						keepMounted
 						open={Boolean(anchorEl)}
@@ -122,7 +125,7 @@ const HeaderContent = ({ edit, mobile, setEdit }) => {
 							</IconButton>
 							<span>Settings</span>
 						</MenuItem>
-					</MenuStyled>
+					</Menu>
 				</>
 			) : (
 				<>
