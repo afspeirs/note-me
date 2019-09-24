@@ -13,7 +13,7 @@ const useStyles = makeStyles(theme => ({
 		fontSize: '1.2em',
 		backgroundColor: theme.palette.background.paper,
 		color: theme.palette.text.primary,
-		':focus': {
+		'&:focus': {
 			outline: 'none',
 		},
 	},
