@@ -1,23 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import clsx from 'clsx';
 import {
 	AppBar,
+	Hidden,
+	IconButton,
+	SwipeableDrawer,
 	Toolbar,
+	Typography,
 	useMediaQuery,
 } from '@material-ui/core';
 import {
 	Menu as MenuIcon,
 } from '@material-ui/icons';
 
-import {
-	ContainerStyled,
-	Content,
-	DrawerHeader,
-	DrawerPlaceholder,
-	DrawerStyled,
-	MenuButtonStyled,
-	Title,
-} from './Container.styled';
+import useStyles from './Container.styled';
 import DrawerContent from '../DrawerContent';
 import HeaderContent from '../HeaderContent';
 import { useStateValue } from '../StateContext';
@@ -42,6 +39,7 @@ const Container = ({
 	notes,
 	setEdit,
 }) => {
+	const classes = useStyles();
 	const [open, setOpen] = React.useState(false);
 	const mobile = useMediaQuery('(max-width:600px)');
 	const [{ performance }] = useStateValue();
@@ -51,18 +49,19 @@ const Container = ({
 	};
 
 	return (
-		<ContainerStyled>
+		<div className={classes.container}>
 			<AppBar position="fixed">
 				<Toolbar>
-					<MenuButtonStyled
+					<IconButton
+						className={classes.menuButton}
 						color="inherit"
 						aria-label="Open drawer"
 						edge="start"
 						onClick={() => handleDrawerToggle(true)}
 					>
 						<MenuIcon />
-					</MenuButtonStyled>
-					<Title variant="h6">NoteMe</Title>
+					</IconButton>
+					<Typography className={classes.title} variant="h6">NoteMe</Typography>
 					<HeaderContent
 						edit={edit}
 						mobile={mobile}
@@ -70,29 +69,38 @@ const Container = ({
 					/>
 				</Toolbar>
 			</AppBar>
-			<DrawerPlaceholder smUp implementation="css" />
-			<DrawerStyled
+			<Hidden className={classes.placeholder} smUp implementation="css" />
+			<SwipeableDrawer
 				variant={mobile ? 'temporary' : 'persistent'}
 				anchor="left"
 				open={open}
+				className={classes.drawer}
+				classes={{
+					paper: classes.drawerPaper,
+				}}
 				onOpen={handleDrawerToggle}
 				onClose={handleDrawerToggle}
 				ModalProps={{ keepMounted: true }}
 				disableBackdropTransition={performance}
 			>
-				<DrawerHeader />
+				<div className={classes.drawerHeader} />
 				<DrawerContent
 					handleDrawerToggle={handleDrawerToggle}
 					handleNoteDelete={handleNoteDelete}
 					loading={loading}
 					notes={notes}
 				/>
-			</DrawerStyled>
-			<Content open={open}>
-				<DrawerHeader />
+			</SwipeableDrawer>
+			<div
+				className={clsx(classes.content, {
+					[classes.contentShift]: open,
+				})}
+				open={open}
+			>
+				<div className={classes.drawerHeader} />
 				{children}
-			</Content>
-		</ContainerStyled>
+			</div>
+		</div>
 	);
 };
 

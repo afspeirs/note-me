@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { ListItem } from '@material-ui/core';
+import {
+	InputBase,
+	List,
+	ListItem,
+} from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 
-import {
-	ListStyled,
-	SearchBarWrapper,
-	SearchIconWrapper,
-	SearchInput,
-} from './NotesSearch.styled';
+import useStyles from './NotesSearch.styled';
 import NotesList from '../NotesList';
 
 const propTypes = {
@@ -24,6 +23,7 @@ const SearchBar = ({
 	loading,
 	notes,
 }) => {
+	const classes = useStyles();
 	const [items, setItems] = useState(notes);
 
 	const filterList = event => setItems(
@@ -33,18 +33,22 @@ const SearchBar = ({
 	useEffect(() => setItems(notes), [notes]);
 
 	return (
-		<ListStyled>
+		<List className={classes.list}>
 			<ListItem>
-				<SearchBarWrapper>
-					<SearchIconWrapper>
+				<div className={classes.search}>
+					<div className={classes.searchIcon}>
 						<SearchIcon />
-					</SearchIconWrapper>
-					<SearchInput
+					</div>
+					<InputBase
+						classes={{
+							root: classes.inputRoot,
+							input: classes.inputInput,
+						}}
 						placeholder="Search Notes"
 						inputProps={{ 'aria-label': 'search' }}
 						onChange={filterList}
 					/>
-				</SearchBarWrapper>
+				</div>
 			</ListItem>
 
 			<NotesList
@@ -53,7 +57,7 @@ const SearchBar = ({
 				loading={loading}
 				notes={items}
 			/>
-		</ListStyled>
+		</List>
 	);
 };
 

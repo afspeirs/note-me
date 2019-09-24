@@ -1,16 +1,16 @@
-import styled from 'styled-components';
-import { NavLink } from 'react-router-dom';
-import { ListItemText } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 
-export const ListItemTextStyled = styled(ListItemText)`
-	overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: nowrap;
-`;
+const useStyles = makeStyles(() => ({
+	listItem: {
+		'&:hover,&.active': {
+			backgroundColor: 'rgba(0, 0, 0, 0.15)',
+		},
+	},
+	listItemText: {
+		overflow: 'hidden',
+		textOverflow: 'ellipsis',
+		whiteSpace: 'nowrap',
+	},
+}));
 
-export const NavLinkStyled = styled(NavLink)`
-	&:hover,
-	&.active {
-		background-color: rgba(0, 0, 0, 0.15);
-	}
-`;
+export default useStyles;

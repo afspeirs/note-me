@@ -4,14 +4,15 @@ import {
 	ListItem,
 	ListItemIcon,
 	ListItemText,
+	Menu,
 	MenuItem,
 } from '@material-ui/core';
 import {
 	Sort as SortIcon,
 } from '@material-ui/icons';
 
+import useStyles from './SortNotes.styled';
 import { useStateValue } from '../StateContext';
-import { MenuStyled } from './SortNotes.styled';
 
 const options = [
 	{ text: 'Modified Date (Newest First)', value: 'date-asc' },
@@ -29,6 +30,7 @@ const propTypes = {
 };
 
 const SortNotes = ({ icon }) => {
+	const classes = useStyles();
 	const [{ sort }, dispatch] = useStateValue();
 	const [value, setValue] = useState(sort);
 	const [anchorEl, setAnchorEl] = React.useState(null);
@@ -69,8 +71,9 @@ const SortNotes = ({ icon }) => {
 					secondary={options[selectedIndex].text}
 				/>
 			</ListItem>
-			<MenuStyled
+			<Menu
 				id="sort-menu"
+				className={classes.menu}
 				anchorEl={anchorEl}
 				keepMounted
 				open={Boolean(anchorEl)}
@@ -86,7 +89,7 @@ const SortNotes = ({ icon }) => {
 						{option.text}
 					</MenuItem>
 				))}
-			</MenuStyled>
+			</Menu>
 		</>
 	);
 };

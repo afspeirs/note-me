@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ListItem } from '@material-ui/core';
+import clsx from 'clsx';
+import { NavLink } from 'react-router-dom';
+import { ListItem, ListItemText } from '@material-ui/core';
 
-import { ListItemTextStyled, NavLinkStyled } from './ListItemLink.styled';
+import useStyles from './ListItemLink.styled';
 
 const defaultProps = {
 	className: '',
@@ -24,17 +26,24 @@ const ListItemLink = ({
 	primary,
 	to,
 }) => {
+	const classes = useStyles();
 	const renderLink = React.useMemo(
 		() => React.forwardRef((props, ref) => (
-			<NavLinkStyled to={to} {...props} innerRef={ref} />
+			<NavLink to={to} {...props} innerRef={ref} />
 		)),
 		[to],
 	);
 
 	return (
 		<li>
-			<ListItem button component={renderLink} className={className} id={id} onClick={onClick}>
-				<ListItemTextStyled primary={primary} />
+			<ListItem
+				button
+				className={clsx(className, classes.listItem)}
+				component={renderLink}
+				id={id}
+				onClick={onClick}
+			>
+				<ListItemText className={classes.listItemText} primary={primary} />
 			</ListItem>
 		</li>
 	);

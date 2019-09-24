@@ -1,38 +1,34 @@
-import styled from 'styled-components';
-import { InputBase, List } from '@material-ui/core';
-import { fade } from '@material-ui/core/styles';
+import { fade, makeStyles } from '@material-ui/core/styles';
 
-import theme from '../../theme';
+const useStyles = makeStyles(theme => ({
+	list: {
+		flexGrow: 1,
+		overflowY: 'auto',
+		overflowX: 'hidden',
+	},
+	search: {
+		position: 'relative',
+		borderRadius: theme.shape.borderRadius,
+		backgroundColor: fade(theme.palette.common.black, 0.10),
+		'&:hover': {
+			backgroundColor: fade(theme.palette.common.black, 0.15),
+		},
+	},
+	searchIcon: {
+		position: 'absolute',
+		width: theme.spacing(5),
+		height: '100%',
+		pointerEvents: 'none',
+		display: 'flex',
+		alignItems: 'center',
+		justifyContent: 'center',
+	},
+	inputRoot: {
+		color: 'inherit',
+	},
+	inputInput: {
+		padding: theme.spacing(1, 1, 1, 5),
+	},
+}));
 
-export const ListStyled = styled(List)`
-	flex-grow: 1;
-	overflow-y: auto;
-`;
-
-export const SearchBarWrapper = styled.div`
-	position: relative;
-	border-radius: ${theme.shape.borderRadius}px;
-	background-color: ${fade(theme.palette.common.black, 0.10)};
-
-	&:hover {
-		background-color: ${fade(theme.palette.common.black, 0.15)};
-	}
-`;
-
-export const SearchIconWrapper = styled.div`
-	position: absolute;
-	width: ${theme.spacing(5)}px;
-	height: 100%;
-	pointer-events: none;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-`;
-
-export const SearchInput = styled(InputBase)`
-	color: inherit;
-
-	.MuiInputBase-input {
-		padding: ${theme.spacing(1, 1, 1, 5)};
-	}
-`;
+export default useStyles;
