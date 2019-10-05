@@ -14,7 +14,6 @@ const defaultProps = {
 const propTypes = {
 	className: PropTypes.string,
 	id: PropTypes.string,
-	onClick: PropTypes.func.isRequired,
 	primary: PropTypes.string.isRequired,
 	to: PropTypes.string.isRequired,
 };
@@ -22,7 +21,6 @@ const propTypes = {
 const ListItemLink = ({
 	className,
 	id,
-	onClick,
 	primary,
 	to,
 }) => {
@@ -41,7 +39,6 @@ const ListItemLink = ({
 				className={clsx(className, classes.listItem)}
 				component={renderLink}
 				id={id}
-				onClick={onClick}
 			>
 				<ListItemText className={classes.listItemText} primary={primary} />
 			</ListItem>

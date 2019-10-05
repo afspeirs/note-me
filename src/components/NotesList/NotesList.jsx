@@ -12,19 +12,13 @@ import TimeAgo from '../TimeAgo';
 import { useStateValue } from '../StateContext';
 import { getTitle } from '../../ultils';
 
-const defaultProps = {
-	handleDrawerToggle: () => {},
-};
-
 const propTypes = {
-	handleDrawerToggle: PropTypes.func,
 	handleNoteDelete: PropTypes.func.isRequired,
 	loading: PropTypes.bool.isRequired,
 	notes: PropTypes.instanceOf(Array).isRequired,
 };
 
 const NotesList = ({
-	handleDrawerToggle,
 	handleNoteDelete,
 	loading,
 	notes,
@@ -94,7 +88,6 @@ const NotesList = ({
 							to={`/note/${note.id}`}
 							className="context-menu-select"
 							id={note.id}
-							onClick={handleDrawerToggle}
 							primary={note.text ? getTitle(note.text) : 'Untitled'}
 						/>
 					</Swipeout>
@@ -115,7 +108,6 @@ const NotesList = ({
 	);
 };
 
-NotesList.defaultProps = defaultProps;
 NotesList.propTypes = propTypes;
 
 export default NotesList;
