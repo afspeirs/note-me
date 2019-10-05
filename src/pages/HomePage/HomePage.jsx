@@ -1,11 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {
+	Button,
+	List,
+	ListItem,
+	ListItemText,
+	useMediaQuery,
+} from '@material-ui/core';
 
 import useStyles from './HomePage.styled';
 import NotesSearch from '../../components/NotesSearch';
-import NotSignedIn from '../../components/NotSignedIn';
 
 const propTypes = {
+	drawerOpen: PropTypes.bool.isRequired,
 	handleNoteDelete: PropTypes.func.isRequired,
 	isSignedIn: PropTypes.bool.isRequired,
 	loading: PropTypes.bool.isRequired,
@@ -14,6 +21,7 @@ const propTypes = {
 };
 
 const HomePage = ({
+	drawerOpen,
 	handleNoteDelete,
 	isSignedIn,
 	loading,
@@ -21,17 +29,35 @@ const HomePage = ({
 	signIn,
 }) => {
 	const classes = useStyles();
+	const mobile = useMediaQuery('(max-width:600px)');
 
 	return (
 		<div className={classes.page}>
 			{!isSignedIn && !loading ? (
-				<NotSignedIn signIn={signIn} />
+				<List>
+					<ListItem>
+						<ListItemText primary="Please sign in below with a Google account to use this app" />
+					</ListItem>
+					<ListItem>
+						<Button variant="contained" color="primary" onClick={signIn}>Sign In</Button>
+					</ListItem>
+				</List>
 			) : (
-				<NotesSearch
-					handleNoteDelete={handleNoteDelete}
-					loading={loading}
-					notes={notes}
-				/>
+				<>
+					{drawerOpen && !mobile ? (
+						<List>
+							<ListItem>
+								<ListItemText primary="Nothing selected" />
+							</ListItem>
+						</List>
+					) : (
+						<NotesSearch
+							handleNoteDelete={handleNoteDelete}
+							loading={loading}
+							notes={notes}
+						/>
+					)}
+				</>
 			)}
 		</div>
 	);
