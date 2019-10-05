@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import useStyles from './HomePage.styled';
-import NotesList from '../../components/NotesList';
+import NotesSearch from '../../components/NotesSearch';
 
 const propTypes = {
 	handleNoteDelete: PropTypes.func.isRequired,
@@ -19,7 +19,7 @@ const HomePage = ({
 
 	return (
 		<div className={classes.page}>
-			<NotesList
+			<NotesSearch
 				handleNoteDelete={handleNoteDelete}
 				loading={loading}
 				notes={notes}
