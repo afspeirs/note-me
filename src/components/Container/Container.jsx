@@ -50,14 +50,15 @@ const Container = ({
 	const [open, setOpen] = React.useState(false);
 	const [{ performance }] = useStateValue();
 
-	// Toggle drawer only in mobile unless toggle is true
-	const handleDrawerToggle = (toggle = false) => {
-		if ((toggle === true) || mobile) setOpen(!open);
-	};
+	// Close drawer only in mobile
+	const handleDrawerClose = () => (mobile) && setOpen(false);
 
-	// Run handleDrawerToggle if the history changes
+	// Toggle drawer only in mobile unless toggle is true
+	const handleDrawerToggle = (toggle = false) => ((toggle === true) || mobile) && setOpen(!open);
+
+	// Run handleDrawerClose if the history changes
 	useEffect(() => {
-		const unlisten = history.listen(handleDrawerToggle);
+		const unlisten = history.listen(handleDrawerClose);
 		return unlisten;
 	}, [history, mobile]); // eslint-disable-line
 
