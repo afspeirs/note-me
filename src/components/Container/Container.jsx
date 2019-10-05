@@ -29,6 +29,7 @@ const propTypes = {
 	edit: PropTypes.bool.isRequired,
 	handleNoteDelete: PropTypes.func.isRequired,
 	history: PropTypes.instanceOf(Object).isRequired,
+	isSignedIn: PropTypes.bool.isRequired,
 	loading: PropTypes.bool.isRequired,
 	notes: PropTypes.instanceOf(Array).isRequired,
 	setEdit: PropTypes.func.isRequired,
@@ -39,6 +40,7 @@ const Container = ({
 	edit,
 	handleNoteDelete,
 	history,
+	isSignedIn,
 	loading,
 	notes,
 	setEdit,
@@ -98,6 +100,7 @@ const Container = ({
 					<Typography className={classes.title} variant="h6">NoteMe</Typography>
 					<HeaderContent
 						edit={edit}
+						isSignedIn={isSignedIn}
 						mobile={mobile}
 						setEdit={setEdit}
 					/>

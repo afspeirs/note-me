@@ -184,6 +184,7 @@ export default class App extends Component {
 									{...props}
 									edit={edit}
 									handleNoteDelete={this.handleNoteDelete}
+									isSignedIn={Boolean(user)}
 									loading={loading}
 									notes={notes}
 									setEdit={this.setEdit}

@@ -18,15 +18,21 @@ import {
 
 import useStyles from './HeaderContent.styled';
 
+const AdapterLink = React.forwardRef((props, ref) => <Link innerRef={ref} {...props} />);
+
 const propTypes = {
 	edit: PropTypes.bool.isRequired,
+	isSignedIn: PropTypes.bool.isRequired,
 	mobile: PropTypes.bool.isRequired,
 	setEdit: PropTypes.func.isRequired,
 };
 
-const AdapterLink = React.forwardRef((props, ref) => <Link innerRef={ref} {...props} />);
-
-const HeaderContent = ({ edit, mobile, setEdit }) => {
+const HeaderContent = ({
+	edit,
+	isSignedIn,
+	mobile,
+	setEdit,
+}) => {
 	const classes = useStyles();
 	const [anchorEl, setAnchorEl] = useState(null);
 	const handleClick = event => setAnchorEl(event.currentTarget);
@@ -53,7 +59,7 @@ const HeaderContent = ({ edit, mobile, setEdit }) => {
 				)}
 			/>
 
-			{mobile ? (
+			{(isSignedIn && mobile) ? (
 				<>
 					<IconButton
 						color="inherit"
@@ -129,17 +135,19 @@ const HeaderContent = ({ edit, mobile, setEdit }) => {
 				</>
 			) : (
 				<>
-					<Tooltip title="Create Note">
-						<IconButton
-							color="inherit"
-							aria-label="Create Note"
-							onClick={handleClose}
-							component={AdapterLink}
-							to="/note/"
-						>
-							<AddIcon />
-						</IconButton>
-					</Tooltip>
+					{isSignedIn && (
+						<Tooltip title="Create Note">
+							<IconButton
+								color="inherit"
+								aria-label="Create Note"
+								onClick={handleClose}
+								component={AdapterLink}
+								to="/note/"
+							>
+								<AddIcon />
+							</IconButton>
+						</Tooltip>
+					)}
 
 					<Route
 						render={({ location }) => (
