@@ -11,14 +11,12 @@ import useStyles from './NotesSearch.styled';
 import NotesList from '../NotesList';
 
 const propTypes = {
-	handleDrawerToggle: PropTypes.func.isRequired,
 	handleNoteDelete: PropTypes.func.isRequired,
 	loading: PropTypes.bool.isRequired,
 	notes: PropTypes.instanceOf(Array).isRequired,
 };
 
 const SearchBar = ({
-	handleDrawerToggle,
 	handleNoteDelete,
 	loading,
 	notes,
@@ -52,7 +50,6 @@ const SearchBar = ({
 			</ListItem>
 
 			<NotesList
-				handleDrawerToggle={handleDrawerToggle}
 				handleNoteDelete={handleNoteDelete}
 				loading={loading}
 				notes={items}
