@@ -108,7 +108,7 @@ export default class Routes extends Component {
 					<Route component={NoPage} />
 				</Switch>
 
-				{/* {!user && <Redirect from="/note/" to="/" />} */}
+				{!user && <Redirect from="/note/" to="/" />}
 
 				{isModal && (
 					<Route
