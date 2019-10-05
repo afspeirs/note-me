@@ -24,14 +24,14 @@ const HomePage = ({
 
 	return (
 		<div className={classes.page}>
-			{isSignedIn ? (
+			{!isSignedIn && !loading ? (
+				<NotSignedIn signIn={signIn} />
+			) : (
 				<NotesSearch
 					handleNoteDelete={handleNoteDelete}
 					loading={loading}
 					notes={notes}
 				/>
-			) : (
-				<NotSignedIn signIn={signIn} />
 			)}
 		</div>
 	);
