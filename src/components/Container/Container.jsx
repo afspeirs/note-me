@@ -66,38 +66,36 @@ const Container = ({
 		<div className={classes.container}>
 			<AppBar position="fixed">
 				<Toolbar>
-					<Route
-						render={({ location }) => (
-							// If SettingsPage is open and the previousLocation is NotePage
-							// Or if the page is NotePage
-							(location.pathname === '/settings/' && window.previousLocation && window.previousLocation.pathname.startsWith('/note/'))
-							|| location.pathname.startsWith('/note/')
-						) && (
-							<>
-								{mobile ? (
-									<IconButton
-										className={classes.menuButton}
-										color="inherit"
-										aria-label="Back"
-										edge="start"
-										onClick={history.goBack}
-									>
-										<ArrowBackIcon />
-									</IconButton>
-								) : (
-									<IconButton
-										className={classes.menuButton}
-										color="inherit"
-										aria-label="Open drawer"
-										edge="start"
-										onClick={() => handleDrawerToggle(true)}
-									>
-										<MenuIcon />
-									</IconButton>
-								)}
-							</>
-						)}
-					/>
+					{mobile ? (
+						<Route
+							render={({ location }) => (
+								// If SettingsPage is open and the previousLocation is NotePage
+								// Or if the page is NotePage
+								(location.pathname === '/settings/' && window.previousLocation && window.previousLocation.pathname.startsWith('/note/'))
+								|| location.pathname.startsWith('/note/')
+							) && (
+								<IconButton
+									className={classes.menuButton}
+									color="inherit"
+									aria-label="Back"
+									edge="start"
+									onClick={history.goBack}
+								>
+									<ArrowBackIcon />
+								</IconButton>
+							)}
+						/>
+					) : (
+						<IconButton
+							className={classes.menuButton}
+							color="inherit"
+							aria-label="Open drawer"
+							edge="start"
+							onClick={() => handleDrawerToggle(true)}
+						>
+							<MenuIcon />
+						</IconButton>
+					)}
 					<Typography className={classes.title} variant="h6">NoteMe</Typography>
 					<HeaderContent
 						edit={edit}
