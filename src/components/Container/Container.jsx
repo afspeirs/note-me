@@ -64,7 +64,12 @@ const Container = ({
 			<AppBar position="fixed">
 				<Toolbar>
 					<Route
-						render={({ location }) => location.pathname !== '/' && (
+						render={({ location }) => (
+							// If SettingsPage is open and the previousLocation is NotePage
+							// Or if the page is NotePage
+							(location.pathname === '/settings/' && window.previousLocation && window.previousLocation.pathname.startsWith('/note/'))
+							|| location.pathname.startsWith('/note/')
+						) && (
 							<>
 								{mobile ? (
 									<IconButton
