@@ -34,10 +34,7 @@ export default class Routes extends Component {
 
 	componentDidUpdate({ history, location }) {
 		// Set previousLocation if props.location is not a modal
-		if (
-			history.action !== 'POP'
-			&& (!location.state || !location.state.modal)
-		) {
+		if (history.action !== 'POP' && (!location.state || !location.state.modal)) {
 			window.previousLocation = location;
 		}
 	}
@@ -73,11 +70,14 @@ export default class Routes extends Component {
 						render={() => (
 							<HomePage
 								handleNoteDelete={handleNoteDelete}
+								isSignedIn={Boolean(user)}
 								loading={loading}
 								notes={notes}
+								signIn={signIn}
 							/>
 						)}
 					/>
+
 					<Route
 						path="/note/:id"
 						render={props => (
@@ -90,6 +90,7 @@ export default class Routes extends Component {
 							/>
 						)}
 					/>
+
 					<Route
 						path="/note/"
 						render={props => (
@@ -97,14 +98,17 @@ export default class Routes extends Component {
 								{...props}
 								edit={edit}
 								handleNoteAdd={handleNoteAdd}
-								setEdit={setEdit}
 								newNote
+								setEdit={setEdit}
 							/>
 						)}
 					/>
+
 					<Redirect from="/settings/" to="/" />
 					<Route component={NoPage} />
 				</Switch>
+
+				{!user && <Redirect from="/note/" to="/" />}
 
 				{isModal && (
 					<Route

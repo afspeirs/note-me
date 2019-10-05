@@ -178,15 +178,17 @@ export default class App extends Component {
 			<ThemeProvider theme={muiTheme}>
 				<StylesProvider injectFirst>
 					<StateProvider initialState={settings} reducer={this.reducer}>
-						<Container
-							edit={edit}
-							handleNoteDelete={this.handleNoteDelete}
-							loading={loading}
-							notes={notes}
-							setEdit={this.setEdit}
-						>
-							<Route
-								render={props => (
+						<Route
+							render={props => (
+								<Container
+									{...props}
+									edit={edit}
+									handleNoteDelete={this.handleNoteDelete}
+									isSignedIn={Boolean(user)}
+									loading={loading}
+									notes={notes}
+									setEdit={this.setEdit}
+								>
 									<Routes
 										{...props}
 										edit={edit}
@@ -200,9 +202,9 @@ export default class App extends Component {
 										signOut={this.signOut}
 										user={user}
 									/>
-								)}
-							/>
-						</Container>
+								</Container>
+							)}
+						/>
 
 						{swSnackbar && (
 							<SimpleSnackbar
