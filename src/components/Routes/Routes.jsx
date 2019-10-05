@@ -13,6 +13,7 @@ export default class Routes extends Component {
 	};
 
 	static propTypes = {
+		drawerOpen: PropTypes.bool.isRequired,
 		edit: PropTypes.bool.isRequired,
 		handleNoteAdd: PropTypes.func.isRequired,
 		handleNoteDelete: PropTypes.func.isRequired,
@@ -41,6 +42,7 @@ export default class Routes extends Component {
 
 	render() {
 		const {
+			drawerOpen,
 			edit,
 			handleNoteAdd,
 			handleNoteDelete,
@@ -69,6 +71,7 @@ export default class Routes extends Component {
 						path="/"
 						render={() => (
 							<HomePage
+								drawerOpen={drawerOpen}
 								handleNoteDelete={handleNoteDelete}
 								isSignedIn={Boolean(user)}
 								loading={loading}

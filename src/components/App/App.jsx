@@ -13,6 +13,7 @@ import Routes from '../Routes';
 
 export default class App extends Component {
 	state = {
+		drawerOpen: false,
 		edit: false,
 		loading: true,
 		notes: [],
@@ -104,6 +105,8 @@ export default class App extends Component {
 	signIn = () => auth.signInWithPopup(provider)
 		.then(({ user }) => this.setState({ user }));
 
+	setDrawerOpen = value => this.setState({ drawerOpen: value });
+
 	setEdit = edit => this.setState({ edit });
 
 	handleNoteAdd = (text, history) => {
@@ -156,6 +159,7 @@ export default class App extends Component {
 
 	render() {
 		const {
+			drawerOpen,
 			edit,
 			loading,
 			notes,
@@ -182,15 +186,18 @@ export default class App extends Component {
 							render={props => (
 								<Container
 									{...props}
+									drawerOpen={drawerOpen}
 									edit={edit}
 									handleNoteDelete={this.handleNoteDelete}
 									isSignedIn={Boolean(user)}
 									loading={loading}
 									notes={notes}
+									setDrawerOpen={this.setDrawerOpen}
 									setEdit={this.setEdit}
 								>
 									<Routes
 										{...props}
+										drawerOpen={drawerOpen}
 										edit={edit}
 										handleNoteAdd={this.handleNoteAdd}
 										handleNoteDelete={this.handleNoteDelete}

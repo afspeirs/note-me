@@ -26,35 +26,42 @@ const propTypes = {
 		PropTypes.arrayOf(PropTypes.node),
 		PropTypes.node,
 	]).isRequired,
+	drawerOpen: PropTypes.bool.isRequired,
 	edit: PropTypes.bool.isRequired,
 	handleNoteDelete: PropTypes.func.isRequired,
 	history: PropTypes.instanceOf(Object).isRequired,
 	isSignedIn: PropTypes.bool.isRequired,
 	loading: PropTypes.bool.isRequired,
 	notes: PropTypes.instanceOf(Array).isRequired,
+	setDrawerOpen: PropTypes.func.isRequired,
 	setEdit: PropTypes.func.isRequired,
 };
 
 const Container = ({
 	children,
+	drawerOpen,
 	edit,
 	handleNoteDelete,
 	history,
 	isSignedIn,
 	loading,
 	notes,
+	setDrawerOpen,
 	setEdit,
 }) => {
 	const classes = useStyles();
 	const mobile = useMediaQuery('(max-width:600px)');
-	const [open, setOpen] = React.useState(false);
 	const [{ performance }] = useStateValue();
 
 	// Close drawer only in mobile
-	const handleDrawerClose = () => (mobile) && setOpen(false);
+	const handleDrawerClose = () => (mobile) && setDrawerOpen(false);
 
 	// Toggle drawer only in mobile unless toggle is true
-	const handleDrawerToggle = (toggle = false) => ((toggle === true) || mobile) && setOpen(!open);
+	const handleDrawerToggle = (toggle = false) => {
+		if ((toggle === true) || mobile) {
+			setDrawerOpen(!drawerOpen);
+		}
+	};
 
 	// Run handleDrawerClose if the history changes
 	useEffect(() => {
@@ -66,38 +73,36 @@ const Container = ({
 		<div className={classes.container}>
 			<AppBar position="fixed">
 				<Toolbar>
-					<Route
-						render={({ location }) => (
-							// If SettingsPage is open and the previousLocation is NotePage
-							// Or if the page is NotePage
-							(location.pathname === '/settings/' && window.previousLocation && window.previousLocation.pathname.startsWith('/note/'))
-							|| location.pathname.startsWith('/note/')
-						) && (
-							<>
-								{mobile ? (
-									<IconButton
-										className={classes.menuButton}
-										color="inherit"
-										aria-label="Back"
-										edge="start"
-										onClick={history.goBack}
-									>
-										<ArrowBackIcon />
-									</IconButton>
-								) : (
-									<IconButton
-										className={classes.menuButton}
-										color="inherit"
-										aria-label="Open drawer"
-										edge="start"
-										onClick={() => handleDrawerToggle(true)}
-									>
-										<MenuIcon />
-									</IconButton>
-								)}
-							</>
-						)}
-					/>
+					{mobile ? (
+						<Route
+							render={({ location }) => (
+								// If SettingsPage is open and the previousLocation is NotePage
+								// Or if the page is NotePage
+								(location.pathname === '/settings/' && window.previousLocation && window.previousLocation.pathname.startsWith('/note/'))
+								|| location.pathname.startsWith('/note/')
+							) && (
+								<IconButton
+									className={classes.menuButton}
+									color="inherit"
+									aria-label="Back"
+									edge="start"
+									onClick={history.goBack}
+								>
+									<ArrowBackIcon />
+								</IconButton>
+							)}
+						/>
+					) : (
+						<IconButton
+							className={classes.menuButton}
+							color="inherit"
+							aria-label="Open drawer"
+							edge="start"
+							onClick={() => handleDrawerToggle(true)}
+						>
+							<MenuIcon />
+						</IconButton>
+					)}
 					<Typography className={classes.title} variant="h6">NoteMe</Typography>
 					<HeaderContent
 						edit={edit}
@@ -111,7 +116,7 @@ const Container = ({
 			<SwipeableDrawer
 				variant={mobile ? 'temporary' : 'persistent'}
 				anchor="left"
-				open={open}
+				open={drawerOpen}
 				className={classes.drawer}
 				classes={{
 					paper: classes.drawerPaper,
@@ -131,9 +136,8 @@ const Container = ({
 			</SwipeableDrawer>
 			<div
 				className={clsx(classes.content, {
-					[classes.contentShift]: open,
+					[classes.contentShift]: drawerOpen,
 				})}
-				open={open}
 			>
 				<div className={classes.drawerHeader} />
 				{children}
