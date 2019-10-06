@@ -1,26 +1,31 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
+import clsx from 'clsx';
 import {
+	List,
 	ListItem,
 	ListItemIcon,
+	ListItemText,
 } from '@material-ui/core';
 import {
 	Alarm as AlarmIcon,
 	Delete as DeleteIcon,
 } from '@material-ui/icons';
+import { withStyles } from '@material-ui/styles';
 
-import { ContextMenuStyled, ListStyled, ListItemTextStyled } from './ContextMenu.styled';
+import styles from './ContextMenu.styled';
 import { getTitle } from '../../ultils';
 import TimeAgo from '../TimeAgo';
 
 const propTypes = {
+	classes: PropTypes.instanceOf(Object).isRequired,
 	closestElement: PropTypes.string.isRequired,
 	arrayOfObjects: PropTypes.instanceOf(Array).isRequired,
 	handleRemoveClick: PropTypes.func.isRequired,
 };
 
-export default class ContextMenu extends React.Component {
+class ContextMenu extends React.Component {
 	state = {
 		closestContextMenuOption: null,
 		visible: false,
@@ -105,20 +110,30 @@ export default class ContextMenu extends React.Component {
 			closestContextMenuOption,
 			visible,
 		} = this.state;
-		const { arrayOfObjects, handleRemoveClick } = this.props;
+		const {
+			classes,
+			arrayOfObjects,
+			handleRemoveClick,
+		} = this.props;
 
 		const currentItem = arrayOfObjects
 			.find(item => item.id === closestContextMenuOption);
 
 		return ReactDOM.createPortal(
 			(visible && currentItem) && (
-				<ContextMenuStyled ref={(ref) => { this.root = ref; }} className="context-menu">
-					<ListStyled>
+				<div
+					className={clsx('context-menu', classes.contextMenu)}
+					ref={(ref) => { this.root = ref; }}
+				>
+					<List className={classes.list}>
 						<ListItem>
 							<ListItemIcon>
 								<AlarmIcon color="primary" />
 							</ListItemIcon>
-							<ListItemTextStyled primary={<TimeAgo slot="title" date={currentItem.date / 1000} />} />
+							<ListItemText
+								className={classes.listItemText}
+								primary={<TimeAgo slot="title" date={currentItem.date / 1000} />}
+							/>
 						</ListItem>
 						<ListItem
 							button
@@ -127,10 +142,13 @@ export default class ContextMenu extends React.Component {
 							<ListItemIcon>
 								<DeleteIcon color="error" />
 							</ListItemIcon>
-							<ListItemTextStyled primary={`Remove "${getTitle(currentItem.text)}"`} />
+							<ListItemText
+								className={classes.listItemText}
+								primary={`Remove "${getTitle(currentItem.text)}"`}
+							/>
 						</ListItem>
-					</ListStyled>
-				</ContextMenuStyled>
+					</List>
+				</div>
 			),
 			document.getElementById('context-menu-container'),
 		);
@@ -138,3 +156,5 @@ export default class ContextMenu extends React.Component {
 }
 
 ContextMenu.propTypes = propTypes;
+
+export default withStyles(styles)(ContextMenu);
