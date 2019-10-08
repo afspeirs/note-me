@@ -19,6 +19,7 @@ const AdapterLink = React.forwardRef((props, ref) => <Link innerRef={ref} {...pr
 const propTypes = {
 	handleDrawerToggle: PropTypes.func.isRequired,
 	handleNoteDelete: PropTypes.func.isRequired,
+	isSignedIn: PropTypes.bool.isRequired,
 	loading: PropTypes.bool.isRequired,
 	notes: PropTypes.instanceOf(Array).isRequired,
 };
@@ -26,6 +27,7 @@ const propTypes = {
 const DrawerContent = ({
 	handleDrawerToggle,
 	handleNoteDelete,
+	isSignedIn,
 	loading,
 	notes,
 }) => (
@@ -37,21 +39,25 @@ const DrawerContent = ({
 			notes={notes}
 		/>
 
-		<Divider />
+		{isSignedIn && (
+			<>
+				<Divider />
 
-		<List disablePadding>
-			<ListItem
-				button
-				component={AdapterLink}
-				to="/note/"
-				onClick={handleDrawerToggle}
-			>
-				<ListItemIcon>
-					<AddIcon />
-				</ListItemIcon>
-				<ListItemText primary="New Note" />
-			</ListItem>
-		</List>
+				<List disablePadding>
+					<ListItem
+						button
+						component={AdapterLink}
+						to="/note/"
+						onClick={handleDrawerToggle}
+					>
+						<ListItemIcon>
+							<AddIcon />
+						</ListItemIcon>
+						<ListItemText primary="New Note" />
+					</ListItem>
+				</List>
+			</>
+		)}
 	</>
 );
 

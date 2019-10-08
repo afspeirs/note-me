@@ -130,6 +130,7 @@ const Container = ({
 				<DrawerContent
 					handleDrawerToggle={handleDrawerToggle}
 					handleNoteDelete={handleNoteDelete}
+					isSignedIn={isSignedIn}
 					loading={loading}
 					notes={notes}
 				/>
