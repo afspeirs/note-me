@@ -38,11 +38,13 @@ export default class App extends Component {
 			}
 		});
 
+		window.addEventListener('keydown', this.handleKeyDown);
 		window.addEventListener('swNewContentAvailable', this.swNewContentAvailable);
 		window.addEventListener('swContentCached', this.swContentCached);
 	}
 
 	componentWillUnmount() {
+		window.removeEventListener('keydown', this.handleKeyDown);
 		window.removeEventListener('swNewContentAvailable', this.swNewContentAvailable);
 		window.removeEventListener('swContentCached', this.swContentCached);
 	}
@@ -108,6 +110,23 @@ export default class App extends Component {
 	setDrawerOpen = value => this.setState({ drawerOpen: value });
 
 	setEdit = edit => this.setState({ edit });
+
+	handleKeyDown = (event) => {
+		// CTRL + B = Toggle sidebar
+		if (event.ctrlKey && event.key === 'b') {
+			event.preventDefault();
+			this.setState(prevState => ({ drawerOpen: !prevState.drawerOpen }));
+		}
+		// CTRL + E = Toggle edit
+		if (event.ctrlKey && event.key === 'e') {
+			event.preventDefault();
+			this.setState(prevState => ({ edit: !prevState.edit }));
+		}
+		// Disable some keyboard shortcuts
+		if (event.ctrlKey && (event.key === 's' || event.key === 'p')) {
+			event.preventDefault();
+		}
+	}
 
 	handleNoteAdd = (text, history) => {
 		const { user, notes } = this.state;

@@ -47,8 +47,7 @@ const NotePage = ({
 			setLocalNote('');
 			setEdit(true);
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [note]);
+	}, [note]); // eslint-disable-line react-hooks/exhaustive-deps
 
 	useEffect(() => {
 		const compare = localNote !== null && !edit;
@@ -58,8 +57,7 @@ const NotePage = ({
 		} else if (compare && localNote !== '') {
 			handleNoteAdd(localNote, history);
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [edit]);
+	}, [edit]); // eslint-disable-line react-hooks/exhaustive-deps
 
 	return (
 		<>
