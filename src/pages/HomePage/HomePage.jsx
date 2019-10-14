@@ -45,11 +45,7 @@ const HomePage = ({
 			) : (
 				<>
 					{drawerOpen && !mobile ? (
-						<List>
-							<ListItem>
-								<ListItemText primary="Nothing selected" />
-							</ListItem>
-						</List>
+						<span className={classes.centered}>Select a note from the list</span>
 					) : (
 						<NotesSearch
 							handleNoteDelete={handleNoteDelete}
