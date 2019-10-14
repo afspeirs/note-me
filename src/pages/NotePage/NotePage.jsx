@@ -39,7 +39,7 @@ const NotePage = ({
 	const { id } = match.params;
 
 	useEffect(() => {
-		if (note !== undefined) {
+		if (note !== null) {
 			setLocalNote(note.text);
 			setEdit(false);
 		}
