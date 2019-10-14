@@ -35,11 +35,11 @@ const NotePage = ({
 	setEdit,
 }) => {
 	const classes = useStyles();
-	const [localNote, setLocalNote] = useState(null);
+	const [localNote, setLocalNote] = useState(undefined);
 	const { id } = match.params;
 
 	useEffect(() => {
-		if (note !== null) {
+		if (note !== undefined) {
 			setLocalNote(note.text);
 			setEdit(false);
 		}
@@ -47,19 +47,17 @@ const NotePage = ({
 			setLocalNote('');
 			setEdit(true);
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [note]);
+	}, [note]); // eslint-disable-line react-hooks/exhaustive-deps
 
 	useEffect(() => {
-		const compare = localNote !== null && !edit;
+		const compare = localNote !== undefined && !edit;
 
 		if (compare && id && localNote !== note.text) {
 			handleNoteUpdate(id, localNote);
 		} else if (compare && localNote !== '') {
 			handleNoteAdd(localNote, history);
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [edit]);
+	}, [edit]); // eslint-disable-line react-hooks/exhaustive-deps
 
 	return (
 		<>
