@@ -224,7 +224,6 @@ export default class App extends Component {
 										{...props}
 										drawerOpen={drawerOpen}
 										edit={edit}
-										handleNoteAdd={this.handleNoteAdd}
 										handleNoteDelete={this.handleNoteDelete}
 										handleNoteUpdate={this.handleNoteUpdate}
 										loading={loading}
