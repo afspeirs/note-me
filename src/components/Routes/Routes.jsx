@@ -15,7 +15,6 @@ export default class Routes extends Component {
 	static propTypes = {
 		drawerOpen: PropTypes.bool.isRequired,
 		edit: PropTypes.bool.isRequired,
-		handleNoteAdd: PropTypes.func.isRequired,
 		handleNoteDelete: PropTypes.func.isRequired,
 		handleNoteUpdate: PropTypes.func.isRequired,
 		history: PropTypes.instanceOf(Object).isRequired,
@@ -44,7 +43,6 @@ export default class Routes extends Component {
 		const {
 			drawerOpen,
 			edit,
-			handleNoteAdd,
 			handleNoteDelete,
 			handleNoteUpdate,
 			loading,
@@ -89,19 +87,6 @@ export default class Routes extends Component {
 								edit={edit}
 								handleNoteUpdate={handleNoteUpdate}
 								note={notes.find(note => note.id === props.match.params.id)}
-								setEdit={setEdit}
-							/>
-						)}
-					/>
-
-					<Route
-						path="/note/"
-						render={props => (
-							<NotePage
-								{...props}
-								edit={edit}
-								handleNoteAdd={handleNoteAdd}
-								newNote
 								setEdit={setEdit}
 							/>
 						)}
