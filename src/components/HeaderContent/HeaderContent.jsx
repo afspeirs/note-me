@@ -23,6 +23,8 @@ const AdapterLink = React.forwardRef((props, ref) => <Link innerRef={ref} {...pr
 const propTypes = {
 	edit: PropTypes.bool.isRequired,
 	isSignedIn: PropTypes.bool.isRequired,
+	handleNoteAdd: PropTypes.func.isRequired,
+	history: PropTypes.instanceOf(Object).isRequired,
 	mobile: PropTypes.bool.isRequired,
 	setEdit: PropTypes.func.isRequired,
 };
@@ -30,6 +32,8 @@ const propTypes = {
 const HeaderContent = ({
 	edit,
 	isSignedIn,
+	handleNoteAdd,
+	history,
 	mobile,
 	setEdit,
 }) => {
@@ -37,6 +41,10 @@ const HeaderContent = ({
 	const [anchorEl, setAnchorEl] = useState(null);
 	const handleClick = event => setAnchorEl(event.currentTarget);
 	const handleClose = () => setAnchorEl(null);
+	const handleNoteAddClick = () => {
+		handleNoteAdd(history);
+		handleClose();
+	}
 
 	return (
 		<>
@@ -80,11 +88,7 @@ const HeaderContent = ({
 						open={Boolean(anchorEl)}
 						onClose={handleClose}
 					>
-						<MenuItem
-							onClick={handleClose}
-							component={AdapterLink}
-							to="/note/"
-						>
+						<MenuItem onClick={handleNoteAddClick}>
 							<IconButton
 								color="inherit"
 								aria-label="Create Note"
@@ -140,9 +144,7 @@ const HeaderContent = ({
 							<IconButton
 								color="inherit"
 								aria-label="Create Note"
-								onClick={handleClose}
-								component={AdapterLink}
-								to="/note/"
+								onClick={handleNoteAddClick}
 							>
 								<AddIcon />
 							</IconButton>

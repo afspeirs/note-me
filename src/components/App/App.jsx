@@ -128,21 +128,26 @@ export default class App extends Component {
 		}
 	}
 
-	handleNoteAdd = (text, history) => {
+	handleNoteAdd = (history) => {
 		const { user, notes } = this.state;
-		const newNote = db.collection(user.uid).doc();
-		const value = {
-			text,
-			date: +new Date(),
-			id: newNote.id,
-			created: +new Date(),
-		};
+		const emptyNotes = notes.filter(el => el.text === '');
 
-		notes.unshift(value);
-		this.setState({ notes });
+		if (emptyNotes.length !== 0) {
+			history.push(`/note/${emptyNotes[0].id}`)
+		} else {
+			const newNote = db.collection(user.uid).doc();
+			const value = {
+				text: '',
+				date: +new Date(),
+				id: newNote.id,
+				created: +new Date(),
+			};
 
-		newNote.set(value)
-			.then(() => history.replace(`/note/${value.id}`));
+			notes.unshift(value);
+			this.setState({ notes });
+
+			newNote.set(value).then(() => history.push(`/note/${value.id}`));
+		}
 	};
 
 	handleNoteDelete = (id, note = null) => {
@@ -207,6 +212,7 @@ export default class App extends Component {
 									{...props}
 									drawerOpen={drawerOpen}
 									edit={edit}
+									handleNoteAdd={this.handleNoteAdd}
 									handleNoteDelete={this.handleNoteDelete}
 									isSignedIn={Boolean(user)}
 									loading={loading}
