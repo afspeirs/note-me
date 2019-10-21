@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom'
 import Swipeout from 'rc-swipeout';
 import { List, ListItem, ListItemText } from '@material-ui/core';
 import { Delete as DeleteIcon } from '@material-ui/icons';
@@ -24,6 +25,7 @@ const NotesList = ({
 	notes,
 }) => {
 	const classes = useStyles();
+	const history = useHistory()
 	const [open, setOpen] = React.useState(false);
 	const [value, setValue] = React.useState(null);
 	const [{ sort }] = useStateValue();
@@ -36,7 +38,7 @@ const NotesList = ({
 	}[sort];
 
 	const handleClose = (note = null) => {
-		if (note && note.id) handleNoteDelete(note.id, note);
+		if (note && note.id) handleNoteDelete(note.id, history);
 		setOpen(false);
 		setValue(null);
 	};

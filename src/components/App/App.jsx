@@ -150,8 +150,9 @@ export default class App extends Component {
 		}
 	};
 
-	handleNoteDelete = (id, note = null) => {
+	handleNoteDelete = (id, history) => {
 		const { user, notes } = this.state;
+		const note = notes.find(note => note.id === id);
 
 		db.collection(user.uid)
 			.doc(id)
@@ -161,6 +162,8 @@ export default class App extends Component {
 			const indexOfNote = notes.indexOf(note);
 			notes.splice(indexOfNote, 1);
 			this.setState({ notes });
+
+			history.replace('/');
 		}
 	};
 
