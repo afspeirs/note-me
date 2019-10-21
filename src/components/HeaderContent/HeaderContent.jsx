@@ -10,6 +10,7 @@ import {
 import {
 	Add as AddIcon,
 	Edit as EditIcon,
+	Delete as DeleteIcon,
 	Home as HomeIcon,
 	Save as SaveIcon,
 	Settings as SettingsIcon,
@@ -24,6 +25,7 @@ const propTypes = {
 	edit: PropTypes.bool.isRequired,
 	isSignedIn: PropTypes.bool.isRequired,
 	handleNoteAdd: PropTypes.func.isRequired,
+	handleNoteDelete: PropTypes.func.isRequired,
 	history: PropTypes.instanceOf(Object).isRequired,
 	mobile: PropTypes.bool.isRequired,
 	setEdit: PropTypes.func.isRequired,
@@ -33,6 +35,7 @@ const HeaderContent = ({
 	edit,
 	isSignedIn,
 	handleNoteAdd,
+	handleNoteDelete,
 	history,
 	mobile,
 	setEdit,
@@ -44,7 +47,11 @@ const HeaderContent = ({
 	const handleNoteAddClick = () => {
 		handleNoteAdd(history);
 		handleClose();
-	}
+	};
+	const handleNoteDeleteClick = (location, history) => {
+		handleNoteDelete(location.pathname.replace(/^(.*[/])/, ''), history)
+		handleClose();
+	};
 
 	return (
 		<>
@@ -118,6 +125,26 @@ const HeaderContent = ({
 							)}
 						/>
 
+						<Route
+							render={({ location }) => (
+								// If SettingsPage is open and the previousLocation is NotePage
+								// Or if the page is NotePage
+								(location.pathname === '/settings/' && window.previousLocation && window.previousLocation.pathname.startsWith('/note/'))
+								|| location.pathname.startsWith('/note/')
+							) && (
+								<MenuItem onClick={() => handleNoteDeleteClick(location, history)}>
+									<IconButton
+										color="inherit"
+										aria-label="Delete"
+										edge="start"
+									>
+										<DeleteIcon />
+									</IconButton>
+									<span>Delete</span>
+								</MenuItem>
+							)}
+						/>
+
 						<MenuItem
 							onClick={handleClose}
 							component={AdapterLink}
@@ -150,6 +177,25 @@ const HeaderContent = ({
 							</IconButton>
 						</Tooltip>
 					)}
+
+					<Route
+						render={({ history, location }) => (
+							// If SettingsPage is open and the previousLocation is NotePage
+							// Or if the page is NotePage
+							(location.pathname === '/settings/' && window.previousLocation && window.previousLocation.pathname.startsWith('/note/'))
+							|| location.pathname.startsWith('/note/')
+						) && (
+							<Tooltip title="Delete">
+								<IconButton
+									color="inherit"
+									aria-label="Delete"
+									onClick={() => handleNoteDelete(location.pathname.replace(/^(.*[/])/, ''), history)}
+								>
+									<DeleteIcon />
+								</IconButton>
+							</Tooltip>
+						)}
+					/>
 
 					<Route
 						render={({ location }) => (

@@ -109,6 +109,7 @@ const Container = ({
 					<HeaderContent
 						edit={edit}
 						handleNoteAdd={handleNoteAdd}
+						handleNoteDelete={handleNoteDelete}
 						history={history}
 						isSignedIn={isSignedIn}
 						mobile={mobile}
