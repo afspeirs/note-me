@@ -88,7 +88,7 @@ const NotesList = ({
 							to={`/note/${note.id}`}
 							className="context-menu-select"
 							id={note.id}
-							primary={note.text ? getTitle(note.text) : 'Untitled'}
+							primary={getTitle(note.text)}
 						/>
 					</Swipeout>
 				))}
