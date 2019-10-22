@@ -144,7 +144,7 @@ class ContextMenu extends React.Component {
 							</ListItemIcon>
 							<ListItemText
 								className={classes.listItemText}
-								primary={`Remove "${getTitle(currentItem.text)}"`}
+								primary={`Delete "${getTitle(currentItem.text)}"`}
 							/>
 						</ListItem>
 					</List>
