@@ -10,29 +10,35 @@ import {
 import {
 	Add as AddIcon,
 	Edit as EditIcon,
+	Delete as DeleteIcon,
 	Home as HomeIcon,
 	Save as SaveIcon,
 	Settings as SettingsIcon,
 	MoreVert as MoreIcon,
 } from '@material-ui/icons';
+import withConfirm from 'material-ui-confirm';
 
 import useStyles from './HeaderContent.styled';
 
 const AdapterLink = React.forwardRef((props, ref) => <Link innerRef={ref} {...props} />);
 
 const propTypes = {
+	confirm: PropTypes.func.isRequired,
 	edit: PropTypes.bool.isRequired,
 	isSignedIn: PropTypes.bool.isRequired,
 	handleNoteAdd: PropTypes.func.isRequired,
+	handleNoteDelete: PropTypes.func.isRequired,
 	history: PropTypes.instanceOf(Object).isRequired,
 	mobile: PropTypes.bool.isRequired,
 	setEdit: PropTypes.func.isRequired,
 };
 
 const HeaderContent = ({
+	confirm,
 	edit,
 	isSignedIn,
 	handleNoteAdd,
+	handleNoteDelete,
 	history,
 	mobile,
 	setEdit,
@@ -44,7 +50,14 @@ const HeaderContent = ({
 	const handleNoteAddClick = () => {
 		handleNoteAdd(history);
 		handleClose();
-	}
+	};
+	const handleNoteDeleteOptions = {
+		title: 'Are you sure you want to delete this note?',
+		confirmationText: 'Delete',
+		dialogProps: {
+			onEnter: handleClose,
+		},
+	};
 
 	return (
 		<>
@@ -118,6 +131,31 @@ const HeaderContent = ({
 							)}
 						/>
 
+						<Route
+							render={({ location }) => (
+								// If SettingsPage is open and the previousLocation is NotePage
+								// Or if the page is NotePage
+								(location.pathname === '/settings/' && window.previousLocation && window.previousLocation.pathname.startsWith('/note/'))
+								|| location.pathname.startsWith('/note/')
+							) && (
+								<MenuItem
+									onClick={confirm(
+										() => handleNoteDelete(location.pathname.replace(/^(.*[/])/, ''), history),
+										handleNoteDeleteOptions,
+									)}
+								>
+									<IconButton
+										color="inherit"
+										aria-label="Delete"
+										edge="start"
+									>
+										<DeleteIcon />
+									</IconButton>
+									<span>Delete</span>
+								</MenuItem>
+							)}
+						/>
+
 						<MenuItem
 							onClick={handleClose}
 							component={AdapterLink}
@@ -150,6 +188,28 @@ const HeaderContent = ({
 							</IconButton>
 						</Tooltip>
 					)}
+
+					<Route
+						render={({ location }) => (
+							// If SettingsPage is open and the previousLocation is NotePage
+							// Or if the page is NotePage
+							(location.pathname === '/settings/' && window.previousLocation && window.previousLocation.pathname.startsWith('/note/'))
+							|| location.pathname.startsWith('/note/')
+						) && (
+							<Tooltip title="Delete">
+								<IconButton
+									color="inherit"
+									aria-label="Delete"
+									onClick={confirm(
+										() => handleNoteDelete(location.pathname.replace(/^(.*[/])/, ''), history),
+										handleNoteDeleteOptions,
+									)}
+								>
+									<DeleteIcon />
+								</IconButton>
+							</Tooltip>
+						)}
+					/>
 
 					<Route
 						render={({ location }) => (
@@ -195,4 +255,4 @@ const HeaderContent = ({
 
 HeaderContent.propTypes = propTypes;
 
-export default HeaderContent;
+export default withConfirm(HeaderContent);
