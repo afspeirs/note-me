@@ -16,12 +16,14 @@ import {
 	Settings as SettingsIcon,
 	MoreVert as MoreIcon,
 } from '@material-ui/icons';
+import withConfirm from 'material-ui-confirm';
 
 import useStyles from './HeaderContent.styled';
 
 const AdapterLink = React.forwardRef((props, ref) => <Link innerRef={ref} {...props} />);
 
 const propTypes = {
+	confirm: PropTypes.func.isRequired,
 	edit: PropTypes.bool.isRequired,
 	isSignedIn: PropTypes.bool.isRequired,
 	handleNoteAdd: PropTypes.func.isRequired,
@@ -32,6 +34,7 @@ const propTypes = {
 };
 
 const HeaderContent = ({
+	confirm,
 	edit,
 	isSignedIn,
 	handleNoteAdd,
@@ -48,9 +51,12 @@ const HeaderContent = ({
 		handleNoteAdd(history);
 		handleClose();
 	};
-	const handleNoteDeleteClick = (location, history) => {
-		handleNoteDelete(location.pathname.replace(/^(.*[/])/, ''), history)
-		handleClose();
+	const handleNoteDeleteOptions = {
+		title: 'Are you sure you want to delete this note?',
+		confirmationText: 'Delete',
+		dialogProps: {
+			onEnter: handleClose,
+		},
 	};
 
 	return (
@@ -132,7 +138,12 @@ const HeaderContent = ({
 								(location.pathname === '/settings/' && window.previousLocation && window.previousLocation.pathname.startsWith('/note/'))
 								|| location.pathname.startsWith('/note/')
 							) && (
-								<MenuItem onClick={() => handleNoteDeleteClick(location, history)}>
+								<MenuItem
+									onClick={confirm(
+										() => handleNoteDelete(location.pathname.replace(/^(.*[/])/, ''), history),
+										handleNoteDeleteOptions,
+									)}
+								>
 									<IconButton
 										color="inherit"
 										aria-label="Delete"
@@ -179,7 +190,7 @@ const HeaderContent = ({
 					)}
 
 					<Route
-						render={({ history, location }) => (
+						render={({ location }) => (
 							// If SettingsPage is open and the previousLocation is NotePage
 							// Or if the page is NotePage
 							(location.pathname === '/settings/' && window.previousLocation && window.previousLocation.pathname.startsWith('/note/'))
@@ -189,7 +200,10 @@ const HeaderContent = ({
 								<IconButton
 									color="inherit"
 									aria-label="Delete"
-									onClick={() => handleNoteDelete(location.pathname.replace(/^(.*[/])/, ''), history)}
+									onClick={confirm(
+										() => handleNoteDelete(location.pathname.replace(/^(.*[/])/, ''), history),
+										handleNoteDeleteOptions,
+									)}
 								>
 									<DeleteIcon />
 								</IconButton>
@@ -241,4 +255,4 @@ const HeaderContent = ({
 
 HeaderContent.propTypes = propTypes;
 
-export default HeaderContent;
+export default withConfirm(HeaderContent);
