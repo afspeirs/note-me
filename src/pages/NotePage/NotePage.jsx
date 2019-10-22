@@ -32,9 +32,9 @@ const NotePage = ({
 	useEffect(() => {
 		if (note !== null) {
 			setLocalNote(note.text);
-			setEdit(false);
+			setEdit(note.text === '');
 		}
-	}, [note]); // eslint-disable-line react-hooks/exhaustive-deps
+	}, [note]); // eslint-disable-line
 
 	useEffect(() => {
 		const compare = localNote !== undefined && !edit;
@@ -42,7 +42,7 @@ const NotePage = ({
 		if (compare && id && localNote !== note.text) {
 			handleNoteUpdate(id, localNote);
 		}
-	}, [edit]); // eslint-disable-line react-hooks/exhaustive-deps
+	}, [edit]); // eslint-disable-line
 
 	return (
 		<>
