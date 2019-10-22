@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom';
 import Swipeout from 'rc-swipeout';
 import { List, ListItem, ListItemText } from '@material-ui/core';
 import { Delete as DeleteIcon } from '@material-ui/icons';
+import withConfirm from 'material-ui-confirm';
 
 import useStyles from './NotesList.styled';
 import ContextMenu from '../ContextMenu';
@@ -14,18 +15,20 @@ import { useStateValue } from '../StateContext';
 import { getTitle } from '../../ultils';
 
 const propTypes = {
+	confirm: PropTypes.func.isRequired,
 	handleNoteDelete: PropTypes.func.isRequired,
 	loading: PropTypes.bool.isRequired,
 	notes: PropTypes.instanceOf(Array).isRequired,
 };
 
 const NotesList = ({
+	confirm,
 	handleNoteDelete,
 	loading,
 	notes,
 }) => {
 	const classes = useStyles();
-	const history = useHistory()
+	const history = useHistory();
 	const [open, setOpen] = React.useState(false);
 	const [value, setValue] = React.useState(null);
 	const [{ sort }] = useStateValue();
@@ -76,7 +79,12 @@ const NotesList = ({
 							},
 							{
 								text: <DeleteIcon />,
-								onPress: () => handleOpen(note),
+								onPress: confirm(
+									() => handleNoteDelete(note.id, history), {
+										title: `Are you sure you want to delete "${getTitle(note.text)}"?`,
+										confirmationText: 'Delete',
+									},
+								),
 								autoClose: true,
 								style: {
 									backgroundColor: 'red',
@@ -112,4 +120,4 @@ const NotesList = ({
 
 NotesList.propTypes = propTypes;
 
-export default NotesList;
+export default withConfirm(NotesList);
