@@ -1,45 +1,7 @@
-// import React from 'react';
-// import {
-// 	ListItem,
-// 	ListItemSecondaryAction,
-// 	ListItemText,
-// } from '@material-ui/core';
-
-// export default class CheckForUpdate extends React.Component {
-// 	state = {
-// 		showUpdatePreloader: false,
-// 	};
-
-// 	updateServiceWorker = () => {
-// 		this.setState({ showUpdatePreloader: true });
-
-// 		if ('serviceWorker' in navigator) {
-// 			navigator.serviceWorker.ready.then(registration => registration.update());
-// 		} else {
-// 			setTimeout(() => window.location.reload(window.location.href), 1500);
-// 		}
-
-// 		setTimeout(() => this.setState({ showUpdatePreloader: false }), 1500);
-// 	}
-
-// 	render() {
-// 		const { showUpdatePreloader } = this.state;
-// 		// console.log(showUpdatePreloader);
-
-// 		return (
-// 			<ListItem>
-// 				<ListItemText primary="Check for update" />
-// 				<ListItemSecondaryAction>
-// 					{!showUpdatePreloader ? 'Refresh' : 'loading'}
-// 				</ListItemSecondaryAction>
-// 			</ListItem>
-// 		);
-// 	}
-// }
-
-
 import React from 'react';
+import PropTypes from 'prop-types';
 import {
+	Button,
 	CircularProgress,
 	IconButton,
 	ListItem,
@@ -50,7 +12,11 @@ import {
 	Refresh as RefreshIcon,
 } from '@material-ui/icons';
 
-const CheckForUpdate = () => {
+const propTypes = {
+	updateAvailable: PropTypes.bool.isRequired,
+};
+
+const CheckForUpdate = ({ updateAvailable }) => {
 	const [loading, setLoading] = React.useState(false);
 	const timer = React.useRef();
 
@@ -76,22 +42,36 @@ const CheckForUpdate = () => {
 	return (
 		<ListItem>
 			<ListItemText primary="Check for update" />
-			<ListItemSecondaryAction>
-				{loading ? (
-					<CircularProgress size={24} color="inherit" />
-				) : (
-					<IconButton
-						color="inherit"
-						disabled={loading}
-						onClick={handleButtonClick}
-						edge="end"
+			{updateAvailable ? (
+				<ListItemSecondaryAction>
+					<Button
+						variant="contained"
+						color="primary"
+						onClick={() => window.location.reload(true)}
 					>
-						<RefreshIcon />
-					</IconButton>
-				)}
-			</ListItemSecondaryAction>
+						Update
+					</Button>
+				</ListItemSecondaryAction>
+			) : (
+				<ListItemSecondaryAction>
+					{loading ? (
+						<CircularProgress size={24} color="inherit" />
+					) : (
+						<IconButton
+							color="inherit"
+							disabled={loading}
+							onClick={handleButtonClick}
+							edge="end"
+						>
+							<RefreshIcon />
+						</IconButton>
+					)}
+				</ListItemSecondaryAction>
+			)}
 		</ListItem>
 	);
 };
+
+CheckForUpdate.propTypes = propTypes;
 
 export default CheckForUpdate;

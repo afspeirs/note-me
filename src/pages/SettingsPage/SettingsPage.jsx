@@ -39,6 +39,7 @@ const propTypes = {
 	history: PropTypes.instanceOf(Object).isRequired,
 	signIn: PropTypes.func.isRequired,
 	signOut: PropTypes.func.isRequired,
+	updateAvailable: PropTypes.bool.isRequired,
 	user: PropTypes.instanceOf(Object),
 };
 
@@ -46,6 +47,7 @@ const Settings = ({
 	history,
 	signIn,
 	signOut,
+	updateAvailable,
 	user,
 }) => {
 	const classes = useStyles();
@@ -129,7 +131,7 @@ const Settings = ({
 						{`v${process.env.REACT_APP_VERSION}`}
 					</ListItemSecondaryAction>
 				</ListItem>
-				<CheckForUpdate />
+				<CheckForUpdate updateAvailable={updateAvailable} />
 				<Divider />
 				<ChangeTheme />
 				<SortNotes />

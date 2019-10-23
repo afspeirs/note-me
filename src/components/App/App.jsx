@@ -22,6 +22,7 @@ export default class App extends Component {
 			darkTheme: JSON.parse(localStorage.getItem('changeDarkTheme')) || false,
 		},
 		swSnackbar: {},
+		updateAvailable: false,
 		user: null,
 	}
 
@@ -55,7 +56,10 @@ export default class App extends Component {
 			secondaryText: 'Update',
 			text: 'A new version is available',
 		};
-		this.setState({ swSnackbar });
+		this.setState({
+			swSnackbar,
+			updateAvailable: true,
+		});
 	}
 
 	swContentCached = () => {
@@ -192,6 +196,7 @@ export default class App extends Component {
 			notes,
 			settings,
 			swSnackbar,
+			updateAvailable,
 			user,
 		} = this.state;
 
@@ -234,6 +239,7 @@ export default class App extends Component {
 										setEdit={this.setEdit}
 										signIn={this.signIn}
 										signOut={this.signOut}
+										updateAvailable={updateAvailable}
 										user={user}
 									/>
 								</Container>
