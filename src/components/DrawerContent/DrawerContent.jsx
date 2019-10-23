@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import {
 	Divider,
 	List,
@@ -14,26 +13,25 @@ import {
 
 import NotesSearch from '../NotesSearch';
 
-const AdapterLink = React.forwardRef((props, ref) => <Link innerRef={ref} {...props} />);
-
 const propTypes = {
-	handleDrawerToggle: PropTypes.func.isRequired,
+	handleNoteAdd: PropTypes.func.isRequired,
 	handleNoteDelete: PropTypes.func.isRequired,
+	history: PropTypes.instanceOf(Object).isRequired,
 	isSignedIn: PropTypes.bool.isRequired,
 	loading: PropTypes.bool.isRequired,
 	notes: PropTypes.instanceOf(Array).isRequired,
 };
 
 const DrawerContent = ({
-	handleDrawerToggle,
+	handleNoteAdd,
 	handleNoteDelete,
+	history,
 	isSignedIn,
 	loading,
 	notes,
 }) => (
 	<>
 		<NotesSearch
-			handleDrawerToggle={handleDrawerToggle}
 			handleNoteDelete={handleNoteDelete}
 			loading={loading}
 			notes={notes}
@@ -44,16 +42,11 @@ const DrawerContent = ({
 				<Divider />
 
 				<List disablePadding>
-					<ListItem
-						button
-						component={AdapterLink}
-						to="/note/"
-						onClick={handleDrawerToggle}
-					>
+					<ListItem button onClick={() => handleNoteAdd(history)}>
 						<ListItemIcon>
 							<AddIcon />
 						</ListItemIcon>
-						<ListItemText primary="New Note" />
+						<ListItemText primary="Create Note" />
 					</ListItem>
 				</List>
 			</>

@@ -28,6 +28,7 @@ const propTypes = {
 	]).isRequired,
 	drawerOpen: PropTypes.bool.isRequired,
 	edit: PropTypes.bool.isRequired,
+	handleNoteAdd: PropTypes.func.isRequired,
 	handleNoteDelete: PropTypes.func.isRequired,
 	history: PropTypes.instanceOf(Object).isRequired,
 	isSignedIn: PropTypes.bool.isRequired,
@@ -41,6 +42,7 @@ const Container = ({
 	children,
 	drawerOpen,
 	edit,
+	handleNoteAdd,
 	handleNoteDelete,
 	history,
 	isSignedIn,
@@ -106,6 +108,9 @@ const Container = ({
 					<Typography className={classes.title} variant="h6">NoteMe</Typography>
 					<HeaderContent
 						edit={edit}
+						handleNoteAdd={handleNoteAdd}
+						handleNoteDelete={handleNoteDelete}
+						history={history}
 						isSignedIn={isSignedIn}
 						mobile={mobile}
 						setEdit={setEdit}
@@ -128,8 +133,9 @@ const Container = ({
 			>
 				<div className={classes.drawerHeader} />
 				<DrawerContent
-					handleDrawerToggle={handleDrawerToggle}
+					handleNoteAdd={handleNoteAdd}
 					handleNoteDelete={handleNoteDelete}
+					history={history}
 					isSignedIn={isSignedIn}
 					loading={loading}
 					notes={notes}

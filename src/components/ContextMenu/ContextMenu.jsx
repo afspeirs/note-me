@@ -13,16 +13,19 @@ import {
 	Delete as DeleteIcon,
 } from '@material-ui/icons';
 import { withStyles } from '@material-ui/styles';
+import withConfirm from 'material-ui-confirm';
 
 import styles from './ContextMenu.styled';
 import { getTitle } from '../../ultils';
 import TimeAgo from '../TimeAgo';
 
 const propTypes = {
+	arrayOfObjects: PropTypes.instanceOf(Array).isRequired,
 	classes: PropTypes.instanceOf(Object).isRequired,
 	closestElement: PropTypes.string.isRequired,
-	arrayOfObjects: PropTypes.instanceOf(Array).isRequired,
-	handleRemoveClick: PropTypes.func.isRequired,
+	confirm: PropTypes.func.isRequired,
+	handleNoteDelete: PropTypes.func.isRequired,
+	history: PropTypes.instanceOf(Object).isRequired,
 };
 
 class ContextMenu extends React.Component {
@@ -111,16 +114,18 @@ class ContextMenu extends React.Component {
 			visible,
 		} = this.state;
 		const {
-			classes,
 			arrayOfObjects,
-			handleRemoveClick,
+			classes,
+			confirm,
+			history,
+			handleNoteDelete,
 		} = this.props;
 
-		const currentItem = arrayOfObjects
+		const currentNote = arrayOfObjects
 			.find(item => item.id === closestContextMenuOption);
 
 		return ReactDOM.createPortal(
-			(visible && currentItem) && (
+			(visible && currentNote) && (
 				<div
 					className={clsx('context-menu', classes.contextMenu)}
 					ref={(ref) => { this.root = ref; }}
@@ -132,19 +137,24 @@ class ContextMenu extends React.Component {
 							</ListItemIcon>
 							<ListItemText
 								className={classes.listItemText}
-								primary={<TimeAgo slot="title" date={currentItem.date / 1000} />}
+								primary={<TimeAgo slot="title" date={currentNote.date / 1000} />}
 							/>
 						</ListItem>
 						<ListItem
 							button
-							onClick={() => handleRemoveClick(currentItem)}
+							onClick={confirm(
+								() => handleNoteDelete(currentNote.id, history), {
+									title: `Are you sure you want to delete "${getTitle(currentNote.text)}"?`,
+									confirmationText: 'Delete',
+								},
+							)}
 						>
 							<ListItemIcon>
 								<DeleteIcon color="error" />
 							</ListItemIcon>
 							<ListItemText
 								className={classes.listItemText}
-								primary={`Remove "${getTitle(currentItem.text)}"`}
+								primary={`Delete "${getTitle(currentNote.text)}"`}
 							/>
 						</ListItem>
 					</List>
@@ -157,4 +167,4 @@ class ContextMenu extends React.Component {
 
 ContextMenu.propTypes = propTypes;
 
-export default withStyles(styles)(ContextMenu);
+export default withStyles(styles)(withConfirm(ContextMenu));

@@ -8,29 +8,20 @@ import useStyles from './NotePage.styled';
 
 const defaultProps = {
 	note: null,
-	newNote: false,
-	handleNoteAdd: () => {},
-	handleNoteUpdate: () => {},
 };
 
 const propTypes = {
 	edit: PropTypes.bool.isRequired,
-	handleNoteAdd: PropTypes.func,
-	handleNoteUpdate: PropTypes.func,
-	history: PropTypes.instanceOf(Object).isRequired,
+	handleNoteUpdate: PropTypes.func.isRequired,
 	match: PropTypes.instanceOf(Object).isRequired,
-	newNote: PropTypes.bool,
 	note: PropTypes.instanceOf(Object),
 	setEdit: PropTypes.func.isRequired,
 };
 
 const NotePage = ({
 	edit,
-	handleNoteAdd,
 	handleNoteUpdate,
-	history,
 	match,
-	newNote,
 	note,
 	setEdit,
 }) => {
@@ -41,23 +32,17 @@ const NotePage = ({
 	useEffect(() => {
 		if (note !== null) {
 			setLocalNote(note.text);
-			setEdit(false);
+			setEdit(note.text === '');
 		}
-		if (newNote) {
-			setLocalNote('');
-			setEdit(true);
-		}
-	}, [note]); // eslint-disable-line react-hooks/exhaustive-deps
+	}, [note]); // eslint-disable-line
 
 	useEffect(() => {
 		const compare = localNote !== undefined && !edit;
 
 		if (compare && id && localNote !== note.text) {
 			handleNoteUpdate(id, localNote);
-		} else if (compare && localNote !== '') {
-			handleNoteAdd(localNote, history);
 		}
-	}, [edit]); // eslint-disable-line react-hooks/exhaustive-deps
+	}, [edit]); // eslint-disable-line
 
 	return (
 		<>

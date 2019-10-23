@@ -1,31 +1,33 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
 import Swipeout from 'rc-swipeout';
 import { List, ListItem, ListItemText } from '@material-ui/core';
 import { Delete as DeleteIcon } from '@material-ui/icons';
+import withConfirm from 'material-ui-confirm';
 
 import useStyles from './NotesList.styled';
 import ContextMenu from '../ContextMenu';
-import DeleteConfirmationDialog from '../DeleteConfirmationDialog';
 import ListItemLink from './ListItemLink';
 import TimeAgo from '../TimeAgo';
 import { useStateValue } from '../StateContext';
 import { getTitle } from '../../ultils';
 
 const propTypes = {
+	confirm: PropTypes.func.isRequired,
 	handleNoteDelete: PropTypes.func.isRequired,
 	loading: PropTypes.bool.isRequired,
 	notes: PropTypes.instanceOf(Array).isRequired,
 };
 
 const NotesList = ({
+	confirm,
 	handleNoteDelete,
 	loading,
 	notes,
 }) => {
 	const classes = useStyles();
-	const [open, setOpen] = React.useState(false);
-	const [value, setValue] = React.useState(null);
+	const history = useHistory();
 	const [{ sort }] = useStateValue();
 
 	const sortFunction = {
@@ -34,17 +36,6 @@ const NotesList = ({
 		'title-asc': (a, b) => a.text.localeCompare(b.text),
 		'title-dsc': (a, b) => b.text.localeCompare(a.text),
 	}[sort];
-
-	const handleClose = (note = null) => {
-		if (note && note.id) handleNoteDelete(note.id, note);
-		setOpen(false);
-		setValue(null);
-	};
-
-	const handleOpen = (note) => {
-		setValue(note);
-		setOpen(true);
-	};
 
 	return (
 		<>
@@ -74,7 +65,12 @@ const NotesList = ({
 							},
 							{
 								text: <DeleteIcon />,
-								onPress: () => handleOpen(note),
+								onPress: confirm(
+									() => handleNoteDelete(note.id, history), {
+										title: `Are you sure you want to delete "${getTitle(note.text)}"?`,
+										confirmationText: 'Delete',
+									},
+								),
 								autoClose: true,
 								style: {
 									backgroundColor: 'red',
@@ -88,21 +84,17 @@ const NotesList = ({
 							to={`/note/${note.id}`}
 							className="context-menu-select"
 							id={note.id}
-							primary={note.text ? getTitle(note.text) : 'Untitled'}
+							primary={getTitle(note.text)}
 						/>
 					</Swipeout>
 				))}
 			</List>
 
 			<ContextMenu
-				closestElement=".context-menu-select"
 				arrayOfObjects={notes}
-				handleRemoveClick={handleOpen}
-			/>
-			<DeleteConfirmationDialog
-				open={open}
-				onClose={handleClose}
-				value={value}
+				closestElement=".context-menu-select"
+				handleNoteDelete={handleNoteDelete}
+				history={history}
 			/>
 		</>
 	);
@@ -110,4 +102,4 @@ const NotesList = ({
 
 NotesList.propTypes = propTypes;
 
-export default NotesList;
+export default withConfirm(NotesList);

@@ -8,19 +8,25 @@
     "@material-ui/styles": "^4.5.0",
     "clsx": "^1.0.4",
     "cra-append-sw": "^2.6.1",
-    "eslint-config-airbnb": "^17.1.1",
-    "firebase": "^6.6.2",
+    "firebase": "^7.2.0",
+    "material-ui-confirm": "^1.0.1",
     "prop-types": "^15.7.2",
     "rc-swipeout": "^2.0.11",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
     "react-markdown": "^4.2.2",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "3.0.1"
+    "react-scripts": "3.2.0"
+  },
+  "devDependencies": {
+    "eslint-config-airbnb": "^17.1.1"
   },
   "scripts": {
     "start": "react-scripts start && cra-append-sw --mode dev ./src/serviceWorker-custom.js",
     "build": "react-scripts build && cra-append-sw ./src/serviceWorker-custom.js"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
   },
   "browserslist": {
     "production": [
@@ -33,8 +39,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "eslintConfig": {
-    "extends": "react-app"
   }
 }
