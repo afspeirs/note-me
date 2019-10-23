@@ -133,7 +133,7 @@ export default class App extends Component {
 		const emptyNotes = notes.filter(el => el.text === '');
 
 		if (emptyNotes.length !== 0) {
-			history.push(`/note/${emptyNotes[0].id}`)
+			history.push(`/note/${emptyNotes[0].id}`);
 		} else {
 			const newNote = db.collection(user.uid).doc();
 			const value = {
@@ -152,7 +152,7 @@ export default class App extends Component {
 
 	handleNoteDelete = (id, history) => {
 		const { user, notes } = this.state;
-		const note = notes.find(note => note.id === id);
+		const note = notes.find(item => item.id === id);
 
 		db.collection(user.uid)
 			.doc(id)
