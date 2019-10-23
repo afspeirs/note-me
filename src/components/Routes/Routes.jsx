@@ -24,6 +24,7 @@ export default class Routes extends Component {
 		setEdit: PropTypes.func.isRequired,
 		signIn: PropTypes.func.isRequired,
 		signOut: PropTypes.func.isRequired,
+		updateAvailable: PropTypes.bool.isRequired,
 		user: PropTypes.instanceOf(Object),
 	}
 
@@ -51,6 +52,7 @@ export default class Routes extends Component {
 			setEdit,
 			signIn,
 			signOut,
+			updateAvailable,
 			user,
 		} = this.props;
 
@@ -106,6 +108,7 @@ export default class Routes extends Component {
 								{...props}
 								signIn={signIn}
 								signOut={signOut}
+								updateAvailable={updateAvailable}
 								user={user}
 							/>
 						)}
