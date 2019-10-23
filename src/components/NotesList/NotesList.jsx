@@ -8,7 +8,6 @@ import withConfirm from 'material-ui-confirm';
 
 import useStyles from './NotesList.styled';
 import ContextMenu from '../ContextMenu';
-import DeleteConfirmationDialog from '../DeleteConfirmationDialog';
 import ListItemLink from './ListItemLink';
 import TimeAgo from '../TimeAgo';
 import { useStateValue } from '../StateContext';
@@ -29,8 +28,6 @@ const NotesList = ({
 }) => {
 	const classes = useStyles();
 	const history = useHistory();
-	const [open, setOpen] = React.useState(false);
-	const [value, setValue] = React.useState(null);
 	const [{ sort }] = useStateValue();
 
 	const sortFunction = {
@@ -39,17 +36,6 @@ const NotesList = ({
 		'title-asc': (a, b) => a.text.localeCompare(b.text),
 		'title-dsc': (a, b) => b.text.localeCompare(a.text),
 	}[sort];
-
-	const handleClose = (note = null) => {
-		if (note && note.id) handleNoteDelete(note.id, history);
-		setOpen(false);
-		setValue(null);
-	};
-
-	const handleOpen = (note) => {
-		setValue(note);
-		setOpen(true);
-	};
 
 	return (
 		<>
@@ -105,14 +91,10 @@ const NotesList = ({
 			</List>
 
 			<ContextMenu
-				closestElement=".context-menu-select"
 				arrayOfObjects={notes}
-				handleRemoveClick={handleOpen}
-			/>
-			<DeleteConfirmationDialog
-				open={open}
-				onClose={handleClose}
-				value={value}
+				closestElement=".context-menu-select"
+				handleNoteDelete={handleNoteDelete}
+				history={history}
 			/>
 		</>
 	);
