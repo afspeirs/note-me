@@ -60,9 +60,7 @@ const Container = ({
 
 	// Toggle drawer only in mobile unless toggle is true
 	const handleDrawerToggle = (toggle = false) => {
-		if ((toggle === true) || mobile) {
-			setDrawerOpen(!drawerOpen);
-		}
+		if ((toggle === true) || mobile) setDrawerOpen(!drawerOpen);
 	};
 
 	// Run handleDrawerClose if the history changes
