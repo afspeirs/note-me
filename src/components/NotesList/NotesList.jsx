@@ -8,7 +8,7 @@ import withConfirm from 'material-ui-confirm';
 
 import useStyles from './NotesList.styled';
 import ContextMenu from '../ContextMenu';
-import ListItemLink from './ListItemLink';
+import ListItemLink from '../ListItemLink';
 import TimeAgo from '../TimeAgo';
 import { useStateValue } from '../StateContext';
 import { getTitle } from '../../ultils';
