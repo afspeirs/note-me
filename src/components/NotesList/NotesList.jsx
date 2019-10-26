@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useHistory } from 'react-router-dom';
+import clsx from 'clsx';
+import { NavLink, useHistory } from 'react-router-dom';
 import Swipeout from 'rc-swipeout';
 import { List, ListItem, ListItemText } from '@material-ui/core';
 import { Delete as DeleteIcon } from '@material-ui/icons';
@@ -8,7 +9,6 @@ import withConfirm from 'material-ui-confirm';
 
 import useStyles from './NotesList.styled';
 import ContextMenu from '../ContextMenu';
-import ListItemLink from '../ListItemLink';
 import TimeAgo from '../TimeAgo';
 import { useStateValue } from '../StateContext';
 import { getTitle } from '../../ultils';
@@ -36,6 +36,13 @@ const NotesList = ({
 		'title-asc': (a, b) => a.text.localeCompare(b.text),
 		'title-dsc': (a, b) => b.text.localeCompare(a.text),
 	}[sort];
+
+	const renderLink = React.useMemo(
+		() => React.forwardRef((props, ref) => (
+			<NavLink {...props} innerRef={ref} />
+		)),
+		[],
+	);
 
 	return (
 		<>
@@ -80,12 +87,17 @@ const NotesList = ({
 							},
 						]}
 					>
-						<ListItemLink
-							to={`/note/${note.id}`}
-							className="context-menu-select"
-							id={note.id}
-							primary={getTitle(note.text)}
-						/>
+						<li>
+							<ListItem
+								button
+								to={`/note/${note.id}`}
+								className={clsx('context-menu-select', classes.listItem)}
+								component={renderLink}
+								id={note.id}
+							>
+								<ListItemText className={classes.listItemText} primary={getTitle(note.text)} />
+							</ListItem>
+						</li>
 					</Swipeout>
 				))}
 			</List>
