@@ -1,10 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { NavLink, useHistory } from 'react-router-dom';
 import Swipeout from 'rc-swipeout';
-import { List, ListItem, ListItemText } from '@material-ui/core';
-import { Delete as DeleteIcon } from '@material-ui/icons';
+import {
+	IconButton,
+	Menu,
+	MenuItem,
+	List,
+	ListItem,
+	ListItemSecondaryAction,
+	ListItemText,
+} from '@material-ui/core';
+import {
+	Alarm as AlarmIcon,
+	Delete as DeleteIcon,
+	MoreHoriz as MoreIcon,
+} from '@material-ui/icons';
 import withConfirm from 'material-ui-confirm';
 
 import useStyles from './NotesList.styled';
@@ -29,6 +41,16 @@ const NotesList = ({
 	const classes = useStyles();
 	const history = useHistory();
 	const [{ sort }] = useStateValue();
+	const [anchorEl, setAnchorEl] = useState(null);
+	const [currentNote, setCurrentNote] = useState(null);
+	const handleClick = (event, note) => {
+		setAnchorEl(event.currentTarget);
+		setCurrentNote(note);
+	};
+	const handleClose = () => {
+		setAnchorEl(null);
+		setCurrentNote(null);
+	};
 
 	const sortFunction = {
 		'date-asc': (a, b) => b.date - a.date,
@@ -58,36 +80,35 @@ const NotesList = ({
 					</ListItem>
 				)}
 				{notes.sort(sortFunction).map(note => (
-					<Swipeout
-						key={`note-${note.id}`}
-						className={classes.swipeout}
-						left={[
-							{
-								text: <TimeAgo date={note.date / 1000} />,
-								autoClose: true,
-								style: {
-									backgroundColor: '#ee6e00',
-									color: 'white',
-								},
-							},
-							{
-								text: <DeleteIcon />,
-								onPress: confirm(
-									() => handleNoteDelete(note.id, history), {
-										title: `Are you sure you want to delete "${getTitle(note.text)}"?`,
-										confirmationText: 'Delete',
+					<React.Fragment key={`note-${note.id}`}>
+						<Swipeout
+							className={classes.swipeout}
+							left={[
+								{
+									text: <TimeAgo date={note.date / 1000} />,
+									autoClose: true,
+									style: {
+										backgroundColor: '#ee6e00',
+										color: 'white',
 									},
-								),
-								autoClose: true,
-								style: {
-									backgroundColor: 'red',
-									color: 'white',
-									width: '56px',
 								},
-							},
-						]}
-					>
-						<li>
+								{
+									text: <DeleteIcon />,
+									onPress: confirm(
+										() => handleNoteDelete(note.id, history), {
+											title: `Are you sure you want to delete "${getTitle(note.text)}"?`,
+											confirmationText: 'Delete',
+										},
+									),
+									autoClose: true,
+									style: {
+										backgroundColor: 'red',
+										color: 'white',
+										width: '56px',
+									},
+								},
+							]}
+						>
 							<ListItem
 								button
 								to={`/note/${note.id}`}
@@ -96,9 +117,56 @@ const NotesList = ({
 								id={note.id}
 							>
 								<ListItemText className={classes.listItemText} primary={getTitle(note.text)} />
+								<ListItemSecondaryAction>
+									<IconButton
+										color="inherit"
+										aria-label="Open menu"
+										edge="end"
+										onClick={event => handleClick(event, note.id)}
+									>
+										<MoreIcon />
+									</IconButton>
+								</ListItemSecondaryAction>
 							</ListItem>
-						</li>
-					</Swipeout>
+						</Swipeout>
+
+						<Menu
+							id="more-menu"
+							className={classes.menu}
+							anchorEl={anchorEl}
+							keepMounted
+							open={currentNote === note.id}
+							onClose={handleClose}
+						>
+							<MenuItem>
+								<IconButton
+									color="inherit"
+									aria-label="Create Note"
+									edge="start"
+								>
+									<AlarmIcon color="primary" />
+								</IconButton>
+								<span><TimeAgo slot="title" date={note.date / 1000} /></span>
+							</MenuItem>
+							<MenuItem
+								onClick={confirm(
+									() => handleNoteDelete(note.id, history), {
+										title: `Are you sure you want to delete "${getTitle(note.text)}"?`,
+										confirmationText: 'Delete',
+									},
+								)}
+							>
+								<IconButton
+									color="inherit"
+									aria-label="Create Note"
+									edge="start"
+								>
+									<DeleteIcon color="primary" />
+								</IconButton>
+								<span>{`Delete "${getTitle(note.text)}"`}</span>
+							</MenuItem>
+						</Menu>
+					</React.Fragment>
 				))}
 			</List>
 
