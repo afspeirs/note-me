@@ -130,14 +130,16 @@ const Container = ({
 				disableBackdropTransition={performance}
 			>
 				<div className={classes.drawerHeader} />
-				<DrawerContent
-					handleNoteAdd={handleNoteAdd}
-					handleNoteDelete={handleNoteDelete}
-					history={history}
-					isSignedIn={isSignedIn}
-					loading={loading}
-					notes={notes}
-				/>
+				{drawerOpen && (
+					<DrawerContent
+						handleNoteAdd={handleNoteAdd}
+						handleNoteDelete={handleNoteDelete}
+						history={history}
+						isSignedIn={isSignedIn}
+						loading={loading}
+						notes={notes}
+					/>
+				)}
 			</SwipeableDrawer>
 			<div
 				className={clsx(classes.content, {
