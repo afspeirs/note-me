@@ -1,22 +1,18 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { NavLink, useHistory } from 'react-router-dom';
 import Swipeout from 'rc-swipeout';
 import {
-	IconButton,
 	List,
 	ListItem,
 	ListItemIcon,
-	ListItemSecondaryAction,
 	ListItemText,
-	Menu,
-	MenuItem,
+	Popover,
 } from '@material-ui/core';
 import {
 	Alarm as AlarmIcon,
 	Delete as DeleteIcon,
-	MoreHoriz as MoreIcon,
 } from '@material-ui/icons';
 import withConfirm from 'material-ui-confirm';
 
@@ -41,14 +37,10 @@ const NotesList = ({
 	const classes = useStyles();
 	const history = useHistory();
 	const [{ sort }] = useStateValue();
-	const [anchorEl, setAnchorEl] = useState(null);
+	const [anchorPosition, setAnchorPosition] = useState({ top: 0, left: 0 });
 	const [currentNote, setCurrentNote] = useState(null);
-	const handleClick = (event, note) => {
-		setAnchorEl(event.currentTarget);
-		setCurrentNote(note);
-	};
 	const handleClose = () => {
-		setAnchorEl(null);
+		setAnchorPosition({ top: 0, left: 0 });
 		setCurrentNote(null);
 	};
 
@@ -65,6 +57,24 @@ const NotesList = ({
 		)),
 		[],
 	);
+
+	const handleContextMenu = (event) => {
+		const closestContextMenuOption = event.target.closest('.context-menu-select');
+
+		if (closestContextMenuOption) {
+			event.preventDefault();
+			setAnchorPosition({ left: event.pageX, top: event.pageY });
+			setCurrentNote(closestContextMenuOption.id);
+		}
+	};
+
+	useEffect(() => {
+		document.addEventListener('contextmenu', handleContextMenu);
+
+		return function cleanuop() {
+			document.removeEventListener('contextmenu', handleContextMenu);
+		};
+	}, []);
 
 	return (
 		<List className={classes.list}>
@@ -116,47 +126,47 @@ const NotesList = ({
 							id={note.id}
 						>
 							<ListItemText className={classes.listItemText} primary={getTitle(note.text)} />
-							<ListItemSecondaryAction>
-								<IconButton
-									color="inherit"
-									aria-label="Open menu"
-									edge="end"
-									onClick={event => handleClick(event, note.id)}
-								>
-									<MoreIcon />
-								</IconButton>
-							</ListItemSecondaryAction>
 						</ListItem>
 					</Swipeout>
 
-					<Menu
-						id="more-menu"
-						className={classes.menu}
-						anchorEl={anchorEl}
-						keepMounted
+					<Popover
 						open={currentNote === note.id}
 						onClose={handleClose}
+						anchorReference="anchorPosition"
+						anchorPosition={{
+							top: anchorPosition.top,
+							left: anchorPosition.left,
+						}}
 					>
-						<MenuItem>
-							<ListItemIcon>
-								<AlarmIcon color="primary" />
-							</ListItemIcon>
-							<ListItemText primary={<TimeAgo slot="title" date={note.date / 1000} />} />
-						</MenuItem>
-						<MenuItem
-							onClick={confirm(
-								() => handleNoteDelete(note.id, history), {
-									title: `Are you sure you want to delete "${getTitle(note.text)}"?`,
-									confirmationText: 'Delete',
-								},
-							)}
-						>
-							<ListItemIcon>
-								<DeleteIcon color="error" />
-							</ListItemIcon>
-							<ListItemText primary={`Delete "${getTitle(note.text)}"`} />
-						</MenuItem>
-					</Menu>
+						<List className={classes.list}>
+							<ListItem>
+								<ListItemIcon>
+									<AlarmIcon color="primary" />
+								</ListItemIcon>
+								<ListItemText
+									className={classes.listItemText}
+									primary={<TimeAgo slot="title" date={note.date / 1000} />}
+								/>
+							</ListItem>
+							<ListItem
+								button
+								onClick={confirm(
+									() => handleNoteDelete(note.id, history), {
+										title: `Are you sure you want to delete "${getTitle(note.text)}"?`,
+										confirmationText: 'Delete',
+									},
+								)}
+							>
+								<ListItemIcon>
+									<DeleteIcon color="error" />
+								</ListItemIcon>
+								<ListItemText
+									className={classes.listItemText}
+									primary={`Delete "${getTitle(note.text)}"`}
+								/>
+							</ListItem>
+						</List>
+					</Popover>
 				</React.Fragment>
 			))}
 		</List>
