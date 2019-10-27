@@ -60,9 +60,7 @@ const Container = ({
 
 	// Toggle drawer only in mobile unless toggle is true
 	const handleDrawerToggle = (toggle = false) => {
-		if ((toggle === true) || mobile) {
-			setDrawerOpen(!drawerOpen);
-		}
+		if ((toggle === true) || mobile) setDrawerOpen(!drawerOpen);
 	};
 
 	// Run handleDrawerClose if the history changes
@@ -132,14 +130,16 @@ const Container = ({
 				disableBackdropTransition={performance}
 			>
 				<div className={classes.drawerHeader} />
-				<DrawerContent
-					handleNoteAdd={handleNoteAdd}
-					handleNoteDelete={handleNoteDelete}
-					history={history}
-					isSignedIn={isSignedIn}
-					loading={loading}
-					notes={notes}
-				/>
+				{drawerOpen && (
+					<DrawerContent
+						handleNoteAdd={handleNoteAdd}
+						handleNoteDelete={handleNoteDelete}
+						history={history}
+						isSignedIn={isSignedIn}
+						loading={loading}
+						notes={notes}
+					/>
+				)}
 			</SwipeableDrawer>
 			<div
 				className={clsx(classes.content, {
