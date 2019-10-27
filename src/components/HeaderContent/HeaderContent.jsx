@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { Link, Route } from 'react-router-dom';
 import {
 	IconButton,
+	ListItemIcon,
+	ListItemText,
 	Menu,
 	MenuItem,
 	Tooltip,
@@ -102,34 +104,11 @@ const HeaderContent = ({
 						onClose={handleClose}
 					>
 						<MenuItem onClick={handleNoteAddClick}>
-							<IconButton
-								color="inherit"
-								aria-label="Create Note"
-								edge="start"
-							>
+							<ListItemIcon>
 								<AddIcon />
-							</IconButton>
-							<span>Create Note</span>
+							</ListItemIcon>
+							<ListItemText primary="Create Note" />
 						</MenuItem>
-
-						<Route
-							render={({ location }) => location.pathname !== '/' && (
-								<MenuItem
-									onClick={handleClose}
-									component={AdapterLink}
-									to="/"
-								>
-									<IconButton
-										color="inherit"
-										aria-label="Home"
-										edge="start"
-									>
-										<HomeIcon />
-									</IconButton>
-									<span>Home</span>
-								</MenuItem>
-							)}
-						/>
 
 						<Route
 							render={({ location }) => (
@@ -144,14 +123,25 @@ const HeaderContent = ({
 										handleNoteDeleteOptions,
 									)}
 								>
-									<IconButton
-										color="inherit"
-										aria-label="Delete"
-										edge="start"
-									>
+									<ListItemIcon>
 										<DeleteIcon />
-									</IconButton>
-									<span>Delete</span>
+									</ListItemIcon>
+									<ListItemText primary="Delete Note" />
+								</MenuItem>
+							)}
+						/>
+
+						<Route
+							render={({ location }) => location.pathname !== '/' && (
+								<MenuItem
+									onClick={handleClose}
+									component={AdapterLink}
+									to="/"
+								>
+									<ListItemIcon>
+										<HomeIcon />
+									</ListItemIcon>
+									<ListItemText primary="Home" />
 								</MenuItem>
 							)}
 						/>
@@ -164,14 +154,10 @@ const HeaderContent = ({
 								state: { modal: true },
 							}}
 						>
-							<IconButton
-								aria-label="setting"
-								color="inherit"
-								edge="start"
-							>
+							<ListItemIcon>
 								<SettingsIcon />
-							</IconButton>
-							<span>Settings</span>
+							</ListItemIcon>
+							<ListItemText primary="Settings" />
 						</MenuItem>
 					</Menu>
 				</>
