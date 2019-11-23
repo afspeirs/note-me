@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-	AppBar,
 	Avatar,
-	Dialog,
 	Divider,
 	IconButton,
 	List,
@@ -11,25 +9,18 @@ import {
 	ListItemAvatar,
 	ListItemSecondaryAction,
 	ListItemText,
-	Slide,
-	Toolbar,
 	Tooltip,
-	Typography,
-	useMediaQuery,
 } from '@material-ui/core';
 import {
-	ArrowBack as ArrowBackIcon,
-	Close as CloseIcon,
 	ExitToApp as ExitToAppIcon,
 } from '@material-ui/icons';
 
 import useStyles from './SettingsPage.styled';
 import ChangeTheme from '../../components/ChangeTheme';
 import CheckForUpdate from '../../components/CheckForUpdate';
+import Modal from '../../components/Modal';
 import SortNotes from '../../components/SortNotes';
 import blankUserPhoto from '../../img/blank-user-photo.png';
-
-const Transition = React.forwardRef((props, ref) => <Slide direction="up" ref={ref} {...props} />);
 
 const defaultProps = {
 	user: null,
@@ -51,50 +42,9 @@ const Settings = ({
 	user,
 }) => {
 	const classes = useStyles();
-	const [open, setOpen] = React.useState(true);
-	const mobile = useMediaQuery('(max-width:600px)');
-
-	const handleClose = (event) => {
-		event.stopPropagation();
-		setOpen(false);
-		setTimeout(() => history.goBack(), 250);
-	};
 
 	return (
-		<Dialog
-			className={classes.dialog}
-			fullWidth
-			fullScreen={mobile}
-			open={open}
-			onClose={handleClose}
-			TransitionComponent={Transition}
-		>
-			<AppBar className={classes.appbar}>
-				<Toolbar>
-					{mobile && (
-						<IconButton
-							className={classes.menuButton}
-							aria-label="close"
-							color="inherit"
-							edge="start"
-							onClick={handleClose}
-						>
-							<ArrowBackIcon />
-						</IconButton>
-					)}
-					<Typography className={classes.title} variant="h6">Settings</Typography>
-					{!mobile && (
-						<IconButton
-							aria-label="close"
-							color="inherit"
-							edge="end"
-							onClick={handleClose}
-						>
-							<CloseIcon />
-						</IconButton>
-					)}
-				</Toolbar>
-			</AppBar>
+		<Modal history={history} title="Settings">
 			<List>
 				{user ? (
 					<ListItem>
@@ -136,7 +86,7 @@ const Settings = ({
 				<ChangeTheme />
 				<SortNotes />
 			</List>
-		</Dialog>
+		</Modal>
 	);
 };
 
