@@ -1,22 +1,9 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
 	accountIcon: {
 		width: '100%',
 		height: '100%',
-	},
-	appbar: {
-		position: 'relative',
-	},
-	dialog: {
-		// TODO - Remove !important
-		zIndex: `${theme.zIndex.appBar + 10} !important`,
-	},
-	menuButton: {
-		marginRight: theme.spacing(2),
-	},
-	title: {
-		flex: 1,
 	},
 }));
 
