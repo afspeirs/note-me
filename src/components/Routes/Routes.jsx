@@ -1,120 +1,125 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Switch, Redirect, Route } from 'react-router-dom';
+import {
+	Switch,
+	Redirect,
+	Route,
+	useHistory,
+	useLocation,
+} from 'react-router-dom';
 
 import HomePage from '../../pages/HomePage';
 import NoPage from '../../pages/NoPage';
 import NotePage from '../../pages/NotePage';
-import Settings from '../../pages/SettingsPage';
+import SettingsPage from '../../pages/SettingsPage';
 
-export default class Routes extends Component {
-	static defaultProps = {
-		user: null,
-	};
+const defaultProps = {
+	user: null,
+};
 
-	static propTypes = {
-		drawerOpen: PropTypes.bool.isRequired,
-		edit: PropTypes.bool.isRequired,
-		handleNoteDelete: PropTypes.func.isRequired,
-		handleNoteUpdate: PropTypes.func.isRequired,
-		history: PropTypes.instanceOf(Object).isRequired,
-		loading: PropTypes.bool.isRequired,
-		location: PropTypes.instanceOf(Object).isRequired,
-		notes: PropTypes.instanceOf(Array).isRequired,
-		setEdit: PropTypes.func.isRequired,
-		signIn: PropTypes.func.isRequired,
-		signOut: PropTypes.func.isRequired,
-		updateAvailable: PropTypes.bool.isRequired,
-		user: PropTypes.instanceOf(Object),
-	}
+const propTypes = {
+	drawerOpen: PropTypes.bool.isRequired,
+	edit: PropTypes.bool.isRequired,
+	handleNoteDelete: PropTypes.func.isRequired,
+	handleNoteUpdate: PropTypes.func.isRequired,
+	loading: PropTypes.bool.isRequired,
+	notes: PropTypes.instanceOf(Array).isRequired,
+	setEdit: PropTypes.func.isRequired,
+	signIn: PropTypes.func.isRequired,
+	signOut: PropTypes.func.isRequired,
+	updateAvailable: PropTypes.bool.isRequired,
+	user: PropTypes.instanceOf(Object),
+};
 
-	componentDidMount() {
-		const { location } = this.props;
+const Routes = ({
+	drawerOpen,
+	edit,
+	handleNoteDelete,
+	handleNoteUpdate,
+	loading,
+	notes,
+	setEdit,
+	signIn,
+	signOut,
+	updateAvailable,
+	user,
+}) => {
+	const history = useHistory();
+	const location = useLocation();
+	const isModal = !!(
+		location
+		&& location.state
+		&& location.state.modal
+		&& window.previousLocation !== location
+	);
+
+	useEffect(() => {
 		window.previousLocation = location;
-	}
+	}, []); // eslint-disable-line
 
-	componentDidUpdate({ history, location }) {
-		// Set previousLocation if props.location is not a modal
+	useEffect(() => {
 		if (history.action !== 'POP' && (!location.state || !location.state.modal)) {
 			window.previousLocation = location;
 		}
-	}
+	}, [history, location]);
 
-	render() {
-		const {
-			drawerOpen,
-			edit,
-			handleNoteDelete,
-			handleNoteUpdate,
-			loading,
-			location,
-			notes,
-			setEdit,
-			signIn,
-			signOut,
-			updateAvailable,
-			user,
-		} = this.props;
+	return (
+		<>
+			<Switch location={isModal ? window.previousLocation : location}>
+				<Route
+					exact
+					path="/"
+					render={() => (
+						<HomePage
+							drawerOpen={drawerOpen}
+							handleNoteDelete={handleNoteDelete}
+							isSignedIn={Boolean(user)}
+							loading={loading}
+							notes={notes}
+							signIn={signIn}
+						/>
+					)}
+				/>
 
-		const isModal = !!(
-			location
-			&& location.state
-			&& location.state.modal
-			&& window.previousLocation !== location
-		);
+				<Route
+					path="/note/:id"
+					render={props => (
+						<NotePage
+							{...props}
+							edit={edit}
+							handleNoteUpdate={handleNoteUpdate}
+							// eslint-disable-next-line react/prop-types
+							note={notes.find(note => note.id === props.match.params.id)}
+							setEdit={setEdit}
+						/>
+					)}
+				/>
 
-		return (
-			<>
-				<Switch location={isModal ? window.previousLocation : location}>
-					<Route
-						exact
-						path="/"
-						render={() => (
-							<HomePage
-								drawerOpen={drawerOpen}
-								handleNoteDelete={handleNoteDelete}
-								isSignedIn={Boolean(user)}
-								loading={loading}
-								notes={notes}
-								signIn={signIn}
-							/>
-						)}
-					/>
+				<Redirect from="/settings/" to="/" />
+				<Route component={NoPage} />
+			</Switch>
 
-					<Route
-						path="/note/:id"
-						render={props => (
-							<NotePage
-								{...props}
-								edit={edit}
-								handleNoteUpdate={handleNoteUpdate}
-								note={notes.find(note => note.id === props.match.params.id)}
-								setEdit={setEdit}
-							/>
-						)}
-					/>
+			{!user && <Redirect from="/note/" to="/" />}
 
-					<Redirect from="/settings/" to="/" />
-					<Route component={NoPage} />
-				</Switch>
+			{isModal && (
+				<Route
+					path="/settings/"
+					render={props => (
+						<SettingsPage
+							{...props}
+							signIn={signIn}
+							signOut={signOut}
+							updateAvailable={updateAvailable}
+							user={user}
+						/>
+					)}
+				/>
+			)}
+		</>
+	);
+};
 
-				{!user && <Redirect from="/note/" to="/" />}
+Routes.defaultProps = defaultProps;
+Routes.propTypes = propTypes;
 
-				{isModal && (
-					<Route
-						path="/settings/"
-						render={props => (
-							<Settings
-								{...props}
-								signIn={signIn}
-								signOut={signOut}
-								updateAvailable={updateAvailable}
-								user={user}
-							/>
-						)}
-					/>
-				)}
-			</>
-		);
-	}
-}
+export default Routes;

@@ -34,7 +34,7 @@ const propTypes = {
 	user: PropTypes.instanceOf(Object),
 };
 
-const Settings = ({
+const SettingsPage = ({
 	history,
 	signIn,
 	signOut,
@@ -90,7 +90,7 @@ const Settings = ({
 	);
 };
 
-Settings.defaultProps = defaultProps;
-Settings.propTypes = propTypes;
+SettingsPage.defaultProps = defaultProps;
+SettingsPage.propTypes = propTypes;
 
-export default Settings;
+export default SettingsPage;

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { useHistory, Route } from 'react-router-dom';
 import clsx from 'clsx';
-import { Route } from 'react-router-dom';
 import {
 	AppBar,
 	Hidden,
@@ -30,7 +30,6 @@ const propTypes = {
 	edit: PropTypes.bool.isRequired,
 	handleNoteAdd: PropTypes.func.isRequired,
 	handleNoteDelete: PropTypes.func.isRequired,
-	history: PropTypes.instanceOf(Object).isRequired,
 	isSignedIn: PropTypes.bool.isRequired,
 	loading: PropTypes.bool.isRequired,
 	notes: PropTypes.instanceOf(Array).isRequired,
@@ -44,7 +43,6 @@ const Container = ({
 	edit,
 	handleNoteAdd,
 	handleNoteDelete,
-	history,
 	isSignedIn,
 	loading,
 	notes,
@@ -52,6 +50,7 @@ const Container = ({
 	setEdit,
 }) => {
 	const classes = useStyles();
+	const history = useHistory();
 	const mobile = useMediaQuery('(max-width:600px)');
 	const [{ performance }] = useStateValue();
 
