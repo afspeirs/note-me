@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import {
 	IconButton,
 	ListItemIcon,
@@ -29,7 +29,6 @@ const propTypes = {
 	isSignedIn: PropTypes.bool.isRequired,
 	handleNoteAdd: PropTypes.func.isRequired,
 	handleNoteDelete: PropTypes.func.isRequired,
-	history: PropTypes.instanceOf(Object).isRequired,
 	mobile: PropTypes.bool.isRequired,
 	setEdit: PropTypes.func.isRequired,
 };
@@ -40,11 +39,11 @@ const HeaderContent = ({
 	isSignedIn,
 	handleNoteAdd,
 	handleNoteDelete,
-	history,
 	mobile,
 	setEdit,
 }) => {
 	const classes = useStyles();
+	const history = useHistory();
 	const location = useLocation();
 	const [anchorEl, setAnchorEl] = useState(null);
 	const handleClick = event => setAnchorEl(event.currentTarget);

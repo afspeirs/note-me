@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
 import {
 	AppBar,
 	Dialog,
@@ -29,17 +30,16 @@ const propTypes = {
 		PropTypes.node,
 	]).isRequired,
 	fullscreen: PropTypes.bool,
-	history: PropTypes.instanceOf(Object).isRequired,
 	title: PropTypes.string,
 };
 
 const Modal = ({
 	children,
 	fullscreen,
-	history,
 	title,
 }) => {
 	const classes = useStyles();
+	const history = useHistory();
 	const [open, setOpen] = React.useState(true);
 	const mobile = useMediaQuery('(max-width:600px)');
 	const fullScreenModal = fullscreen || mobile;
