@@ -27,7 +27,6 @@ const defaultProps = {
 };
 
 const propTypes = {
-	history: PropTypes.instanceOf(Object).isRequired,
 	signIn: PropTypes.func.isRequired,
 	signOut: PropTypes.func.isRequired,
 	updateAvailable: PropTypes.bool.isRequired,
@@ -35,7 +34,6 @@ const propTypes = {
 };
 
 const SettingsPage = ({
-	history,
 	signIn,
 	signOut,
 	updateAvailable,
@@ -44,7 +42,7 @@ const SettingsPage = ({
 	const classes = useStyles();
 
 	return (
-		<Modal history={history} title="Settings">
+		<Modal title="Settings">
 			<List>
 				{user ? (
 					<ListItem>

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
 import {
 	Divider,
 	List,
@@ -16,7 +17,6 @@ import NotesSearch from '../NotesSearch';
 const propTypes = {
 	handleNoteAdd: PropTypes.func.isRequired,
 	handleNoteDelete: PropTypes.func.isRequired,
-	history: PropTypes.instanceOf(Object).isRequired,
 	isSignedIn: PropTypes.bool.isRequired,
 	loading: PropTypes.bool.isRequired,
 	notes: PropTypes.instanceOf(Array).isRequired,
@@ -25,34 +25,37 @@ const propTypes = {
 const DrawerContent = ({
 	handleNoteAdd,
 	handleNoteDelete,
-	history,
 	isSignedIn,
 	loading,
 	notes,
-}) => (
-	<>
-		<NotesSearch
-			handleNoteDelete={handleNoteDelete}
-			loading={loading}
-			notes={notes}
-		/>
+}) => {
+	const history = useHistory();
 
-		{isSignedIn && (
-			<>
-				<Divider />
+	return (
+		<>
+			<NotesSearch
+				handleNoteDelete={handleNoteDelete}
+				loading={loading}
+				notes={notes}
+			/>
 
-				<List disablePadding>
-					<ListItem button onClick={() => handleNoteAdd(history)}>
-						<ListItemIcon>
-							<AddIcon />
-						</ListItemIcon>
-						<ListItemText primary="Create Note" />
-					</ListItem>
-				</List>
-			</>
-		)}
-	</>
-);
+			{isSignedIn && (
+				<>
+					<Divider />
+
+					<List disablePadding>
+						<ListItem button onClick={() => handleNoteAdd(history)}>
+							<ListItemIcon>
+								<AddIcon />
+							</ListItemIcon>
+							<ListItemText primary="Create Note" />
+						</ListItem>
+					</List>
+				</>
+			)}
+		</>
+	);
+};
 
 DrawerContent.propTypes = propTypes;
 

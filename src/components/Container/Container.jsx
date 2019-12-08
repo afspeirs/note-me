@@ -107,7 +107,6 @@ const Container = ({
 						edit={edit}
 						handleNoteAdd={handleNoteAdd}
 						handleNoteDelete={handleNoteDelete}
-						history={history}
 						isSignedIn={isSignedIn}
 						mobile={mobile}
 						setEdit={setEdit}
@@ -133,7 +132,6 @@ const Container = ({
 					<DrawerContent
 						handleNoteAdd={handleNoteAdd}
 						handleNoteDelete={handleNoteDelete}
-						history={history}
 						isSignedIn={isSignedIn}
 						loading={loading}
 						notes={notes}
