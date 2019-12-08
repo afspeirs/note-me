@@ -80,7 +80,7 @@ const HeaderContent = ({
 				</Tooltip>
 			)}
 
-			{(isSignedIn && mobile) ? (
+			{(isSignedIn && mobile && location.pathname !== '/') ? (
 				<>
 					<IconButton
 						color="inherit"
