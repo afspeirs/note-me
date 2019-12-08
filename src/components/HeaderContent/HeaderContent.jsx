@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import {
 	IconButton,
 	ListItemIcon,
@@ -21,8 +21,7 @@ import {
 import withConfirm from 'material-ui-confirm';
 
 import useStyles from './HeaderContent.styled';
-
-const AdapterLink = React.forwardRef((props, ref) => <Link innerRef={ref} {...props} />);
+import AdapterLink from '../AdapterLink';
 
 const propTypes = {
 	confirm: PropTypes.func.isRequired,
