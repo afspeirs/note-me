@@ -24,20 +24,6 @@ const App = () => {
 	const [updateAvailable, setUpdateAvailable] = useState(false);
 	const [user, setUser] = useState(null);
 
-	// state = {
-	// 	drawerOpen: false,
-	// 	edit: false,
-	// 	loading: true,
-	// 	notes: [],
-	// 	settings: {
-	// 		sort: localStorage.getItem('changeSort') || 'date-asc',
-	// 		darkTheme: JSON.parse(localStorage.getItem('changeDarkTheme')) || false,
-	// 	},
-	// 	swSnackbar: {},
-	// 	updateAvailable: false,
-	// 	user: null,
-	// }
-
 	const swNewContentAvailable = () => {
 		setSnackbarConent({
 			onClose: () => window.location.reload(true),
@@ -45,10 +31,6 @@ const App = () => {
 			text: 'A new version is available',
 		});
 		setUpdateAvailable(true);
-		// this.setState({
-		// 	swSnackbar,
-		// 	updateAvailable: true,
-		// });
 	};
 
 	const swContentCached = () => {
