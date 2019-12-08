@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { StylesProvider, ThemeProvider } from '@material-ui/styles';
 
@@ -211,52 +211,48 @@ export default class App extends Component {
 		});
 
 		return (
-			<ThemeProvider theme={muiTheme}>
-				<StylesProvider injectFirst>
-					<StateProvider initialState={settings} reducer={this.reducer}>
-						<Route
-							render={props => (
-								<Container
-									{...props}
+			<BrowserRouter>
+				<ThemeProvider theme={muiTheme}>
+					<StylesProvider injectFirst>
+						<StateProvider initialState={settings} reducer={this.reducer}>
+							<Container
+								drawerOpen={drawerOpen}
+								edit={edit}
+								handleNoteAdd={this.handleNoteAdd}
+								handleNoteDelete={this.handleNoteDelete}
+								isSignedIn={Boolean(user)}
+								loading={loading}
+								notes={notes}
+								setDrawerOpen={this.setDrawerOpen}
+								setEdit={this.setEdit}
+							>
+								<Routes
 									drawerOpen={drawerOpen}
 									edit={edit}
-									handleNoteAdd={this.handleNoteAdd}
 									handleNoteDelete={this.handleNoteDelete}
-									isSignedIn={Boolean(user)}
+									handleNoteUpdate={this.handleNoteUpdate}
 									loading={loading}
 									notes={notes}
-									setDrawerOpen={this.setDrawerOpen}
 									setEdit={this.setEdit}
-								>
-									<Routes
-										{...props}
-										drawerOpen={drawerOpen}
-										edit={edit}
-										handleNoteDelete={this.handleNoteDelete}
-										handleNoteUpdate={this.handleNoteUpdate}
-										loading={loading}
-										notes={notes}
-										setEdit={this.setEdit}
-										signIn={this.signIn}
-										signOut={this.signOut}
-										updateAvailable={updateAvailable}
-										user={user}
-									/>
-								</Container>
-							)}
-						/>
+									signIn={this.signIn}
+									signOut={this.signOut}
+									updateAvailable={updateAvailable}
+									user={user}
+								/>
+							</Container>
 
-						{swSnackbar && (
-							<SimpleSnackbar
-								onClose={this.swSnackbarReset}
-								onSecondaryClose={swSnackbar.onClose}
-								secondaryText={swSnackbar.secondaryText}
-								text={swSnackbar.text}
-							/>
-						)}
-					</StateProvider>
-				</StylesProvider>
-			</ThemeProvider>
+							{swSnackbar && (
+								<SimpleSnackbar
+									onClose={this.swSnackbarReset}
+									onSecondaryClose={swSnackbar.onClose}
+									secondaryText={swSnackbar.secondaryText}
+									text={swSnackbar.text}
+								/>
+							)}
+						</StateProvider>
+					</StylesProvider>
+				</ThemeProvider>
+			</BrowserRouter>
 		);
 	}
 }
