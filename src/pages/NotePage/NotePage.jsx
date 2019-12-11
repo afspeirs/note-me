@@ -5,6 +5,7 @@ import { Prompt } from 'react-router-dom';
 import Markdown from 'react-markdown';
 
 import useStyles from './NotePage.styled';
+import LinkRenderer from '../../components/LinkRenderer';
 
 const defaultProps = {
 	note: null,
@@ -57,6 +58,7 @@ const NotePage = ({
 				<Markdown
 					className={classes.page}
 					escapeHtml
+					renderers={{ link: LinkRenderer }}
 					source={localNote}
 				/>
 			)}
