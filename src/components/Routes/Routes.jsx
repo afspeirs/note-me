@@ -89,7 +89,7 @@ const Routes = ({
 				<Route component={NoPage} />
 			</Switch>
 
-			{!user && <Redirect from="/note/" to="/" />}
+			{user === false && <Redirect from="/note/" to="/" />}
 
 			{isModal && (
 				<Route
