@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { createMuiTheme } from '@material-ui/core/styles';
-import { StylesProvider, ThemeProvider } from '@material-ui/styles';
+import { ThemeProvider } from '@material-ui/styles';
 
 import Container from '../Container';
 import SimpleSnackbar from '../SimpleSnackbar';
@@ -184,44 +184,42 @@ const App = () => {
 	return (
 		<BrowserRouter>
 			<ThemeProvider theme={muiTheme}>
-				<StylesProvider injectFirst>
-					<StateProvider initialState={settings} reducer={reducer}>
-						<Container
+				<StateProvider initialState={settings} reducer={reducer}>
+					<Container
+						drawerOpen={drawerOpen}
+						edit={edit}
+						handleNoteAdd={handleNoteAdd}
+						handleNoteDelete={handleNoteDelete}
+						isSignedIn={user !== false}
+						loading={loading}
+						notes={notes}
+						setDrawerOpen={setDrawerOpen}
+						setEdit={setEdit}
+					>
+						<Routes
 							drawerOpen={drawerOpen}
 							edit={edit}
-							handleNoteAdd={handleNoteAdd}
 							handleNoteDelete={handleNoteDelete}
-							isSignedIn={user !== false}
+							handleNoteUpdate={handleNoteUpdate}
 							loading={loading}
 							notes={notes}
-							setDrawerOpen={setDrawerOpen}
 							setEdit={setEdit}
-						>
-							<Routes
-								drawerOpen={drawerOpen}
-								edit={edit}
-								handleNoteDelete={handleNoteDelete}
-								handleNoteUpdate={handleNoteUpdate}
-								loading={loading}
-								notes={notes}
-								setEdit={setEdit}
-								signIn={signIn}
-								signOut={signOut}
-								updateAvailable={updateAvailable}
-								user={user}
-							/>
-						</Container>
+							signIn={signIn}
+							signOut={signOut}
+							updateAvailable={updateAvailable}
+							user={user}
+						/>
+					</Container>
 
-						{snackbarContent && (
-							<SimpleSnackbar
-								onClose={swSnackbarReset}
-								onSecondaryClose={snackbarContent.onClose}
-								secondaryText={snackbarContent.secondaryText}
-								text={snackbarContent.text}
-							/>
-						)}
-					</StateProvider>
-				</StylesProvider>
+					{snackbarContent && (
+						<SimpleSnackbar
+							onClose={swSnackbarReset}
+							onSecondaryClose={snackbarContent.onClose}
+							secondaryText={snackbarContent.secondaryText}
+							text={snackbarContent.text}
+						/>
+					)}
+				</StateProvider>
 			</ThemeProvider>
 		</BrowserRouter>
 	);
