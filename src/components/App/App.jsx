@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter } from 'react-router-dom';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 
 import Container from '../Container';
 import SimpleSnackbar from '../SimpleSnackbar';
 import theme from '../../theme';
+import { useAuth } from '../AuthContext';
 import { StateProvider } from '../StateContext';
 
-import { auth, db, provider } from '../../firebase';
+import { db } from '../../firebase';
 import Routes from '../Routes';
 
 const App = () => {
+	const { signIn, signOut, user } = useAuth();
 	const [drawerOpen, setDrawerOpen] = useState(false);
 	const [edit, setEdit] = useState(false);
 	const [loading, setLoading] = useState(true);
@@ -22,7 +23,8 @@ const App = () => {
 	});
 	const [snackbarContent, setSnackbarConent] = useState({});
 	const [updateAvailable, setUpdateAvailable] = useState(false);
-	const [user, setUser] = useState(null);
+
+	console.log(user);
 
 	const swNewContentAvailable = () => {
 		setSnackbarConent({
@@ -71,12 +73,6 @@ const App = () => {
 				return state;
 		}
 	};
-
-	const signOut = () => auth.signOut()
-		.then(() => setUser(null));
-
-	const signIn = () => auth.signInWithPopup(provider)
-		.then(({ user: authUser }) => setUser(authUser));
 
 	const handleKeyDown = (event) => {
 		// CTRL + B = Toggle sidebar
@@ -154,22 +150,20 @@ const App = () => {
 	});
 
 	useEffect(() => {
-		auth.onAuthStateChanged((authUser) => {
-			if (authUser) {
-				setUser(authUser);
-				db.collection(authUser.uid)
-					.onSnapshot((snapshot) => {
-						const authNotes = snapshot.docs.map(doc => doc.data());
-						setLoading(false);
-						setNotes(authNotes);
-					});
-			} else {
-				setLoading(false);
-				setNotes([]);
-				setUser(false);
-			}
-		});
+		if (user) {
+			db.collection(user.uid)
+				.onSnapshot((snapshot) => {
+					const authNotes = snapshot.docs.map(doc => doc.data());
+					setLoading(false);
+					setNotes(authNotes);
+				});
+		} else if (user !== null) {
+			setLoading(false);
+			setNotes([]);
+		}
+	}, [user]); // eslint-disable-line
 
+	useEffect(() => {
 		window.addEventListener('keydown', handleKeyDown);
 		window.addEventListener('swNewContentAvailable', swNewContentAvailable);
 		window.addEventListener('swContentCached', swContentCached);
@@ -182,46 +176,44 @@ const App = () => {
 	}, []); // eslint-disable-line
 
 	return (
-		<BrowserRouter>
-			<ThemeProvider theme={muiTheme}>
-				<StateProvider initialState={settings} reducer={reducer}>
-					<Container
+		<ThemeProvider theme={muiTheme}>
+			<StateProvider initialState={settings} reducer={reducer}>
+				<Container
+					drawerOpen={drawerOpen}
+					edit={edit}
+					handleNoteAdd={handleNoteAdd}
+					handleNoteDelete={handleNoteDelete}
+					isSignedIn={user !== false}
+					loading={loading}
+					notes={notes}
+					setDrawerOpen={setDrawerOpen}
+					setEdit={setEdit}
+				>
+					<Routes
 						drawerOpen={drawerOpen}
 						edit={edit}
-						handleNoteAdd={handleNoteAdd}
 						handleNoteDelete={handleNoteDelete}
-						isSignedIn={user !== false}
+						handleNoteUpdate={handleNoteUpdate}
 						loading={loading}
 						notes={notes}
-						setDrawerOpen={setDrawerOpen}
 						setEdit={setEdit}
-					>
-						<Routes
-							drawerOpen={drawerOpen}
-							edit={edit}
-							handleNoteDelete={handleNoteDelete}
-							handleNoteUpdate={handleNoteUpdate}
-							loading={loading}
-							notes={notes}
-							setEdit={setEdit}
-							signIn={signIn}
-							signOut={signOut}
-							updateAvailable={updateAvailable}
-							user={user}
-						/>
-					</Container>
+						signIn={signIn}
+						signOut={signOut}
+						updateAvailable={updateAvailable}
+						user={user}
+					/>
+				</Container>
 
-					{snackbarContent && (
-						<SimpleSnackbar
-							onClose={swSnackbarReset}
-							onSecondaryClose={snackbarContent.onClose}
-							secondaryText={snackbarContent.secondaryText}
-							text={snackbarContent.text}
-						/>
-					)}
-				</StateProvider>
-			</ThemeProvider>
-		</BrowserRouter>
+				{snackbarContent && (
+					<SimpleSnackbar
+						onClose={swSnackbarReset}
+						onSecondaryClose={snackbarContent.onClose}
+						secondaryText={snackbarContent.secondaryText}
+						text={snackbarContent.text}
+					/>
+				)}
+			</StateProvider>
+		</ThemeProvider>
 	);
 };
 
