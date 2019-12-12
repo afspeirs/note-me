@@ -7,6 +7,10 @@ body {
 	-moz-osx-font-smoothing: grayscale;
 }
 
+a {
+	color: #ee6e00;
+}
+
 *,
 *:before,
 *:after {
