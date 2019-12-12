@@ -8,14 +8,11 @@ import {
 	useLocation,
 } from 'react-router-dom';
 
+import { useAuth } from '../AuthContext';
 import HomePage from '../../pages/HomePage';
 import NoPage from '../../pages/NoPage';
 import NotePage from '../../pages/NotePage';
 import SettingsPage from '../../pages/SettingsPage';
-
-const defaultProps = {
-	user: null,
-};
 
 const propTypes = {
 	drawerOpen: PropTypes.bool.isRequired,
@@ -25,10 +22,7 @@ const propTypes = {
 	loading: PropTypes.bool.isRequired,
 	notes: PropTypes.instanceOf(Array).isRequired,
 	setEdit: PropTypes.func.isRequired,
-	signIn: PropTypes.func.isRequired,
-	signOut: PropTypes.func.isRequired,
 	updateAvailable: PropTypes.bool.isRequired,
-	user: PropTypes.instanceOf(Object),
 };
 
 const Routes = ({
@@ -39,11 +33,9 @@ const Routes = ({
 	loading,
 	notes,
 	setEdit,
-	signIn,
-	signOut,
 	updateAvailable,
-	user,
 }) => {
+	const { user } = useAuth();
 	const history = useHistory();
 	const location = useLocation();
 	const isModal = !!(
@@ -73,10 +65,8 @@ const Routes = ({
 						<HomePage
 							drawerOpen={drawerOpen}
 							handleNoteDelete={handleNoteDelete}
-							isSignedIn={Boolean(user)}
 							loading={loading}
 							notes={notes}
-							signIn={signIn}
 						/>
 					)}
 				/>
@@ -107,10 +97,7 @@ const Routes = ({
 					render={props => (
 						<SettingsPage
 							{...props}
-							signIn={signIn}
-							signOut={signOut}
 							updateAvailable={updateAvailable}
-							user={user}
 						/>
 					)}
 				/>
@@ -119,7 +106,6 @@ const Routes = ({
 	);
 };
 
-Routes.defaultProps = defaultProps;
 Routes.propTypes = propTypes;
 
 export default Routes;

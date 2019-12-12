@@ -12,7 +12,7 @@ import { db } from '../../firebase';
 import Routes from '../Routes';
 
 const App = () => {
-	const { signIn, signOut, user } = useAuth();
+	const { user } = useAuth();
 	const [drawerOpen, setDrawerOpen] = useState(false);
 	const [edit, setEdit] = useState(false);
 	const [loading, setLoading] = useState(true);
@@ -183,7 +183,7 @@ const App = () => {
 					edit={edit}
 					handleNoteAdd={handleNoteAdd}
 					handleNoteDelete={handleNoteDelete}
-					isSignedIn={user !== false}
+					isSignedIn={Boolean(user)}
 					loading={loading}
 					notes={notes}
 					setDrawerOpen={setDrawerOpen}
@@ -197,10 +197,7 @@ const App = () => {
 						loading={loading}
 						notes={notes}
 						setEdit={setEdit}
-						signIn={signIn}
-						signOut={signOut}
 						updateAvailable={updateAvailable}
-						user={user}
 					/>
 				</Container>
 
