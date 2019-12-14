@@ -24,10 +24,11 @@ import { getTitle } from '../../ultils';
 
 const propTypes = {
 	confirm: PropTypes.func.isRequired,
+	notes: PropTypes.arrayOf(PropTypes.array).isRequired,
 };
 
-const NotesList = ({ confirm }) => {
-	const { handleNoteDelete, loading, notes } = useNotes();
+const NotesList = ({ confirm, notes }) => {
+	const { handleNoteDelete, loading } = useNotes();
 	const classes = useStyles();
 	const [{ sort }] = useStateValue();
 	const [anchorPosition, setAnchorPosition] = useState({ top: 0, left: 0 });
