@@ -9,31 +9,29 @@ import {
 } from '@material-ui/core';
 
 import useStyles from './HomePage.styled';
+import { useAuth } from '../../components/AuthContext';
 import NotesSearch from '../../components/NotesSearch';
 
 const propTypes = {
 	drawerOpen: PropTypes.bool.isRequired,
 	handleNoteDelete: PropTypes.func.isRequired,
-	isSignedIn: PropTypes.bool.isRequired,
 	loading: PropTypes.bool.isRequired,
 	notes: PropTypes.instanceOf(Array).isRequired,
-	signIn: PropTypes.func.isRequired,
 };
 
 const HomePage = ({
 	drawerOpen,
 	handleNoteDelete,
-	isSignedIn,
 	loading,
 	notes,
-	signIn,
 }) => {
+	const { signIn, user } = useAuth();
 	const classes = useStyles();
 	const mobile = useMediaQuery('(max-width:600px)');
 
 	return (
 		<div className={classes.page}>
-			{!isSignedIn && !loading ? (
+			{!user && !loading ? (
 				<List>
 					<ListItem>
 						<ListItemText primary="Please sign in below with a Google account to use this app" />

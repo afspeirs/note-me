@@ -1,14 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
-import './index.css';
 import 'rc-swipeout/dist/rc-swipeout.css';
-import App from './components/App';
+
+import './index.css';
 import * as serviceWorker from './serviceWorker';
+import App from './components/App';
+import { AuthProvider } from './components/AuthContext';
 
 ReactDOM.render((
 	<BrowserRouter>
-		<App />
+		<AuthProvider>
+			<App />
+		</AuthProvider>
 	</BrowserRouter>
 ), document.getElementById('root'));
 
