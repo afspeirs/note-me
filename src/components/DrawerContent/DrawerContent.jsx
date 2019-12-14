@@ -12,32 +12,20 @@ import {
 	Add as AddIcon,
 } from '@material-ui/icons';
 
+import { useNotes } from '../NotesContext';
 import NotesSearch from '../NotesSearch';
 
 const propTypes = {
-	handleNoteAdd: PropTypes.func.isRequired,
-	handleNoteDelete: PropTypes.func.isRequired,
 	isSignedIn: PropTypes.bool.isRequired,
-	loading: PropTypes.bool.isRequired,
-	notes: PropTypes.instanceOf(Array).isRequired,
 };
 
-const DrawerContent = ({
-	handleNoteAdd,
-	handleNoteDelete,
-	isSignedIn,
-	loading,
-	notes,
-}) => {
+const DrawerContent = ({ isSignedIn }) => {
 	const history = useHistory();
+	const { handleNoteAdd } = useNotes();
 
 	return (
 		<>
-			<NotesSearch
-				handleNoteDelete={handleNoteDelete}
-				loading={loading}
-				notes={notes}
-			/>
+			<NotesSearch />
 
 			{isSignedIn && (
 				<>

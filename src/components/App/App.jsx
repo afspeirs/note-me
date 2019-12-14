@@ -6,19 +6,11 @@ import Container from '../Container';
 import SimpleSnackbar from '../SimpleSnackbar';
 import theme from '../../theme';
 import { useAuth } from '../AuthContext';
-import { useNotes } from '../NotesContext';
 import { StateProvider } from '../StateContext';
 import Routes from '../Routes';
 
 const App = () => {
 	const { user } = useAuth();
-	const {
-		handleNoteAdd,
-		handleNoteDelete,
-		handleNoteUpdate,
-		loading,
-		notes,
-	} = useNotes();
 	const [drawerOpen, setDrawerOpen] = useState(false);
 	const [edit, setEdit] = useState(false);
 	const [settings, setSettings] = useState({
@@ -123,21 +115,13 @@ const App = () => {
 				<Container
 					drawerOpen={drawerOpen}
 					edit={edit}
-					handleNoteAdd={handleNoteAdd}
-					handleNoteDelete={handleNoteDelete}
 					isSignedIn={Boolean(user)}
-					loading={loading}
-					notes={notes}
 					setDrawerOpen={setDrawerOpen}
 					setEdit={setEdit}
 				>
 					<Routes
 						drawerOpen={drawerOpen}
 						edit={edit}
-						handleNoteDelete={handleNoteDelete}
-						handleNoteUpdate={handleNoteUpdate}
-						loading={loading}
-						notes={notes}
 						setEdit={setEdit}
 						updateAvailable={updateAvailable}
 					/>

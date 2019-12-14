@@ -18,22 +18,16 @@ import withConfirm from 'material-ui-confirm';
 
 import useStyles from './NotesList.styled';
 import TimeAgo from '../TimeAgo';
+import { useNotes } from '../NotesContext';
 import { useStateValue } from '../StateContext';
 import { getTitle } from '../../ultils';
 
 const propTypes = {
 	confirm: PropTypes.func.isRequired,
-	handleNoteDelete: PropTypes.func.isRequired,
-	loading: PropTypes.bool.isRequired,
-	notes: PropTypes.instanceOf(Array).isRequired,
 };
 
-const NotesList = ({
-	confirm,
-	handleNoteDelete,
-	loading,
-	notes,
-}) => {
+const NotesList = ({ confirm }) => {
+	const { handleNoteDelete, loading, notes } = useNotes();
 	const classes = useStyles();
 	const history = useHistory();
 	const [{ sort }] = useStateValue();
