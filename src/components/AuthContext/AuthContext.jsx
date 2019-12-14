@@ -41,6 +41,7 @@ function useAuthProvider() {
 
 	// Return the user object and auth methods
 	return {
+		isSignedIn: Boolean(user),
 		signIn,
 		signOut,
 		user,

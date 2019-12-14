@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import {
 	Divider,
@@ -12,15 +11,13 @@ import {
 	Add as AddIcon,
 } from '@material-ui/icons';
 
+import { useAuth } from '../AuthContext';
 import { useNotes } from '../NotesContext';
 import NotesSearch from '../NotesSearch';
 
-const propTypes = {
-	isSignedIn: PropTypes.bool.isRequired,
-};
-
-const DrawerContent = ({ isSignedIn }) => {
+const DrawerContent = () => {
 	const history = useHistory();
+	const { isSignedIn } = useAuth();
 	const { handleNoteAdd } = useNotes();
 
 	return (
@@ -44,7 +41,5 @@ const DrawerContent = ({ isSignedIn }) => {
 		</>
 	);
 };
-
-DrawerContent.propTypes = propTypes;
 
 export default DrawerContent;

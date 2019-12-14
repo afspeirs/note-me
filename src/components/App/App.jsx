@@ -5,12 +5,10 @@ import { ThemeProvider } from '@material-ui/styles';
 import Container from '../Container';
 import SimpleSnackbar from '../SimpleSnackbar';
 import theme from '../../theme';
-import { useAuth } from '../AuthContext';
 import { StateProvider } from '../StateContext';
 import Routes from '../Routes';
 
 const App = () => {
-	const { user } = useAuth();
 	const [drawerOpen, setDrawerOpen] = useState(false);
 	const [edit, setEdit] = useState(false);
 	const [settings, setSettings] = useState({
@@ -19,8 +17,6 @@ const App = () => {
 	});
 	const [snackbarContent, setSnackbarConent] = useState({});
 	const [updateAvailable, setUpdateAvailable] = useState(false);
-
-	console.log(user);
 
 	const swNewContentAvailable = () => {
 		setSnackbarConent({
@@ -115,7 +111,6 @@ const App = () => {
 				<Container
 					drawerOpen={drawerOpen}
 					edit={edit}
-					isSignedIn={Boolean(user)}
 					setDrawerOpen={setDrawerOpen}
 					setEdit={setEdit}
 				>

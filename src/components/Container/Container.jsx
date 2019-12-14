@@ -28,7 +28,6 @@ const propTypes = {
 	]).isRequired,
 	drawerOpen: PropTypes.bool.isRequired,
 	edit: PropTypes.bool.isRequired,
-	isSignedIn: PropTypes.bool.isRequired,
 	setDrawerOpen: PropTypes.func.isRequired,
 	setEdit: PropTypes.func.isRequired,
 };
@@ -37,7 +36,6 @@ const Container = ({
 	children,
 	drawerOpen,
 	edit,
-	isSignedIn,
 	setDrawerOpen,
 	setEdit,
 }) => {
@@ -97,7 +95,6 @@ const Container = ({
 					<Typography className={classes.title} variant="h6">NoteMe</Typography>
 					<HeaderContent
 						edit={edit}
-						isSignedIn={isSignedIn}
 						mobile={mobile}
 						setEdit={setEdit}
 					/>
@@ -118,11 +115,7 @@ const Container = ({
 				disableBackdropTransition={performance}
 			>
 				<div className={classes.drawerHeader} />
-				{drawerOpen && (
-					<DrawerContent
-						isSignedIn={isSignedIn}
-					/>
-				)}
+				{drawerOpen && <DrawerContent />}
 			</SwipeableDrawer>
 			<div
 				className={clsx(classes.content, {
