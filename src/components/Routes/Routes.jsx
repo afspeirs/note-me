@@ -9,6 +9,7 @@ import {
 } from 'react-router-dom';
 
 import { useAuth } from '../AuthContext';
+import { useNotes } from '../NotesContext';
 import HomePage from '../../pages/HomePage';
 import NoPage from '../../pages/NoPage';
 import NotePage from '../../pages/NotePage';
@@ -17,10 +18,6 @@ import SettingsPage from '../../pages/SettingsPage';
 const propTypes = {
 	drawerOpen: PropTypes.bool.isRequired,
 	edit: PropTypes.bool.isRequired,
-	handleNoteDelete: PropTypes.func.isRequired,
-	handleNoteUpdate: PropTypes.func.isRequired,
-	loading: PropTypes.bool.isRequired,
-	notes: PropTypes.instanceOf(Array).isRequired,
 	setEdit: PropTypes.func.isRequired,
 	updateAvailable: PropTypes.bool.isRequired,
 };
@@ -28,16 +25,13 @@ const propTypes = {
 const Routes = ({
 	drawerOpen,
 	edit,
-	handleNoteDelete,
-	handleNoteUpdate,
-	loading,
-	notes,
 	setEdit,
 	updateAvailable,
 }) => {
 	const { user } = useAuth();
 	const history = useHistory();
 	const location = useLocation();
+	const { handleNoteUpdate, notes } = useNotes();
 	const isModal = !!(
 		location
 		&& location.state
@@ -61,14 +55,7 @@ const Routes = ({
 				<Route
 					exact
 					path="/"
-					render={() => (
-						<HomePage
-							drawerOpen={drawerOpen}
-							handleNoteDelete={handleNoteDelete}
-							loading={loading}
-							notes={notes}
-						/>
-					)}
+					render={() => <HomePage drawerOpen={drawerOpen} />}
 				/>
 
 				<Route

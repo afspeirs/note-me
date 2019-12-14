@@ -10,22 +10,16 @@ import {
 
 import useStyles from './HomePage.styled';
 import { useAuth } from '../../components/AuthContext';
+import { useNotes } from '../../components/NotesContext';
 import NotesSearch from '../../components/NotesSearch';
 
 const propTypes = {
 	drawerOpen: PropTypes.bool.isRequired,
-	handleNoteDelete: PropTypes.func.isRequired,
-	loading: PropTypes.bool.isRequired,
-	notes: PropTypes.instanceOf(Array).isRequired,
 };
 
-const HomePage = ({
-	drawerOpen,
-	handleNoteDelete,
-	loading,
-	notes,
-}) => {
+const HomePage = ({ drawerOpen }) => {
 	const { signIn, user } = useAuth();
+	const { handleNoteDelete, loading, notes } = useNotes();
 	const classes = useStyles();
 	const mobile = useMediaQuery('(max-width:600px)');
 

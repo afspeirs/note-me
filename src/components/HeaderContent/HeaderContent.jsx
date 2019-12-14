@@ -22,13 +22,12 @@ import withConfirm from 'material-ui-confirm';
 
 import useStyles from './HeaderContent.styled';
 import AdapterLink from '../AdapterLink';
+import { useNotes } from '../NotesContext';
 
 const propTypes = {
 	confirm: PropTypes.func.isRequired,
 	edit: PropTypes.bool.isRequired,
 	isSignedIn: PropTypes.bool.isRequired,
-	handleNoteAdd: PropTypes.func.isRequired,
-	handleNoteDelete: PropTypes.func.isRequired,
 	mobile: PropTypes.bool.isRequired,
 	setEdit: PropTypes.func.isRequired,
 };
@@ -37,13 +36,12 @@ const HeaderContent = ({
 	confirm,
 	edit,
 	isSignedIn,
-	handleNoteAdd,
-	handleNoteDelete,
 	mobile,
 	setEdit,
 }) => {
 	const classes = useStyles();
 	const history = useHistory();
+	const { handleNoteAdd, handleNoteDelete } = useNotes();
 	const location = useLocation();
 	const [anchorEl, setAnchorEl] = useState(null);
 	const handleClick = event => setAnchorEl(event.currentTarget);

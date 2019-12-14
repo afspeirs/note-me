@@ -28,11 +28,7 @@ const propTypes = {
 	]).isRequired,
 	drawerOpen: PropTypes.bool.isRequired,
 	edit: PropTypes.bool.isRequired,
-	handleNoteAdd: PropTypes.func.isRequired,
-	handleNoteDelete: PropTypes.func.isRequired,
 	isSignedIn: PropTypes.bool.isRequired,
-	loading: PropTypes.bool.isRequired,
-	notes: PropTypes.instanceOf(Array).isRequired,
 	setDrawerOpen: PropTypes.func.isRequired,
 	setEdit: PropTypes.func.isRequired,
 };
@@ -41,11 +37,7 @@ const Container = ({
 	children,
 	drawerOpen,
 	edit,
-	handleNoteAdd,
-	handleNoteDelete,
 	isSignedIn,
-	loading,
-	notes,
 	setDrawerOpen,
 	setEdit,
 }) => {
@@ -105,8 +97,6 @@ const Container = ({
 					<Typography className={classes.title} variant="h6">NoteMe</Typography>
 					<HeaderContent
 						edit={edit}
-						handleNoteAdd={handleNoteAdd}
-						handleNoteDelete={handleNoteDelete}
 						isSignedIn={isSignedIn}
 						mobile={mobile}
 						setEdit={setEdit}
@@ -130,11 +120,7 @@ const Container = ({
 				<div className={classes.drawerHeader} />
 				{drawerOpen && (
 					<DrawerContent
-						handleNoteAdd={handleNoteAdd}
-						handleNoteDelete={handleNoteDelete}
 						isSignedIn={isSignedIn}
-						loading={loading}
-						notes={notes}
 					/>
 				)}
 			</SwipeableDrawer>
