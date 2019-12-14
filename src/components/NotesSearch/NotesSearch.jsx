@@ -10,7 +10,7 @@ import useStyles from './NotesSearch.styled';
 import { useNotes } from '../NotesContext';
 import NotesList from '../NotesList';
 
-const SearchBar = () => {
+const NotesSearch = () => {
 	const { notes } = useNotes();
 	const classes = useStyles();
 	const [items, setItems] = useState(notes);
@@ -47,4 +47,4 @@ const SearchBar = () => {
 	);
 };
 
-export default SearchBar;
+export default NotesSearch;

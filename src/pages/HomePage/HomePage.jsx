@@ -19,7 +19,7 @@ const propTypes = {
 
 const HomePage = ({ drawerOpen }) => {
 	const { signIn, user } = useAuth();
-	const { handleNoteDelete, loading, notes } = useNotes();
+	const { loading } = useNotes();
 	const classes = useStyles();
 	const mobile = useMediaQuery('(max-width:600px)');
 
@@ -39,11 +39,7 @@ const HomePage = ({ drawerOpen }) => {
 					{drawerOpen && !mobile ? (
 						<span className={classes.centered}>Select a note from the list</span>
 					) : (
-						<NotesSearch
-							handleNoteDelete={handleNoteDelete}
-							loading={loading}
-							notes={notes}
-						/>
+						<NotesSearch />
 					)}
 				</>
 			)}

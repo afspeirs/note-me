@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import { NavLink, useHistory } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import Swipeout from 'rc-swipeout';
 import {
 	List,
@@ -29,7 +29,6 @@ const propTypes = {
 const NotesList = ({ confirm }) => {
 	const { handleNoteDelete, loading, notes } = useNotes();
 	const classes = useStyles();
-	const history = useHistory();
 	const [{ sort }] = useStateValue();
 	const [anchorPosition, setAnchorPosition] = useState({ top: 0, left: 0 });
 	const [currentNote, setCurrentNote] = useState(null);
@@ -98,7 +97,7 @@ const NotesList = ({ confirm }) => {
 							{
 								text: <DeleteIcon />,
 								onPress: confirm(
-									() => handleNoteDelete(note.id, history), {
+									() => handleNoteDelete(note.id), {
 										title: `Are you sure you want to delete "${getTitle(note.text)}"?`,
 										confirmationText: 'Delete',
 									},
@@ -145,7 +144,7 @@ const NotesList = ({ confirm }) => {
 							<ListItem
 								button
 								onClick={confirm(
-									() => handleNoteDelete(note.id, history), {
+									() => handleNoteDelete(note.id), {
 										title: `Are you sure you want to delete "${getTitle(note.text)}"?`,
 										confirmationText: 'Delete',
 									},

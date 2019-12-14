@@ -4,6 +4,7 @@ import React, {
 	useEffect,
 	useState,
 } from 'react';
+import { useHistory } from 'react-router-dom';
 
 import { db } from '../../firebase';
 import { useAuth } from '../AuthContext';
@@ -16,10 +17,11 @@ export const useNotes = () => useContext(NotesContext);
 // Provider hook that creates notes object and handles state
 function useNotesProvider() {
 	const { user } = useAuth();
+	const history = useHistory();
 	const [loading, setLoading] = useState(true);
 	const [notes, setNotes] = useState([]);
 
-	const handleNoteAdd = (history) => {
+	const handleNoteAdd = () => {
 		const emptyNotes = notes.filter(el => el.text === '');
 
 		if (emptyNotes.length !== 0) {
@@ -38,7 +40,7 @@ function useNotesProvider() {
 		}
 	};
 
-	const handleNoteDelete = (id, history) => {
+	const handleNoteDelete = (id) => {
 		const note = notes.find(item => item.id === id);
 
 		db.collection(user.uid)

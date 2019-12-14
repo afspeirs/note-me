@@ -1,5 +1,4 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
 import {
 	Divider,
 	List,
@@ -16,7 +15,6 @@ import { useNotes } from '../NotesContext';
 import NotesSearch from '../NotesSearch';
 
 const DrawerContent = () => {
-	const history = useHistory();
 	const { isSignedIn } = useAuth();
 	const { handleNoteAdd } = useNotes();
 
@@ -29,7 +27,7 @@ const DrawerContent = () => {
 					<Divider />
 
 					<List disablePadding>
-						<ListItem button onClick={() => handleNoteAdd(history)}>
+						<ListItem button onClick={handleNoteAdd}>
 							<ListItemIcon>
 								<AddIcon />
 							</ListItemIcon>

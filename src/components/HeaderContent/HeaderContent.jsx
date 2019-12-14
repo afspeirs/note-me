@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import {
 	IconButton,
 	ListItemIcon,
@@ -39,7 +39,6 @@ const HeaderContent = ({
 	setEdit,
 }) => {
 	const classes = useStyles();
-	const history = useHistory();
 	const { isSignedIn } = useAuth();
 	const { handleNoteAdd, handleNoteDelete } = useNotes();
 	const location = useLocation();
@@ -47,7 +46,7 @@ const HeaderContent = ({
 	const handleClick = event => setAnchorEl(event.currentTarget);
 	const handleClose = () => setAnchorEl(null);
 	const handleNoteAddClick = () => {
-		handleNoteAdd(history);
+		handleNoteAdd();
 		handleClose();
 	};
 	const handleNoteDeleteOptions = {
@@ -113,7 +112,7 @@ const HeaderContent = ({
 						) && (
 							<MenuItem
 								onClick={confirm(
-									() => handleNoteDelete(location.pathname.replace(/^(.*[/])/, ''), history),
+									() => handleNoteDelete(location.pathname.replace(/^(.*[/])/, '')),
 									handleNoteDeleteOptions,
 								)}
 							>
@@ -177,7 +176,7 @@ const HeaderContent = ({
 								color="inherit"
 								aria-label="Delete"
 								onClick={confirm(
-									() => handleNoteDelete(location.pathname.replace(/^(.*[/])/, ''), history),
+									() => handleNoteDelete(location.pathname.replace(/^(.*[/])/, '')),
 									handleNoteDeleteOptions,
 								)}
 							>
