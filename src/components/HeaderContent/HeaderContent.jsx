@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import {
 	IconButton,
 	ListItemIcon,
@@ -22,13 +22,12 @@ import withConfirm from 'material-ui-confirm';
 
 import useStyles from './HeaderContent.styled';
 import AdapterLink from '../AdapterLink';
+import { useAuth } from '../AuthContext';
+import { useNotes } from '../NotesContext';
 
 const propTypes = {
 	confirm: PropTypes.func.isRequired,
 	edit: PropTypes.bool.isRequired,
-	isSignedIn: PropTypes.bool.isRequired,
-	handleNoteAdd: PropTypes.func.isRequired,
-	handleNoteDelete: PropTypes.func.isRequired,
 	mobile: PropTypes.bool.isRequired,
 	setEdit: PropTypes.func.isRequired,
 };
@@ -36,20 +35,18 @@ const propTypes = {
 const HeaderContent = ({
 	confirm,
 	edit,
-	isSignedIn,
-	handleNoteAdd,
-	handleNoteDelete,
 	mobile,
 	setEdit,
 }) => {
 	const classes = useStyles();
-	const history = useHistory();
+	const { isSignedIn } = useAuth();
+	const { handleNoteAdd, handleNoteDelete } = useNotes();
 	const location = useLocation();
 	const [anchorEl, setAnchorEl] = useState(null);
 	const handleClick = event => setAnchorEl(event.currentTarget);
 	const handleClose = () => setAnchorEl(null);
 	const handleNoteAddClick = () => {
-		handleNoteAdd(history);
+		handleNoteAdd();
 		handleClose();
 	};
 	const handleNoteDeleteOptions = {
@@ -115,7 +112,7 @@ const HeaderContent = ({
 						) && (
 							<MenuItem
 								onClick={confirm(
-									() => handleNoteDelete(location.pathname.replace(/^(.*[/])/, ''), history),
+									() => handleNoteDelete(location.pathname.replace(/^(.*[/])/, '')),
 									handleNoteDeleteOptions,
 								)}
 							>
@@ -179,7 +176,7 @@ const HeaderContent = ({
 								color="inherit"
 								aria-label="Delete"
 								onClick={confirm(
-									() => handleNoteDelete(location.pathname.replace(/^(.*[/])/, ''), history),
+									() => handleNoteDelete(location.pathname.replace(/^(.*[/])/, '')),
 									handleNoteDeleteOptions,
 								)}
 							>

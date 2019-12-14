@@ -1,6 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { useHistory } from 'react-router-dom';
 import {
 	Divider,
 	List,
@@ -12,39 +10,24 @@ import {
 	Add as AddIcon,
 } from '@material-ui/icons';
 
+import { useAuth } from '../AuthContext';
+import { useNotes } from '../NotesContext';
 import NotesSearch from '../NotesSearch';
 
-const propTypes = {
-	handleNoteAdd: PropTypes.func.isRequired,
-	handleNoteDelete: PropTypes.func.isRequired,
-	isSignedIn: PropTypes.bool.isRequired,
-	loading: PropTypes.bool.isRequired,
-	notes: PropTypes.instanceOf(Array).isRequired,
-};
-
-const DrawerContent = ({
-	handleNoteAdd,
-	handleNoteDelete,
-	isSignedIn,
-	loading,
-	notes,
-}) => {
-	const history = useHistory();
+const DrawerContent = () => {
+	const { isSignedIn } = useAuth();
+	const { handleNoteAdd } = useNotes();
 
 	return (
 		<>
-			<NotesSearch
-				handleNoteDelete={handleNoteDelete}
-				loading={loading}
-				notes={notes}
-			/>
+			<NotesSearch />
 
 			{isSignedIn && (
 				<>
 					<Divider />
 
 					<List disablePadding>
-						<ListItem button onClick={() => handleNoteAdd(history)}>
+						<ListItem button onClick={handleNoteAdd}>
 							<ListItemIcon>
 								<AddIcon />
 							</ListItemIcon>
@@ -56,7 +39,5 @@ const DrawerContent = ({
 		</>
 	);
 };
-
-DrawerContent.propTypes = propTypes;
 
 export default DrawerContent;

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import { NavLink, useHistory } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import Swipeout from 'rc-swipeout';
 import {
 	List,
@@ -18,24 +18,18 @@ import withConfirm from 'material-ui-confirm';
 
 import useStyles from './NotesList.styled';
 import TimeAgo from '../TimeAgo';
+import { useNotes } from '../NotesContext';
 import { useStateValue } from '../StateContext';
 import { getTitle } from '../../ultils';
 
 const propTypes = {
 	confirm: PropTypes.func.isRequired,
-	handleNoteDelete: PropTypes.func.isRequired,
-	loading: PropTypes.bool.isRequired,
-	notes: PropTypes.instanceOf(Array).isRequired,
+	notes: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
-const NotesList = ({
-	confirm,
-	handleNoteDelete,
-	loading,
-	notes,
-}) => {
+const NotesList = ({ confirm, notes }) => {
+	const { handleNoteDelete, loading } = useNotes();
 	const classes = useStyles();
-	const history = useHistory();
 	const [{ sort }] = useStateValue();
 	const [anchorPosition, setAnchorPosition] = useState({ top: 0, left: 0 });
 	const [currentNote, setCurrentNote] = useState(null);
@@ -104,7 +98,7 @@ const NotesList = ({
 							{
 								text: <DeleteIcon />,
 								onPress: confirm(
-									() => handleNoteDelete(note.id, history), {
+									() => handleNoteDelete(note.id), {
 										title: `Are you sure you want to delete "${getTitle(note.text)}"?`,
 										confirmationText: 'Delete',
 									},
@@ -151,7 +145,7 @@ const NotesList = ({
 							<ListItem
 								button
 								onClick={confirm(
-									() => handleNoteDelete(note.id, history), {
+									() => handleNoteDelete(note.id), {
 										title: `Are you sure you want to delete "${getTitle(note.text)}"?`,
 										confirmationText: 'Delete',
 									},

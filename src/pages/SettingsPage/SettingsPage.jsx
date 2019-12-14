@@ -16,30 +16,21 @@ import {
 } from '@material-ui/icons';
 
 import useStyles from './SettingsPage.styled';
+import { useAuth } from '../../components/AuthContext';
 import ChangeTheme from '../../components/ChangeTheme';
 import CheckForUpdate from '../../components/CheckForUpdate';
 import Modal from '../../components/Modal';
 import SortNotes from '../../components/SortNotes';
 import blankUserPhoto from '../../img/blank-user-photo.png';
 
-const defaultProps = {
-	user: null,
-};
-
 const propTypes = {
-	signIn: PropTypes.func.isRequired,
-	signOut: PropTypes.func.isRequired,
 	updateAvailable: PropTypes.bool.isRequired,
-	user: PropTypes.instanceOf(Object),
 };
 
-const SettingsPage = ({
-	signIn,
-	signOut,
-	updateAvailable,
-	user,
-}) => {
+const SettingsPage = ({ updateAvailable }) => {
+	const { signIn, signOut, user } = useAuth();
 	const classes = useStyles();
+
 
 	return (
 		<Modal title="Settings">
@@ -88,7 +79,6 @@ const SettingsPage = ({
 	);
 };
 
-SettingsPage.defaultProps = defaultProps;
 SettingsPage.propTypes = propTypes;
 
 export default SettingsPage;

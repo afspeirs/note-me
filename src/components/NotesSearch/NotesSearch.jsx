@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import {
 	InputBase,
 	List,
@@ -8,19 +7,11 @@ import {
 import SearchIcon from '@material-ui/icons/Search';
 
 import useStyles from './NotesSearch.styled';
+import { useNotes } from '../NotesContext';
 import NotesList from '../NotesList';
 
-const propTypes = {
-	handleNoteDelete: PropTypes.func.isRequired,
-	loading: PropTypes.bool.isRequired,
-	notes: PropTypes.instanceOf(Array).isRequired,
-};
-
-const SearchBar = ({
-	handleNoteDelete,
-	loading,
-	notes,
-}) => {
+const NotesSearch = () => {
+	const { notes } = useNotes();
 	const classes = useStyles();
 	const [items, setItems] = useState(notes);
 
@@ -50,14 +41,10 @@ const SearchBar = ({
 			</ListItem>
 
 			<NotesList
-				handleNoteDelete={handleNoteDelete}
-				loading={loading}
 				notes={items}
 			/>
 		</List>
 	);
 };
 
-SearchBar.propTypes = propTypes;
-
-export default SearchBar;
+export default NotesSearch;

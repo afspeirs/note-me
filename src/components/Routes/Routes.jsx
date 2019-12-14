@@ -8,44 +8,30 @@ import {
 	useLocation,
 } from 'react-router-dom';
 
+import { useAuth } from '../AuthContext';
+import { useNotes } from '../NotesContext';
 import HomePage from '../../pages/HomePage';
 import NoPage from '../../pages/NoPage';
 import NotePage from '../../pages/NotePage';
 import SettingsPage from '../../pages/SettingsPage';
 
-const defaultProps = {
-	user: null,
-};
-
 const propTypes = {
 	drawerOpen: PropTypes.bool.isRequired,
 	edit: PropTypes.bool.isRequired,
-	handleNoteDelete: PropTypes.func.isRequired,
-	handleNoteUpdate: PropTypes.func.isRequired,
-	loading: PropTypes.bool.isRequired,
-	notes: PropTypes.instanceOf(Array).isRequired,
 	setEdit: PropTypes.func.isRequired,
-	signIn: PropTypes.func.isRequired,
-	signOut: PropTypes.func.isRequired,
 	updateAvailable: PropTypes.bool.isRequired,
-	user: PropTypes.instanceOf(Object),
 };
 
 const Routes = ({
 	drawerOpen,
 	edit,
-	handleNoteDelete,
-	handleNoteUpdate,
-	loading,
-	notes,
 	setEdit,
-	signIn,
-	signOut,
 	updateAvailable,
-	user,
 }) => {
+	const { user } = useAuth();
 	const history = useHistory();
 	const location = useLocation();
+	const { handleNoteUpdate, notes } = useNotes();
 	const isModal = !!(
 		location
 		&& location.state
@@ -69,16 +55,7 @@ const Routes = ({
 				<Route
 					exact
 					path="/"
-					render={() => (
-						<HomePage
-							drawerOpen={drawerOpen}
-							handleNoteDelete={handleNoteDelete}
-							isSignedIn={Boolean(user)}
-							loading={loading}
-							notes={notes}
-							signIn={signIn}
-						/>
-					)}
+					render={() => <HomePage drawerOpen={drawerOpen} />}
 				/>
 
 				<Route
@@ -99,7 +76,7 @@ const Routes = ({
 				<Route component={NoPage} />
 			</Switch>
 
-			{!user && <Redirect from="/note/" to="/" />}
+			{user === false && <Redirect from="/note/" to="/" />}
 
 			{isModal && (
 				<Route
@@ -107,10 +84,7 @@ const Routes = ({
 					render={props => (
 						<SettingsPage
 							{...props}
-							signIn={signIn}
-							signOut={signOut}
 							updateAvailable={updateAvailable}
-							user={user}
 						/>
 					)}
 				/>
@@ -119,7 +93,6 @@ const Routes = ({
 	);
 };
 
-Routes.defaultProps = defaultProps;
 Routes.propTypes = propTypes;
 
 export default Routes;
