@@ -7,11 +7,14 @@ import './index.css';
 import * as serviceWorker from './serviceWorker';
 import App from './components/App';
 import { AuthProvider } from './components/AuthContext';
+import { NotesProvider } from './components/NotesContext';
 
 ReactDOM.render((
 	<BrowserRouter>
 		<AuthProvider>
-			<App />
+			<NotesProvider>
+				<App />
+			</NotesProvider>
 		</AuthProvider>
 	</BrowserRouter>
 ), document.getElementById('root'));

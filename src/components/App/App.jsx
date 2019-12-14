@@ -6,17 +6,21 @@ import Container from '../Container';
 import SimpleSnackbar from '../SimpleSnackbar';
 import theme from '../../theme';
 import { useAuth } from '../AuthContext';
+import { useNotes } from '../NotesContext';
 import { StateProvider } from '../StateContext';
-
-import { db } from '../../firebase';
 import Routes from '../Routes';
 
 const App = () => {
 	const { user } = useAuth();
+	const {
+		handleNoteAdd,
+		handleNoteDelete,
+		handleNoteUpdate,
+		loading,
+		notes,
+	} = useNotes();
 	const [drawerOpen, setDrawerOpen] = useState(false);
 	const [edit, setEdit] = useState(false);
-	const [loading, setLoading] = useState(true);
-	const [notes, setNotes] = useState([]);
 	const [settings, setSettings] = useState({
 		sort: localStorage.getItem('changeSort') || 'date-asc',
 		darkTheme: JSON.parse(localStorage.getItem('changeDarkTheme')) || false,
@@ -91,54 +95,6 @@ const App = () => {
 		}
 	};
 
-	const handleNoteAdd = (history) => {
-		const emptyNotes = notes.filter(el => el.text === '');
-
-		if (emptyNotes.length !== 0) {
-			history.push(`/note/${emptyNotes[0].id}`);
-		} else {
-			const newNote = db.collection(user.uid).doc();
-			const value = {
-				text: '',
-				date: +new Date(),
-				id: newNote.id,
-				created: +new Date(),
-			};
-
-			notes.unshift(value);
-			newNote.set(value).then(() => history.push(`/note/${value.id}`));
-		}
-	};
-
-	const handleNoteDelete = (id, history) => {
-		const note = notes.find(item => item.id === id);
-
-		db.collection(user.uid)
-			.doc(id)
-			.delete();
-
-		if (note) {
-			const indexOfNote = notes.indexOf(note);
-			notes.splice(indexOfNote, 1);
-			history.replace('/');
-		}
-	};
-
-	const handleNoteUpdate = (id, text) => {
-		const index = notes.findIndex(note => note.id === id);
-		const value = {
-			...notes[index],
-			text,
-			date: +new Date(),
-		};
-
-		db.collection(user.uid)
-			.doc(id)
-			.set(value);
-
-		notes[index] = value;
-	};
-
 	const muiTheme = createMuiTheme({
 		...theme,
 		...{
@@ -148,20 +104,6 @@ const App = () => {
 			},
 		},
 	});
-
-	useEffect(() => {
-		if (user) {
-			db.collection(user.uid)
-				.onSnapshot((snapshot) => {
-					const authNotes = snapshot.docs.map(doc => doc.data());
-					setLoading(false);
-					setNotes(authNotes);
-				});
-		} else if (user !== null) {
-			setLoading(false);
-			setNotes([]);
-		}
-	}, [user]); // eslint-disable-line
 
 	useEffect(() => {
 		window.addEventListener('keydown', handleKeyDown);
