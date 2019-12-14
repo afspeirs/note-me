@@ -24,7 +24,7 @@ import { getTitle } from '../../ultils';
 
 const propTypes = {
 	confirm: PropTypes.func.isRequired,
-	notes: PropTypes.arrayOf(PropTypes.array).isRequired,
+	notes: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 const NotesList = ({ confirm, notes }) => {
