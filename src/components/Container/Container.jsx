@@ -115,7 +115,7 @@ const Container = ({
 				disableBackdropTransition={performance}
 			>
 				<div className={classes.drawerHeader} />
-				{drawerOpen && <DrawerContent />}
+				<DrawerContent />
 			</SwipeableDrawer>
 			<div
 				className={clsx(classes.content, {
