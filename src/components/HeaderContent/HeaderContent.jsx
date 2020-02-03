@@ -22,8 +22,8 @@ import withConfirm from 'material-ui-confirm';
 
 import useStyles from './HeaderContent.styled';
 import AdapterLink from '../AdapterLink';
-import { useAuth } from '../AuthContext';
-import { useNotes } from '../NotesContext';
+import { useAuth } from '../../hooks/AuthContext';
+import { useNotes } from '../../hooks/NotesContext';
 
 const propTypes = {
 	confirm: PropTypes.func.isRequired,

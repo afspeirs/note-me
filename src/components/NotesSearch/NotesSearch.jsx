@@ -7,8 +7,8 @@ import {
 import SearchIcon from '@material-ui/icons/Search';
 
 import useStyles from './NotesSearch.styled';
-import { useNotes } from '../NotesContext';
 import NotesList from '../NotesList';
+import { useNotes } from '../../hooks/NotesContext';
 
 const NotesSearch = () => {
 	const { notes } = useNotes();

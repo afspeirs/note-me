@@ -8,8 +8,8 @@ import {
 	useLocation,
 } from 'react-router-dom';
 
-import { useAuth } from '../AuthContext';
-import { useNotes } from '../NotesContext';
+import { useAuth } from '../../hooks/AuthContext';
+import { useNotes } from '../../hooks/NotesContext';
 import HomePage from '../../pages/HomePage';
 import NoPage from '../../pages/NoPage';
 import NotePage from '../../pages/NotePage';
