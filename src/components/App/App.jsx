@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { createMuiTheme } from '@material-ui/core/styles';
-import { ThemeProvider } from '@material-ui/styles';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
 import Container from '../Container';
 import SimpleSnackbar from '../SimpleSnackbar';
