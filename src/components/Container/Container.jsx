@@ -62,7 +62,16 @@ const Container = ({
 		<div className={classes.container}>
 			<AppBar position="fixed">
 				<Toolbar>
-					{mobile ? (
+					<IconButton
+						className={classes.menuButton}
+						color="inherit"
+						aria-label="Open drawer"
+						edge="start"
+						onClick={() => handleDrawerToggle(true)}
+					>
+						<MenuIcon />
+					</IconButton>
+					{mobile && (
 						<Route
 							render={({ location }) => (
 								// If SettingsPage is open and the previousLocation is NotePage
@@ -81,16 +90,6 @@ const Container = ({
 								</IconButton>
 							)}
 						/>
-					) : (
-						<IconButton
-							className={classes.menuButton}
-							color="inherit"
-							aria-label="Open drawer"
-							edge="start"
-							onClick={() => handleDrawerToggle(true)}
-						>
-							<MenuIcon />
-						</IconButton>
 					)}
 					<Typography className={classes.title} variant="h6">NoteMe</Typography>
 					<HeaderContent
