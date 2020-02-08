@@ -14,7 +14,7 @@ import {
 	Alarm as AlarmIcon,
 	Delete as DeleteIcon,
 } from '@material-ui/icons';
-import withConfirm from 'material-ui-confirm';
+import { useConfirm } from 'material-ui-confirm';
 
 import useStyles from './NotesList.styled';
 import TimeAgo from '../TimeAgo';
@@ -23,21 +23,16 @@ import { useNotes } from '../../hooks/NotesContext';
 import { useStateValue } from '../../hooks/StateContext';
 
 const propTypes = {
-	confirm: PropTypes.func.isRequired,
 	notes: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
-const NotesList = ({ confirm, notes }) => {
+const NotesList = ({ notes }) => {
+	const confirm = useConfirm();
 	const { handleNoteDelete, loading } = useNotes();
 	const classes = useStyles();
 	const [{ sort }] = useStateValue();
 	const [anchorPosition, setAnchorPosition] = useState({ top: 0, left: 0 });
 	const [currentNote, setCurrentNote] = useState(null);
-	const handleClose = () => {
-		setAnchorPosition({ top: 0, left: 0 });
-		setCurrentNote(null);
-	};
-
 	const sortFunction = {
 		'date-asc': (a, b) => b.date - a.date,
 		'date-dsc': (a, b) => a.date - b.date,
@@ -52,6 +47,19 @@ const NotesList = ({ confirm, notes }) => {
 		)),
 		[],
 	);
+
+	const handleClose = () => {
+		setAnchorPosition({ top: 0, left: 0 });
+		setCurrentNote(null);
+	};
+
+	const handleNoteDeleteClick = ({ id, text }) => {
+		confirm({
+			title: `Are you sure you want to delete "${getTitle(text)}"?`,
+			confirmationText: 'Delete',
+		})
+			.then(() => handleNoteDelete(id));
+	};
 
 	const handleContextMenu = (event) => {
 		const closestContextMenuOption = event.target.closest('.context-menu-select');
@@ -98,12 +106,7 @@ const NotesList = ({ confirm, notes }) => {
 							},
 							{
 								text: <DeleteIcon />,
-								onPress: confirm(
-									() => handleNoteDelete(note.id), {
-										title: `Are you sure you want to delete "${getTitle(note.text)}"?`,
-										confirmationText: 'Delete',
-									},
-								),
+								onPress: () => handleNoteDeleteClick(note),
 								autoClose: true,
 								style: {
 									backgroundColor: 'red',
@@ -143,15 +146,7 @@ const NotesList = ({ confirm, notes }) => {
 									primary={<TimeAgo slot="title" date={note.date / 1000} />}
 								/>
 							</ListItem>
-							<ListItem
-								button
-								onClick={confirm(
-									() => handleNoteDelete(note.id), {
-										title: `Are you sure you want to delete "${getTitle(note.text)}"?`,
-										confirmationText: 'Delete',
-									},
-								)}
-							>
+							<ListItem button onClick={() => handleNoteDeleteClick(note)}>
 								<ListItemIcon>
 									<DeleteIcon color="error" />
 								</ListItemIcon>
@@ -170,4 +165,4 @@ const NotesList = ({ confirm, notes }) => {
 
 NotesList.propTypes = propTypes;
 
-export default withConfirm(NotesList);
+export default NotesList;

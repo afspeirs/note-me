@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import { ConfirmProvider } from 'material-ui-confirm';
 
 import Container from '../Container';
 import Routes from '../Routes';
@@ -109,28 +110,30 @@ const App = () => {
 
 	return (
 		<ThemeProvider theme={muiTheme}>
-			<StateProvider initialState={settings} reducer={reducer}>
-				<Container
-					drawerOpen={drawerOpen}
-					setDrawerOpen={setDrawerOpen}
-				>
-					<Routes
+			<ConfirmProvider>
+				<StateProvider initialState={settings} reducer={reducer}>
+					<Container
 						drawerOpen={drawerOpen}
-						edit={edit}
-						setEdit={setEdit}
-						updateAvailable={updateAvailable}
-					/>
-				</Container>
+						setDrawerOpen={setDrawerOpen}
+					>
+						<Routes
+							drawerOpen={drawerOpen}
+							edit={edit}
+							setEdit={setEdit}
+							updateAvailable={updateAvailable}
+						/>
+					</Container>
 
-				{snackbarContent && (
-					<SimpleSnackbar
-						onClose={swSnackbarReset}
-						onSecondaryClose={snackbarContent.onClose}
-						secondaryText={snackbarContent.secondaryText}
-						text={snackbarContent.text}
-					/>
-				)}
-			</StateProvider>
+					{snackbarContent && (
+						<SimpleSnackbar
+							onClose={swSnackbarReset}
+							onSecondaryClose={snackbarContent.onClose}
+							secondaryText={snackbarContent.secondaryText}
+							text={snackbarContent.text}
+						/>
+					)}
+				</StateProvider>
+			</ConfirmProvider>
 		</ThemeProvider>
 	);
 };
