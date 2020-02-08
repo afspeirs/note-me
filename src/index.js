@@ -6,11 +6,12 @@ import 'rc-swipeout/dist/rc-swipeout.css';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
 import App from './components/App';
+import UserConfirmation from './components/UserConfirmation';
 import { AuthProvider } from './hooks/AuthContext';
 import { NotesProvider } from './hooks/NotesContext';
 
 ReactDOM.render((
-	<BrowserRouter>
+	<BrowserRouter getUserConfirmation={(message, callback) => UserConfirmation(message, callback)}>
 		<AuthProvider>
 			<NotesProvider>
 				<App />

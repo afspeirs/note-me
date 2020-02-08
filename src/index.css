@@ -17,11 +17,6 @@ a {
 	box-sizing: border-box;
 }
 
-#context-menu-container {
-	position: absolute;
-	z-index: 5000;
-}
-
 ::-webkit-scrollbar {
 	max-width: 8px;
 	max-height: 8px;
