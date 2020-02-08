@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
 import Container from '../Container';
+import Routes from '../Routes';
 import SimpleSnackbar from '../SimpleSnackbar';
 import theme from '../../theme';
-import { StateProvider } from '../StateContext';
-import Routes from '../Routes';
+import { StateProvider } from '../../hooks/StateContext';
 
 const App = () => {
 	const [drawerOpen, setDrawerOpen] = useState(false);

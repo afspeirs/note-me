@@ -12,7 +12,7 @@ import {
 } from '@material-ui/icons';
 
 import useStyles from './SortNotes.styled';
-import { useStateValue } from '../StateContext';
+import { useStateValue } from '../../hooks/StateContext';
 
 const options = [
 	{ text: 'Modified Date (Newest First)', value: 'date-asc' },

@@ -18,9 +18,9 @@ import withConfirm from 'material-ui-confirm';
 
 import useStyles from './NotesList.styled';
 import TimeAgo from '../TimeAgo';
-import { useStateValue } from '../StateContext';
 import { getTitle } from '../../ultils';
 import { useNotes } from '../../hooks/NotesContext';
+import { useStateValue } from '../../hooks/StateContext';
 
 const propTypes = {
 	confirm: PropTypes.func.isRequired,
