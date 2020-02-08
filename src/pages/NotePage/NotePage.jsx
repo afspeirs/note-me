@@ -60,7 +60,7 @@ const NotePage = ({
 					className={clsx(classes.page, classes.textarea)}
 					type="text"
 					value={localNote}
-					onChange={event => setLocalNote(event.target.value)}
+					onChange={(event) => setLocalNote(event.target.value)}
 				/>
 			) : (
 				<Markdown

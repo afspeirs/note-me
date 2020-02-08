@@ -33,13 +33,13 @@ const SortNotes = ({ icon }) => {
 	const classes = useStyles();
 	const [{ sort }, dispatch] = useStateValue();
 	const [value, setValue] = useState(sort);
-	const [anchorEl, setAnchorEl] = React.useState(null);
+	const [anchorEl, setAnchorEl] = useState(null);
 	// eslint-disable-next-line max-len
-	const [selectedIndex, setSelectedIndex] = React.useState(options.findIndex(item => item.value === value));
+	const [selectedIndex, setSelectedIndex] = useState(options.findIndex((item) => item.value === value));
 
 	const handleClose = () => setAnchorEl(null);
 
-	const handleClickListItem = event => setAnchorEl(event.currentTarget);
+	const handleClickListItem = (event) => setAnchorEl(event.currentTarget);
 
 	const handleClickMenuItem = (event, index) => {
 		setValue(options[index].value);
@@ -84,7 +84,7 @@ const SortNotes = ({ icon }) => {
 						key={option.text}
 						selected={index === selectedIndex}
 						value={option.value}
-						onClick={event => handleClickMenuItem(event, index)}
+						onClick={(event) => handleClickMenuItem(event, index)}
 					>
 						{option.text}
 					</MenuItem>

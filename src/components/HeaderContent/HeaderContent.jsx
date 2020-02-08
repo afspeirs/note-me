@@ -34,7 +34,7 @@ const HeaderContent = ({ confirm, mobile }) => {
 	const { handleNoteAdd, handleNoteDelete } = useNotes();
 	const location = useLocation();
 	const [anchorEl, setAnchorEl] = useState(null);
-	const handleClick = event => setAnchorEl(event.currentTarget);
+	const handleClick = (event) => setAnchorEl(event.currentTarget);
 	const handleClose = () => setAnchorEl(null);
 	const handleNoteAddClick = () => {
 		handleNoteAdd();

@@ -47,6 +47,7 @@ const NotesList = ({ confirm, notes }) => {
 
 	const renderLink = React.useMemo(
 		() => React.forwardRef((props, ref) => (
+			// eslint-disable-next-line react/jsx-props-no-spreading
 			<NavLink {...props} innerRef={ref} />
 		)),
 		[],
@@ -82,7 +83,7 @@ const NotesList = ({ confirm, notes }) => {
 					<ListItemText primary="Loading, please wait while we gather your notes" />
 				</ListItem>
 			)}
-			{notes.sort(sortFunction).map(note => (
+			{notes.sort(sortFunction).map((note) => (
 				<React.Fragment key={`note-${note.id}`}>
 					<Swipeout
 						className={classes.swipeout}

@@ -71,12 +71,12 @@ const App = () => {
 			// B = Toggle sidebar
 			if (event.key === 'b') {
 				event.preventDefault();
-				setDrawerOpen(prevState => !prevState);
+				setDrawerOpen((prevState) => !prevState);
 			}
 			// E or S = Toggle edit
 			if (event.key === 'e' || event.key === 's') {
 				event.preventDefault();
-				setEdit(prevState => !prevState);
+				setEdit((prevState) => !prevState);
 			}
 			// Disable some keyboard shortcuts
 			if ((event.key === 'p')) {

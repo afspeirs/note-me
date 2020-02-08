@@ -25,7 +25,7 @@ const CheckForUpdate = ({ updateAvailable }) => {
 
 	const updateServiceWorker = () => {
 		if ('serviceWorker' in navigator) {
-			navigator.serviceWorker.ready.then(registration => registration.update());
+			navigator.serviceWorker.ready.then((registration) => registration.update());
 		} else {
 			setTimeout(() => window.location.reload(window.location.href), 1500);
 		}
