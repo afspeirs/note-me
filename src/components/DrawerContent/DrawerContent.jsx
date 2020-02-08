@@ -10,9 +10,9 @@ import {
 	Add as AddIcon,
 } from '@material-ui/icons';
 
-import { useAuth } from '../AuthContext';
-import { useNotes } from '../NotesContext';
 import NotesSearch from '../NotesSearch';
+import { useAuth } from '../../hooks/AuthContext';
+import { useNotes } from '../../hooks/NotesContext';
 
 const DrawerContent = () => {
 	const { isSignedIn } = useAuth();

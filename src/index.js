@@ -6,8 +6,8 @@ import 'rc-swipeout/dist/rc-swipeout.css';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
 import App from './components/App';
-import { AuthProvider } from './components/AuthContext';
-import { NotesProvider } from './components/NotesContext';
+import { AuthProvider } from './hooks/AuthContext';
+import { NotesProvider } from './hooks/NotesContext';
 
 ReactDOM.render((
 	<BrowserRouter>

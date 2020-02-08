@@ -3,6 +3,14 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { Prompt } from 'react-router-dom';
 import Markdown from 'react-markdown';
+import {
+	Fab,
+	Tooltip,
+} from '@material-ui/core';
+import {
+	Edit as EditIcon,
+	Save as SaveIcon,
+} from '@material-ui/icons';
 
 import useStyles from './NotePage.styled';
 import LinkRenderer from '../../components/LinkRenderer';
@@ -69,6 +77,17 @@ const NotePage = ({
 					message="Are you sure you want to leave without saving?"
 				/>
 			)}
+
+			<Tooltip title={edit ? 'Save' : 'Edit'}>
+				<Fab
+					color="primary"
+					aria-label={edit ? 'Save' : 'Edit'}
+					className={classes.fab}
+					onClick={() => setEdit(!edit)}
+				>
+					{edit ? <SaveIcon /> : <EditIcon />}
+				</Fab>
+			</Tooltip>
 		</>
 	);
 };

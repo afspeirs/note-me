@@ -9,9 +9,9 @@ import {
 } from '@material-ui/core';
 
 import useStyles from './HomePage.styled';
-import { useAuth } from '../../components/AuthContext';
-import { useNotes } from '../../components/NotesContext';
 import NotesSearch from '../../components/NotesSearch';
+import { useAuth } from '../../hooks/AuthContext';
+import { useNotes } from '../../hooks/NotesContext';
 
 const propTypes = {
 	drawerOpen: PropTypes.bool.isRequired,

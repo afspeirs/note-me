@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { createMuiTheme } from '@material-ui/core/styles';
-import { ThemeProvider } from '@material-ui/styles';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
 import Container from '../Container';
 import SimpleSnackbar from '../SimpleSnackbar';
@@ -67,19 +66,22 @@ const App = () => {
 	};
 
 	const handleKeyDown = (event) => {
-		// CTRL + B = Toggle sidebar
-		if (event.ctrlKey && event.key === 'b') {
-			event.preventDefault();
-			setDrawerOpen(prevState => !prevState);
-		}
-		// CTRL + E = Toggle edit
-		if (event.ctrlKey && event.key === 'e') {
-			event.preventDefault();
-			setEdit(prevState => !prevState);
-		}
-		// Disable some keyboard shortcuts
-		if (event.ctrlKey && (event.key === 's' || event.key === 'p')) {
-			event.preventDefault();
+		// If CTRL or CMD is pressed
+		if (event.ctrlKey || event.metaKey) {
+			// B = Toggle sidebar
+			if (event.key === 'b') {
+				event.preventDefault();
+				setDrawerOpen(prevState => !prevState);
+			}
+			// E or S = Toggle edit
+			if (event.key === 'e' || event.key === 's') {
+				event.preventDefault();
+				setEdit(prevState => !prevState);
+			}
+			// Disable some keyboard shortcuts
+			if ((event.key === 'p')) {
+				event.preventDefault();
+			}
 		}
 	};
 
@@ -110,9 +112,7 @@ const App = () => {
 			<StateProvider initialState={settings} reducer={reducer}>
 				<Container
 					drawerOpen={drawerOpen}
-					edit={edit}
 					setDrawerOpen={setDrawerOpen}
-					setEdit={setEdit}
 				>
 					<Routes
 						drawerOpen={drawerOpen}

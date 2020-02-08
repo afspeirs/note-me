@@ -27,17 +27,13 @@ const propTypes = {
 		PropTypes.node,
 	]).isRequired,
 	drawerOpen: PropTypes.bool.isRequired,
-	edit: PropTypes.bool.isRequired,
 	setDrawerOpen: PropTypes.func.isRequired,
-	setEdit: PropTypes.func.isRequired,
 };
 
 const Container = ({
 	children,
 	drawerOpen,
-	edit,
 	setDrawerOpen,
-	setEdit,
 }) => {
 	const classes = useStyles();
 	const history = useHistory();
@@ -62,7 +58,16 @@ const Container = ({
 		<div className={classes.container}>
 			<AppBar position="fixed">
 				<Toolbar>
-					{mobile ? (
+					<IconButton
+						className={classes.menuButton}
+						color="inherit"
+						aria-label="Open drawer"
+						edge="start"
+						onClick={() => handleDrawerToggle(true)}
+					>
+						<MenuIcon />
+					</IconButton>
+					{mobile && (
 						<Route
 							render={({ location }) => (
 								// If SettingsPage is open and the previousLocation is NotePage
@@ -81,23 +86,9 @@ const Container = ({
 								</IconButton>
 							)}
 						/>
-					) : (
-						<IconButton
-							className={classes.menuButton}
-							color="inherit"
-							aria-label="Open drawer"
-							edge="start"
-							onClick={() => handleDrawerToggle(true)}
-						>
-							<MenuIcon />
-						</IconButton>
 					)}
 					<Typography className={classes.title} variant="h6">NoteMe</Typography>
-					<HeaderContent
-						edit={edit}
-						mobile={mobile}
-						setEdit={setEdit}
-					/>
+					<HeaderContent mobile={mobile} />
 				</Toolbar>
 			</AppBar>
 			<Hidden className={classes.placeholder} smUp implementation="css" />

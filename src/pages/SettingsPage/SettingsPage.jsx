@@ -16,12 +16,12 @@ import {
 } from '@material-ui/icons';
 
 import useStyles from './SettingsPage.styled';
-import { useAuth } from '../../components/AuthContext';
 import ChangeTheme from '../../components/ChangeTheme';
 import CheckForUpdate from '../../components/CheckForUpdate';
 import Modal from '../../components/Modal';
 import SortNotes from '../../components/SortNotes';
 import blankUserPhoto from '../../img/blank-user-photo.png';
+import { useAuth } from '../../hooks/AuthContext';
 
 const propTypes = {
 	updateAvailable: PropTypes.bool.isRequired,
