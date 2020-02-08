@@ -16,7 +16,7 @@ import {
 	Settings as SettingsIcon,
 	MoreVert as MoreIcon,
 } from '@material-ui/icons';
-import withConfirm from 'material-ui-confirm';
+import { useConfirm } from 'material-ui-confirm';
 
 import useStyles from './HeaderContent.styled';
 import AdapterLink from '../AdapterLink';
@@ -24,28 +24,33 @@ import { useAuth } from '../../hooks/AuthContext';
 import { useNotes } from '../../hooks/NotesContext';
 
 const propTypes = {
-	confirm: PropTypes.func.isRequired,
 	mobile: PropTypes.bool.isRequired,
 };
 
-const HeaderContent = ({ confirm, mobile }) => {
+const HeaderContent = ({ mobile }) => {
 	const classes = useStyles();
+	const confirm = useConfirm();
 	const { isSignedIn } = useAuth();
 	const { handleNoteAdd, handleNoteDelete } = useNotes();
 	const location = useLocation();
 	const [anchorEl, setAnchorEl] = useState(null);
-	const handleClick = event => setAnchorEl(event.currentTarget);
+	const handleClick = (event) => setAnchorEl(event.currentTarget);
 	const handleClose = () => setAnchorEl(null);
 	const handleNoteAddClick = () => {
 		handleNoteAdd();
 		handleClose();
 	};
 	const handleNoteDeleteOptions = {
+		// TODO - Get current not name
 		title: 'Are you sure you want to delete this note?',
 		confirmationText: 'Delete',
 		dialogProps: {
 			onEnter: handleClose,
 		},
+	};
+	const handleNoteDeleteClick = () => {
+		confirm(handleNoteDeleteOptions)
+			.then(() => handleNoteDelete(location.pathname.replace(/^(.*[/])/, '')));
 	};
 
 	return (
@@ -84,12 +89,7 @@ const HeaderContent = ({ confirm, mobile }) => {
 							(location.pathname === '/settings/' && window.previousLocation && window.previousLocation.pathname.startsWith('/note/'))
 							|| location.pathname.startsWith('/note/')
 						) && (
-							<MenuItem
-								onClick={confirm(
-									() => handleNoteDelete(location.pathname.replace(/^(.*[/])/, '')),
-									handleNoteDeleteOptions,
-								)}
-							>
+							<MenuItem onClick={handleNoteDelete}>
 								<ListItemIcon>
 									<DeleteIcon />
 								</ListItemIcon>
@@ -149,10 +149,7 @@ const HeaderContent = ({ confirm, mobile }) => {
 							<IconButton
 								color="inherit"
 								aria-label="Delete"
-								onClick={confirm(
-									() => handleNoteDelete(location.pathname.replace(/^(.*[/])/, '')),
-									handleNoteDeleteOptions,
-								)}
+								onClick={handleNoteDeleteClick}
 							>
 								<DeleteIcon />
 							</IconButton>
@@ -201,4 +198,4 @@ const HeaderContent = ({ confirm, mobile }) => {
 
 HeaderContent.propTypes = propTypes;
 
-export default withConfirm(HeaderContent);
+export default HeaderContent;

@@ -15,8 +15,8 @@ const NotesSearch = () => {
 	const classes = useStyles();
 	const [items, setItems] = useState(notes);
 
-	const filterList = event => setItems(
-		notes.filter(item => item.text.toLowerCase().search(event.target.value.toLowerCase()) !== -1),
+	const filterList = (event) => setItems(
+		notes.filter((item) => item.text.toLowerCase().search(event.target.value.toLowerCase()) !== -1),
 	);
 
 	useEffect(() => setItems(notes), [notes]);

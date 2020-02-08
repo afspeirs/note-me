@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import { ConfirmProvider } from 'material-ui-confirm';
 
 import Container from '../Container';
+import Routes from '../Routes';
 import SimpleSnackbar from '../SimpleSnackbar';
 import theme from '../../theme';
-import { StateProvider } from '../StateContext';
-import Routes from '../Routes';
+import { StateProvider } from '../../hooks/StateContext';
 
 const App = () => {
 	const [drawerOpen, setDrawerOpen] = useState(false);
@@ -71,12 +72,12 @@ const App = () => {
 			// B = Toggle sidebar
 			if (event.key === 'b') {
 				event.preventDefault();
-				setDrawerOpen(prevState => !prevState);
+				setDrawerOpen((prevState) => !prevState);
 			}
 			// E or S = Toggle edit
 			if (event.key === 'e' || event.key === 's') {
 				event.preventDefault();
-				setEdit(prevState => !prevState);
+				setEdit((prevState) => !prevState);
 			}
 			// Disable some keyboard shortcuts
 			if ((event.key === 'p')) {
@@ -109,28 +110,30 @@ const App = () => {
 
 	return (
 		<ThemeProvider theme={muiTheme}>
-			<StateProvider initialState={settings} reducer={reducer}>
-				<Container
-					drawerOpen={drawerOpen}
-					setDrawerOpen={setDrawerOpen}
-				>
-					<Routes
+			<ConfirmProvider>
+				<StateProvider initialState={settings} reducer={reducer}>
+					<Container
 						drawerOpen={drawerOpen}
-						edit={edit}
-						setEdit={setEdit}
-						updateAvailable={updateAvailable}
-					/>
-				</Container>
+						setDrawerOpen={setDrawerOpen}
+					>
+						<Routes
+							drawerOpen={drawerOpen}
+							edit={edit}
+							setEdit={setEdit}
+							updateAvailable={updateAvailable}
+						/>
+					</Container>
 
-				{snackbarContent && (
-					<SimpleSnackbar
-						onClose={swSnackbarReset}
-						onSecondaryClose={snackbarContent.onClose}
-						secondaryText={snackbarContent.secondaryText}
-						text={snackbarContent.text}
-					/>
-				)}
-			</StateProvider>
+					{snackbarContent && (
+						<SimpleSnackbar
+							onClose={swSnackbarReset}
+							onSecondaryClose={snackbarContent.onClose}
+							secondaryText={snackbarContent.secondaryText}
+							text={snackbarContent.text}
+						/>
+					)}
+				</StateProvider>
+			</ConfirmProvider>
 		</ThemeProvider>
 	);
 };

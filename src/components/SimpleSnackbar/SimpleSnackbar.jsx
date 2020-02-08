@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
 import {
 	Button,
 	IconButton,
@@ -9,6 +8,8 @@ import {
 import {
 	Close as CloseIcon,
 } from '@material-ui/icons';
+
+import useStyles from './SimpleSnackbar.styled';
 
 const defaultProps = {
 	onSecondaryClose: () => {},
@@ -22,12 +23,6 @@ const propTypes = {
 	secondaryText: PropTypes.string,
 	text: PropTypes.string,
 };
-
-const useStyles = makeStyles(theme => ({
-	close: {
-		padding: theme.spacing(0.5),
-	},
-}));
 
 const SimpleSnackbar = ({
 	onClose,
@@ -44,10 +39,7 @@ const SimpleSnackbar = ({
 	};
 
 	const handleClose = (event, reason) => {
-		if (reason === 'clickaway') {
-			return;
-		}
-
+		if (reason === 'clickaway') return;
 		onClose();
 	};
 

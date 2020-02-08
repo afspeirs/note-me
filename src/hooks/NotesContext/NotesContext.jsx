@@ -22,7 +22,7 @@ function useNotesProvider() {
 	const [notes, setNotes] = useState([]);
 
 	const handleNoteAdd = () => {
-		const emptyNotes = notes.filter(el => el.text === '');
+		const emptyNotes = notes.filter((note) => note.text === '');
 
 		if (emptyNotes.length !== 0) {
 			history.push(`/note/${emptyNotes[0].id}`);
@@ -41,7 +41,7 @@ function useNotesProvider() {
 	};
 
 	const handleNoteDelete = (id) => {
-		const note = notes.find(item => item.id === id);
+		const note = notes.find((item) => item.id === id);
 
 		db.collection(user.uid)
 			.doc(id)
@@ -55,7 +55,7 @@ function useNotesProvider() {
 	};
 
 	const handleNoteUpdate = (id, text) => {
-		const index = notes.findIndex(note => note.id === id);
+		const index = notes.findIndex((note) => note.id === id);
 		const value = {
 			...notes[index],
 			text,
@@ -74,7 +74,7 @@ function useNotesProvider() {
 		if (user) {
 			db.collection(user.uid)
 				.onSnapshot((snapshot) => {
-					const authNotes = snapshot.docs.map(doc => doc.data());
+					const authNotes = snapshot.docs.map((doc) => doc.data());
 					setLoading(false);
 					setNotes(authNotes);
 				});

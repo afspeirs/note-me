@@ -6,7 +6,7 @@ import {
 	Switch,
 } from '@material-ui/core';
 
-import { useStateValue } from '../StateContext';
+import { useStateValue } from '../../hooks/StateContext';
 
 const ChangeTheme = () => {
 	const [{ darkTheme }, dispatch] = useStateValue();

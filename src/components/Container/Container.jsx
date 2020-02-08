@@ -19,7 +19,7 @@ import {
 import useStyles from './Container.styled';
 import DrawerContent from '../DrawerContent';
 import HeaderContent from '../HeaderContent';
-import { useStateValue } from '../StateContext';
+import { useStateValue } from '../../hooks/StateContext';
 
 const propTypes = {
 	children: PropTypes.oneOfType([

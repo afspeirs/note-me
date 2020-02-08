@@ -60,13 +60,12 @@ const Routes = ({
 
 				<Route
 					path="/note/:id"
-					render={props => (
+					render={({ match }) => (
 						<NotePage
-							{...props}
 							edit={edit}
 							handleNoteUpdate={handleNoteUpdate}
-							// eslint-disable-next-line react/prop-types
-							note={notes.find(note => note.id === props.match.params.id)}
+							match={match}
+							note={notes.find((note) => note.id === match.params.id)}
 							setEdit={setEdit}
 						/>
 					)}
@@ -81,12 +80,7 @@ const Routes = ({
 			{isModal && (
 				<Route
 					path="/settings/"
-					render={props => (
-						<SettingsPage
-							{...props}
-							updateAvailable={updateAvailable}
-						/>
-					)}
+					render={() => <SettingsPage updateAvailable={updateAvailable} />}
 				/>
 			)}
 		</>

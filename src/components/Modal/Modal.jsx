@@ -17,6 +17,7 @@ import {
 
 import useStyles from './Modal.styled';
 
+// eslint-disable-next-line react/jsx-props-no-spreading
 const Transition = React.forwardRef((props, ref) => <Slide direction="up" ref={ref} {...props} />);
 
 const defaultProps = {

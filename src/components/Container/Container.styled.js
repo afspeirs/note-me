@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const drawerWidth = 256;
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
 	container: {
 		position: 'absolute',
 		top: 0,
