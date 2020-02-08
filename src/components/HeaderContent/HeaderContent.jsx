@@ -11,10 +11,8 @@ import {
 } from '@material-ui/core';
 import {
 	Add as AddIcon,
-	Edit as EditIcon,
 	Delete as DeleteIcon,
 	Home as HomeIcon,
-	Save as SaveIcon,
 	Settings as SettingsIcon,
 	MoreVert as MoreIcon,
 } from '@material-ui/icons';
@@ -27,17 +25,10 @@ import { useNotes } from '../../hooks/NotesContext';
 
 const propTypes = {
 	confirm: PropTypes.func.isRequired,
-	edit: PropTypes.bool.isRequired,
 	mobile: PropTypes.bool.isRequired,
-	setEdit: PropTypes.func.isRequired,
 };
 
-const HeaderContent = ({
-	confirm,
-	edit,
-	mobile,
-	setEdit,
-}) => {
+const HeaderContent = ({ confirm, mobile }) => {
 	const classes = useStyles();
 	const { isSignedIn } = useAuth();
 	const { handleNoteAdd, handleNoteDelete } = useNotes();
@@ -59,23 +50,6 @@ const HeaderContent = ({
 
 	return (
 		<>
-			{(
-				// If SettingsPage is open and the previousLocation is NotePage
-				// Or if the page is NotePage
-				(location.pathname === '/settings/' && window.previousLocation && window.previousLocation.pathname.startsWith('/note/'))
-				|| location.pathname.startsWith('/note/')
-			) && (
-				<Tooltip title={edit ? 'Save' : 'Edit'}>
-					<IconButton
-						color="inherit"
-						aria-label={edit ? 'Save' : 'Edit'}
-						onClick={() => setEdit(!edit)}
-					>
-						{edit ? <SaveIcon /> : <EditIcon />}
-					</IconButton>
-				</Tooltip>
-			)}
-
 			{(isSignedIn && mobile && location.pathname !== '/') ? (
 				<>
 					<IconButton

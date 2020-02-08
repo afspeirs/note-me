@@ -5,7 +5,16 @@ const useStyles = makeStyles(theme => ({
 		width: 'inherit',
 		flexGrow: 1,
 		padding: theme.spacing(2),
+		paddingBottom: theme.spacing(10),
 		overflowY: 'auto',
+	},
+	fab: {
+		position: 'fixed',
+		bottom: theme.spacing(2),
+		right: theme.spacing(2),
+	},
+	extendedIcon: {
+		marginRight: theme.spacing(1),
 	},
 	textarea: {
 		resize: 'none',

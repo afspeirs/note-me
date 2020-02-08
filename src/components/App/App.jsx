@@ -109,9 +109,7 @@ const App = () => {
 			<StateProvider initialState={settings} reducer={reducer}>
 				<Container
 					drawerOpen={drawerOpen}
-					edit={edit}
 					setDrawerOpen={setDrawerOpen}
-					setEdit={setEdit}
 				>
 					<Routes
 						drawerOpen={drawerOpen}

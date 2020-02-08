@@ -27,17 +27,13 @@ const propTypes = {
 		PropTypes.node,
 	]).isRequired,
 	drawerOpen: PropTypes.bool.isRequired,
-	edit: PropTypes.bool.isRequired,
 	setDrawerOpen: PropTypes.func.isRequired,
-	setEdit: PropTypes.func.isRequired,
 };
 
 const Container = ({
 	children,
 	drawerOpen,
-	edit,
 	setDrawerOpen,
-	setEdit,
 }) => {
 	const classes = useStyles();
 	const history = useHistory();
@@ -92,11 +88,7 @@ const Container = ({
 						/>
 					)}
 					<Typography className={classes.title} variant="h6">NoteMe</Typography>
-					<HeaderContent
-						edit={edit}
-						mobile={mobile}
-						setEdit={setEdit}
-					/>
+					<HeaderContent mobile={mobile} />
 				</Toolbar>
 			</AppBar>
 			<Hidden className={classes.placeholder} smUp implementation="css" />
