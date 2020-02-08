@@ -66,19 +66,22 @@ const App = () => {
 	};
 
 	const handleKeyDown = (event) => {
-		// CTRL + B = Toggle sidebar
-		if (event.ctrlKey && event.key === 'b') {
-			event.preventDefault();
-			setDrawerOpen(prevState => !prevState);
-		}
-		// CTRL + E = Toggle edit
-		if (event.ctrlKey && event.key === 'e') {
-			event.preventDefault();
-			setEdit(prevState => !prevState);
-		}
-		// Disable some keyboard shortcuts
-		if (event.ctrlKey && (event.key === 's' || event.key === 'p')) {
-			event.preventDefault();
+		// If CTRL or CMD is pressed
+		if (event.ctrlKey || event.metaKey) {
+			// B = Toggle sidebar
+			if (event.key === 'b') {
+				event.preventDefault();
+				setDrawerOpen(prevState => !prevState);
+			}
+			// E or S = Toggle edit
+			if (event.key === 'e' || event.key === 's') {
+				event.preventDefault();
+				setEdit(prevState => !prevState);
+			}
+			// Disable some keyboard shortcuts
+			if ((event.key === 'p')) {
+				event.preventDefault();
+			}
 		}
 	};
 
