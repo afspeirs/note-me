@@ -30,12 +30,7 @@ const Routes = ({
 	const { user } = useAuth();
 	const location = useLocation();
 	const { handleNoteUpdate, notes } = useNotes();
-	const isModal = !!(
-		location
-		&& location.state
-		&& location.state.modal
-		&& window.previousLocation !== location
-	);
+	const isModal = !!(location?.state?.modal && window.previousLocation !== location);
 
 	useEffect(() => {
 		window.previousLocation = location;
