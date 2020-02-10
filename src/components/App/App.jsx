@@ -13,7 +13,7 @@ const App = () => {
 	const [edit, setEdit] = useState(false);
 	const [settings, setSettings] = useState({
 		sort: localStorage.getItem('changeSort') || 'date-asc',
-		sortFavourite: JSON.parse(localStorage.getItem('changeSortFavourite')) || true,
+		sortFavourite: JSON.parse(localStorage.getItem('changeSortFavourite')) || false,
 		darkTheme: JSON.parse(localStorage.getItem('changeDarkTheme')) || false,
 	});
 	const [snackbarContent, setSnackbarConent] = useState({});
