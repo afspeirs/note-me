@@ -4,7 +4,9 @@ import {
 	List,
 	ListItem,
 } from '@material-ui/core';
-import SearchIcon from '@material-ui/icons/Search';
+import {
+	Search as SearchIcon,
+} from '@material-ui/icons';
 
 import useStyles from './NotesSearch.styled';
 import NotesList from '../NotesList';
@@ -13,13 +15,17 @@ import { useNotes } from '../../hooks/NotesContext';
 const NotesSearch = () => {
 	const { notes } = useNotes();
 	const classes = useStyles();
+	const [text, setText] = useState('');
 	const [items, setItems] = useState(notes);
 
-	const filterList = (event) => setItems(
-		notes.filter((item) => item.text.toLowerCase().search(event.target.value.toLowerCase()) !== -1),
+	const handleTextInput = (event) => setText(event.target.value);
+
+	const updateItems = () => setItems(
+		notes.filter((item) => item.text.toLowerCase().search(text.toLowerCase()) !== -1),
 	);
 
-	useEffect(() => setItems(notes), [notes]);
+	// updateItems based on the search field input
+	useEffect(updateItems, [notes, text]);
 
 	return (
 		<List className={classes.list}>
@@ -35,7 +41,7 @@ const NotesSearch = () => {
 						}}
 						placeholder="Search Notes"
 						inputProps={{ 'aria-label': 'search' }}
-						onChange={filterList}
+						onChange={handleTextInput}
 					/>
 				</div>
 			</ListItem>

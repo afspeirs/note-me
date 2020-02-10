@@ -4,15 +4,19 @@ import clsx from 'clsx';
 import { NavLink } from 'react-router-dom';
 import Swipeout from 'rc-swipeout';
 import {
+	Checkbox,
 	List,
 	ListItem,
 	ListItemIcon,
+	ListItemSecondaryAction,
 	ListItemText,
 	Popover,
 } from '@material-ui/core';
 import {
 	Alarm as AlarmIcon,
 	Delete as DeleteIcon,
+	Star as StarIcon,
+	StarBorder as StarBorderIcon,
 } from '@material-ui/icons';
 import { useConfirm } from 'material-ui-confirm';
 
@@ -28,17 +32,28 @@ const propTypes = {
 
 const NotesList = ({ notes }) => {
 	const confirm = useConfirm();
-	const { handleNoteDelete, loading } = useNotes();
+	const { handleNoteFavourite, handleNoteDelete, loading } = useNotes();
 	const classes = useStyles();
-	const [{ sort }] = useStateValue();
+	const [{ sort, sortFavourite }] = useStateValue();
 	const [anchorPosition, setAnchorPosition] = useState({ top: 0, left: 0 });
 	const [currentNote, setCurrentNote] = useState(null);
-	const sortFunction = {
+	const sortNoteFunction = {
 		'date-asc': (a, b) => b.date - a.date,
 		'date-dsc': (a, b) => a.date - b.date,
 		'title-asc': (a, b) => a.text.localeCompare(b.text),
 		'title-dsc': (a, b) => b.text.localeCompare(a.text),
 	}[sort];
+	const sortFavouriteFunction = (a, b) => {
+		if (sortFavourite) {
+			if (a.favourite === b.favourite) return 0;
+			if (a.favourite) return -1;
+		}
+		return 1;
+	};
+
+	const sortedNotes = notes
+		.sort(sortNoteFunction)
+		.sort(sortFavouriteFunction);
 
 	const renderLink = React.useMemo(
 		() => React.forwardRef((props, ref) => (
@@ -91,7 +106,7 @@ const NotesList = ({ notes }) => {
 					<ListItemText primary="Loading, please wait while we gather your notes" />
 				</ListItem>
 			)}
-			{notes.sort(sortFunction).map((note) => (
+			{sortedNotes.map((note) => (
 				<React.Fragment key={`note-${note.id}`}>
 					<Swipeout
 						className={classes.swipeout}
@@ -111,7 +126,7 @@ const NotesList = ({ notes }) => {
 								style: {
 									backgroundColor: 'red',
 									color: 'white',
-									width: '56px',
+									width: 56,
 								},
 							},
 						]}
@@ -124,6 +139,17 @@ const NotesList = ({ notes }) => {
 							id={note.id}
 						>
 							<ListItemText className={classes.listItemText} primary={getTitle(note.text)} />
+							<ListItemSecondaryAction>
+								<Checkbox
+									color="primary"
+									edge="end"
+									checked={note.favourite}
+									checkedIcon={<StarIcon />}
+									icon={<StarBorderIcon />}
+									inputProps={{ 'aria-labelledby': note.id }}
+									onChange={(event) => handleNoteFavourite(event, note.id)}
+								/>
+							</ListItemSecondaryAction>
 						</ListItem>
 					</Swipeout>
 
