@@ -37,12 +37,21 @@ const NotesList = ({ notes }) => {
 	const [{ sort }] = useStateValue();
 	const [anchorPosition, setAnchorPosition] = useState({ top: 0, left: 0 });
 	const [currentNote, setCurrentNote] = useState(null);
-	const sortFunction = {
+	const sortNoteFunction = {
 		'date-asc': (a, b) => b.date - a.date,
 		'date-dsc': (a, b) => a.date - b.date,
 		'title-asc': (a, b) => a.text.localeCompare(b.text),
 		'title-dsc': (a, b) => b.text.localeCompare(a.text),
 	}[sort];
+	const sortFavouriteFunction = (a, b) => {
+		if (a.favourite === b.favourite) return 0;
+		if (a.favourite) return -1;
+		return 1;
+	};
+
+	const sortedNotes = notes
+		.sort(sortNoteFunction)
+		.sort(sortFavouriteFunction);
 
 	const renderLink = React.useMemo(
 		() => React.forwardRef((props, ref) => (
@@ -95,7 +104,7 @@ const NotesList = ({ notes }) => {
 					<ListItemText primary="Loading, please wait while we gather your notes" />
 				</ListItem>
 			)}
-			{notes.sort(sortFunction).map((note) => (
+			{sortedNotes.map((note) => (
 				<React.Fragment key={`note-${note.id}`}>
 					<Swipeout
 						className={classes.swipeout}
@@ -115,7 +124,7 @@ const NotesList = ({ notes }) => {
 								style: {
 									backgroundColor: 'red',
 									color: 'white',
-									width: '56px',
+									width: 56,
 								},
 							},
 						]}
