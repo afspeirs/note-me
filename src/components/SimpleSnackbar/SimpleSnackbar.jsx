@@ -2,14 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {
 	Button,
-	IconButton,
 	Snackbar,
 } from '@material-ui/core';
-import {
-	Close as CloseIcon,
-} from '@material-ui/icons';
-
-import useStyles from './SimpleSnackbar.styled';
 
 const defaultProps = {
 	onSecondaryClose: () => {},
@@ -30,7 +24,6 @@ const SimpleSnackbar = ({
 	secondaryText,
 	text,
 }) => {
-	const classes = useStyles();
 	const open = Boolean(text);
 
 	const handleSecondaryClick = () => {
@@ -62,19 +55,9 @@ const SimpleSnackbar = ({
 						size="small"
 						onClick={handleSecondaryClick}
 					>
-						{/* eslint-disable-line react/jsx-one-expression-per-line */}
 						{secondaryText}
 					</Button>
 				),
-				<IconButton
-					key="close"
-					aria-label="close"
-					color="inherit"
-					className={classes.close}
-					onClick={handleClose}
-				>
-					<CloseIcon />
-				</IconButton>,
 			]}
 		/>
 	);
