@@ -16,11 +16,16 @@ const App = () => {
 		sortFavourite: JSON.parse(localStorage.getItem('changeSortFavourite')) || false,
 		darkTheme: JSON.parse(localStorage.getItem('changeDarkTheme')) || false,
 	});
-	const [snackbarContent, setSnackbarConent] = useState({});
+	const defaultSnackbarContent = {
+		onClose: () => {},
+		secondaryText: null,
+		text: null,
+	};
+	const [snackbarContent, setSnackbarContent] = useState(defaultSnackbarContent);
 	const [updateAvailable, setUpdateAvailable] = useState(false);
 
 	const swNewContentAvailable = () => {
-		setSnackbarConent({
+		setSnackbarContent({
 			onClose: () => window.location.reload(true),
 			secondaryText: 'Update',
 			text: 'A new version is available',
@@ -29,20 +34,13 @@ const App = () => {
 	};
 
 	const swContentCached = () => {
-		setSnackbarConent({
-			onClose: () => {},
-			secondaryText: null,
+		setSnackbarContent({
+			...defaultSnackbarContent,
 			text: 'Caching complete! Now available offline',
 		});
 	};
 
-	const swSnackbarReset = () => {
-		setSnackbarConent({
-			onClose: () => {},
-			secondaryText: null,
-			text: null,
-		});
-	};
+	const swSnackbarReset = () => setSnackbarContent(defaultSnackbarContent);
 
 	const reducer = (state, action) => {
 		localStorage.setItem(action.type, action.value);
