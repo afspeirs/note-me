@@ -76,7 +76,6 @@ function useNotesProvider() {
 		const value = {
 			...notes[index],
 			favourite: checked,
-			// date: +new Date(),
 		};
 
 		db.collection(user.uid)
