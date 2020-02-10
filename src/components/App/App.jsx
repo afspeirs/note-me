@@ -16,7 +16,12 @@ const App = () => {
 		sortFavourite: JSON.parse(localStorage.getItem('changeSortFavourite')) || false,
 		darkTheme: JSON.parse(localStorage.getItem('changeDarkTheme')) || false,
 	});
-	const [snackbarContent, setSnackbarContent] = useState({});
+	const defaultSnackbarContent = {
+		onClose: () => {},
+		secondaryText: null,
+		text: null,
+	};
+	const [snackbarContent, setSnackbarContent] = useState(defaultSnackbarContent);
 	const [updateAvailable, setUpdateAvailable] = useState(false);
 
 	const swNewContentAvailable = () => {
@@ -30,19 +35,12 @@ const App = () => {
 
 	const swContentCached = () => {
 		setSnackbarContent({
-			onClose: () => {},
-			secondaryText: null,
+			...defaultSnackbarContent,
 			text: 'Caching complete! Now available offline',
 		});
 	};
 
-	const swSnackbarReset = () => {
-		setSnackbarContent({
-			onClose: () => {},
-			secondaryText: null,
-			text: null,
-		});
-	};
+	const swSnackbarReset = () => setSnackbarContent(defaultSnackbarContent);
 
 	const reducer = (state, action) => {
 		localStorage.setItem(action.type, action.value);
@@ -103,7 +101,6 @@ const App = () => {
 	});
 
 	useEffect(() => {
-		swNewContentAvailable();
 		window.addEventListener('keydown', handleKeyDown);
 		window.addEventListener('swNewContentAvailable', swNewContentAvailable);
 		window.addEventListener('swContentCached', swContentCached);
