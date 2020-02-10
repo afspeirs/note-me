@@ -6,8 +6,8 @@ import React, {
 } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { db } from '../../firebase';
-import { useAuth } from '../AuthContext';
+import { db } from '../firebase';
+import { useAuth } from './AuthContext';
 
 const NotesContext = createContext();
 

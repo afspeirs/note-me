@@ -5,7 +5,7 @@ import React, {
 	useState,
 } from 'react';
 
-import { auth, provider } from '../../firebase';
+import { auth, provider } from '../firebase';
 
 const AuthContext = createContext();
 

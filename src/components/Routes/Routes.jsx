@@ -4,7 +4,6 @@ import {
 	Switch,
 	Redirect,
 	Route,
-	useHistory,
 	useLocation,
 } from 'react-router-dom';
 
@@ -29,25 +28,19 @@ const Routes = ({
 	updateAvailable,
 }) => {
 	const { user } = useAuth();
-	const history = useHistory();
 	const location = useLocation();
 	const { handleNoteUpdate, notes } = useNotes();
-	const isModal = !!(
-		location
-		&& location.state
-		&& location.state.modal
-		&& window.previousLocation !== location
-	);
+	const isModal = !!(location?.state?.modal && window.previousLocation !== location);
 
 	useEffect(() => {
 		window.previousLocation = location;
 	}, []); // eslint-disable-line
 
 	useEffect(() => {
-		if (history.action !== 'POP' && (!location.state || !location.state.modal)) {
+		if (!location.state || !location.state.modal) {
 			window.previousLocation = location;
 		}
-	}, [history, location]);
+	}, [location]);
 
 	return (
 		<>

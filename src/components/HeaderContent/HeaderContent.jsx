@@ -89,7 +89,7 @@ const HeaderContent = ({ mobile }) => {
 							(location.pathname === '/settings/' && window.previousLocation && window.previousLocation.pathname.startsWith('/note/'))
 							|| location.pathname.startsWith('/note/')
 						) && (
-							<MenuItem onClick={handleNoteDelete}>
+							<MenuItem onClick={handleNoteDeleteClick}>
 								<ListItemIcon>
 									<DeleteIcon />
 								</ListItemIcon>
