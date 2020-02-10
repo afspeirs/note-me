@@ -34,7 +34,7 @@ const NotesList = ({ notes }) => {
 	const confirm = useConfirm();
 	const { handleNoteFavourite, handleNoteDelete, loading } = useNotes();
 	const classes = useStyles();
-	const [{ sort }] = useStateValue();
+	const [{ sort, sortFavourite }] = useStateValue();
 	const [anchorPosition, setAnchorPosition] = useState({ top: 0, left: 0 });
 	const [currentNote, setCurrentNote] = useState(null);
 	const sortNoteFunction = {
@@ -44,8 +44,10 @@ const NotesList = ({ notes }) => {
 		'title-dsc': (a, b) => b.text.localeCompare(a.text),
 	}[sort];
 	const sortFavouriteFunction = (a, b) => {
-		if (a.favourite === b.favourite) return 0;
-		if (a.favourite) return -1;
+		if (sortFavourite) {
+			if (a.favourite === b.favourite) return 0;
+			if (a.favourite) return -1;
+		}
 		return 1;
 	};
 

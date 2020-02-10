@@ -12,6 +12,7 @@ import ChangeTheme from '../../components/ChangeTheme';
 import CheckForUpdate from '../../components/CheckForUpdate';
 import Modal from '../../components/Modal';
 import SortNotes from '../../components/SortNotes';
+import SortNotesFavourite from '../../components/SortNotesFavourite';
 import UserInformation from '../../components/UserInformation';
 
 const propTypes = {
@@ -31,6 +32,7 @@ const SettingsPage = ({ updateAvailable }) => (
 			<CheckForUpdate updateAvailable={updateAvailable} />
 			<Divider />
 			<ChangeTheme />
+			<SortNotesFavourite />
 			<SortNotes />
 		</List>
 	</Modal>

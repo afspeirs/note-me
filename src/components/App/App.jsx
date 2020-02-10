@@ -13,6 +13,7 @@ const App = () => {
 	const [edit, setEdit] = useState(false);
 	const [settings, setSettings] = useState({
 		sort: localStorage.getItem('changeSort') || 'date-asc',
+		sortFavourite: JSON.parse(localStorage.getItem('changeSortFavourite')) || true,
 		darkTheme: JSON.parse(localStorage.getItem('changeDarkTheme')) || false,
 	});
 	const [snackbarContent, setSnackbarConent] = useState({});
@@ -50,6 +51,11 @@ const App = () => {
 				return {
 					...state,
 					sort: action.value,
+				};
+			case 'changeSortFavourite':
+				return {
+					...state,
+					sortFavourite: action.value,
 				};
 			case 'changeDarkTheme':
 				setSettings({
