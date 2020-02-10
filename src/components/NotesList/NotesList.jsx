@@ -4,15 +4,19 @@ import clsx from 'clsx';
 import { NavLink } from 'react-router-dom';
 import Swipeout from 'rc-swipeout';
 import {
+	Checkbox,
 	List,
 	ListItem,
 	ListItemIcon,
+	ListItemSecondaryAction,
 	ListItemText,
 	Popover,
 } from '@material-ui/core';
 import {
 	Alarm as AlarmIcon,
 	Delete as DeleteIcon,
+	Star as StarIcon,
+	StarBorder as StarBorderIcon,
 } from '@material-ui/icons';
 import { useConfirm } from 'material-ui-confirm';
 
@@ -28,7 +32,7 @@ const propTypes = {
 
 const NotesList = ({ notes }) => {
 	const confirm = useConfirm();
-	const { handleNoteDelete, loading } = useNotes();
+	const { handleNoteFavourite, handleNoteDelete, loading } = useNotes();
 	const classes = useStyles();
 	const [{ sort }] = useStateValue();
 	const [anchorPosition, setAnchorPosition] = useState({ top: 0, left: 0 });
@@ -124,6 +128,17 @@ const NotesList = ({ notes }) => {
 							id={note.id}
 						>
 							<ListItemText className={classes.listItemText} primary={getTitle(note.text)} />
+							<ListItemSecondaryAction>
+								<Checkbox
+									color="primary"
+									edge="end"
+									checked={note.favourite}
+									checkedIcon={<StarIcon />}
+									icon={<StarBorderIcon />}
+									inputProps={{ 'aria-labelledby': note.id }}
+									onChange={(event) => handleNoteFavourite(event, note.id)}
+								/>
+							</ListItemSecondaryAction>
 						</ListItem>
 					</Swipeout>
 

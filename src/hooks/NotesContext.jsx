@@ -33,6 +33,7 @@ function useNotesProvider() {
 				date: +new Date(),
 				id: newNote.id,
 				created: +new Date(),
+				favourite: false,
 			};
 
 			notes.unshift(value);
@@ -69,6 +70,22 @@ function useNotesProvider() {
 		notes[index] = value;
 	};
 
+	const handleNoteFavourite = (event, id) => {
+		const { checked } = event.target;
+		const index = notes.findIndex((note) => note.id === id);
+		const value = {
+			...notes[index],
+			favourite: checked,
+			// date: +new Date(),
+		};
+
+		db.collection(user.uid)
+			.doc(id)
+			.set(value);
+
+		notes[index] = value;
+	};
+
 	// Subscribe to user on mount
 	useEffect(() => {
 		if (user) {
@@ -88,6 +105,7 @@ function useNotesProvider() {
 	return {
 		handleNoteAdd,
 		handleNoteDelete,
+		handleNoteFavourite,
 		handleNoteUpdate,
 		loading,
 		notes,
