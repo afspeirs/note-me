@@ -9,8 +9,6 @@ import {
 
 const UserConfirmation = (message, callback) => {
 	const container = document.getElementById('user-confirmation');
-	// container.setAttribute("custom-confirmation-navigation", "");
-	// document.body.appendChild(container);
 
 	const closeModal = (callbackState) => {
 		ReactDOM.unmountComponentAtNode(container);
