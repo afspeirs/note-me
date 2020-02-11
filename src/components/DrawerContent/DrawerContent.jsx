@@ -20,7 +20,7 @@ const DrawerContent = () => {
 
 	return (
 		<>
-			<NotesSearch />
+			<NotesSearch uniqueString="drawer-content" />
 
 			{isSignedIn && (
 				<>

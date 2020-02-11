@@ -28,9 +28,10 @@ import { useStateValue } from '../../hooks/StateContext';
 
 const propTypes = {
 	notes: PropTypes.arrayOf(PropTypes.object).isRequired,
+	uniqueString: PropTypes.string.isRequired,
 };
 
-const NotesList = ({ notes }) => {
+const NotesList = ({ notes, uniqueString }) => {
 	const confirm = useConfirm();
 	const { handleNoteFavourite, handleNoteDelete, loading } = useNotes();
 	const classes = useStyles();
@@ -77,7 +78,7 @@ const NotesList = ({ notes }) => {
 	};
 
 	const handleContextMenu = (event) => {
-		const closestContextMenuOption = event.target.closest('.context-menu-select');
+		const closestContextMenuOption = event.target.closest(`.context-menu-select-${uniqueString}`);
 
 		if (closestContextMenuOption) {
 			event.preventDefault();
@@ -134,7 +135,7 @@ const NotesList = ({ notes }) => {
 						<ListItem
 							button
 							to={`/note/${note.id}`}
-							className={clsx('context-menu-select', classes.listItem)}
+							className={clsx(`.context-menu-select-${uniqueString}`, classes.listItem)}
 							component={renderLink}
 							id={note.id}
 						>
