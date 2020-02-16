@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {
 	Button,
 	List,
@@ -12,14 +11,12 @@ import useStyles from './HomePage.styled';
 import NotesSearch from '../../components/NotesSearch';
 import { useAuth } from '../../hooks/AuthContext';
 import { useNotes } from '../../hooks/NotesContext';
+import { useStateValue } from '../../hooks/StateContext';
 
-const propTypes = {
-	drawerOpen: PropTypes.bool.isRequired,
-};
-
-const HomePage = ({ drawerOpen }) => {
+const HomePage = () => {
 	const { signIn, user } = useAuth();
 	const { loading } = useNotes();
+	const [{ drawerOpen }] = useStateValue();
 	const classes = useStyles();
 	const mobile = useMediaQuery('(max-width:600px)');
 
@@ -46,7 +43,5 @@ const HomePage = ({ drawerOpen }) => {
 		</div>
 	);
 };
-
-HomePage.propTypes = propTypes;
 
 export default HomePage;

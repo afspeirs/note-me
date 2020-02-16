@@ -19,31 +19,35 @@ import {
 import useStyles from './Container.styled';
 import DrawerContent from '../DrawerContent';
 import HeaderContent from '../HeaderContent';
+import { useStateValue } from '../../hooks/StateContext';
 
 const propTypes = {
 	children: PropTypes.oneOfType([
 		PropTypes.arrayOf(PropTypes.node),
 		PropTypes.node,
 	]).isRequired,
-	drawerOpen: PropTypes.bool.isRequired,
-	setDrawerOpen: PropTypes.func.isRequired,
 };
 
-const Container = ({
-	children,
-	drawerOpen,
-	setDrawerOpen,
-}) => {
+const Container = ({ children }) => {
+	const [{ drawerOpen }, dispatch] = useStateValue();
 	const classes = useStyles();
 	const history = useHistory();
 	const mobile = useMediaQuery('(max-width:600px)');
 
 	// Close drawer only in mobile
-	const handleDrawerClose = () => (mobile) && setDrawerOpen(false);
+	const handleDrawerClose = () => (mobile) && dispatch({
+		type: 'app-drawerOpen',
+		value: false,
+	});
 
 	// Toggle drawer only in mobile unless toggle is true
 	const handleDrawerToggle = (toggle = false) => {
-		if ((toggle === true) || mobile) setDrawerOpen(!drawerOpen);
+		if ((toggle === true) || mobile) {
+			dispatch({
+				type: 'app-drawerOpen',
+				value: !drawerOpen,
+			});
+		}
 	};
 
 	// Run handleDrawerClose if the history changes

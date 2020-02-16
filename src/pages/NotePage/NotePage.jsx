@@ -14,34 +14,35 @@ import {
 
 import useStyles from './NotePage.styled';
 import LinkRenderer from '../../components/LinkRenderer';
+import { useStateValue } from '../../hooks/StateContext';
 
 const defaultProps = {
 	note: null,
 };
 
 const propTypes = {
-	edit: PropTypes.bool.isRequired,
 	handleNoteUpdate: PropTypes.func.isRequired,
 	match: PropTypes.instanceOf(Object).isRequired,
 	note: PropTypes.instanceOf(Object),
-	setEdit: PropTypes.func.isRequired,
 };
 
 const NotePage = ({
-	edit,
 	handleNoteUpdate,
 	match,
 	note,
-	setEdit,
 }) => {
 	const classes = useStyles();
 	const [localNote, setLocalNote] = useState(undefined);
+	const [{ edit }, dispatch] = useStateValue();
 	const { id } = match.params;
 
 	useEffect(() => {
 		if (note !== null) {
 			setLocalNote(note.text);
-			setEdit(note.text === '');
+			dispatch({
+				type: 'app-edit',
+				value: note.text === '',
+			});
 		}
 	}, [note]); // eslint-disable-line
 
@@ -83,7 +84,10 @@ const NotePage = ({
 					color="primary"
 					aria-label={edit ? 'Save' : 'Edit'}
 					className={classes.fab}
-					onClick={() => setEdit(!edit)}
+					onClick={() => dispatch({
+						type: 'app-edit',
+						value: !edit,
+					})}
 				>
 					{edit ? <SaveIcon /> : <EditIcon />}
 				</Fab>

@@ -34,7 +34,8 @@ const NotesList = ({ notes, locationSelector }) => {
 	const confirm = useConfirm();
 	const { handleNoteFavourite, handleNoteDelete, loading } = useNotes();
 	const classes = useStyles();
-	const [{ sort, sortFavourite }] = useStateValue();
+	const [{ settings }] = useStateValue();
+	const { sort, sortFavourite } = settings;
 	const [contextAnchor, setContextAnchor] = useState(null);
 	const sortNoteFunction = {
 		'date-asc': (a, b) => b.date - a.date,
