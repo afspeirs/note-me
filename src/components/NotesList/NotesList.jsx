@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import { NavLink } from 'react-router-dom';
 import Swipeout from 'rc-swipeout';
 import {
-	Checkbox,
+	IconButton,
 	List,
 	ListItem,
 	ListItemIcon,
@@ -115,8 +115,18 @@ const NotesList = ({ notes, locationSelector }) => {
 								text: <TimeAgo date={note.date / 1000} />,
 								autoClose: true,
 								style: {
+									backgroundColor: '#9e9e9e',
+									color: 'white',
+								},
+							},
+							{
+								text: note.favourite ? <StarIcon color="inherit" /> : <StarBorderIcon />,
+								onPress: () => handleNoteFavourite(note.id),
+								autoClose: true,
+								style: {
 									backgroundColor: '#ee6e00',
 									color: 'white',
+									width: 56,
 								},
 							},
 							{
@@ -139,17 +149,17 @@ const NotesList = ({ notes, locationSelector }) => {
 							data-id={note.id}
 						>
 							<ListItemText className={classes.listItemText} primary={getTitle(note.text)} />
-							<ListItemSecondaryAction>
-								<Checkbox
-									color="primary"
-									edge="end"
-									checked={note.favourite}
-									checkedIcon={<StarIcon />}
-									icon={<StarBorderIcon />}
-									inputProps={{ 'aria-labelledby': note.id }}
-									onChange={(event) => handleNoteFavourite(event, note.id)}
-								/>
-							</ListItemSecondaryAction>
+							{note.favourite && (
+								<ListItemSecondaryAction>
+									<IconButton
+										color="primary"
+										edge="end"
+										aria-label="Favourited note"
+									>
+										<StarIcon />
+									</IconButton>
+								</ListItemSecondaryAction>
+							)}
 						</ListItem>
 					</Swipeout>
 
@@ -170,6 +180,15 @@ const NotesList = ({ notes, locationSelector }) => {
 								<ListItemText
 									className={classes.listItemText}
 									primary={<TimeAgo date={note.date / 1000} />}
+								/>
+							</ListItem>
+							<ListItem button onClick={() => handleNoteFavourite(note.id)}>
+								<ListItemIcon>
+									{note.favourite ? <StarIcon color="primary" /> : <StarBorderIcon />}
+								</ListItemIcon>
+								<ListItemText
+									className={classes.listItemText}
+									primary={`${note.favourite ? 'Unfavourite' : 'Favourite'} "${getTitle(note.text)}"`}
 								/>
 							</ListItem>
 							<ListItem button onClick={() => handleNoteDeleteClick(note)}>
