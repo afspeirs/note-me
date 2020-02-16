@@ -17,13 +17,11 @@ import SettingsPage from '../../pages/SettingsPage';
 const propTypes = {
 	edit: PropTypes.bool.isRequired,
 	setEdit: PropTypes.func.isRequired,
-	updateAvailable: PropTypes.bool.isRequired,
 };
 
 const Routes = ({
 	edit,
 	setEdit,
-	updateAvailable,
 }) => {
 	const { user } = useAuth();
 	const location = useLocation();
@@ -71,7 +69,7 @@ const Routes = ({
 			{isModal && (
 				<Route
 					path="/settings/"
-					render={() => <SettingsPage updateAvailable={updateAvailable} />}
+					component={SettingsPage}
 				/>
 			)}
 		</>

@@ -10,7 +10,6 @@ import { useStateValue } from '../../hooks/StateContext';
 
 const App = () => {
 	const [edit, setEdit] = useState(false);
-	const [updateAvailable, setUpdateAvailable] = useState(false);
 	const [{ drawerOpen, settings }, dispatch] = useStateValue();
 	const defaultSnackbarContent = {
 		onClose: () => {},
@@ -25,7 +24,10 @@ const App = () => {
 			secondaryText: 'Update',
 			text: 'A new version is available',
 		});
-		setUpdateAvailable(true);
+		dispatch({
+			type: 'app-updateAvailable',
+			value: true,
+		});
 	};
 
 	const swContentCached = () => {
@@ -89,7 +91,6 @@ const App = () => {
 					<Routes
 						edit={edit}
 						setEdit={setEdit}
-						updateAvailable={updateAvailable}
 					/>
 				</Container>
 

@@ -18,6 +18,11 @@ export const reducer = (state, action) => {
 				...state,
 				drawerOpen: action.value,
 			};
+		case 'app-updateAvailable':
+			return {
+				...state,
+				updateAvailable: action.value,
+			};
 		case 'settings-darkTheme':
 			return {
 				...state,
