@@ -6,16 +6,12 @@ import Container from '../Container';
 import Routes from '../Routes';
 import SimpleSnackbar from '../SimpleSnackbar';
 import theme from '../../theme';
-import { StateProvider } from '../../hooks/StateContext';
+import { useStateValue } from '../../hooks/StateContext';
 
 const App = () => {
 	const [drawerOpen, setDrawerOpen] = useState(false);
 	const [edit, setEdit] = useState(false);
-	const [settings, setSettings] = useState({
-		sort: localStorage.getItem('changeSort') || 'date-asc',
-		sortFavourite: JSON.parse(localStorage.getItem('changeSortFavourite')) || false,
-		darkTheme: JSON.parse(localStorage.getItem('changeDarkTheme')) || false,
-	});
+	const [settings] = useStateValue();
 	const defaultSnackbarContent = {
 		onClose: () => {},
 		secondaryText: null,
@@ -41,34 +37,6 @@ const App = () => {
 	};
 
 	const swSnackbarReset = () => setSnackbarContent(defaultSnackbarContent);
-
-	const reducer = (state, action) => {
-		localStorage.setItem(action.type, action.value);
-		switch (action.type) {
-			case 'changeSort':
-				return {
-					...state,
-					sort: action.value,
-				};
-			case 'changeSortFavourite':
-				return {
-					...state,
-					sortFavourite: action.value,
-				};
-			case 'changeDarkTheme':
-				setSettings({
-					...settings,
-					darkTheme: action.value,
-				});
-
-				return {
-					...state,
-					darkTheme: action.value,
-				};
-			default:
-				return state;
-		}
-	};
 
 	const handleKeyDown = (event) => {
 		// If CTRL or CMD is pressed
@@ -115,28 +83,26 @@ const App = () => {
 	return (
 		<ThemeProvider theme={muiTheme}>
 			<ConfirmProvider>
-				<StateProvider initialState={settings} reducer={reducer}>
-					<Container
+				<Container
+					drawerOpen={drawerOpen}
+					setDrawerOpen={setDrawerOpen}
+				>
+					<Routes
 						drawerOpen={drawerOpen}
-						setDrawerOpen={setDrawerOpen}
-					>
-						<Routes
-							drawerOpen={drawerOpen}
-							edit={edit}
-							setEdit={setEdit}
-							updateAvailable={updateAvailable}
-						/>
-					</Container>
+						edit={edit}
+						setEdit={setEdit}
+						updateAvailable={updateAvailable}
+					/>
+				</Container>
 
-					{snackbarContent && (
-						<SimpleSnackbar
-							onClose={swSnackbarReset}
-							onSecondaryClose={snackbarContent.onClose}
-							secondaryText={snackbarContent.secondaryText}
-							text={snackbarContent.text}
-						/>
-					)}
-				</StateProvider>
+				{snackbarContent && (
+					<SimpleSnackbar
+						onClose={swSnackbarReset}
+						onSecondaryClose={snackbarContent.onClose}
+						secondaryText={snackbarContent.secondaryText}
+						text={snackbarContent.text}
+					/>
+				)}
 			</ConfirmProvider>
 		</ThemeProvider>
 	);
