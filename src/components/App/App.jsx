@@ -11,14 +11,14 @@ import { useStateValue } from '../../hooks/StateContext';
 const App = () => {
 	const [drawerOpen, setDrawerOpen] = useState(false);
 	const [edit, setEdit] = useState(false);
-	const [settings] = useStateValue();
+	const [{ settings }] = useStateValue();
+	const [updateAvailable, setUpdateAvailable] = useState(false);
 	const defaultSnackbarContent = {
 		onClose: () => {},
 		secondaryText: null,
 		text: null,
 	};
 	const [snackbarContent, setSnackbarContent] = useState(defaultSnackbarContent);
-	const [updateAvailable, setUpdateAvailable] = useState(false);
 
 	const swNewContentAvailable = () => {
 		setSnackbarContent({

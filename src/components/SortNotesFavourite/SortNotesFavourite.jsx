@@ -9,12 +9,13 @@ import {
 import { useStateValue } from '../../hooks/StateContext';
 
 const SortNotesFavourite = () => {
-	const [{ sortFavourite }, dispatch] = useStateValue();
+	const [{ settings }, dispatch] = useStateValue();
+	const { sortFavourite } = settings;
 	const [checked, setChecked] = React.useState(sortFavourite);
 
 	const handleToggle = () => {
 		dispatch({
-			type: 'changeSortFavourite',
+			type: 'settingsSortFavourite',
 			value: !checked,
 		});
 

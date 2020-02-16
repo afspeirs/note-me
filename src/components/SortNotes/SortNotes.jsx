@@ -31,7 +31,8 @@ const propTypes = {
 
 const SortNotes = ({ icon }) => {
 	const classes = useStyles();
-	const [{ sort }, dispatch] = useStateValue();
+	const [{ settings }, dispatch] = useStateValue();
+	const { sort } = settings;
 	const [value, setValue] = useState(sort);
 	const [anchorEl, setAnchorEl] = useState(null);
 	// eslint-disable-next-line max-len
@@ -47,7 +48,7 @@ const SortNotes = ({ icon }) => {
 		setAnchorEl(null);
 
 		dispatch({
-			type: 'changeSort',
+			type: 'settingsSort',
 			value: options[index].value,
 		});
 	};
