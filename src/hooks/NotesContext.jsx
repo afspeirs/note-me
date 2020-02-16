@@ -70,12 +70,12 @@ function useNotesProvider() {
 		notes[index] = value;
 	};
 
-	const handleNoteFavourite = (event, id) => {
-		const { checked } = event.target;
+	const handleNoteFavourite = (id) => {
 		const index = notes.findIndex((note) => note.id === id);
+		const currentNote = notes[index];
 		const value = {
-			...notes[index],
-			favourite: checked,
+			...currentNote,
+			favourite: !currentNote.favourite,
 		};
 
 		db.collection(user.uid)
@@ -100,7 +100,6 @@ function useNotesProvider() {
 		}
 	}, [user]); // eslint-disable-line
 
-	// Return the user object and notes methods
 	return {
 		handleNoteAdd,
 		handleNoteDelete,

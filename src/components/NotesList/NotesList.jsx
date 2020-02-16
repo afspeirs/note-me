@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import { NavLink } from 'react-router-dom';
 import Swipeout from 'rc-swipeout';
 import {
-	Checkbox,
+	IconButton,
 	List,
 	ListItem,
 	ListItemIcon,
@@ -28,15 +28,15 @@ import { useStateValue } from '../../hooks/StateContext';
 
 const propTypes = {
 	notes: PropTypes.arrayOf(PropTypes.object).isRequired,
+	locationSelector: PropTypes.string.isRequired,
 };
 
-const NotesList = ({ notes }) => {
+const NotesList = ({ notes, locationSelector }) => {
 	const confirm = useConfirm();
 	const { handleNoteFavourite, handleNoteDelete, loading } = useNotes();
 	const classes = useStyles();
 	const [{ sort, sortFavourite }] = useStateValue();
-	const [anchorPosition, setAnchorPosition] = useState({ top: 0, left: 0 });
-	const [currentNote, setCurrentNote] = useState(null);
+	const [contextAnchor, setContextAnchor] = useState(null);
 	const sortNoteFunction = {
 		'date-asc': (a, b) => b.date - a.date,
 		'date-dsc': (a, b) => a.date - b.date,
@@ -63,11 +63,6 @@ const NotesList = ({ notes }) => {
 		[],
 	);
 
-	const handleClose = () => {
-		setAnchorPosition({ top: 0, left: 0 });
-		setCurrentNote(null);
-	};
-
 	const handleNoteDeleteClick = ({ id, text }) => {
 		confirm({
 			title: `Are you sure you want to delete "${getTitle(text)}"?`,
@@ -76,23 +71,28 @@ const NotesList = ({ notes }) => {
 			.then(() => handleNoteDelete(id));
 	};
 
-	const handleContextMenu = (event) => {
-		const closestContextMenuOption = event.target.closest('.context-menu-select');
+	const handleContextMenuClose = () => setContextAnchor(null);
 
-		if (closestContextMenuOption) {
+	const handleContextMenuOpen = (event) => {
+		const closestContextMenuOption = event.target.closest('.context-menu-select');
+		const closestLocationSelector = event.target.closest(locationSelector);
+
+		// Only render if the right click occurs within the locationSelector
+		if (closestContextMenuOption && closestLocationSelector) {
 			event.preventDefault();
-			setAnchorPosition({ left: event.pageX, top: event.pageY });
-			setCurrentNote(closestContextMenuOption.id);
+			setContextAnchor({
+				left: event.pageX,
+				top: event.pageY,
+				id: closestContextMenuOption.dataset.id,
+			});
 		}
 	};
 
 	useEffect(() => {
-		document.addEventListener('contextmenu', handleContextMenu);
+		document.addEventListener('contextmenu', handleContextMenuOpen);
 
-		return function cleanuop() {
-			document.removeEventListener('contextmenu', handleContextMenu);
-		};
-	}, []);
+		return () => document.removeEventListener('contextmenu', handleContextMenuOpen);
+	}, []); // eslint-disable-line
 
 	return (
 		<List className={classes.list}>
@@ -115,8 +115,18 @@ const NotesList = ({ notes }) => {
 								text: <TimeAgo date={note.date / 1000} />,
 								autoClose: true,
 								style: {
+									backgroundColor: '#9e9e9e',
+									color: 'white',
+								},
+							},
+							{
+								text: note.favourite ? <StarIcon color="inherit" /> : <StarBorderIcon />,
+								onPress: () => handleNoteFavourite(note.id),
+								autoClose: true,
+								style: {
 									backgroundColor: '#ee6e00',
 									color: 'white',
+									width: 56,
 								},
 							},
 							{
@@ -134,42 +144,51 @@ const NotesList = ({ notes }) => {
 						<ListItem
 							button
 							to={`/note/${note.id}`}
-							className={clsx('context-menu-select', classes.listItem)}
+							className={clsx(classes.listItem, 'context-menu-select')}
 							component={renderLink}
-							id={note.id}
+							data-id={note.id}
 						>
 							<ListItemText className={classes.listItemText} primary={getTitle(note.text)} />
-							<ListItemSecondaryAction>
-								<Checkbox
-									color="primary"
-									edge="end"
-									checked={note.favourite}
-									checkedIcon={<StarIcon />}
-									icon={<StarBorderIcon />}
-									inputProps={{ 'aria-labelledby': note.id }}
-									onChange={(event) => handleNoteFavourite(event, note.id)}
-								/>
-							</ListItemSecondaryAction>
+							{note.favourite && (
+								<ListItemSecondaryAction>
+									<IconButton
+										color="primary"
+										edge="end"
+										aria-label="Favourited note"
+									>
+										<StarIcon />
+									</IconButton>
+								</ListItemSecondaryAction>
+							)}
 						</ListItem>
 					</Swipeout>
 
 					<Popover
-						open={currentNote === note.id}
-						onClose={handleClose}
+						open={contextAnchor?.id === note.id}
+						onClose={handleContextMenuClose}
 						anchorReference="anchorPosition"
 						anchorPosition={{
-							top: anchorPosition.top,
-							left: anchorPosition.left,
+							top: contextAnchor?.top || 0,
+							left: contextAnchor?.left || 0,
 						}}
 					>
-						<List className={classes.list}>
+						<List className={classes.list} dense>
 							<ListItem>
 								<ListItemIcon>
 									<AlarmIcon color="primary" />
 								</ListItemIcon>
 								<ListItemText
 									className={classes.listItemText}
-									primary={<TimeAgo slot="title" date={note.date / 1000} />}
+									primary={<TimeAgo date={note.date / 1000} />}
+								/>
+							</ListItem>
+							<ListItem button onClick={() => handleNoteFavourite(note.id)}>
+								<ListItemIcon>
+									{note.favourite ? <StarIcon color="primary" /> : <StarBorderIcon />}
+								</ListItemIcon>
+								<ListItemText
+									className={classes.listItemText}
+									primary={`${note.favourite ? 'Unfavourite' : 'Favourite'} "${getTitle(note.text)}"`}
 								/>
 							</ListItem>
 							<ListItem button onClick={() => handleNoteDeleteClick(note)}>

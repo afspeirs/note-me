@@ -19,7 +19,6 @@ import {
 import useStyles from './Container.styled';
 import DrawerContent from '../DrawerContent';
 import HeaderContent from '../HeaderContent';
-import { useStateValue } from '../../hooks/StateContext';
 
 const propTypes = {
 	children: PropTypes.oneOfType([
@@ -38,7 +37,6 @@ const Container = ({
 	const classes = useStyles();
 	const history = useHistory();
 	const mobile = useMediaQuery('(max-width:600px)');
-	const [{ performance }] = useStateValue();
 
 	// Close drawer only in mobile
 	const handleDrawerClose = () => (mobile) && setDrawerOpen(false);
@@ -96,20 +94,19 @@ const Container = ({
 				variant={mobile ? 'temporary' : 'persistent'}
 				anchor="left"
 				open={drawerOpen}
-				className={classes.drawer}
+				className={clsx(classes.drawer, 'MuiDrawer')}
 				classes={{
 					paper: classes.drawerPaper,
 				}}
 				onOpen={handleDrawerToggle}
 				onClose={handleDrawerToggle}
 				ModalProps={{ keepMounted: true }}
-				disableBackdropTransition={performance}
 			>
 				<div className={classes.drawerHeader} />
 				<DrawerContent />
 			</SwipeableDrawer>
 			<div
-				className={clsx(classes.content, {
+				className={clsx(classes.content, 'MuiPage', {
 					[classes.contentShift]: drawerOpen,
 				})}
 			>
