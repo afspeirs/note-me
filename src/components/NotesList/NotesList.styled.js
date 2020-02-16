@@ -14,6 +14,9 @@ const useStyles = makeStyles((theme) => ({
 		textOverflow: 'ellipsis',
 		whiteSpace: 'nowrap',
 	},
+	secondaryAction: {
+		pointerEvents: 'none',
+	},
 	swipeout: {
 		position: 'relative',
 		'& .rc-swipeout-content': {
