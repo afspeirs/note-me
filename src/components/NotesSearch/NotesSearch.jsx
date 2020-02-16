@@ -14,10 +14,10 @@ import NotesList from '../NotesList';
 import { useNotes } from '../../hooks/NotesContext';
 
 const propTypes = {
-	uniqueString: PropTypes.string.isRequired,
+	locationSelector: PropTypes.string.isRequired,
 };
 
-const NotesSearch = ({ uniqueString }) => {
+const NotesSearch = ({ locationSelector }) => {
 	const { notes } = useNotes();
 	const classes = useStyles();
 	const [text, setText] = useState('');
@@ -53,7 +53,7 @@ const NotesSearch = ({ uniqueString }) => {
 
 			<NotesList
 				notes={items}
-				uniqueString={uniqueString}
+				locationSelector={locationSelector}
 			/>
 		</List>
 	);

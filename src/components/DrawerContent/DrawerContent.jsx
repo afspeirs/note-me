@@ -20,7 +20,7 @@ const DrawerContent = () => {
 
 	return (
 		<>
-			<NotesSearch uniqueString="drawer-content" />
+			<NotesSearch locationSelector=".MuiDrawer" />
 
 			{isSignedIn && (
 				<>

@@ -94,7 +94,7 @@ const Container = ({
 				variant={mobile ? 'temporary' : 'persistent'}
 				anchor="left"
 				open={drawerOpen}
-				className={classes.drawer}
+				className={clsx(classes.drawer, 'MuiDrawer')}
 				classes={{
 					paper: classes.drawerPaper,
 				}}
@@ -106,7 +106,7 @@ const Container = ({
 				<DrawerContent />
 			</SwipeableDrawer>
 			<div
-				className={clsx(classes.content, {
+				className={clsx(classes.content, 'MuiPage', {
 					[classes.contentShift]: drawerOpen,
 				})}
 			>
