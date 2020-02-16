@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
 import {
 	Switch,
 	Redirect,
@@ -14,15 +13,7 @@ import NoPage from '../../pages/NoPage';
 import NotePage from '../../pages/NotePage';
 import SettingsPage from '../../pages/SettingsPage';
 
-const propTypes = {
-	edit: PropTypes.bool.isRequired,
-	setEdit: PropTypes.func.isRequired,
-};
-
-const Routes = ({
-	edit,
-	setEdit,
-}) => {
+const Routes = () => {
 	const { user } = useAuth();
 	const location = useLocation();
 	const { handleNoteUpdate, notes } = useNotes();
@@ -51,11 +42,9 @@ const Routes = ({
 					path="/note/:id"
 					render={({ match }) => (
 						<NotePage
-							edit={edit}
 							handleNoteUpdate={handleNoteUpdate}
 							match={match}
 							note={notes.find((note) => note.id === match.params.id)}
-							setEdit={setEdit}
 						/>
 					)}
 				/>
@@ -75,7 +64,5 @@ const Routes = ({
 		</>
 	);
 };
-
-Routes.propTypes = propTypes;
 
 export default Routes;

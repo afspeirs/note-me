@@ -9,8 +9,7 @@ import theme from '../../theme';
 import { useStateValue } from '../../hooks/StateContext';
 
 const App = () => {
-	const [edit, setEdit] = useState(false);
-	const [{ drawerOpen, settings }, dispatch] = useStateValue();
+	const [{ drawerOpen, edit, settings }, dispatch] = useStateValue();
 	const defaultSnackbarContent = {
 		onClose: () => {},
 		secondaryText: null,
@@ -53,7 +52,10 @@ const App = () => {
 			// E or S = Toggle edit
 			if (event.key === 'e' || event.key === 's') {
 				event.preventDefault();
-				setEdit((prevState) => !prevState);
+				dispatch({
+					type: 'app-edit',
+					value: !edit,
+				});
 			}
 			// Disable some keyboard shortcuts
 			if ((event.key === 'p')) {
@@ -88,10 +90,7 @@ const App = () => {
 		<ThemeProvider theme={muiTheme}>
 			<ConfirmProvider>
 				<Container>
-					<Routes
-						edit={edit}
-						setEdit={setEdit}
-					/>
+					<Routes />
 				</Container>
 
 				{snackbarContent && (

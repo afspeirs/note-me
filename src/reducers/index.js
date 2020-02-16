@@ -18,6 +18,11 @@ export const reducer = (state, action) => {
 				...state,
 				drawerOpen: action.value,
 			};
+		case 'app-edit':
+			return {
+				...state,
+				edit: action.value,
+			};
 		case 'app-updateAvailable':
 			return {
 				...state,
