@@ -9,10 +9,9 @@ import theme from '../../theme';
 import { useStateValue } from '../../hooks/StateContext';
 
 const App = () => {
-	const [drawerOpen, setDrawerOpen] = useState(false);
 	const [edit, setEdit] = useState(false);
-	const [{ settings }] = useStateValue();
 	const [updateAvailable, setUpdateAvailable] = useState(false);
+	const [{ drawerOpen, settings }, dispatch] = useStateValue();
 	const defaultSnackbarContent = {
 		onClose: () => {},
 		secondaryText: null,
@@ -44,7 +43,10 @@ const App = () => {
 			// B = Toggle sidebar
 			if (event.key === 'b') {
 				event.preventDefault();
-				setDrawerOpen((prevState) => !prevState);
+				dispatch({
+					type: 'app-drawerOpen',
+					value: !drawerOpen,
+				});
 			}
 			// E or S = Toggle edit
 			if (event.key === 'e' || event.key === 's') {
@@ -83,12 +85,8 @@ const App = () => {
 	return (
 		<ThemeProvider theme={muiTheme}>
 			<ConfirmProvider>
-				<Container
-					drawerOpen={drawerOpen}
-					setDrawerOpen={setDrawerOpen}
-				>
+				<Container>
 					<Routes
-						drawerOpen={drawerOpen}
 						edit={edit}
 						setEdit={setEdit}
 						updateAvailable={updateAvailable}

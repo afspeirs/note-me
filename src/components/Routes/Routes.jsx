@@ -15,14 +15,12 @@ import NotePage from '../../pages/NotePage';
 import SettingsPage from '../../pages/SettingsPage';
 
 const propTypes = {
-	drawerOpen: PropTypes.bool.isRequired,
 	edit: PropTypes.bool.isRequired,
 	setEdit: PropTypes.func.isRequired,
 	updateAvailable: PropTypes.bool.isRequired,
 };
 
 const Routes = ({
-	drawerOpen,
 	edit,
 	setEdit,
 	updateAvailable,
@@ -48,7 +46,7 @@ const Routes = ({
 				<Route
 					exact
 					path="/"
-					render={() => <HomePage drawerOpen={drawerOpen} />}
+					component={HomePage}
 				/>
 
 				<Route
