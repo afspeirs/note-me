@@ -48,7 +48,7 @@ const SortNotes = ({ icon }) => {
 		setAnchorEl(null);
 
 		dispatch({
-			type: 'settingsSort',
+			type: 'settings-sort',
 			value: options[index].value,
 		});
 	};

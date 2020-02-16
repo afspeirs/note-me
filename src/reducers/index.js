@@ -1,15 +1,16 @@
 export const initialState = {
 	settings: {
-		sort: localStorage.getItem('changeSort') || 'date-asc',
-		sortFavourite: JSON.parse(localStorage.getItem('changeSortFavourite')) || false,
-		darkTheme: JSON.parse(localStorage.getItem('changeDarkTheme')) || false,
+		sort: localStorage.getItem('settings-sort') || 'date-asc',
+		sortFavourite: JSON.parse(localStorage.getItem('settings-sortFavourite')) || false,
+		darkTheme: JSON.parse(localStorage.getItem('settings-darkTheme')) || false,
 	},
 };
 
 export const reducer = (state, action) => {
-	localStorage.setItem(action.type, action.value);
+	if (action.type.startsWith('settings-')) localStorage.setItem(action.type, action.value);
+
 	switch (action.type) {
-		case 'settingsSort':
+		case 'settings-sort':
 			return {
 				...state,
 				settings: {
@@ -17,7 +18,7 @@ export const reducer = (state, action) => {
 					sort: action.value,
 				},
 			};
-		case 'settingsSortFavourite':
+		case 'settings-sortFavourite':
 			return {
 				...state,
 				settings: {
@@ -25,7 +26,7 @@ export const reducer = (state, action) => {
 					sortFavourite: action.value,
 				},
 			};
-		case 'settingsDarkTheme':
+		case 'settings-darkTheme':
 			return {
 				...state,
 				settings: {

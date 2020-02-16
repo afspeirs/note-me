@@ -15,7 +15,7 @@ const SortNotesFavourite = () => {
 
 	const handleToggle = () => {
 		dispatch({
-			type: 'settingsSortFavourite',
+			type: 'settings-sortFavourite',
 			value: !checked,
 		});
 

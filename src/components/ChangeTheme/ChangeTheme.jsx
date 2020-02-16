@@ -15,7 +15,7 @@ const ChangeTheme = () => {
 
 	const handleToggle = () => {
 		dispatch({
-			type: 'settingsDarkTheme',
+			type: 'settings-darkTheme',
 			value: !checked,
 		});
 
