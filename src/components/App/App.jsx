@@ -66,11 +66,9 @@ const App = () => {
 
 	const muiTheme = createMuiTheme({
 		...theme,
-		...{
-			palette: {
-				...theme.palette,
-				type: settings.darkTheme === true ? 'dark' : 'light',
-			},
+		palette: {
+			...theme.palette,
+			type: settings.darkTheme === true ? 'dark' : 'light',
 		},
 	});
 
