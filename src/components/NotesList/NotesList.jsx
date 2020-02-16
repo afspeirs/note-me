@@ -162,7 +162,7 @@ const NotesList = ({ notes, locationSelector }) => {
 							left: contextAnchor?.left || 0,
 						}}
 					>
-						<List className={classes.list}>
+						<List className={classes.list} dense>
 							<ListItem>
 								<ListItemIcon>
 									<AlarmIcon color="primary" />
