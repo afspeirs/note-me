@@ -7,7 +7,6 @@ import {
 } from 'react-router-dom';
 
 import { useAuth } from '../../hooks/AuthContext';
-import { useNotes } from '../../hooks/NotesContext';
 import HomePage from '../../pages/HomePage';
 import NoPage from '../../pages/NoPage';
 import NotePage from '../../pages/NotePage';
@@ -16,7 +15,6 @@ import SettingsPage from '../../pages/SettingsPage';
 const Routes = () => {
 	const { user } = useAuth();
 	const location = useLocation();
-	const { handleNoteUpdate, notes } = useNotes();
 	const isModal = !!(location?.state?.modal && window.previousLocation !== location);
 
 	useEffect(() => {
@@ -40,13 +38,7 @@ const Routes = () => {
 
 				<Route
 					path="/note/:id"
-					render={({ match }) => (
-						<NotePage
-							handleNoteUpdate={handleNoteUpdate}
-							match={match}
-							note={notes.find((note) => note.id === match.params.id)}
-						/>
-					)}
+					component={NotePage}
 				/>
 
 				<Redirect from="/settings/" to="/" />
