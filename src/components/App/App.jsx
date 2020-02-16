@@ -6,23 +6,18 @@ import Container from '../Container';
 import Routes from '../Routes';
 import SimpleSnackbar from '../SimpleSnackbar';
 import theme from '../../theme';
-import { StateProvider } from '../../hooks/StateContext';
+import { useStateValue } from '../../hooks/StateContext';
 
 const App = () => {
-	const [drawerOpen, setDrawerOpen] = useState(false);
-	const [edit, setEdit] = useState(false);
-	const [settings, setSettings] = useState({
-		sort: localStorage.getItem('changeSort') || 'date-asc',
-		sortFavourite: JSON.parse(localStorage.getItem('changeSortFavourite')) || false,
-		darkTheme: JSON.parse(localStorage.getItem('changeDarkTheme')) || false,
-	});
+	const [{ drawerOpen, edit, settings }, dispatch] = useStateValue();
 	const defaultSnackbarContent = {
 		onClose: () => {},
 		secondaryText: null,
 		text: null,
 	};
 	const [snackbarContent, setSnackbarContent] = useState(defaultSnackbarContent);
-	const [updateAvailable, setUpdateAvailable] = useState(false);
+
+	const snackbarReset = () => setSnackbarContent(defaultSnackbarContent);
 
 	const swNewContentAvailable = () => {
 		setSnackbarContent({
@@ -30,7 +25,10 @@ const App = () => {
 			secondaryText: 'Update',
 			text: 'A new version is available',
 		});
-		setUpdateAvailable(true);
+		dispatch({
+			type: 'app-updateAvailable',
+			value: true,
+		});
 	};
 
 	const swContentCached = () => {
@@ -40,48 +38,24 @@ const App = () => {
 		});
 	};
 
-	const swSnackbarReset = () => setSnackbarContent(defaultSnackbarContent);
-
-	const reducer = (state, action) => {
-		localStorage.setItem(action.type, action.value);
-		switch (action.type) {
-			case 'changeSort':
-				return {
-					...state,
-					sort: action.value,
-				};
-			case 'changeSortFavourite':
-				return {
-					...state,
-					sortFavourite: action.value,
-				};
-			case 'changeDarkTheme':
-				setSettings({
-					...settings,
-					darkTheme: action.value,
-				});
-
-				return {
-					...state,
-					darkTheme: action.value,
-				};
-			default:
-				return state;
-		}
-	};
-
 	const handleKeyDown = (event) => {
 		// If CTRL or CMD is pressed
 		if (event.ctrlKey || event.metaKey) {
 			// B = Toggle sidebar
 			if (event.key === 'b') {
 				event.preventDefault();
-				setDrawerOpen((prevState) => !prevState);
+				dispatch({
+					type: 'app-drawerOpen',
+					value: !drawerOpen,
+				});
 			}
 			// E or S = Toggle edit
 			if (event.key === 'e' || event.key === 's') {
 				event.preventDefault();
-				setEdit((prevState) => !prevState);
+				dispatch({
+					type: 'app-edit',
+					value: !edit,
+				});
 			}
 			// Disable some keyboard shortcuts
 			if ((event.key === 'p')) {
@@ -92,11 +66,9 @@ const App = () => {
 
 	const muiTheme = createMuiTheme({
 		...theme,
-		...{
-			palette: {
-				...theme.palette,
-				type: settings.darkTheme === true ? 'dark' : 'light',
-			},
+		palette: {
+			...theme.palette,
+			type: settings.darkTheme === true ? 'dark' : 'light',
 		},
 	});
 
@@ -115,28 +87,18 @@ const App = () => {
 	return (
 		<ThemeProvider theme={muiTheme}>
 			<ConfirmProvider>
-				<StateProvider initialState={settings} reducer={reducer}>
-					<Container
-						drawerOpen={drawerOpen}
-						setDrawerOpen={setDrawerOpen}
-					>
-						<Routes
-							drawerOpen={drawerOpen}
-							edit={edit}
-							setEdit={setEdit}
-							updateAvailable={updateAvailable}
-						/>
-					</Container>
+				<Container>
+					<Routes />
+				</Container>
 
-					{snackbarContent && (
-						<SimpleSnackbar
-							onClose={swSnackbarReset}
-							onSecondaryClose={snackbarContent.onClose}
-							secondaryText={snackbarContent.secondaryText}
-							text={snackbarContent.text}
-						/>
-					)}
-				</StateProvider>
+				{snackbarContent && (
+					<SimpleSnackbar
+						onClose={snackbarReset}
+						onSecondaryClose={snackbarContent.onClose}
+						secondaryText={snackbarContent.secondaryText}
+						text={snackbarContent.text}
+					/>
+				)}
 			</ConfirmProvider>
 		</ThemeProvider>
 	);

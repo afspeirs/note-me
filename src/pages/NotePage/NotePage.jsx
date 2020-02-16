@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import { Prompt } from 'react-router-dom';
+import { Prompt, useParams } from 'react-router-dom';
 import Markdown from 'react-markdown';
 import {
 	Fab,
@@ -14,41 +13,31 @@ import {
 
 import useStyles from './NotePage.styled';
 import LinkRenderer from '../../components/LinkRenderer';
+import { useNotes } from '../../hooks/NotesContext';
+import { useStateValue } from '../../hooks/StateContext';
 
-const defaultProps = {
-	note: null,
-};
-
-const propTypes = {
-	edit: PropTypes.bool.isRequired,
-	handleNoteUpdate: PropTypes.func.isRequired,
-	match: PropTypes.instanceOf(Object).isRequired,
-	note: PropTypes.instanceOf(Object),
-	setEdit: PropTypes.func.isRequired,
-};
-
-const NotePage = ({
-	edit,
-	handleNoteUpdate,
-	match,
-	note,
-	setEdit,
-}) => {
-	const classes = useStyles();
+const NotePage = () => {
+	const { id } = useParams();
+	const { handleNoteUpdate, notes } = useNotes();
 	const [localNote, setLocalNote] = useState(undefined);
-	const { id } = match.params;
+	const [{ edit }, dispatch] = useStateValue();
+	const classes = useStyles();
+	const currentNote = notes.find((note) => note.id === id);
 
 	useEffect(() => {
-		if (note !== null) {
-			setLocalNote(note.text);
-			setEdit(note.text === '');
+		if (currentNote) {
+			setLocalNote(currentNote.text);
+			dispatch({
+				type: 'app-edit',
+				value: currentNote.text === '',
+			});
 		}
-	}, [note]); // eslint-disable-line
+	}, [currentNote]); // eslint-disable-line
 
 	useEffect(() => {
 		const compare = localNote !== undefined && !edit;
 
-		if (compare && id && localNote !== note.text) {
+		if (compare && id && localNote !== currentNote.text) {
 			handleNoteUpdate(id, localNote);
 		}
 	}, [edit]); // eslint-disable-line
@@ -71,9 +60,9 @@ const NotePage = ({
 				/>
 			)}
 
-			{note && (
+			{currentNote && (
 				<Prompt
-					when={localNote !== note.text}
+					when={localNote !== currentNote.text}
 					message="Are you sure you want to leave without saving?"
 				/>
 			)}
@@ -83,7 +72,10 @@ const NotePage = ({
 					color="primary"
 					aria-label={edit ? 'Save' : 'Edit'}
 					className={classes.fab}
-					onClick={() => setEdit(!edit)}
+					onClick={() => dispatch({
+						type: 'app-edit',
+						value: !edit,
+					})}
 				>
 					{edit ? <SaveIcon /> : <EditIcon />}
 				</Fab>
@@ -91,8 +83,5 @@ const NotePage = ({
 		</>
 	);
 };
-
-NotePage.defaultProps = defaultProps;
-NotePage.propTypes = propTypes;
 
 export default NotePage;

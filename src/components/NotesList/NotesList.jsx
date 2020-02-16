@@ -4,7 +4,6 @@ import clsx from 'clsx';
 import { NavLink } from 'react-router-dom';
 import Swipeout from 'rc-swipeout';
 import {
-	IconButton,
 	List,
 	ListItem,
 	ListItemIcon,
@@ -35,7 +34,8 @@ const NotesList = ({ notes, locationSelector }) => {
 	const confirm = useConfirm();
 	const { handleNoteFavourite, handleNoteDelete, loading } = useNotes();
 	const classes = useStyles();
-	const [{ sort, sortFavourite }] = useStateValue();
+	const [{ settings }] = useStateValue();
+	const { sort, sortFavourite } = settings;
 	const [contextAnchor, setContextAnchor] = useState(null);
 	const sortNoteFunction = {
 		'date-asc': (a, b) => b.date - a.date,
@@ -150,14 +150,8 @@ const NotesList = ({ notes, locationSelector }) => {
 						>
 							<ListItemText className={classes.listItemText} primary={getTitle(note.text)} />
 							{note.favourite && (
-								<ListItemSecondaryAction>
-									<IconButton
-										color="primary"
-										edge="end"
-										aria-label="Favourited note"
-									>
-										<StarIcon />
-									</IconButton>
+								<ListItemSecondaryAction className={classes.secondaryAction}>
+									<StarIcon color="primary" edge="end" />
 								</ListItemSecondaryAction>
 							)}
 						</ListItem>

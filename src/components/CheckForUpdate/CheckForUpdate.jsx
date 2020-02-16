@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {
 	Button,
 	CircularProgress,
@@ -12,11 +11,10 @@ import {
 	Refresh as RefreshIcon,
 } from '@material-ui/icons';
 
-const propTypes = {
-	updateAvailable: PropTypes.bool.isRequired,
-};
+import { useStateValue } from '../../hooks/StateContext';
 
-const CheckForUpdate = ({ updateAvailable }) => {
+const CheckForUpdate = () => {
+	const [{ updateAvailable }] = useStateValue();
 	const [loading, setLoading] = React.useState(false);
 	const timer = React.useRef();
 
@@ -71,7 +69,5 @@ const CheckForUpdate = ({ updateAvailable }) => {
 		</ListItem>
 	);
 };
-
-CheckForUpdate.propTypes = propTypes;
 
 export default CheckForUpdate;

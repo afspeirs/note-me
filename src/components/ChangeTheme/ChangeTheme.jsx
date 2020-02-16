@@ -9,12 +9,13 @@ import {
 import { useStateValue } from '../../hooks/StateContext';
 
 const ChangeTheme = () => {
-	const [{ darkTheme }, dispatch] = useStateValue();
+	const [{ settings }, dispatch] = useStateValue();
+	const { darkTheme } = settings;
 	const [checked, setChecked] = React.useState(darkTheme);
 
 	const handleToggle = () => {
 		dispatch({
-			type: 'changeDarkTheme',
+			type: 'settings-darkTheme',
 			value: !checked,
 		});
 

@@ -9,15 +9,20 @@ import App from './components/App';
 import UserConfirmation from './components/UserConfirmation';
 import { AuthProvider } from './hooks/AuthContext';
 import { NotesProvider } from './hooks/NotesContext';
+import { StateProvider } from './hooks/StateContext';
+import { initialState, reducer } from './reducers';
+
 
 ReactDOM.render((
-	<BrowserRouter getUserConfirmation={(message, callback) => UserConfirmation(message, callback)}>
-		<AuthProvider>
-			<NotesProvider>
-				<App />
-			</NotesProvider>
-		</AuthProvider>
-	</BrowserRouter>
+	<StateProvider initialState={initialState} reducer={reducer}>
+		<BrowserRouter getUserConfirmation={(message, callback) => UserConfirmation(message, callback)}>
+			<AuthProvider>
+				<NotesProvider>
+					<App />
+				</NotesProvider>
+			</AuthProvider>
+		</BrowserRouter>
+	</StateProvider>
 ), document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change

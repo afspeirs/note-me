@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {
 	Divider,
 	List,
@@ -15,11 +14,7 @@ import SortNotes from '../../components/SortNotes';
 import SortNotesFavourite from '../../components/SortNotesFavourite';
 import UserInformation from '../../components/UserInformation';
 
-const propTypes = {
-	updateAvailable: PropTypes.bool.isRequired,
-};
-
-const SettingsPage = ({ updateAvailable }) => (
+const SettingsPage = () => (
 	<Modal title="Settings">
 		<List>
 			<UserInformation />
@@ -29,7 +24,7 @@ const SettingsPage = ({ updateAvailable }) => (
 					{`v${process.env.REACT_APP_VERSION}`}
 				</ListItemSecondaryAction>
 			</ListItem>
-			<CheckForUpdate updateAvailable={updateAvailable} />
+			<CheckForUpdate />
 			<Divider />
 			<ChangeTheme />
 			<SortNotesFavourite />
@@ -37,7 +32,5 @@ const SettingsPage = ({ updateAvailable }) => (
 		</List>
 	</Modal>
 );
-
-SettingsPage.propTypes = propTypes;
 
 export default SettingsPage;
