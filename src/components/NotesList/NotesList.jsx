@@ -169,7 +169,7 @@ const NotesList = ({ notes, locationSelector }) => {
 								</ListItemIcon>
 								<ListItemText
 									className={classes.listItemText}
-									primary={<TimeAgo slot="title" date={note.date / 1000} />}
+									primary={<TimeAgo date={note.date / 1000} />}
 								/>
 							</ListItem>
 							<ListItem button onClick={() => handleNoteDeleteClick(note)}>
