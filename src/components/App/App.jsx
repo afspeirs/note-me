@@ -17,6 +17,8 @@ const App = () => {
 	};
 	const [snackbarContent, setSnackbarContent] = useState(defaultSnackbarContent);
 
+	const snackbarReset = () => setSnackbarContent(defaultSnackbarContent);
+
 	const swNewContentAvailable = () => {
 		setSnackbarContent({
 			onClose: () => window.location.reload(true),
@@ -35,8 +37,6 @@ const App = () => {
 			text: 'Caching complete! Now available offline',
 		});
 	};
-
-	const swSnackbarReset = () => setSnackbarContent(defaultSnackbarContent);
 
 	const handleKeyDown = (event) => {
 		// If CTRL or CMD is pressed
@@ -95,7 +95,7 @@ const App = () => {
 
 				{snackbarContent && (
 					<SimpleSnackbar
-						onClose={swSnackbarReset}
+						onClose={snackbarReset}
 						onSecondaryClose={snackbarContent.onClose}
 						secondaryText={snackbarContent.secondaryText}
 						text={snackbarContent.text}
