@@ -10,49 +10,22 @@ export const initialState = {
 };
 
 export const reducer = (state, action) => {
-	if (action.type.startsWith('settings-')) localStorage.setItem(action.type, action.value);
+	const [location, value] = action.type.split('-');
 
-	switch (action.type) {
-		case 'app-drawerOpen':
-			return {
-				...state,
-				drawerOpen: action.value !== undefined ? action.value : !state.drawerOpen,
-			};
-		case 'app-edit':
-			return {
-				...state,
-				edit: action.value !== undefined ? action.value : !state.edit,
-			};
-		case 'app-updateAvailable':
-			return {
-				...state,
-				updateAvailable: action.value !== undefined ? action.value : !state.updateAvailable,
-			};
-		case 'settings-darkTheme':
-			return {
-				...state,
-				settings: {
-					...state.settings,
-					darkTheme: action.value,
-				},
-			};
-		case 'settings-sort':
-			return {
-				...state,
-				settings: {
-					...state.settings,
-					sort: action.value,
-				},
-			};
-		case 'settings-sortFavourite':
-			return {
-				...state,
-				settings: {
-					...state.settings,
-					sortFavourite: action.value,
-				},
-			};
-		default:
-			return state;
+	if (location === 'settings') {
+		localStorage.setItem(action.type, action.value);
+
+		return {
+			...state,
+			settings: {
+				...state.settings,
+				[value]: action.value,
+			},
+		};
 	}
+
+	return {
+		...state,
+		[value]: action.value !== undefined ? action.value : !state[value],
+	};
 };
