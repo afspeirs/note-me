@@ -10,22 +10,24 @@ export const initialState = {
 };
 
 export const reducer = (state, action) => {
-	const [location, value] = action.type.split('-');
+	const [location, name] = action.type.split('-');
 
 	if (location === 'settings') {
-		localStorage.setItem(action.type, action.value);
+		const value = action.value !== undefined ? action.value : !state.settings[name];
+
+		localStorage.setItem(action.type, value);
 
 		return {
 			...state,
 			settings: {
 				...state.settings,
-				[value]: action.value,
+				[name]: value,
 			},
 		};
 	}
 
 	return {
 		...state,
-		[value]: action.value !== undefined ? action.value : !state[value],
+		[name]: action.value !== undefined ? action.value : !state[name],
 	};
 };

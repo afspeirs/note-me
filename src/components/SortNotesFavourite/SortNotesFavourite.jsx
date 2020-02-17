@@ -11,16 +11,8 @@ import { useStateValue } from '../../hooks/StateContext';
 const SortNotesFavourite = () => {
 	const [{ settings }, dispatch] = useStateValue();
 	const { sortFavourite } = settings;
-	const [checked, setChecked] = React.useState(sortFavourite);
 
-	const handleToggle = () => {
-		dispatch({
-			type: 'settings-sortFavourite',
-			value: !checked,
-		});
-
-		setChecked(!checked);
-	};
+	const handleToggle = () => dispatch({ type: 'settings-sortFavourite' });
 
 	return (
 		<>
@@ -34,7 +26,7 @@ const SortNotesFavourite = () => {
 						color="primary"
 						edge="end"
 						onChange={handleToggle}
-						checked={checked}
+						checked={sortFavourite}
 						inputProps={{ 'aria-labelledby': 'change-sort-favourite' }}
 					/>
 				</ListItemSecondaryAction>
