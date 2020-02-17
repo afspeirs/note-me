@@ -5,14 +5,16 @@ import {
 	ListItemSecondaryAction,
 	ListItemText,
 } from '@material-ui/core';
+import { useConfirm } from 'material-ui-confirm';
 
 import useStyles from './ImportExport.styled';
 import { getTitle } from '../../ultils';
 import { useNotes } from '../../hooks/NotesContext';
 
 const ImportExport = () => {
-	const classes = useStyles();
+	const confirm = useConfirm();
 	const { handleNoteAdd, notes } = useNotes();
+	const classes = useStyles();
 
 	// Read each file and create a note for it
 	const onChangeImport = (event) => [...event.target.files].forEach((file) => {
@@ -32,11 +34,22 @@ const ImportExport = () => {
 		document.body.removeChild(element);
 	};
 
-	const onClickExport = () => notes.forEach((note) => {
-		const title = getTitle(note.text);
-		const { text } = note;
-		exportMarkdownFile(title, text);
-	});
+	const onClickExport = () => {
+		confirm({
+			title: `Do you want to export all ${notes.length} Notes as Markdown files?`,
+			cancellationText: 'No',
+			confirmationText: 'Yes',
+			dialogProps: {
+				classes: {
+					root: classes.confirm,
+				},
+			},
+		}).then(() => notes.forEach((note) => {
+			const title = getTitle(note.text);
+			const { text } = note;
+			exportMarkdownFile(title, text);
+		}));
+	};
 
 	return (
 		<>
