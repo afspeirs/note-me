@@ -8,7 +8,6 @@ import {
 import { useConfirm } from 'material-ui-confirm';
 
 import useStyles from './ImportExport.styled';
-import { getTitle } from '../../ultils';
 import { useNotes } from '../../hooks/NotesContext';
 
 const ImportExport = () => {
@@ -45,8 +44,7 @@ const ImportExport = () => {
 				},
 			},
 		}).then(() => notes.forEach((note) => {
-			const title = getTitle(note.text);
-			const { text } = note;
+			const { text, title } = note;
 			exportMarkdownFile(title, text);
 		}));
 	};

@@ -21,7 +21,6 @@ import { useConfirm } from 'material-ui-confirm';
 
 import useStyles from './NotesList.styled';
 import TimeAgo from '../TimeAgo';
-import { getTitle } from '../../ultils';
 import { useNotes } from '../../hooks/NotesContext';
 import { useStateValue } from '../../hooks/StateContext';
 
@@ -63,9 +62,9 @@ const NotesList = ({ notes, locationSelector }) => {
 		[],
 	);
 
-	const handleNoteDeleteClick = ({ id, text }) => {
+	const handleNoteDeleteClick = ({ id, title }) => {
 		confirm({
-			title: `Are you sure you want to delete "${getTitle(text)}"?`,
+			title: `Are you sure you want to delete "${title}"?`,
 			confirmationText: 'Delete',
 		})
 			.then(() => handleNoteDelete(id));
@@ -148,7 +147,7 @@ const NotesList = ({ notes, locationSelector }) => {
 							component={renderLink}
 							data-id={note.id}
 						>
-							<ListItemText className={classes.listItemText} primary={getTitle(note.text)} />
+							<ListItemText className={classes.listItemText} primary={note.title} />
 							{note.favourite && (
 								<ListItemSecondaryAction className={classes.secondaryAction}>
 									<StarIcon color="primary" edge="end" />
@@ -182,7 +181,7 @@ const NotesList = ({ notes, locationSelector }) => {
 								</ListItemIcon>
 								<ListItemText
 									className={classes.listItemText}
-									primary={`${note.favourite ? 'Unfavourite' : 'Favourite'} "${getTitle(note.text)}"`}
+									primary={`${note.favourite ? 'Unfavourite' : 'Favourite'} "${note.title}"`}
 								/>
 							</ListItem>
 							<ListItem button onClick={() => handleNoteDeleteClick(note)}>
@@ -191,7 +190,7 @@ const NotesList = ({ notes, locationSelector }) => {
 								</ListItemIcon>
 								<ListItemText
 									className={classes.listItemText}
-									primary={`Delete "${getTitle(note.text)}"`}
+									primary={`Delete "${note.title}"`}
 								/>
 							</ListItem>
 						</List>
