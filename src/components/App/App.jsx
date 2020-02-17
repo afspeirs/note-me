@@ -6,9 +6,11 @@ import Container from '../Container';
 import Routes from '../Routes';
 import SimpleSnackbar from '../SimpleSnackbar';
 import theme from '../../theme';
+import { useNotes } from '../../hooks/NotesContext';
 import { useStateValue } from '../../hooks/StateContext';
 
 const App = () => {
+	const { handleNoteAdd } = useNotes();
 	const [{ drawerOpen, edit, settings }, dispatch] = useStateValue();
 	const defaultSnackbarContent = {
 		onClose: () => {},
@@ -56,6 +58,10 @@ const App = () => {
 					type: 'app-edit',
 					value: !edit,
 				});
+			}
+			if (event.key === 'n') {
+				event.preventDefault();
+				handleNoteAdd();
 			}
 			// Disable some keyboard shortcuts
 			if ((event.key === 'p')) {
