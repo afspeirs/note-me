@@ -21,7 +21,7 @@ function useNotesProvider() {
 	const [loading, setLoading] = useState(true);
 	const [notes, setNotes] = useState([]);
 
-	const handleNoteAdd = () => {
+	const handleNoteAdd = (text = '') => {
 		const emptyNotes = notes.filter((note) => note.text === '');
 
 		if (emptyNotes.length !== 0) {
@@ -29,7 +29,7 @@ function useNotesProvider() {
 		} else {
 			const newNote = db.collection(user.uid).doc();
 			const value = {
-				text: '',
+				text,
 				date: +new Date(),
 				id: newNote.id,
 				created: +new Date(),
