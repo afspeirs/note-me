@@ -72,10 +72,7 @@ const NotePage = () => {
 					color="primary"
 					aria-label={edit ? 'Save' : 'Edit'}
 					className={classes.fab}
-					onClick={() => dispatch({
-						type: 'app-edit',
-						value: !edit,
-					})}
+					onClick={() => dispatch({ type: 'app-edit' })}
 				>
 					{edit ? <SaveIcon /> : <EditIcon />}
 				</Fab>

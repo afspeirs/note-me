@@ -43,10 +43,7 @@ const Container = ({ children }) => {
 	// Toggle drawer only in mobile unless toggle is true
 	const handleDrawerToggle = (toggle = false) => {
 		if ((toggle === true) || mobile) {
-			dispatch({
-				type: 'app-drawerOpen',
-				value: !drawerOpen,
-			});
+			dispatch({ type: 'app-drawerOpen' });
 		}
 	};
 
