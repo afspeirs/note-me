@@ -9,6 +9,7 @@ import {
 
 import ChangeTheme from '../../components/ChangeTheme';
 import CheckForUpdate from '../../components/CheckForUpdate';
+import ImportExport from '../../components/ImportExport';
 import Modal from '../../components/Modal';
 import SortNotes from '../../components/SortNotes';
 import SortNotesFavourite from '../../components/SortNotesFavourite';
@@ -25,10 +26,16 @@ const SettingsPage = () => (
 				</ListItemSecondaryAction>
 			</ListItem>
 			<CheckForUpdate />
+
 			<Divider />
+
 			<ChangeTheme />
 			<SortNotesFavourite />
 			<SortNotes />
+
+			<Divider />
+
+			<ImportExport />
 		</List>
 	</Modal>
 );
