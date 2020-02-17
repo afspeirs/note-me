@@ -9,7 +9,7 @@ import theme from '../../theme';
 import { useStateValue } from '../../hooks/StateContext';
 
 const App = () => {
-	const [{ drawerOpen, edit, settings }, dispatch] = useStateValue();
+	const [{ settings }, dispatch] = useStateValue();
 	const defaultSnackbarContent = {
 		onClose: () => {},
 		secondaryText: null,
@@ -44,18 +44,12 @@ const App = () => {
 			// B = Toggle sidebar
 			if (event.key === 'b') {
 				event.preventDefault();
-				dispatch({
-					type: 'app-drawerOpen',
-					value: !drawerOpen,
-				});
+				dispatch({ type: 'app-drawerOpen' });
 			}
 			// E or S = Toggle edit
 			if (event.key === 'e' || event.key === 's') {
 				event.preventDefault();
-				dispatch({
-					type: 'app-edit',
-					value: !edit,
-				});
+				dispatch({ type: 'app-edit' });
 			}
 			// Disable some keyboard shortcuts
 			if ((event.key === 'p')) {

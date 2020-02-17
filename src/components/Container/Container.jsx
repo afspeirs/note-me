@@ -19,6 +19,7 @@ import {
 import useStyles from './Container.styled';
 import DrawerContent from '../DrawerContent';
 import HeaderContent from '../HeaderContent';
+import { useNotes } from '../../hooks/NotesContext';
 import { useStateValue } from '../../hooks/StateContext';
 
 const propTypes = {
@@ -29,6 +30,7 @@ const propTypes = {
 };
 
 const Container = ({ children }) => {
+	const { currentNote } = useNotes();
 	const [{ drawerOpen }, dispatch] = useStateValue();
 	const classes = useStyles();
 	const history = useHistory();
@@ -43,10 +45,7 @@ const Container = ({ children }) => {
 	// Toggle drawer only in mobile unless toggle is true
 	const handleDrawerToggle = (toggle = false) => {
 		if ((toggle === true) || mobile) {
-			dispatch({
-				type: 'app-drawerOpen',
-				value: !drawerOpen,
-			});
+			dispatch({ type: 'app-drawerOpen' });
 		}
 	};
 
@@ -89,7 +88,9 @@ const Container = ({ children }) => {
 							)}
 						/>
 					)}
-					<Typography className={classes.title} variant="h6">NoteMe</Typography>
+					<Typography className={classes.title} variant="h6" noWrap>
+						{currentNote?.title || 'NoteMe'}
+					</Typography>
 					<HeaderContent mobile={mobile} />
 				</Toolbar>
 			</AppBar>
