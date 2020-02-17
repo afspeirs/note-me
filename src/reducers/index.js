@@ -16,17 +16,17 @@ export const reducer = (state, action) => {
 		case 'app-drawerOpen':
 			return {
 				...state,
-				drawerOpen: action.value || !state.drawerOpen,
+				drawerOpen: action.value !== undefined ? action.value : !state.drawerOpen,
 			};
 		case 'app-edit':
 			return {
 				...state,
-				edit: action.value || !state.edit,
+				edit: action.value !== undefined ? action.value : !state.edit,
 			};
 		case 'app-updateAvailable':
 			return {
 				...state,
-				updateAvailable: action.value || !state.updateAvailable,
+				updateAvailable: action.value !== undefined ? action.value : !state.updateAvailable,
 			};
 		case 'settings-darkTheme':
 			return {

@@ -6,8 +6,9 @@ import React, {
 } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { db } from '../firebase';
 import { useAuth } from './AuthContext';
+import { db } from '../firebase';
+import { getTitle } from '../ultils';
 
 const NotesContext = createContext();
 
@@ -20,6 +21,7 @@ function useNotesProvider() {
 	const history = useHistory();
 	const [loading, setLoading] = useState(true);
 	const [notes, setNotes] = useState([]);
+	const [currentNote, setCurrentNote] = useState(null);
 
 	const handleNoteAdd = (text = '') => {
 		const emptyNotes = notes.filter((note) => note.text === '');
@@ -30,6 +32,7 @@ function useNotesProvider() {
 			const newNote = db.collection(user.uid).doc();
 			const value = {
 				text,
+				title: getTitle(text),
 				date: +new Date(),
 				id: newNote.id,
 				created: +new Date(),
@@ -60,6 +63,7 @@ function useNotesProvider() {
 		const value = {
 			...notes[index],
 			text,
+			title: getTitle(text),
 			date: +new Date(),
 		};
 
@@ -72,10 +76,10 @@ function useNotesProvider() {
 
 	const handleNoteFavourite = (id) => {
 		const index = notes.findIndex((note) => note.id === id);
-		const currentNote = notes[index];
+		const localNote = notes[index];
 		const value = {
-			...currentNote,
-			favourite: !currentNote.favourite,
+			...localNote,
+			favourite: !localNote.favourite,
 		};
 
 		db.collection(user.uid)
@@ -101,12 +105,14 @@ function useNotesProvider() {
 	}, [user]); // eslint-disable-line
 
 	return {
+		currentNote,
 		handleNoteAdd,
 		handleNoteDelete,
 		handleNoteFavourite,
 		handleNoteUpdate,
 		loading,
 		notes,
+		setCurrentNote,
 	};
 }
 

@@ -18,7 +18,7 @@ import { useStateValue } from '../../hooks/StateContext';
 
 const NotePage = () => {
 	const { id } = useParams();
-	const { handleNoteUpdate, notes } = useNotes();
+	const { handleNoteUpdate, notes, setCurrentNote } = useNotes();
 	const [localNote, setLocalNote] = useState(undefined);
 	const [{ edit }, dispatch] = useStateValue();
 	const classes = useStyles();
@@ -26,12 +26,14 @@ const NotePage = () => {
 
 	useEffect(() => {
 		if (currentNote) {
+			setCurrentNote(currentNote);
 			setLocalNote(currentNote.text);
 			dispatch({
 				type: 'app-edit',
 				value: currentNote.text === '',
 			});
 		}
+		return () => setCurrentNote(null);
 	}, [currentNote]); // eslint-disable-line
 
 	useEffect(() => {
