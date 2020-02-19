@@ -67,6 +67,50 @@ const HeaderContent = ({ mobile }) => {
 		handleClose();
 	};
 
+	const headerItems = [
+		{
+			icon: <AddIcon />,
+			onClick: handleAddNote,
+			text: 'Create Note',
+			hidden: isSignedIn,
+		},
+		{
+			icon: currentNote?.favourite ? <StarIcon color="inherit" /> : <StarBorderIcon />,
+			onClick: handleFavouriteNote,
+			text: currentNote?.favourite ? 'Unfavourite' : 'Favourite',
+			hidden: currentNote,
+		},
+		{
+			icon: <DeleteIcon />,
+			onClick: handleDeleteNote,
+			text: 'Delete Note',
+			hidden: currentNote,
+		},
+		{
+			component: AdapterLink,
+			icon: <HomeIcon />,
+			onClick: handleClose,
+			text: 'Home',
+			to: '/',
+			hidden: (
+				// If SettingsPage is open and the previousLocation is HomePage
+				// Or if the page is not HomePage
+				!(location.pathname === '/settings/' && window.previousLocation?.pathname === '/')
+				&& location.pathname !== '/'
+			),
+		},
+		{
+			component: AdapterLink,
+			icon: <SettingsIcon />,
+			onClick: handleClose,
+			text: 'Settings',
+			to: {
+				pathname: '/settings/',
+				state: { modal: true },
+			},
+		},
+	];
+
 	return (
 		<>
 			{(isSignedIn && mobile && location.pathname !== '/') ? (
@@ -90,133 +134,46 @@ const HeaderContent = ({ mobile }) => {
 						open={Boolean(anchorEl)}
 						onClose={handleClose}
 					>
-						<MenuItem onClick={handleAddNote}>
-							<ListItemIcon>
-								<AddIcon />
-							</ListItemIcon>
-							<ListItemText primary="Create Note" />
-						</MenuItem>
-
-						{currentNote && (
-							<MenuItem onClick={handleFavouriteNote}>
-								<ListItemIcon>
-									{currentNote.favourite ? <StarIcon color="inherit" /> : <StarBorderIcon />}
-								</ListItemIcon>
-								<ListItemText
-									primary={currentNote.favourite ? 'Unfavourite' : 'Favourite'}
-								/>
-							</MenuItem>
-						)}
-
-						{currentNote && (
-							<MenuItem onClick={handleDeleteNote}>
-								<ListItemIcon>
-									<DeleteIcon />
-								</ListItemIcon>
-								<ListItemText primary="Delete Note" />
-							</MenuItem>
-						)}
-
-						{location.pathname !== '/' && (
+						{headerItems.map((item) => (
 							<MenuItem
-								onClick={handleClose}
-								component={AdapterLink}
-								to="/"
+								component={item.component}
+								key={item.text}
+								onClick={item.onClick}
+								to={item.to}
+								hidden={Boolean(item.hidden)}
+								display={item.hidden ? 'block' : 'none'}
 							>
 								<ListItemIcon>
-									<HomeIcon />
+									{item.icon}
 								</ListItemIcon>
-								<ListItemText primary="Home" />
+								<ListItemText
+									primary={item.text}
+								/>
 							</MenuItem>
-						)}
-
-						<MenuItem
-							onClick={handleClose}
-							component={AdapterLink}
-							to={{
-								pathname: '/settings/',
-								state: { modal: true },
-							}}
-						>
-							<ListItemIcon>
-								<SettingsIcon />
-							</ListItemIcon>
-							<ListItemText primary="Settings" />
-						</MenuItem>
+						))}
 					</Menu>
 				</>
 			) : (
 				<>
-					{isSignedIn && (
-						<Tooltip title="Create Note">
-							<IconButton
-								color="inherit"
-								aria-label="Create Note"
-								onClick={handleAddNote}
-							>
-								<AddIcon />
-							</IconButton>
-						</Tooltip>
-					)}
-
-					{currentNote && (
-						<Tooltip title={currentNote.favourite ? 'Unfavourite' : 'Favourite'}>
-							<IconButton
-								color="inherit"
-								aria-label={currentNote.favourite ? 'Unfavourite' : 'Favourite'}
-								onClick={handleFavouriteNote}
-							>
-								{currentNote.favourite ? <StarIcon /> : <StarBorderIcon />}
-							</IconButton>
-						</Tooltip>
-					)}
-
-					{currentNote && (
-						<Tooltip title="Delete">
-							<IconButton
-								color="inherit"
-								aria-label="Delete"
-								onClick={handleDeleteNote}
-							>
-								<DeleteIcon />
-							</IconButton>
-						</Tooltip>
-					)}
-
-					{(
-						// If SettingsPage is open and the previousLocation is HomePage
-						// Or if the page is not HomePage
-						!(location.pathname === '/settings/' && window.previousLocation?.pathname === '/')
-						&& location.pathname !== '/'
-					) && (
-						<Tooltip title="Home">
-							<IconButton
-								color="inherit"
-								aria-label="Home"
-								onClick={handleClose}
-								component={AdapterLink}
-								to="/"
-							>
-								<HomeIcon />
-							</IconButton>
-						</Tooltip>
-					)}
-
-					<Tooltip title="Settings">
-						<IconButton
-							aria-label="setting"
-							color="inherit"
-							edge="end"
-							onClick={handleClose}
-							component={AdapterLink}
-							to={{
-								pathname: '/settings/',
-								state: { modal: true },
-							}}
+					{headerItems.map((item, index) => (
+						<Tooltip
+							key={item.text}
+							title={item.text}
+							hidden={Boolean(item.hidden)}
+							display={item.hidden ? 'block' : 'none'}
 						>
-							<SettingsIcon />
-						</IconButton>
-					</Tooltip>
+							<IconButton
+								aria-label={item.text}
+								color="inherit"
+								component={item.component}
+								edge={index === headerItems.length - 1 && 'end'}
+								onClick={item.onClick}
+								to={item.to}
+							>
+								{item.icon}
+							</IconButton>
+						</Tooltip>
+					))}
 				</>
 			)}
 		</>
