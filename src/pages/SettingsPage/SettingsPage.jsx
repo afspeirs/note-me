@@ -7,6 +7,7 @@ import {
 import AppVersion from '../../components/AppVersion';
 import ChangeTheme from '../../components/ChangeTheme';
 import CheckForUpdate from '../../components/CheckForUpdate';
+import DisablePersistentDrawer from '../../components/DisablePersistentDrawer';
 import ImportExport from '../../components/ImportExport';
 import Modal from '../../components/Modal';
 import SortNotes from '../../components/SortNotes';
@@ -23,6 +24,7 @@ const SettingsPage = () => (
 			<Divider />
 
 			<ChangeTheme />
+			<DisablePersistentDrawer />
 			<SortNotesFavourite />
 			<SortNotes />
 
