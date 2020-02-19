@@ -16,7 +16,7 @@ import { useNotes } from '../../hooks/NotesContext';
 
 const DrawerContent = () => {
 	const { isSignedIn } = useAuth();
-	const { handleNoteAdd } = useNotes();
+	const { addNote } = useNotes();
 
 	return (
 		<>
@@ -27,7 +27,7 @@ const DrawerContent = () => {
 					<Divider />
 
 					<List disablePadding>
-						<ListItem button onClick={handleNoteAdd}>
+						<ListItem button onClick={addNote}>
 							<ListItemIcon>
 								<AddIcon />
 							</ListItemIcon>

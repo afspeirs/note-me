@@ -31,26 +31,29 @@ const HeaderContent = ({ mobile }) => {
 	const classes = useStyles();
 	const confirm = useConfirm();
 	const { isSignedIn } = useAuth();
-	const { handleNoteAdd, handleNoteDelete } = useNotes();
+	const { addNote, deleteNote } = useNotes();
 	const location = useLocation();
 	const [anchorEl, setAnchorEl] = useState(null);
+
 	const handleClick = (event) => setAnchorEl(event.currentTarget);
+
 	const handleClose = () => setAnchorEl(null);
-	const handleNoteAddClick = () => {
-		handleNoteAdd();
+
+	const handleAddNote = () => {
+		addNote();
 		handleClose();
 	};
-	const handleNoteDeleteOptions = {
-		// TODO - Get current not name
-		title: 'Are you sure you want to delete this note?',
-		confirmationText: 'Delete',
-		dialogProps: {
-			onEnter: handleClose,
-		},
-	};
-	const handleNoteDeleteClick = () => {
-		confirm(handleNoteDeleteOptions)
-			.then(() => handleNoteDelete(location.pathname.replace(/^(.*[/])/, '')));
+
+	const handleDeleteNote = () => {
+		confirm({
+			// TODO - Get current not name
+			title: 'Are you sure you want to delete this note?',
+			confirmationText: 'Delete',
+			dialogProps: {
+				onEnter: handleClose,
+			},
+		})
+			.then(() => deleteNote(location.pathname.replace(/^(.*[/])/, '')));
 	};
 
 	return (
@@ -76,7 +79,7 @@ const HeaderContent = ({ mobile }) => {
 						open={Boolean(anchorEl)}
 						onClose={handleClose}
 					>
-						<MenuItem onClick={handleNoteAddClick}>
+						<MenuItem onClick={handleAddNote}>
 							<ListItemIcon>
 								<AddIcon />
 							</ListItemIcon>
@@ -89,7 +92,7 @@ const HeaderContent = ({ mobile }) => {
 							(location.pathname === '/settings/' && window.previousLocation && window.previousLocation.pathname.startsWith('/note/'))
 							|| location.pathname.startsWith('/note/')
 						) && (
-							<MenuItem onClick={handleNoteDeleteClick}>
+							<MenuItem onClick={handleDeleteNote}>
 								<ListItemIcon>
 									<DeleteIcon />
 								</ListItemIcon>
@@ -132,7 +135,7 @@ const HeaderContent = ({ mobile }) => {
 							<IconButton
 								color="inherit"
 								aria-label="Create Note"
-								onClick={handleNoteAddClick}
+								onClick={handleAddNote}
 							>
 								<AddIcon />
 							</IconButton>
@@ -149,7 +152,7 @@ const HeaderContent = ({ mobile }) => {
 							<IconButton
 								color="inherit"
 								aria-label="Delete"
-								onClick={handleNoteDeleteClick}
+								onClick={handleDeleteNote}
 							>
 								<DeleteIcon />
 							</IconButton>

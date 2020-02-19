@@ -23,7 +23,7 @@ function useNotesProvider() {
 	const [notes, setNotes] = useState([]);
 	const [currentNote, setCurrentNote] = useState(null);
 
-	const handleNoteAdd = (text = '') => {
+	const addNote = (text = '') => {
 		const emptyNotes = notes.filter((note) => note.text === '');
 
 		if (emptyNotes.length !== 0) {
@@ -44,7 +44,7 @@ function useNotesProvider() {
 		}
 	};
 
-	const handleNoteDelete = (id) => {
+	const deleteNote = (id) => {
 		const note = notes.find((item) => item.id === id);
 
 		db.collection(user.uid)
@@ -58,7 +58,7 @@ function useNotesProvider() {
 		}
 	};
 
-	const handleNoteUpdate = (id, text) => {
+	const updateNote = (id, text) => {
 		const index = notes.findIndex((note) => note.id === id);
 		const value = {
 			...notes[index],
@@ -74,7 +74,7 @@ function useNotesProvider() {
 		notes[index] = value;
 	};
 
-	const handleNoteFavourite = (id) => {
+	const favouriteNote = (id) => {
 		const index = notes.findIndex((note) => note.id === id);
 		const localNote = notes[index];
 		const value = {
@@ -105,14 +105,14 @@ function useNotesProvider() {
 	}, [user]); // eslint-disable-line
 
 	return {
+		addNote,
 		currentNote,
-		handleNoteAdd,
-		handleNoteDelete,
-		handleNoteFavourite,
-		handleNoteUpdate,
+		deleteNote,
+		favouriteNote,
 		loading,
 		notes,
 		setCurrentNote,
+		updateNote,
 	};
 }
 

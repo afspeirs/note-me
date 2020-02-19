@@ -12,13 +12,13 @@ import { useNotes } from '../../hooks/NotesContext';
 
 const ImportExport = () => {
 	const confirm = useConfirm();
-	const { handleNoteAdd, notes } = useNotes();
+	const { addNote, notes } = useNotes();
 	const classes = useStyles();
 
 	// Read each file and create a note for it
 	const onChangeImport = (event) => [...event.target.files].forEach((file) => {
 		const reader = new FileReader();
-		reader.onload = () => handleNoteAdd(reader.result);
+		reader.onload = () => addNote(reader.result);
 		reader.readAsText(file);
 	});
 
