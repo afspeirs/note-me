@@ -31,10 +31,11 @@ const propTypes = {
 
 const Container = ({ children }) => {
 	const { currentNote } = useNotes();
-	const [{ drawerOpen }, dispatch] = useStateValue();
+	const [{ drawerOpen, settings }, dispatch] = useStateValue();
+	const { disablePersistentDrawer } = settings;
 	const classes = useStyles();
 	const history = useHistory();
-	const mobile = useMediaQuery('(max-width:600px)');
+	const mobile = useMediaQuery('(max-width:600px)') || disablePersistentDrawer;
 
 	// Close drawer only in mobile
 	const handleDrawerClose = () => (mobile) && dispatch({
@@ -94,7 +95,7 @@ const Container = ({ children }) => {
 					<HeaderContent mobile={mobile} />
 				</Toolbar>
 			</AppBar>
-			<Hidden className={classes.placeholder} smUp implementation="css" />
+			<Hidden className={classes.placeholder} smUp={!mobile} implementation="css" />
 			<SwipeableDrawer
 				variant={mobile ? 'temporary' : 'persistent'}
 				anchor="left"
@@ -112,7 +113,7 @@ const Container = ({ children }) => {
 			</SwipeableDrawer>
 			<div
 				className={clsx(classes.content, 'MuiPage', {
-					[classes.contentShift]: drawerOpen,
+					[classes.contentShift]: drawerOpen && !disablePersistentDrawer,
 				})}
 			>
 				<div className={classes.drawerHeader} />

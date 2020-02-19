@@ -11,16 +11,8 @@ import { useStateValue } from '../../hooks/StateContext';
 const ChangeTheme = () => {
 	const [{ settings }, dispatch] = useStateValue();
 	const { darkTheme } = settings;
-	const [checked, setChecked] = React.useState(darkTheme);
 
-	const handleToggle = () => {
-		dispatch({
-			type: 'settings-darkTheme',
-			value: !checked,
-		});
-
-		setChecked(!checked);
-	};
+	const handleToggle = () => dispatch({ type: 'settings-darkTheme' });
 
 	return (
 		<>
@@ -34,7 +26,7 @@ const ChangeTheme = () => {
 						color="primary"
 						edge="end"
 						onChange={handleToggle}
-						checked={checked}
+						checked={darkTheme}
 						inputProps={{ 'aria-labelledby': 'change-dark-theme' }}
 					/>
 				</ListItemSecondaryAction>

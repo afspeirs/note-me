@@ -16,9 +16,10 @@ import { useStateValue } from '../../hooks/StateContext';
 const HomePage = () => {
 	const { signIn, user } = useAuth();
 	const { loading } = useNotes();
-	const [{ drawerOpen }] = useStateValue();
+	const [{ drawerOpen, settings }] = useStateValue();
+	const { disablePersistentDrawer } = settings;
 	const classes = useStyles();
-	const mobile = useMediaQuery('(max-width:600px)');
+	const mobile = useMediaQuery('(max-width:600px)') || disablePersistentDrawer;
 
 	return (
 		<div className={classes.page}>

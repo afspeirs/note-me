@@ -18,7 +18,7 @@ import { useStateValue } from '../../hooks/StateContext';
 
 const NotePage = () => {
 	const { id } = useParams();
-	const { handleNoteUpdate, notes, setCurrentNote } = useNotes();
+	const { notes, setCurrentNote, updateNote } = useNotes();
 	const [localNote, setLocalNote] = useState(undefined);
 	const [{ edit }, dispatch] = useStateValue();
 	const classes = useStyles();
@@ -40,7 +40,7 @@ const NotePage = () => {
 		const compare = localNote !== undefined && !edit;
 
 		if (compare && id && localNote !== currentNote.text) {
-			handleNoteUpdate(id, localNote);
+			updateNote(id, localNote);
 		}
 	}, [edit]); // eslint-disable-line
 

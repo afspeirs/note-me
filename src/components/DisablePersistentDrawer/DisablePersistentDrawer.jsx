@@ -8,26 +8,26 @@ import {
 
 import { useStateValue } from '../../hooks/StateContext';
 
-const SortNotesFavourite = () => {
+const DisablePersistentDrawer = () => {
 	const [{ settings }, dispatch] = useStateValue();
-	const { sortFavourite } = settings;
+	const { disablePersistentDrawer } = settings;
 
-	const handleToggle = () => dispatch({ type: 'settings-sortFavourite' });
+	const handleToggle = () => dispatch({ type: 'settings-disablePersistentDrawer' });
 
 	return (
 		<>
 			<ListItem>
 				<ListItemText
-					id="change-sort-favourite"
-					primary="Show Favourites at the top of the list"
+					id="change-disable-persistent-drawer"
+					primary="Disable Persistent Drawer"
 				/>
 				<ListItemSecondaryAction>
 					<Switch
 						color="primary"
 						edge="end"
 						onChange={handleToggle}
-						checked={sortFavourite}
-						inputProps={{ 'aria-labelledby': 'change-sort-favourite' }}
+						checked={disablePersistentDrawer}
+						inputProps={{ 'aria-labelledby': 'change-disable-persistent-drawer' }}
 					/>
 				</ListItemSecondaryAction>
 			</ListItem>
@@ -35,4 +35,4 @@ const SortNotesFavourite = () => {
 	);
 };
 
-export default SortNotesFavourite;
+export default DisablePersistentDrawer;

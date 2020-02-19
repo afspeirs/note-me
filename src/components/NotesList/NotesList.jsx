@@ -31,7 +31,7 @@ const propTypes = {
 
 const NotesList = ({ notes, locationSelector }) => {
 	const confirm = useConfirm();
-	const { handleNoteFavourite, handleNoteDelete, loading } = useNotes();
+	const { deleteNote, favouriteNote, loading } = useNotes();
 	const classes = useStyles();
 	const [{ settings }] = useStateValue();
 	const { sort, sortFavourite } = settings;
@@ -62,14 +62,6 @@ const NotesList = ({ notes, locationSelector }) => {
 		[],
 	);
 
-	const handleNoteDeleteClick = ({ id, title }) => {
-		confirm({
-			title: `Are you sure you want to delete "${title}"?`,
-			confirmationText: 'Delete',
-		})
-			.then(() => handleNoteDelete(id));
-	};
-
 	const handleContextMenuClose = () => setContextAnchor(null);
 
 	const handleContextMenuOpen = (event) => {
@@ -85,6 +77,19 @@ const NotesList = ({ notes, locationSelector }) => {
 				id: closestContextMenuOption.dataset.id,
 			});
 		}
+	};
+
+	const handleFavouriteNote = (id) => {
+		handleContextMenuClose();
+		favouriteNote(id);
+	};
+
+	const handleDeleteNote = ({ id, title }) => {
+		confirm({
+			title: `Are you sure you want to delete "${title}"?`,
+			confirmationText: 'Delete',
+		})
+			.then(() => deleteNote(id));
 	};
 
 	useEffect(() => {
@@ -120,7 +125,7 @@ const NotesList = ({ notes, locationSelector }) => {
 							},
 							{
 								text: note.favourite ? <StarIcon color="inherit" /> : <StarBorderIcon />,
-								onPress: () => handleNoteFavourite(note.id),
+								onPress: () => handleFavouriteNote(note.id),
 								autoClose: true,
 								style: {
 									backgroundColor: '#ee6e00',
@@ -130,7 +135,7 @@ const NotesList = ({ notes, locationSelector }) => {
 							},
 							{
 								text: <DeleteIcon />,
-								onPress: () => handleNoteDeleteClick(note),
+								onPress: () => handleDeleteNote(note),
 								autoClose: true,
 								style: {
 									backgroundColor: 'red',
@@ -175,7 +180,7 @@ const NotesList = ({ notes, locationSelector }) => {
 									primary={<TimeAgo date={note.date / 1000} />}
 								/>
 							</ListItem>
-							<ListItem button onClick={() => handleNoteFavourite(note.id)}>
+							<ListItem button onClick={() => handleFavouriteNote(note.id)}>
 								<ListItemIcon>
 									{note.favourite ? <StarIcon color="primary" /> : <StarBorderIcon />}
 								</ListItemIcon>
@@ -184,7 +189,7 @@ const NotesList = ({ notes, locationSelector }) => {
 									primary={`${note.favourite ? 'Unfavourite' : 'Favourite'} "${note.title}"`}
 								/>
 							</ListItem>
-							<ListItem button onClick={() => handleNoteDeleteClick(note)}>
+							<ListItem button onClick={() => handleDeleteNote(note)}>
 								<ListItemIcon>
 									<DeleteIcon color="error" />
 								</ListItemIcon>

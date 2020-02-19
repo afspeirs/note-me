@@ -2,13 +2,12 @@ import React from 'react';
 import {
 	Divider,
 	List,
-	ListItem,
-	ListItemSecondaryAction,
-	ListItemText,
 } from '@material-ui/core';
 
+import AppVersion from '../../components/AppVersion';
 import ChangeTheme from '../../components/ChangeTheme';
 import CheckForUpdate from '../../components/CheckForUpdate';
+import DisablePersistentDrawer from '../../components/DisablePersistentDrawer';
 import ImportExport from '../../components/ImportExport';
 import Modal from '../../components/Modal';
 import SortNotes from '../../components/SortNotes';
@@ -19,17 +18,13 @@ const SettingsPage = () => (
 	<Modal title="Settings">
 		<List>
 			<UserInformation />
-			<ListItem>
-				<ListItemText primary="App version:" />
-				<ListItemSecondaryAction>
-					{`v${process.env.REACT_APP_VERSION}`}
-				</ListItemSecondaryAction>
-			</ListItem>
+			<AppVersion />
 			<CheckForUpdate />
 
 			<Divider />
 
 			<ChangeTheme />
+			<DisablePersistentDrawer />
 			<SortNotesFavourite />
 			<SortNotes />
 

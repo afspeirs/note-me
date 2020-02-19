@@ -33,17 +33,15 @@ const SortNotes = ({ icon }) => {
 	const classes = useStyles();
 	const [{ settings }, dispatch] = useStateValue();
 	const { sort } = settings;
-	const [value, setValue] = useState(sort);
 	const [anchorEl, setAnchorEl] = useState(null);
 	// eslint-disable-next-line max-len
-	const [selectedIndex, setSelectedIndex] = useState(options.findIndex((item) => item.value === value));
+	const [selectedIndex, setSelectedIndex] = useState(options.findIndex((item) => item.value === sort));
 
 	const handleClose = () => setAnchorEl(null);
 
 	const handleClickListItem = (event) => setAnchorEl(event.currentTarget);
 
 	const handleClickMenuItem = (event, index) => {
-		setValue(options[index].value);
 		setSelectedIndex(index);
 		setAnchorEl(null);
 
