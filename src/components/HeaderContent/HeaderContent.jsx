@@ -13,8 +13,10 @@ import {
 	Add as AddIcon,
 	Delete as DeleteIcon,
 	Home as HomeIcon,
-	Settings as SettingsIcon,
 	MoreVert as MoreIcon,
+	Settings as SettingsIcon,
+	Star as StarIcon,
+	StarBorder as StarBorderIcon,
 } from '@material-ui/icons';
 import { useConfirm } from 'material-ui-confirm';
 
@@ -31,7 +33,12 @@ const HeaderContent = ({ mobile }) => {
 	const classes = useStyles();
 	const confirm = useConfirm();
 	const { isSignedIn } = useAuth();
-	const { addNote, deleteNote } = useNotes();
+	const {
+		addNote,
+		currentNote,
+		favouriteNote,
+		deleteNote,
+	} = useNotes();
 	const location = useLocation();
 	const [anchorEl, setAnchorEl] = useState(null);
 
@@ -46,14 +53,18 @@ const HeaderContent = ({ mobile }) => {
 
 	const handleDeleteNote = () => {
 		confirm({
-			// TODO - Get current not name
-			title: 'Are you sure you want to delete this note?',
+			title: `Are you sure you want to delete "${currentNote.title}"?`,
 			confirmationText: 'Delete',
 			dialogProps: {
 				onEnter: handleClose,
 			},
 		})
-			.then(() => deleteNote(location.pathname.replace(/^(.*[/])/, '')));
+			.then(() => deleteNote(currentNote.id));
+	};
+
+	const handleFavouriteNote = () => {
+		favouriteNote(currentNote.id);
+		handleClose();
 	};
 
 	return (
@@ -86,12 +97,18 @@ const HeaderContent = ({ mobile }) => {
 							<ListItemText primary="Create Note" />
 						</MenuItem>
 
-						{(
-							// If SettingsPage is open and the previousLocation is NotePage
-							// Or if the page is NotePage
-							(location.pathname === '/settings/' && window.previousLocation && window.previousLocation.pathname.startsWith('/note/'))
-							|| location.pathname.startsWith('/note/')
-						) && (
+						{currentNote && (
+							<MenuItem onClick={handleFavouriteNote}>
+								<ListItemIcon>
+									{currentNote.favourite ? <StarIcon color="inherit" /> : <StarBorderIcon />}
+								</ListItemIcon>
+								<ListItemText
+									primary={currentNote.favourite ? 'Unfavourite' : 'Favourite'}
+								/>
+							</MenuItem>
+						)}
+
+						{currentNote && (
 							<MenuItem onClick={handleDeleteNote}>
 								<ListItemIcon>
 									<DeleteIcon />
@@ -142,12 +159,19 @@ const HeaderContent = ({ mobile }) => {
 						</Tooltip>
 					)}
 
-					{(
-						// If SettingsPage is open and the previousLocation is NotePage
-						// Or if the page is NotePage
-						(location.pathname === '/settings/' && window.previousLocation && window.previousLocation.pathname.startsWith('/note/'))
-						|| location.pathname.startsWith('/note/')
-					) && (
+					{currentNote && (
+						<Tooltip title={currentNote.favourite ? 'Unfavourite' : 'Favourite'}>
+							<IconButton
+								color="inherit"
+								aria-label={currentNote.favourite ? 'Unfavourite' : 'Favourite'}
+								onClick={handleFavouriteNote}
+							>
+								{currentNote.favourite ? <StarIcon /> : <StarBorderIcon />}
+							</IconButton>
+						</Tooltip>
+					)}
+
+					{currentNote && (
 						<Tooltip title="Delete">
 							<IconButton
 								color="inherit"
@@ -162,7 +186,7 @@ const HeaderContent = ({ mobile }) => {
 					{(
 						// If SettingsPage is open and the previousLocation is HomePage
 						// Or if the page is not HomePage
-						!(location.pathname === '/settings/' && window.previousLocation && window.previousLocation.pathname === '/')
+						!(location.pathname === '/settings/' && window.previousLocation?.pathname === '/')
 						&& location.pathname !== '/'
 					) && (
 						<Tooltip title="Home">
