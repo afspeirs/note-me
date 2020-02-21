@@ -59,7 +59,7 @@ const HeaderContent = ({ mobile }) => {
 				onEnter: handleClose,
 			},
 		})
-			.then(() => deleteNote(currentNote.id));
+			.then(deleteNote);
 	};
 
 	const handleFavouriteNote = () => {
