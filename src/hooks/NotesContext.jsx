@@ -44,42 +44,42 @@ function useNotesProvider() {
 		}
 	};
 
-	const deleteNote = () => {
-		const index = notes.indexOf(currentNote);
+	const deleteNote = (note = currentNote) => {
+		const index = notes.indexOf(note);
 
 		db.collection(user.uid)
-			.doc(currentNote.id)
+			.doc(note.id)
 			.delete();
 
 		notes.splice(index, 1);
 		history.replace('/');
 	};
 
-	const favouriteNote = () => {
-		const index = notes.indexOf(currentNote);
+	const favouriteNote = (note = currentNote) => {
+		const index = notes.indexOf(note);
 		const value = {
-			...currentNote,
-			favourite: !currentNote.favourite,
+			...note,
+			favourite: !note.favourite,
 		};
 
 		db.collection(user.uid)
-			.doc(currentNote.id)
+			.doc(note.id)
 			.set(value);
 
 		notes[index] = value;
 	};
 
-	const updateNote = (text) => {
-		const index = notes.indexOf(currentNote);
+	const updateNote = (text, note = currentNote) => {
+		const index = notes.indexOf(note);
 		const value = {
-			...currentNote,
+			...note,
 			date: +new Date(),
 			text,
 			title: getTitle(text),
 		};
 
 		db.collection(user.uid)
-			.doc(currentNote.id)
+			.doc(note.id)
 			.set(value);
 
 		notes[index] = value;

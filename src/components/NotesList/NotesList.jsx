@@ -79,17 +79,17 @@ const NotesList = ({ notes, locationSelector }) => {
 		}
 	};
 
-	const handleFavouriteNote = () => {
+	const handleFavouriteNote = (note) => {
 		handleContextMenuClose();
-		favouriteNote();
+		favouriteNote(note);
 	};
 
-	const handleDeleteNote = (title) => {
+	const handleDeleteNote = (note) => {
 		confirm({
-			title: `Are you sure you want to delete "${title}"?`,
+			title: `Are you sure you want to delete "${note.title}"?`,
 			confirmationText: 'Delete',
 		})
-			.then(deleteNote);
+			.then(() => deleteNote(note));
 	};
 
 	useEffect(() => {
@@ -125,7 +125,7 @@ const NotesList = ({ notes, locationSelector }) => {
 							},
 							{
 								text: note.favourite ? <StarIcon color="inherit" /> : <StarBorderIcon />,
-								onPress: handleFavouriteNote,
+								onPress: () => handleFavouriteNote(note),
 								autoClose: true,
 								style: {
 									backgroundColor: '#ee6e00',
@@ -135,7 +135,7 @@ const NotesList = ({ notes, locationSelector }) => {
 							},
 							{
 								text: <DeleteIcon />,
-								onPress: () => handleDeleteNote(note.title),
+								onPress: () => handleDeleteNote(note),
 								autoClose: true,
 								style: {
 									backgroundColor: 'red',
@@ -180,7 +180,7 @@ const NotesList = ({ notes, locationSelector }) => {
 									primary={<TimeAgo date={note.date / 1000} />}
 								/>
 							</ListItem>
-							<ListItem button onClick={handleFavouriteNote}>
+							<ListItem button onClick={() => handleFavouriteNote(note)}>
 								<ListItemIcon>
 									{note.favourite ? <StarIcon color="primary" /> : <StarBorderIcon />}
 								</ListItemIcon>
@@ -189,7 +189,7 @@ const NotesList = ({ notes, locationSelector }) => {
 									primary={`${note.favourite ? 'Unfavourite' : 'Favourite'} "${note.title}"`}
 								/>
 							</ListItem>
-							<ListItem button onClick={() => handleDeleteNote(note.title)}>
+							<ListItem button onClick={() => handleDeleteNote(note)}>
 								<ListItemIcon>
 									<DeleteIcon color="error" />
 								</ListItemIcon>
