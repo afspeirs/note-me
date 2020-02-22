@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
 	Button,
 	Checkbox,
@@ -26,12 +26,14 @@ const NotesExport = () => {
 	const classes = useStyles();
 	const confirm = useConfirm();
 	const { notes } = useNotes();
-	const [checkedNotes, setCheckedNotes] = useState([...Array(notes.length)].map(() => false));
+	const [checkedNotes, setCheckedNotes] = useState([]);
 	const [open, setOpen] = useState(false);
+
+	// Update / Reset checkedNotes if notes update
+	useEffect(() => setCheckedNotes([...Array(notes.length)].map(() => false)), [notes]);
 
 	const handleOpen = () => setOpen(true);
 	const handleClose = () => setOpen(false);
-
 
 	const handleSelectedNotesToggle = (index) => {
 		const local = [...checkedNotes];
