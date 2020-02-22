@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useLocation } from 'react-router-dom';
 import {
@@ -41,7 +41,6 @@ const HeaderContent = ({ mobile }) => {
 	} = useNotes();
 	const location = useLocation();
 	const [anchorEl, setAnchorEl] = useState(null);
-	const [headerItems, setHeaderItems] = useState([]);
 
 	const handleClick = (event) => setAnchorEl(event.currentTarget);
 
@@ -68,52 +67,49 @@ const HeaderContent = ({ mobile }) => {
 		handleClose();
 	};
 
-	// Update HeaderItems
-	useEffect(() => {
-		setHeaderItems([
-			{
-				icon: <AddIcon />,
-				onClick: handleAddNote,
-				text: 'Create Note',
-				visible: isSignedIn,
+	const headerItems = useMemo(() => [
+		{
+			icon: <AddIcon />,
+			onClick: handleAddNote,
+			text: 'Create Note',
+			visible: isSignedIn,
+		},
+		{
+			icon: currentNote?.favourite ? <StarIcon color="inherit" /> : <StarBorderIcon />,
+			onClick: handleFavouriteNote,
+			text: currentNote?.favourite ? 'Unfavourite' : 'Favourite',
+			visible: Boolean(currentNote),
+		},
+		{
+			icon: <DeleteIcon />,
+			onClick: handleDeleteNote,
+			text: 'Delete Note',
+			visible: Boolean(currentNote),
+		},
+		{
+			component: AdapterLink,
+			icon: <HomeIcon />,
+			onClick: handleClose,
+			text: 'Home',
+			to: '/',
+			visible: Boolean(
+				// If SettingsPage is open and the previousLocation is HomePage
+				// Or if the page is not HomePage
+				!(location.pathname === '/settings/' && window.previousLocation?.pathname === '/')
+				&& location.pathname !== '/',
+			),
+		},
+		{
+			component: AdapterLink,
+			icon: <SettingsIcon />,
+			onClick: handleClose,
+			text: 'Settings',
+			to: {
+				pathname: '/settings/',
+				state: { modal: true },
 			},
-			{
-				icon: currentNote?.favourite ? <StarIcon color="inherit" /> : <StarBorderIcon />,
-				onClick: handleFavouriteNote,
-				text: currentNote?.favourite ? 'Unfavourite' : 'Favourite',
-				visible: Boolean(currentNote),
-			},
-			{
-				icon: <DeleteIcon />,
-				onClick: handleDeleteNote,
-				text: 'Delete Note',
-				visible: Boolean(currentNote),
-			},
-			{
-				component: AdapterLink,
-				icon: <HomeIcon />,
-				onClick: handleClose,
-				text: 'Home',
-				to: '/',
-				visible: Boolean(
-					// If SettingsPage is open and the previousLocation is HomePage
-					// Or if the page is not HomePage
-					!(location.pathname === '/settings/' && window.previousLocation?.pathname === '/')
-					&& location.pathname !== '/',
-				),
-			},
-			{
-				component: AdapterLink,
-				icon: <SettingsIcon />,
-				onClick: handleClose,
-				text: 'Settings',
-				to: {
-					pathname: '/settings/',
-					state: { modal: true },
-				},
-			},
-		].filter((item) => item.visible !== false)); // Remove non visible items
-	}, [currentNote]); // eslint-disable-line
+		},
+	].filter((item) => item.visible !== false), [currentNote]);
 
 	return (
 		<>
