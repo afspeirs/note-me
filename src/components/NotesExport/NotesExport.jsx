@@ -28,12 +28,16 @@ const NotesExport = () => {
 	const { notes } = useNotes();
 	const [checkedNotes, setCheckedNotes] = useState([]);
 	const [open, setOpen] = useState(false);
+	const isCheckedNotesSelected = checkedNotes.every((note) => note === false);
 
-	// Update / Reset checkedNotes if notes update
-	useEffect(() => setCheckedNotes([...Array(notes.length)].map(() => false)), [notes]);
+	const resetSelectedNotes = () => setCheckedNotes([...Array(notes.length)].map(() => false));
+
+	const handleClose = () => {
+		resetSelectedNotes();
+		setOpen(false);
+	};
 
 	const handleOpen = () => setOpen(true);
-	const handleClose = () => setOpen(false);
 
 	const handleSelectedNotesToggle = (index) => {
 		const local = [...checkedNotes];
@@ -72,6 +76,9 @@ const NotesExport = () => {
 			});
 		});
 	};
+
+	// Update / Reset checkedNotes if notes update
+	useEffect(resetSelectedNotes, [notes]);
 
 	return (
 		<>
@@ -159,9 +166,16 @@ const NotesExport = () => {
 						Cancel
 					</Button>
 					<Button
+						color="inherit"
+						disabled={isCheckedNotesSelected}
+						onClick={resetSelectedNotes}
+					>
+						Reset
+					</Button>
+					<Button
 						autoFocus
 						color="primary"
-						disabled={checkedNotes.every((note) => note === false)}
+						disabled={isCheckedNotesSelected}
 						onClick={handleExportClick}
 					>
 						Export
