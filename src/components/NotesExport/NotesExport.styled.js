@@ -19,6 +19,9 @@ const useStyles = makeStyles((theme) => ({
 		textOverflow: 'ellipsis',
 		whiteSpace: 'nowrap',
 	},
+	maxSelected: {
+		color: theme.palette.info.main,
+	},
 }));
 
 export default useStyles;

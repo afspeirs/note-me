@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import clsx from 'clsx';
 import {
 	Button,
 	Checkbox,
@@ -28,7 +29,9 @@ const NotesExport = () => {
 	const { notes } = useNotes();
 	const [checkedNotes, setCheckedNotes] = useState([]);
 	const [open, setOpen] = useState(false);
+	const [maxSelectable] = useState(10);
 	const isCheckedNotesSelected = checkedNotes.every((note) => note === false);
+	const numberOfCheckedNotes = checkedNotes.filter((note) => note === true).length;
 
 	const resetSelectedNotes = () => setCheckedNotes([...Array(notes.length)].map(() => false));
 
@@ -42,8 +45,12 @@ const NotesExport = () => {
 	const handleSelectedNotesToggle = (index) => {
 		const local = [...checkedNotes];
 		const value = checkedNotes[index];
-		local[index] = !value;
-		setCheckedNotes(local);
+
+		// Limit the number of selectable notes to maxSelectable
+		if (!(numberOfCheckedNotes === maxSelectable && !value)) {
+			local[index] = !value;
+			setCheckedNotes(local);
+		}
 	};
 
 	const exportMarkdownFile = (name, text) => {
@@ -60,7 +67,7 @@ const NotesExport = () => {
 	const handleExportClick = () => {
 		const selectedNotes = notes.filter((note, index) => checkedNotes[index]);
 		confirm({
-			title: `Do you want to export ${selectedNotes.length === 1 ? 'this note as a' : `these ${selectedNotes.length} notes as`} Markdown file${selectedNotes.length === 1 ? 's' : ''}?`,
+			title: `Do you want to export ${selectedNotes.length === 1 ? 'this note' : `these ${selectedNotes.length} notes`}?`,
 			cancellationText: 'No',
 			confirmationText: 'Yes',
 			dialogProps: {
@@ -120,8 +127,17 @@ const NotesExport = () => {
 
 				<DialogContent dividers>
 					<Typography gutterBottom>
-						Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis
-						in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+						Select which notes you would like to export. They will be saved as Markdown files
+					</Typography>
+					<Typography>
+						<span
+							className={clsx({
+								[classes.maxSelected]: numberOfCheckedNotes === maxSelectable,
+							})}
+						>
+							{`${numberOfCheckedNotes}/${maxSelectable}`}
+						</span>
+						&nbsp;notes selected for export
 					</Typography>
 
 					<List className={classes.list} dense>
