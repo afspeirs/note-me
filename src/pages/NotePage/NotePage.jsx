@@ -40,7 +40,7 @@ const NotePage = () => {
 		const compare = localNote !== undefined && !edit;
 
 		if (compare && id && localNote !== currentNote.text) {
-			updateNote(id, localNote);
+			updateNote(localNote);
 		}
 	}, [edit]); // eslint-disable-line
 

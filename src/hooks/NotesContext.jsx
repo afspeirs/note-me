@@ -24,19 +24,19 @@ function useNotesProvider() {
 	const [currentNote, setCurrentNote] = useState(null);
 
 	const addNote = (text = '') => {
-		const emptyNotes = notes.filter((note) => note.text === '');
+		const untitledNotes = notes.filter((note) => note.text === '');
 
-		if (emptyNotes.length !== 0) {
-			history.push(`/note/${emptyNotes[0].id}`);
+		if (untitledNotes.length !== 0) {
+			history.push(`/note/${untitledNotes[0].id}`);
 		} else {
 			const newNote = db.collection(user.uid).doc();
 			const value = {
+				created: +new Date(),
+				date: +new Date(),
+				favourite: false,
+				id: newNote.id,
 				text,
 				title: getTitle(text),
-				date: +new Date(),
-				id: newNote.id,
-				created: +new Date(),
-				favourite: false,
 			};
 
 			notes.unshift(value);
@@ -44,46 +44,42 @@ function useNotesProvider() {
 		}
 	};
 
-	const deleteNote = (id) => {
-		const note = notes.find((item) => item.id === id);
+	const deleteNote = () => {
+		const index = notes.indexOf(currentNote);
 
 		db.collection(user.uid)
-			.doc(id)
+			.doc(currentNote.id)
 			.delete();
 
-		if (note) {
-			const indexOfNote = notes.indexOf(note);
-			notes.splice(indexOfNote, 1);
-			history.replace('/');
-		}
+		notes.splice(index, 1);
+		history.replace('/');
 	};
 
-	const updateNote = (id, text) => {
-		const index = notes.findIndex((note) => note.id === id);
+	const favouriteNote = () => {
+		const index = notes.indexOf(currentNote);
 		const value = {
-			...notes[index],
-			text,
-			title: getTitle(text),
-			date: +new Date(),
+			...currentNote,
+			favourite: !currentNote.favourite,
 		};
 
 		db.collection(user.uid)
-			.doc(id)
+			.doc(currentNote.id)
 			.set(value);
 
 		notes[index] = value;
 	};
 
-	const favouriteNote = (id) => {
-		const index = notes.findIndex((note) => note.id === id);
-		const localNote = notes[index];
+	const updateNote = (text) => {
+		const index = notes.indexOf(currentNote);
 		const value = {
-			...localNote,
-			favourite: !localNote.favourite,
+			...currentNote,
+			date: +new Date(),
+			text,
+			title: getTitle(text),
 		};
 
 		db.collection(user.uid)
-			.doc(id)
+			.doc(currentNote.id)
 			.set(value);
 
 		notes[index] = value;

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useHistory, Route } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import clsx from 'clsx';
 import {
 	AppBar,
@@ -13,7 +13,6 @@ import {
 } from '@material-ui/core';
 import {
 	Menu as MenuIcon,
-	ArrowBack as ArrowBackIcon,
 } from '@material-ui/icons';
 
 import useStyles from './Container.styled';
@@ -35,17 +34,18 @@ const Container = ({ children }) => {
 	const { disablePersistentDrawer } = settings;
 	const classes = useStyles();
 	const history = useHistory();
-	const mobile = useMediaQuery('(max-width:600px)') || disablePersistentDrawer;
+	const mobile = useMediaQuery('(max-width:600px)');
+	const persistentDrawer = mobile || disablePersistentDrawer;
 
 	// Close drawer only in mobile
-	const handleDrawerClose = () => (mobile) && dispatch({
+	const handleDrawerClose = () => (persistentDrawer) && dispatch({
 		type: 'app-drawerOpen',
 		value: false,
 	});
 
 	// Toggle drawer only in mobile unless toggle is true
 	const handleDrawerToggle = (toggle = false) => {
-		if ((toggle === true) || mobile) {
+		if ((toggle === true) || persistentDrawer) {
 			dispatch({ type: 'app-drawerOpen' });
 		}
 	};
@@ -54,7 +54,7 @@ const Container = ({ children }) => {
 	useEffect(() => {
 		const unlisten = history.listen(handleDrawerClose);
 		return unlisten;
-	}, [history, mobile]); // eslint-disable-line
+	}, [history, persistentDrawer]); // eslint-disable-line
 
 	return (
 		<div className={classes.container}>
@@ -69,35 +69,15 @@ const Container = ({ children }) => {
 					>
 						<MenuIcon />
 					</IconButton>
-					{mobile && (
-						<Route
-							render={({ location }) => (
-								// If SettingsPage is open and the previousLocation is NotePage
-								// Or if the page is NotePage
-								(location.pathname === '/settings/' && window.previousLocation && window.previousLocation.pathname.startsWith('/note/'))
-								|| location.pathname.startsWith('/note/')
-							) && (
-								<IconButton
-									className={classes.menuButton}
-									color="inherit"
-									aria-label="Back"
-									edge="start"
-									onClick={history.goBack}
-								>
-									<ArrowBackIcon />
-								</IconButton>
-							)}
-						/>
-					)}
 					<Typography className={classes.title} variant="h6" noWrap>
 						{currentNote?.title || 'NoteMe'}
 					</Typography>
 					<HeaderContent mobile={mobile} />
 				</Toolbar>
 			</AppBar>
-			<Hidden className={classes.placeholder} smUp={!mobile} implementation="css" />
+			<Hidden className={classes.placeholder} smUp={!persistentDrawer} implementation="css" />
 			<SwipeableDrawer
-				variant={mobile ? 'temporary' : 'persistent'}
+				variant={persistentDrawer ? 'temporary' : 'persistent'}
 				anchor="left"
 				open={drawerOpen}
 				className={clsx(classes.drawer, 'MuiDrawer')}
