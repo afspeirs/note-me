@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useHistory, Route } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import clsx from 'clsx';
 import {
 	AppBar,
@@ -13,7 +13,6 @@ import {
 } from '@material-ui/core';
 import {
 	Menu as MenuIcon,
-	ArrowBack as ArrowBackIcon,
 } from '@material-ui/icons';
 
 import useStyles from './Container.styled';
@@ -70,26 +69,6 @@ const Container = ({ children }) => {
 					>
 						<MenuIcon />
 					</IconButton>
-					{persistentDrawer && (
-						<Route
-							render={({ location }) => (
-								// If SettingsPage is open and the previousLocation is NotePage
-								// Or if the page is NotePage
-								(location.pathname === '/settings/' && window.previousLocation?.pathname.startsWith('/note/'))
-								|| location.pathname.startsWith('/note/')
-							) && (
-								<IconButton
-									className={classes.menuButton}
-									color="inherit"
-									aria-label="Back"
-									edge="start"
-									onClick={history.goBack}
-								>
-									<ArrowBackIcon />
-								</IconButton>
-							)}
-						/>
-					)}
 					<Typography className={classes.title} variant="h6" noWrap>
 						{currentNote?.title || 'NoteMe'}
 					</Typography>
