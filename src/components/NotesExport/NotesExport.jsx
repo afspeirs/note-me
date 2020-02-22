@@ -126,8 +126,8 @@ const NotesExport = () => {
 
 					<List className={classes.list} dense>
 						{checkedNotes.map((note, index) => {
-							const labelId = `checkbox-list-label-${note.id}`;
 							const currentNote = notes[index];
+							const labelId = `checkbox-list-label-${currentNote.id}`;
 
 							return (
 								<ListItem
