@@ -65,7 +65,7 @@ const HeaderContent = ({ mobile }) => {
 	};
 
 	const handleFavouriteNote = () => {
-		favouriteNote(currentNote.id);
+		favouriteNote();
 		handleClose();
 	};
 
