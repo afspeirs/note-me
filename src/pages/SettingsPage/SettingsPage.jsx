@@ -25,6 +25,9 @@ const SettingsPage = () => (
 
 			<ChangeTheme />
 			<DisablePersistentDrawer />
+
+			<Divider />
+
 			<SortNotesFavourite />
 			<SortNotes />
 
