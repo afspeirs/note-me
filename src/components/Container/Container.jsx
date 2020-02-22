@@ -75,7 +75,7 @@ const Container = ({ children }) => {
 							render={({ location }) => (
 								// If SettingsPage is open and the previousLocation is NotePage
 								// Or if the page is NotePage
-								(location.pathname === '/settings/' && window.previousLocation && window.previousLocation.pathname.startsWith('/note/'))
+								(location.pathname === '/settings/' && window.previousLocation?.pathname.startsWith('/note/'))
 								|| location.pathname.startsWith('/note/')
 							) && (
 								<IconButton
