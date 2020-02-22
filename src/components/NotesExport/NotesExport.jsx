@@ -175,6 +175,14 @@ const NotesExport = () => {
 				</DialogContent>
 
 				<DialogActions>
+					<Typography
+						className={clsx(classes.numberSelected, {
+							[classes.maxSelected]: numberOfCheckedNotes === maxSelectable,
+						})}
+					>
+						{`${numberOfCheckedNotes}/${maxSelectable}`}
+					</Typography>
+
 					<Button
 						color="inherit"
 						onClick={handleClose}

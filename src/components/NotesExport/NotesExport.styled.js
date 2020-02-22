@@ -19,6 +19,10 @@ const useStyles = makeStyles((theme) => ({
 		textOverflow: 'ellipsis',
 		whiteSpace: 'nowrap',
 	},
+	numberSelected: {
+		paddingLeft: theme.spacing(1),
+		marginRight: 'auto',
+	},
 	maxSelected: {
 		color: theme.palette.info.main,
 	},
