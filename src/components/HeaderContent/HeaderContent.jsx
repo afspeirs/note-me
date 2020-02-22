@@ -24,6 +24,7 @@ import useStyles from './HeaderContent.styled';
 import AdapterLink from '../AdapterLink';
 import { useAuth } from '../../hooks/AuthContext';
 import { useNotes } from '../../hooks/NotesContext';
+import { isPathVisible } from '../../ultils';
 
 const propTypes = {
 	mobile: PropTypes.bool.isRequired,
@@ -41,6 +42,7 @@ const HeaderContent = ({ mobile }) => {
 	} = useNotes();
 	const location = useLocation();
 	const [anchorEl, setAnchorEl] = useState(null);
+	const isHomeVisible = isPathVisible(location, '/');
 
 	const handleClick = (event) => setAnchorEl(event.currentTarget);
 
@@ -92,12 +94,7 @@ const HeaderContent = ({ mobile }) => {
 			onClick: handleClose,
 			text: 'Home',
 			to: '/',
-			visible: Boolean(
-				// If SettingsPage is open and the previousLocation is HomePage
-				// Or if the page is not HomePage
-				!(location.pathname === '/settings/' && window.previousLocation?.pathname === '/')
-				&& location.pathname !== '/',
-			),
+			visible: isHomeVisible,
 		},
 		{
 			component: AdapterLink,
@@ -109,11 +106,11 @@ const HeaderContent = ({ mobile }) => {
 				state: { modal: true },
 			},
 		},
-	].filter((item) => item.visible !== false), [currentNote]); // eslint-disable-line
+	].filter((item) => item.visible !== false), [currentNote, isSignedIn]); // eslint-disable-line
 
 	return (
 		<>
-			{(isSignedIn && mobile && location.pathname !== '/') ? (
+			{(isSignedIn && mobile && isHomeVisible) ? (
 				<>
 					<IconButton
 						color="inherit"
