@@ -109,7 +109,7 @@ const HeaderContent = ({ mobile }) => {
 				state: { modal: true },
 			},
 		},
-	].filter((item) => item.visible !== false), [currentNote]);
+	].filter((item) => item.visible !== false), [currentNote]); // eslint-disable-line
 
 	return (
 		<>
