@@ -59,6 +59,7 @@ const Modal = ({
 			open={open}
 			onClose={handleClose}
 			TransitionComponent={Transition}
+			aria-labelledby={`${title}-modal-title`}
 		>
 			<AppBar className={classes.appbar}>
 				<Toolbar>
@@ -73,7 +74,7 @@ const Modal = ({
 							<ArrowBackIcon />
 						</IconButton>
 					)}
-					<Typography className={classes.title} variant="h6">{title}</Typography>
+					<Typography className={classes.title} variant="h6" id={`${title}-modal-title`}>{title}</Typography>
 					{!fullScreenModal && (
 						<IconButton
 							aria-label="close"
