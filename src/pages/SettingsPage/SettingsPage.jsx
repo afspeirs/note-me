@@ -8,7 +8,8 @@ import AppVersion from '../../components/AppVersion';
 import ChangeTheme from '../../components/ChangeTheme';
 import CheckForUpdate from '../../components/CheckForUpdate';
 import DisablePersistentDrawer from '../../components/DisablePersistentDrawer';
-import ImportExport from '../../components/ImportExport';
+import NotesExport from '../../components/NotesExport';
+import NotesImport from '../../components/NotesImport';
 import Modal from '../../components/Modal';
 import SortNotes from '../../components/SortNotes';
 import SortNotesFavourite from '../../components/SortNotesFavourite';
@@ -33,7 +34,8 @@ const SettingsPage = () => (
 
 			<Divider />
 
-			<ImportExport />
+			<NotesImport />
+			<NotesExport />
 		</List>
 	</Modal>
 );

@@ -1,18 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-// const DialogContent = withStyles(theme => ({
-// 	root: {
-// 		padding: theme.spacing(2),
-// 	},
-// }))(MuiDialogContent);
-
-// const DialogActions = withStyles(theme => ({
-// 	root: {
-// 		margin: 0,
-// 		padding: theme.spacing(1),
-// 	},
-// }))(MuiDialogActions);
-
 const useStyles = makeStyles((theme) => ({
 	root: {
 		margin: 0,
