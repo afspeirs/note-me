@@ -54,20 +54,21 @@ const NotesExport = () => {
 	const handleExportClick = () => {
 		const selectedNotes = notes.filter((note, index) => checkedNotes[index]);
 		confirm({
-			// TODO - Update copy to match how many you have selected e.g. note(s)
-			title: `Do you want to export all ${selectedNotes.length} Notes as Markdown files?`,
+			title: `Do you want to export ${selectedNotes.length === 1 ? 'this note as a' : `these ${selectedNotes.length} notes as`} Markdown file${selectedNotes.length === 1 ? 's' : ''}?`,
 			cancellationText: 'No',
 			confirmationText: 'Yes',
 			dialogProps: {
-				onExit: handleClose,
 				classes: {
 					root: classes.dialog,
 				},
 			},
-		}).then(() => selectedNotes.forEach((note) => {
-			const { text, title } = note;
-			exportMarkdownFile(title.substring(0, 100), text);
-		}));
+		}).then(() => {
+			handleClose();
+			selectedNotes.forEach((note) => {
+				const { text, title } = note;
+				exportMarkdownFile(title.substring(0, 100), text);
+			});
+		});
 	};
 
 	return (
