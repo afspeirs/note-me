@@ -1,7 +1,7 @@
 {
-	"name": "Note Me",
+	"name": "NoteMe",
 	"short_name": "NoteMe",
-	"description": "Store your notes as markdown",
+	"description": "Create and store markdown notes",
 	"dir": "ltr",
 	"lang": "en",
 	"start_url": ".",

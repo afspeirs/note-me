@@ -1,7 +1,14 @@
 {
   "name": "note-me",
   "version": "4.5.0",
-  "private": true,
+  "description": "Create and store markdown notes",
+  "scripts": {
+    "start": "react-scripts start && cra-append-sw --mode dev ./src/serviceWorker-custom.js",
+    "build": "react-scripts build && cra-append-sw ./src/serviceWorker-custom.js"
+  },
+  "keywords": [],
+  "author": "AFSpeirs",
+  "license": "ISC",
   "dependencies": {
     "@material-ui/core": "^4.9.4",
     "@material-ui/icons": "^4.9.1",
@@ -19,10 +26,6 @@
   },
   "devDependencies": {
     "eslint-config-airbnb": "^18.0.1"
-  },
-  "scripts": {
-    "start": "react-scripts start && cra-append-sw --mode dev ./src/serviceWorker-custom.js",
-    "build": "react-scripts build && cra-append-sw ./src/serviceWorker-custom.js"
   },
   "eslintConfig": {
     "extends": "react-app"
