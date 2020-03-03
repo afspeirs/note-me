@@ -153,9 +153,9 @@ const NotePage = () => {
 						onSelect={handleSelect}
 					/>
 
-					<AppBar position="sticky" color="inherit" className={classes.appBar}>
-						<Toolbar variant="dense" className={classes.toolbar}>
-							<ToggleButtonGroup value={formats} onChange={handleFormat} aria-label="text formatting">
+					<AppBar className={classes.appBar} color="inherit" position="sticky">
+						<Toolbar className={classes.toolbar} disableGutters variant="dense">
+							<ToggleButtonGroup aria-label="note formatting" onChange={handleFormat} value={formats}>
 								<ToggleButton value="bold" aria-label="bold">
 									<FormatBoldIcon />
 								</ToggleButton>
@@ -191,8 +191,8 @@ const NotePage = () => {
 								</ToggleButton>
 								{/* URL */}
 								{/* Photo URL */}
+								<div className={classes.spacer} />
 							</ToggleButtonGroup>
-							<div className={classes.spacer} />
 						</Toolbar>
 					</AppBar>
 				</>

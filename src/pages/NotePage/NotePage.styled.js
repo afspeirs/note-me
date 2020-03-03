@@ -33,10 +33,15 @@ const useStyles = makeStyles((theme) => ({
 		zIndex: 0,
 	},
 	toolbar: {
-		marginRight: theme.spacing(9),
+		overflowX: 'scroll',
+		scrollbarWidth: 'none',
+		'&::-webkit-scrollbar': {
+			width: 0,
+			height: 0,
+		},
 	},
 	spacer: {
-		width: theme.spacing(3),
+		width: '25vw',
 	},
 }));
 
