@@ -3,13 +3,30 @@ import clsx from 'clsx';
 import { Prompt, useParams } from 'react-router-dom';
 import Markdown from 'react-markdown';
 import {
+	AppBar,
 	Fab,
+	Toolbar,
 	Tooltip,
 } from '@material-ui/core';
 import {
+	CheckBox as CheckBoxIcon,
+	Code as CodeIcon,
 	Edit as EditIcon,
+	FormatBold as FormatBoldIcon,
+	FormatItalic as FormatItalicIcon,
+	FormatListBulleted as FormatListBulletedIcon,
+	FormatListNumbered as FormatListNumberedIcon,
+	FormatQuote as FormatQuoteIcon,
+	FormatUnderlined as FormatUnderlinedIcon,
 	Save as SaveIcon,
+	StrikethroughS as StrikethroughSIcon,
+	TextFields as TextFieldsIcon,
+	Title as TitleIcon,
 } from '@material-ui/icons';
+import {
+	ToggleButton,
+	ToggleButtonGroup,
+} from '@material-ui/lab';
 
 import useStyles from './NotePage.styled';
 import LinkRenderer from '../../components/LinkRenderer';
@@ -24,6 +41,9 @@ const NotePage = () => {
 	const [{ edit }, dispatch] = useStateValue();
 	const classes = useStyles();
 	const currentNote = notes.find((note) => note.id === id);
+	const [formats, setFormats] = React.useState(() => []);
+
+	const handleFormat = (event, newFormats) => setFormats(newFormats);
 
 	const splitAt = (index) => [localNote.slice(0, index), localNote.slice(index)];
 
@@ -122,15 +142,60 @@ const NotePage = () => {
 	return (
 		<>
 			{edit ? (
-				<textarea
-					className={clsx(classes.page, classes.textarea)}
-					type="text"
-					value={localNote}
-					onBlur={handleBlur}
-					onChange={handleChange}
-					onFocus={handleFocus}
-					onSelect={handleSelect}
-				/>
+				<>
+					<textarea
+						className={clsx(classes.page, classes.textarea)}
+						type="text"
+						value={localNote}
+						onBlur={handleBlur}
+						onChange={handleChange}
+						onFocus={handleFocus}
+						onSelect={handleSelect}
+					/>
+
+					<AppBar position="sticky" color="inherit" className={classes.appBar}>
+						<Toolbar variant="dense" className={classes.toolbar}>
+							<ToggleButtonGroup value={formats} onChange={handleFormat} aria-label="text formatting">
+								<ToggleButton value="bold" aria-label="bold">
+									<FormatBoldIcon />
+								</ToggleButton>
+								<ToggleButton value="italic" aria-label="italic">
+									<FormatItalicIcon />
+								</ToggleButton>
+								<ToggleButton value="underlined" aria-label="underlined">
+									<FormatUnderlinedIcon />
+								</ToggleButton>
+								<ToggleButton value="title" aria-label="title">
+									<TitleIcon />
+								</ToggleButton>
+								<ToggleButton value="subtitle" aria-label="subtitle">
+									<TextFieldsIcon />
+								</ToggleButton>
+								<ToggleButton value="strikethrough" aria-label="strikethrough">
+									<StrikethroughSIcon />
+								</ToggleButton>
+								<ToggleButton value="bulletlist" aria-label="bulletlist">
+									<FormatListBulletedIcon />
+								</ToggleButton>
+								<ToggleButton value="numberlist" aria-label="numberlist">
+									<FormatListNumberedIcon />
+								</ToggleButton>
+								<ToggleButton value="checklist" aria-label="checklist">
+									<CheckBoxIcon />
+								</ToggleButton>
+								<ToggleButton value="blockquote" aria-label="blockquote">
+									<FormatQuoteIcon />
+								</ToggleButton>
+								<ToggleButton value="code" aria-label="code">
+									<CodeIcon />
+								</ToggleButton>
+								{/* URL */}
+								{/* Photo URL */}
+							</ToggleButtonGroup>
+							<div className={classes.spacer} />
+						</Toolbar>
+					</AppBar>
+				</>
 			) : (
 				<Markdown
 					className={classes.page}

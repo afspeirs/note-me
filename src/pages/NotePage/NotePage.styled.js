@@ -12,6 +12,7 @@ const useStyles = makeStyles((theme) => ({
 		position: 'fixed',
 		bottom: theme.spacing(2),
 		right: theme.spacing(2),
+		zIndex: 1,
 	},
 	extendedIcon: {
 		marginRight: theme.spacing(1),
@@ -25,6 +26,17 @@ const useStyles = makeStyles((theme) => ({
 		'&:focus': {
 			outline: 'none',
 		},
+	},
+	appBar: {
+		top: 'auto',
+		bottom: 0,
+		zIndex: 0,
+	},
+	toolbar: {
+		marginRight: theme.spacing(9),
+	},
+	spacer: {
+		width: theme.spacing(3),
 	},
 }));
 
