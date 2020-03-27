@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import { Prompt, useParams } from 'react-router-dom';
 import Markdown from 'react-markdown';
@@ -41,9 +41,13 @@ const NotePage = () => {
 	const [{ edit }, dispatch] = useStateValue();
 	const classes = useStyles();
 	const currentNote = notes.find((note) => note.id === id);
-	const [formats, setFormats] = React.useState(() => []);
+	const [formats, setFormats] = useState(() => []);
+	const [recentFormat, setRecentFormat] = useState(null);
 
-	const handleFormat = (event, newFormats) => setFormats(newFormats);
+	const handleFormat = (event, newFormats) => {
+		setRecentFormat(event.target.value);
+		setFormats(newFormats);
+	};
 
 	const splitAt = (index) => [localNote.slice(0, index), localNote.slice(index)];
 
@@ -92,9 +96,14 @@ const NotePage = () => {
 	};
 
 	// TODO: force blur when saving a not via shortcuts
-	const handleBlur = () => {
-		console.log('blur');
-		setSelection(null);
+	const handleBlur = (event) => {
+		if (edit) {
+			// console.log('don't blur');
+			event.target.focus();
+		} else {
+			// console.log('blur');
+			setSelection(null);
+		}
 	};
 
 	const handleChange = (event) => {
@@ -102,9 +111,9 @@ const NotePage = () => {
 		setLocalNote(event.target.value);
 	};
 
-	const handleFocus = () => {
-		console.log('focus');
-	};
+	// const handleFocus = () => {
+	// 	console.log('focus');
+	// };
 
 	const handleSelect = (event) => {
 		updateSelection(event.target);
@@ -119,6 +128,7 @@ const NotePage = () => {
 				value: currentNote.text === '',
 			});
 		}
+
 		return () => setCurrentNote(null);
 	}, [currentNote]); // eslint-disable-line
 
@@ -128,16 +138,64 @@ const NotePage = () => {
 		if (compare && id && localNote !== currentNote.text) {
 			updateNote(localNote);
 		}
+		if (!edit) {
+			setSelection(null);
+		}
 	}, [edit]); // eslint-disable-line
 
-	console.log(selection);
+	// Update formats on selection of text
+	useEffect(() => {
+		console.log(selection);
 
-	if (selection?.end !== selection?.start) {
-		console.log(formatSelection('__'));
-	}
-	if (localNote && selection && selection?.end === selection?.start) {
-		console.log(prefixLine('-'));
-	}
+		// Reset Formats
+		// setFormats([]);
+		setRecentFormat(null);
+
+		// Check if the text is one/many of the following
+		// bold
+		// italic
+		// underlined
+		// title
+		// subtitle
+		// strikethrough
+		// bulletlist
+		// numberlist
+		// checklist
+		// blockquote
+		// code
+	}, [selection]); // eslint-disable-line
+
+	useEffect(() => {
+		console.log(formats);
+		// console.log(recentFormat);
+
+		if (recentFormat === 'bold') {
+			console.dir(formats);
+
+			setLocalNote(formatSelection('**'));
+			// TODO: move the cursor 2 charactors from the initial point
+		}
+
+		// if (selection?.end !== selection?.start) {
+		// 	console.log(formatSelection('__'));
+		// }
+		// if (localNote && selection && selection?.end === selection?.start) {
+		// 	console.log(prefixLine('-'));
+		// }
+
+		// Check if the text is one/many of the following
+		// bold
+		// italic
+		// underlined
+		// title
+		// subtitle
+		// strikethrough
+		// bulletlist
+		// numberlist
+		// checklist
+		// blockquote
+		// code
+	}, [formats]); // eslint-disable-line
 
 	return (
 		<>
@@ -149,44 +207,44 @@ const NotePage = () => {
 						value={localNote}
 						onBlur={handleBlur}
 						onChange={handleChange}
-						onFocus={handleFocus}
+						// onFocus={handleFocus}
 						onSelect={handleSelect}
 					/>
 
 					<AppBar className={classes.appBar} color="inherit" position="sticky">
 						<Toolbar className={classes.toolbar} disableGutters variant="dense">
 							<ToggleButtonGroup aria-label="note formatting" onChange={handleFormat} value={formats}>
-								<ToggleButton value="bold" aria-label="bold">
+								<ToggleButton value="bold" aria-label="bold" disabled={!selection}>
 									<FormatBoldIcon />
 								</ToggleButton>
-								<ToggleButton value="italic" aria-label="italic">
+								<ToggleButton value="italic" aria-label="italic" disabled={!selection}>
 									<FormatItalicIcon />
 								</ToggleButton>
-								<ToggleButton value="underlined" aria-label="underlined">
+								<ToggleButton value="underlined" aria-label="underlined" disabled={!selection}>
 									<FormatUnderlinedIcon />
 								</ToggleButton>
-								<ToggleButton value="title" aria-label="title">
+								<ToggleButton value="title" aria-label="title" disabled={!selection}>
 									<TitleIcon />
 								</ToggleButton>
-								<ToggleButton value="subtitle" aria-label="subtitle">
+								<ToggleButton value="subtitle" aria-label="subtitle" disabled={!selection}>
 									<TextFieldsIcon />
 								</ToggleButton>
-								<ToggleButton value="strikethrough" aria-label="strikethrough">
+								<ToggleButton value="strikethrough" aria-label="strikethrough" disabled={!selection}>
 									<StrikethroughSIcon />
 								</ToggleButton>
-								<ToggleButton value="bulletlist" aria-label="bulletlist">
+								<ToggleButton value="bulletlist" aria-label="bulletlist" disabled={!selection}>
 									<FormatListBulletedIcon />
 								</ToggleButton>
-								<ToggleButton value="numberlist" aria-label="numberlist">
+								<ToggleButton value="numberlist" aria-label="numberlist" disabled={!selection}>
 									<FormatListNumberedIcon />
 								</ToggleButton>
-								<ToggleButton value="checklist" aria-label="checklist">
+								<ToggleButton value="checklist" aria-label="checklist" disabled={!selection}>
 									<CheckBoxIcon />
 								</ToggleButton>
-								<ToggleButton value="blockquote" aria-label="blockquote">
+								<ToggleButton value="blockquote" aria-label="blockquote" disabled={!selection}>
 									<FormatQuoteIcon />
 								</ToggleButton>
-								<ToggleButton value="code" aria-label="code">
+								<ToggleButton value="code" aria-label="code" disabled={!selection}>
 									<CodeIcon />
 								</ToggleButton>
 								{/* URL */}
