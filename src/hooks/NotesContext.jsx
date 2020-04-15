@@ -23,7 +23,7 @@ function useNotesProvider() {
 	const [notes, setNotes] = useState([]);
 	const [currentNote, setCurrentNote] = useState(null);
 
-	const addNote = (text = '') => {
+	const addNote = (text) => {
 		const untitledNotes = notes.filter((note) => note.text === '');
 
 		if (untitledNotes.length !== 0) {
