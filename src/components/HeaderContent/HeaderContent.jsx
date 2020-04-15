@@ -46,7 +46,7 @@ const HeaderContent = ({ isHomeVisible, mobile }) => {
 	const handleClose = () => setAnchorEl(null);
 
 	const handleAddNote = () => {
-		addNote();
+		addNote('');
 		handleClose();
 	};
 
