@@ -21,6 +21,7 @@ function useNotesProvider() {
 	const history = useHistory();
 	const [loading, setLoading] = useState(true);
 	const [notes, setNotes] = useState([]);
+	const [folders, setFolders] = useState([]);
 	const [currentNote, setCurrentNote] = useState(null);
 
 	const addNote = (text) => {
@@ -100,6 +101,11 @@ function useNotesProvider() {
 		}
 	}, [user]); // eslint-disable-line
 
+	// Update folder name when notes change
+	useEffect(() => {
+		setFolders([...new Set(notes.map((note) => note.folder))]);
+	}, [notes]); // eslint-disable-line
+
 	return {
 		addNote,
 		currentNote,
@@ -107,6 +113,7 @@ function useNotesProvider() {
 		favouriteNote,
 		loading,
 		notes,
+		folders,
 		setCurrentNote,
 		updateNote,
 	};

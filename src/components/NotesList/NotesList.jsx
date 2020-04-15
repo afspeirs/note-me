@@ -4,6 +4,7 @@ import clsx from 'clsx';
 import { NavLink } from 'react-router-dom';
 import Swipeout from 'rc-swipeout';
 import {
+	Collapse,
 	List,
 	ListItem,
 	ListItemIcon,
@@ -14,6 +15,9 @@ import {
 import {
 	Alarm as AlarmIcon,
 	Delete as DeleteIcon,
+	ExpandLess as ExpandLessIcon,
+	ExpandMore as ExpandMoreIcon,
+	Folder as FolderIcon,
 	Star as StarIcon,
 	StarBorder as StarBorderIcon,
 } from '@material-ui/icons';
@@ -31,11 +35,17 @@ const propTypes = {
 
 const NotesList = ({ notes, locationSelector }) => {
 	const confirm = useConfirm();
-	const { deleteNote, favouriteNote, loading } = useNotes();
+	const {
+		deleteNote,
+		favouriteNote,
+		folders,
+		loading,
+	} = useNotes();
 	const classes = useStyles();
 	const [{ settings }] = useStateValue();
 	const { sort, sortFavourite } = settings;
 	const [contextAnchor, setContextAnchor] = useState(null);
+	const [openFolders, setOpenFolders] = useState(null);
 	const sortNoteFunction = {
 		'date-asc': (a, b) => a.date - b.date,
 		'date-dsc': (a, b) => b.date - a.date,
@@ -49,7 +59,7 @@ const NotesList = ({ notes, locationSelector }) => {
 		return 1;
 	};
 
-	const sortedNotes = notes
+	const sortArray = (array) => array
 		.sort(sortNoteFunction)
 		.sort(sortFavouriteFunction);
 
@@ -91,11 +101,21 @@ const NotesList = ({ notes, locationSelector }) => {
 			.then(() => deleteNote(note));
 	};
 
+	const handleFolderClick = (index) => {
+		const newOpenFolders = [...openFolders];
+		newOpenFolders[index] = !newOpenFolders[index];
+		setOpenFolders(newOpenFolders);
+	};
+
 	useEffect(() => {
 		document.addEventListener('contextmenu', handleContextMenuOpen);
 
 		return () => document.removeEventListener('contextmenu', handleContextMenuOpen);
 	}, []); // eslint-disable-line
+
+	useEffect(() => {
+		setOpenFolders(folders.map(() => true));
+	}, [folders]); // eslint-disable-line
 
 	return (
 		<List className={classes.list}>
@@ -109,98 +129,123 @@ const NotesList = ({ notes, locationSelector }) => {
 					<ListItemText primary="Loading, please wait while we gather your notes" />
 				</ListItem>
 			)}
-			{sortedNotes.map((note) => (
-				<React.Fragment key={`note-${note.id}`}>
-					<Swipeout
-						className={classes.swipeout}
-						left={[
-							{
-								text: <TimeAgo date={note.date / 1000} />,
-								autoClose: true,
-								style: {
-									backgroundColor: '#9e9e9e',
-									color: 'white',
-								},
-							},
-							{
-								text: note.favourite ? <StarIcon color="inherit" /> : <StarBorderIcon />,
-								onPress: () => handleFavouriteNote(note),
-								autoClose: true,
-								style: {
-									backgroundColor: '#ee6e00',
-									color: 'white',
-									width: 56,
-								},
-							},
-							{
-								text: <DeleteIcon />,
-								onPress: () => handleDeleteNote(note),
-								autoClose: true,
-								style: {
-									backgroundColor: 'red',
-									color: 'white',
-									width: 56,
-								},
-							},
-						]}
-					>
-						<ListItem
-							button
-							to={`/note/${note.id}`}
-							className={clsx(classes.listItem, 'context-menu-select')}
-							component={renderLink}
-							data-id={note.id}
-						>
-							<ListItemText className={classes.listItemText} primary={note.title} />
-							{note.favourite && (
-								<ListItemSecondaryAction className={classes.secondaryAction}>
-									<StarIcon color="primary" edge="end" />
-								</ListItemSecondaryAction>
-							)}
-						</ListItem>
-					</Swipeout>
 
-					<Popover
-						open={contextAnchor?.id === note.id}
-						onClose={handleContextMenuClose}
-						anchorReference="anchorPosition"
-						anchorPosition={{
-							top: contextAnchor?.top || 0,
-							left: contextAnchor?.left || 0,
-						}}
-					>
-						<List className={classes.list} dense>
-							<ListItem>
-								<ListItemIcon>
-									<AlarmIcon color="primary" />
-								</ListItemIcon>
-								<ListItemText
-									className={classes.listItemText}
-									primary={<TimeAgo date={note.date / 1000} />}
-								/>
-							</ListItem>
-							<ListItem button onClick={() => handleFavouriteNote(note)}>
-								<ListItemIcon>
-									{note.favourite ? <StarIcon color="primary" /> : <StarBorderIcon />}
-								</ListItemIcon>
-								<ListItemText
-									className={classes.listItemText}
-									primary={`${note.favourite ? 'Unfavourite' : 'Favourite'} "${note.title}"`}
-								/>
-							</ListItem>
-							<ListItem button onClick={() => handleDeleteNote(note)}>
-								<ListItemIcon>
-									<DeleteIcon color="error" />
-								</ListItemIcon>
-								<ListItemText
-									className={classes.listItemText}
-									primary={`Delete "${note.title}"`}
-								/>
-							</ListItem>
-						</List>
-					</Popover>
-				</React.Fragment>
-			))}
+			{openFolders && folders.map((folder, index) => {
+				const folderName = folder || 'Unsorted';
+				const folderNotes = notes.filter((note) => note.folder === folder);
+				// console.log(folderName);
+				// console.log(folderNotes);
+
+				return (
+					<React.Fragment key={folderName}>
+						<ListItem button onClick={() => handleFolderClick(index)}>
+							<ListItemIcon>
+								<FolderIcon />
+							</ListItemIcon>
+							<ListItemText primary={folderName} />
+							{openFolders[index] ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+						</ListItem>
+						<Collapse in={openFolders[index]} timeout="auto" unmountOnExit>
+							<List component="div" disablePadding>
+								{sortArray(folderNotes).map((note) => (
+									<React.Fragment key={`note-${note.id}`}>
+										<Swipeout
+											className={classes.swipeout}
+											left={[
+												{
+													text: <TimeAgo date={note.date / 1000} />,
+													autoClose: true,
+													style: {
+														backgroundColor: '#9e9e9e',
+														color: 'white',
+													},
+												},
+												{
+													text: note.favourite ? <StarIcon color="inherit" /> : <StarBorderIcon />,
+													onPress: () => handleFavouriteNote(note),
+													autoClose: true,
+													style: {
+														backgroundColor: '#ee6e00',
+														color: 'white',
+														width: 56,
+													},
+												},
+												{
+													text: <DeleteIcon />,
+													onPress: () => handleDeleteNote(note),
+													autoClose: true,
+													style: {
+														backgroundColor: 'red',
+														color: 'white',
+														width: 56,
+													},
+												},
+											]}
+										>
+											<ListItem
+												button
+												to={`/note/${note.id}`}
+												className={clsx(classes.listItem, 'context-menu-select')}
+												component={renderLink}
+												data-id={note.id}
+											>
+												<ListItemText className={classes.listItemText} primary={note.title} />
+												{note.favourite && (
+													<ListItemSecondaryAction className={classes.secondaryAction}>
+														<StarIcon color="primary" edge="end" />
+													</ListItemSecondaryAction>
+												)}
+											</ListItem>
+										</Swipeout>
+
+										<Popover
+											open={contextAnchor?.id === note.id}
+											onClose={handleContextMenuClose}
+											anchorReference="anchorPosition"
+											anchorPosition={{
+												top: contextAnchor?.top || 0,
+												left: contextAnchor?.left || 0,
+											}}
+										>
+											<List className={classes.list} dense>
+												<ListItem>
+													<ListItemIcon>
+														<AlarmIcon color="primary" />
+													</ListItemIcon>
+													<ListItemText
+														className={classes.listItemText}
+														primary={<TimeAgo date={note.date / 1000} />}
+													/>
+												</ListItem>
+												<ListItem button onClick={() => handleFavouriteNote(note)}>
+													<ListItemIcon>
+														{note.favourite ? <StarIcon color="primary" /> : <StarBorderIcon />}
+													</ListItemIcon>
+													<ListItemText
+														className={classes.listItemText}
+														primary={`${note.favourite ? 'Unfavourite' : 'Favourite'} "${note.title}"`}
+													/>
+												</ListItem>
+												<ListItem button onClick={() => handleDeleteNote(note)}>
+													<ListItemIcon>
+														<DeleteIcon color="error" />
+													</ListItemIcon>
+													<ListItemText
+														className={classes.listItemText}
+														primary={`Delete "${note.title}"`}
+													/>
+												</ListItem>
+											</List>
+										</Popover>
+									</React.Fragment>
+								))}
+							</List>
+						</Collapse>
+					</React.Fragment>
+				);
+			})}
+
+
 		</List>
 	);
 };
