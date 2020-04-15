@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import clsx from 'clsx';
 import {
 	AppBar,
@@ -20,6 +20,7 @@ import DrawerContent from '../DrawerContent';
 import HeaderContent from '../HeaderContent';
 import { useNotes } from '../../hooks/NotesContext';
 import { useStateValue } from '../../hooks/StateContext';
+import { isPathVisible } from '../../ultils';
 
 const propTypes = {
 	children: PropTypes.oneOfType([
@@ -34,18 +35,20 @@ const Container = ({ children }) => {
 	const { disablePersistentDrawer } = settings;
 	const classes = useStyles();
 	const history = useHistory();
+	const location = useLocation();
 	const mobile = useMediaQuery('(max-width:600px)');
 	const persistentDrawer = mobile || disablePersistentDrawer;
+	const isHomeVisible = isPathVisible(location, '/');
 
 	// Close drawer only in mobile
-	const handleDrawerClose = () => (persistentDrawer) && dispatch({
+	const handleDrawerClose = () => persistentDrawer && dispatch({
 		type: 'app-drawerOpen',
 		value: false,
 	});
 
 	// Toggle drawer only in mobile unless toggle is true
 	const handleDrawerToggle = (toggle = false) => {
-		if ((toggle === true) || persistentDrawer) {
+		if (toggle || persistentDrawer) {
 			dispatch({ type: 'app-drawerOpen' });
 		}
 	};
@@ -60,19 +63,25 @@ const Container = ({ children }) => {
 		<div className={classes.container}>
 			<AppBar position="fixed">
 				<Toolbar>
-					<IconButton
-						className={classes.menuButton}
-						color="inherit"
-						aria-label="Open drawer"
-						edge="start"
-						onClick={() => handleDrawerToggle(true)}
-					>
-						<MenuIcon />
-					</IconButton>
+					{!(!isHomeVisible && persistentDrawer) && (
+						// Show if not on the HomePage and in mobile
+						<IconButton
+							className={classes.menuButton}
+							color="inherit"
+							aria-label="Open drawer"
+							edge="start"
+							onClick={() => handleDrawerToggle(true)}
+						>
+							<MenuIcon />
+						</IconButton>
+					)}
 					<Typography className={classes.title} variant="h6" noWrap>
 						{currentNote?.title || 'NoteMe'}
 					</Typography>
-					<HeaderContent mobile={mobile} />
+					<HeaderContent
+						isHomeVisible={isHomeVisible}
+						mobile={mobile}
+					/>
 				</Toolbar>
 			</AppBar>
 			<Hidden className={classes.placeholder} smUp={!persistentDrawer} implementation="css" />

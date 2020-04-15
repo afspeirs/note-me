@@ -1,6 +1,5 @@
 import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useLocation } from 'react-router-dom';
 import {
 	IconButton,
 	ListItemIcon,
@@ -24,13 +23,13 @@ import useStyles from './HeaderContent.styled';
 import AdapterLink from '../AdapterLink';
 import { useAuth } from '../../hooks/AuthContext';
 import { useNotes } from '../../hooks/NotesContext';
-import { isPathVisible } from '../../ultils';
 
 const propTypes = {
+	isHomeVisible: PropTypes.bool.isRequired,
 	mobile: PropTypes.bool.isRequired,
 };
 
-const HeaderContent = ({ mobile }) => {
+const HeaderContent = ({ isHomeVisible, mobile }) => {
 	const classes = useStyles();
 	const confirm = useConfirm();
 	const { isSignedIn } = useAuth();
@@ -40,9 +39,7 @@ const HeaderContent = ({ mobile }) => {
 		favouriteNote,
 		deleteNote,
 	} = useNotes();
-	const location = useLocation();
 	const [anchorEl, setAnchorEl] = useState(null);
-	const isHomeVisible = isPathVisible(location, '/');
 
 	const handleClick = (event) => setAnchorEl(event.currentTarget);
 

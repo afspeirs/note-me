@@ -27,7 +27,7 @@ const DrawerContent = () => {
 					<Divider />
 
 					<List disablePadding>
-						<ListItem button onClick={addNote}>
+						<ListItem button onClick={() => addNote('')}>
 							<ListItemIcon>
 								<AddIcon />
 							</ListItemIcon>
