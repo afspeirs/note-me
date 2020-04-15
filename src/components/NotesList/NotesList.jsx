@@ -4,17 +4,24 @@ import clsx from 'clsx';
 import { NavLink } from 'react-router-dom';
 import Swipeout from 'rc-swipeout';
 import {
+	Button,
 	Collapse,
+	Dialog,
+	DialogActions,
+	DialogContent,
+	DialogTitle,
 	List,
 	ListItem,
 	ListItemIcon,
 	ListItemSecondaryAction,
 	ListItemText,
 	Popover,
+	TextField,
 } from '@material-ui/core';
 import {
 	Alarm as AlarmIcon,
 	Delete as DeleteIcon,
+	Edit as EditIcon,
 	ExpandLess as ExpandLessIcon,
 	ExpandMore as ExpandMoreIcon,
 	Folder as FolderIcon,
@@ -45,6 +52,7 @@ const NotesList = ({ notes, locationSelector }) => {
 	const [{ settings }] = useStateValue();
 	const { sort, sortFavourite } = settings;
 	const [contextAnchor, setContextAnchor] = useState(null);
+	const [renameModalOpen, setRenameModalOpen] = useState(false);
 	const [openFolders, setOpenFolders] = useState(null);
 	const sortNoteFunction = {
 		'date-asc': (a, b) => a.date - b.date,
@@ -107,6 +115,25 @@ const NotesList = ({ notes, locationSelector }) => {
 		setOpenFolders(newOpenFolders);
 	};
 
+	const handleRenameFolderClick = (index) => {
+		handleContextMenuClose();
+		setRenameModalOpen(index);
+	};
+
+	const handleRenameFolder = (value, index) => {
+		// TODO: handle the rename of folders
+		// it will have to filter the notes that use that folder and update all notes ...
+		// ... (but not change the date modified)
+
+		const oldFolderName = folders[index];
+		const newFolderName = value;
+
+		console.log(oldFolderName, newFolderName);
+
+		// TODO: create setFolders to be exported from NotesContext
+		// setFolders(oldFolderName, newFolderName);
+	};
+
 	useEffect(() => {
 		document.addEventListener('contextmenu', handleContextMenuOpen);
 
@@ -135,16 +162,67 @@ const NotesList = ({ notes, locationSelector }) => {
 				const folderNotes = notes.filter((note) => note.folder === folder);
 				// console.log(folderName);
 				// console.log(folderNotes);
+				const folderKey = folderName;
 
 				return (
-					<React.Fragment key={folderName}>
-						<ListItem button onClick={() => handleFolderClick(index)}>
+					<React.Fragment key={folderKey}>
+						<ListItem
+							button
+							className="context-menu-select"
+							data-id={folderKey}
+							onClick={() => handleFolderClick(index)}
+						>
 							<ListItemIcon>
 								<FolderIcon />
 							</ListItemIcon>
 							<ListItemText primary={folderName} />
 							{openFolders[index] ? <ExpandLessIcon /> : <ExpandMoreIcon />}
 						</ListItem>
+
+						<Popover
+							open={contextAnchor?.id === folderKey}
+							onClose={handleContextMenuClose}
+							anchorReference="anchorPosition"
+							anchorPosition={{
+								top: contextAnchor?.top || 0,
+								left: contextAnchor?.left || 0,
+							}}
+						>
+							<List className={classes.list} dense>
+								<ListItem button onClick={() => handleRenameFolderClick(index)}>
+									<ListItemIcon>
+										<EditIcon color="primary" />
+									</ListItemIcon>
+									<ListItemText
+										className={classes.listItemText}
+										primary={`Rename "${folderName}"`}
+									/>
+								</ListItem>
+							</List>
+						</Popover>
+
+						<Dialog
+							open={renameModalOpen === index}
+							maxWidth="xs"
+							aria-labelledby={`rename-${folderKey}-dialog-title`}
+							onClose={() => setRenameModalOpen(-1)}
+						>
+							<DialogTitle id={`rename-${folderKey}-dialog-title`}>Rename Folder</DialogTitle>
+							<DialogContent>
+								<TextField
+									autoFocus
+									fullWidth
+									id={`rename-${folderKey}`}
+									margin="dense"
+									onChange={(event) => handleRenameFolder(event.target.value, index)}
+									value={folders[index]}
+								/>
+							</DialogContent>
+							<DialogActions>
+								<Button onClick={() => setRenameModalOpen(false)}>Close</Button>
+							</DialogActions>
+						</Dialog>
+
 						<Collapse in={openFolders[index]} timeout="auto" unmountOnExit>
 							<List component="div" disablePadding>
 								{sortArray(folderNotes).map((note) => (
