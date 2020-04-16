@@ -39,15 +39,15 @@ const NotesList = ({ notes, locationSelector }) => {
 	const sortNoteFunction = {
 		'date-asc': (a, b) => b.date - a.date,
 		'date-dsc': (a, b) => a.date - b.date,
-		'title-asc': (a, b) => {
-			console.log(a.text.localeCompare(b.text));
-
-			return a.text.localeCompare(b.text);
-		},
+		'title-asc': (a, b) => a.text.localeCompare(b.text),
 		'title-dsc': (a, b) => b.text.localeCompare(a.text),
 	}[sort];
-	const sortFavouriteFunction = (a) => {
-		if (sortFavourite && a.favourite) return -1;
+	const sortFavouriteFunction = (a, b) => {
+		if (sortFavourite) {
+			if (a.favourite === b.favourite) return 0;
+			if (a.favourite) return -1;
+			return 1;
+		}
 		return 0;
 	};
 
