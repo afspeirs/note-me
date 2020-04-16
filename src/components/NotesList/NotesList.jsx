@@ -37,16 +37,18 @@ const NotesList = ({ notes, locationSelector }) => {
 	const { sort, sortFavourite } = settings;
 	const [contextAnchor, setContextAnchor] = useState(null);
 	const sortNoteFunction = {
-		'date-asc': (a, b) => a.date - b.date,
-		'date-dsc': (a, b) => b.date - a.date,
-		'title-asc': (a, b) => b.text.localeCompare(a.text),
-		'title-dsc': (a, b) => a.text.localeCompare(b.text),
+		'date-asc': (a, b) => b.date - a.date,
+		'date-dsc': (a, b) => a.date - b.date,
+		'title-asc': (a, b) => {
+			console.log(a.text.localeCompare(b.text));
+
+			return a.text.localeCompare(b.text);
+		},
+		'title-dsc': (a, b) => b.text.localeCompare(a.text),
 	}[sort];
 	const sortFavouriteFunction = (a) => {
-		if (sortFavourite) {
-			if (a.favourite) return -1;
-		}
-		return 1;
+		if (sortFavourite && a.favourite) return -1;
+		return 0;
 	};
 
 	const sortedNotes = notes
