@@ -70,6 +70,17 @@ function useNotesProvider() {
 		notes[index] = value;
 	};
 
+	const renameFolder = (oldFolderName, newFolderName) => {
+		console.log(oldFolderName, newFolderName);
+		const newFolders = [...folders];
+
+		const index = newFolders.indexOf(oldFolderName);
+
+		newFolders[index] = newFolderName;
+
+		setFolders(newFolders);
+	};
+
 	const updateNote = (text, note = currentNote) => {
 		const index = notes.indexOf(note);
 		const value = {
@@ -103,7 +114,11 @@ function useNotesProvider() {
 
 	// Update folder name when notes change
 	useEffect(() => {
-		setFolders([...new Set(notes.map((note) => note.folder))]);
+		// Filter out undefined folder names and remove duplicates
+		const newFolders = [...new Set(notes.map((note) => note.folder))]
+			.filter(Boolean);
+
+		setFolders(newFolders);
 	}, [notes]); // eslint-disable-line
 
 	return {
@@ -111,9 +126,10 @@ function useNotesProvider() {
 		currentNote,
 		deleteNote,
 		favouriteNote,
+		folders,
 		loading,
 		notes,
-		folders,
+		renameFolder,
 		setCurrentNote,
 		updateNote,
 	};

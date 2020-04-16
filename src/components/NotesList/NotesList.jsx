@@ -47,6 +47,7 @@ const NotesList = ({ notes, locationSelector }) => {
 		favouriteNote,
 		folders,
 		loading,
+		renameFolder,
 	} = useNotes();
 	const classes = useStyles();
 	const [{ settings }] = useStateValue();
@@ -123,17 +124,10 @@ const NotesList = ({ notes, locationSelector }) => {
 	};
 
 	const handleRenameFolder = (value, index) => {
-		// TODO: handle the rename of folders
-		// it will have to filter the notes that use that folder and update all notes ...
-		// ... (but not change the date modified)
-
 		const oldFolderName = folders[index];
 		const newFolderName = value;
 
-		console.log(oldFolderName, newFolderName);
-
-		// TODO: create setFolders to be exported from NotesContext
-		// setFolders(oldFolderName, newFolderName);
+		renameFolder(oldFolderName, newFolderName);
 	};
 
 	useEffect(() => {
@@ -160,7 +154,7 @@ const NotesList = ({ notes, locationSelector }) => {
 			)}
 
 			{openFolders && folders.map((folder, index) => {
-				const folderName = folder || 'Unsorted';
+				const folderName = folder;
 				const folderNotes = notes.filter((note) => note.folder === folder);
 				// console.log(folderName);
 				// console.log(folderNotes);
@@ -265,7 +259,7 @@ const NotesList = ({ notes, locationSelector }) => {
 											<ListItem
 												button
 												to={`/note/${note.id}`}
-												className={clsx(classes.listItem, 'context-menu-select')}
+												className={clsx(classes.listItem, classes.nested, 'context-menu-select')}
 												component={renderLink}
 												data-id={note.id}
 											>
@@ -325,7 +319,99 @@ const NotesList = ({ notes, locationSelector }) => {
 				);
 			})}
 
+			{notes.filter((note) => !note.folder).map((note) => (
+				<React.Fragment key={`note-${note.id}`}>
+					{/* TODO: turn into component */}
+					<Swipeout
+						className={classes.swipeout}
+						left={[
+							{
+								text: <TimeAgo date={note.date / 1000} />,
+								autoClose: true,
+								style: {
+									backgroundColor: '#9e9e9e',
+									color: 'white',
+								},
+							},
+							{
+								text: note.favourite ? <StarIcon color="inherit" /> : <StarBorderIcon />,
+								onPress: () => handleFavouriteNote(note),
+								autoClose: true,
+								style: {
+									backgroundColor: '#ee6e00',
+									color: 'white',
+									width: 56,
+								},
+							},
+							{
+								text: <DeleteIcon />,
+								onPress: () => handleDeleteNote(note),
+								autoClose: true,
+								style: {
+									backgroundColor: 'red',
+									color: 'white',
+									width: 56,
+								},
+							},
+						]}
+					>
+						<ListItem
+							button
+							to={`/note/${note.id}`}
+							className={clsx(classes.listItem, 'context-menu-select')}
+							component={renderLink}
+							data-id={note.id}
+						>
+							<ListItemText className={classes.listItemText} primary={note.title} />
+							{note.favourite && (
+								<ListItemSecondaryAction className={classes.secondaryAction}>
+									<StarIcon color="primary" edge="end" />
+								</ListItemSecondaryAction>
+							)}
+						</ListItem>
+					</Swipeout>
 
+					<Popover
+						open={contextAnchor?.id === note.id}
+						onClose={handleContextMenuClose}
+						anchorReference="anchorPosition"
+						anchorPosition={{
+							top: contextAnchor?.top || 0,
+							left: contextAnchor?.left || 0,
+						}}
+					>
+						<List className={classes.list} dense>
+							<ListItem>
+								<ListItemIcon>
+									<AlarmIcon color="primary" />
+								</ListItemIcon>
+								<ListItemText
+									className={classes.listItemText}
+									primary={<TimeAgo date={note.date / 1000} />}
+								/>
+							</ListItem>
+							<ListItem button onClick={() => handleFavouriteNote(note)}>
+								<ListItemIcon>
+									{note.favourite ? <StarIcon color="primary" /> : <StarBorderIcon />}
+								</ListItemIcon>
+								<ListItemText
+									className={classes.listItemText}
+									primary={`${note.favourite ? 'Unfavourite' : 'Favourite'} "${note.title}"`}
+								/>
+							</ListItem>
+							<ListItem button onClick={() => handleDeleteNote(note)}>
+								<ListItemIcon>
+									<DeleteIcon color="error" />
+								</ListItemIcon>
+								<ListItemText
+									className={classes.listItemText}
+									primary={`Delete "${note.title}"`}
+								/>
+							</ListItem>
+						</List>
+					</Popover>
+				</React.Fragment>
+			))}
 		</List>
 	);
 };

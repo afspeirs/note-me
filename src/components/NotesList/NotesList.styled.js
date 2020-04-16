@@ -14,6 +14,9 @@ const useStyles = makeStyles((theme) => ({
 		textOverflow: 'ellipsis',
 		whiteSpace: 'nowrap',
 	},
+	nested: {
+		paddingLeft: theme.spacing(4),
+	},
 	secondaryAction: {
 		pointerEvents: 'none',
 	},
