@@ -55,16 +55,18 @@ const NotesList = ({ notes, locationSelector }) => {
 	const [renameModalOpen, setRenameModalOpen] = useState(false);
 	const [openFolders, setOpenFolders] = useState(null);
 	const sortNoteFunction = {
-		'date-asc': (a, b) => a.date - b.date,
-		'date-dsc': (a, b) => b.date - a.date,
-		'title-asc': (a, b) => b.text.localeCompare(a.text),
-		'title-dsc': (a, b) => a.text.localeCompare(b.text),
+		'date-asc': (a, b) => b.date - a.date,
+		'date-dsc': (a, b) => a.date - b.date,
+		'title-asc': (a, b) => a.text.localeCompare(b.text),
+		'title-dsc': (a, b) => b.text.localeCompare(a.text),
 	}[sort];
-	const sortFavouriteFunction = (a) => {
+	const sortFavouriteFunction = (a, b) => {
 		if (sortFavourite) {
+			if (a.favourite === b.favourite) return 0;
 			if (a.favourite) return -1;
+			return 1;
 		}
-		return 1;
+		return 0;
 	};
 
 	const sortArray = (array) => array
