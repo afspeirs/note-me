@@ -118,16 +118,13 @@ const NotesList = ({ notes, locationSelector }) => {
 		setOpenFolders(newOpenFolders);
 	};
 
-	const handleRenameFolderClick = (index) => {
+	const handleRenameFolderClick = (key) => {
 		handleContextMenuClose();
-		setRenameModalOpen(index);
+		setRenameModalOpen(key);
 	};
 
 	const handleRenameFolder = (value, index) => {
-		const oldFolderName = folders[index];
-		const newFolderName = value;
-
-		renameFolder(oldFolderName, newFolderName);
+		renameFolder(value, index);
 	};
 
 	useEffect(() => {
@@ -154,11 +151,11 @@ const NotesList = ({ notes, locationSelector }) => {
 			)}
 
 			{openFolders && folders.map((folder, index) => {
-				const folderName = folder;
-				const folderNotes = notes.filter((note) => note.folder === folder);
+				const folderName = folder.name;
+				const folderNotes = notes.filter((note) => note.folder === folder.name);
 				// console.log(folderName);
 				// console.log(folderNotes);
-				const folderKey = folderName;
+				const folderKey = `folder-${folder.id}`;
 
 				return (
 					<React.Fragment key={folderKey}>
@@ -185,7 +182,7 @@ const NotesList = ({ notes, locationSelector }) => {
 							}}
 						>
 							<List className={classes.list} dense>
-								<ListItem button onClick={() => handleRenameFolderClick(index)}>
+								<ListItem button onClick={() => handleRenameFolderClick(folderKey)}>
 									<ListItemIcon>
 										<EditIcon color="primary" />
 									</ListItemIcon>
@@ -198,20 +195,28 @@ const NotesList = ({ notes, locationSelector }) => {
 						</Popover>
 
 						<Dialog
-							open={renameModalOpen === index}
+							open={renameModalOpen === folderKey}
 							maxWidth="xs"
 							aria-labelledby={`rename-${folderKey}-dialog-title`}
-							onClose={() => setRenameModalOpen(-1)}
+							onClose={() => setRenameModalOpen(null)}
 						>
-							<DialogTitle id={`rename-${folderKey}-dialog-title`}>Rename Folder</DialogTitle>
+							<DialogTitle id={`rename-${folderKey}-dialog-title`}>{`Rename ${folderName}`}</DialogTitle>
 							<DialogContent>
+								{/*
+									TODO: do not use state for the text field and get the value ...
+									... if the user clicks a save button
+
+									use useRef to store the textField onBlur
+
+									Add save button that gets the value from the ref
+								*/}
 								<TextField
 									autoFocus
 									fullWidth
 									id={`rename-${folderKey}`}
 									margin="dense"
-									onChange={(event) => handleRenameFolder(event.target.value, index)}
-									value={folders[index]}
+									// onChange={(event) => handleRenameFolder(event.target.value, index)}
+									defaultValue={folderName}
 								/>
 							</DialogContent>
 							<DialogActions>

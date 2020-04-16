@@ -70,15 +70,31 @@ function useNotesProvider() {
 		notes[index] = value;
 	};
 
-	const renameFolder = (oldFolderName, newFolderName) => {
-		console.log(oldFolderName, newFolderName);
-		const newFolders = [...folders];
+	const renameFolder = (value, index) => {
+		// console.log(value, index);
+		const oldFolderName = folders[index].name;
+		// console.log(oldFolderName);
 
-		const index = newFolders.indexOf(oldFolderName);
+		const notesToUpdate = notes
+			.filter((note) => note.folder === oldFolderName)
+			.map((note) => ({
+				...note,
+				folder: value,
+			}));
 
-		newFolders[index] = newFolderName;
+		notesToUpdate.forEach((note) => {
+			db.collection(user.uid)
+				.doc(note.id)
+				.set(note);
+		});
 
-		setFolders(newFolders);
+		console.log(notesToUpdate);
+
+		// Do I not need to set notes?
+		// setNotes([
+		// 	...notes,
+		// 	notesToUpdate,
+		// ]);
 	};
 
 	const updateNote = (text, note = currentNote) => {
@@ -116,7 +132,11 @@ function useNotesProvider() {
 	useEffect(() => {
 		// Filter out undefined folder names and remove duplicates
 		const newFolders = [...new Set(notes.map((note) => note.folder))]
-			.filter(Boolean);
+			.filter(Boolean)
+			.map((folder) => ({
+				name: folder,
+				id: Math.floor(Math.random() * notes.length * 2),
+			}));
 
 		setFolders(newFolders);
 	}, [notes]); // eslint-disable-line
