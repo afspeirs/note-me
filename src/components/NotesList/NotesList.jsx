@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { NavLink } from 'react-router-dom';
@@ -26,16 +26,16 @@ import { useStateValue } from '../../hooks/StateContext';
 
 const propTypes = {
 	notes: PropTypes.arrayOf(PropTypes.object).isRequired,
-	locationSelector: PropTypes.string.isRequired,
 };
 
-const NotesList = ({ notes, locationSelector }) => {
+const NotesList = ({ notes }) => {
 	const confirm = useConfirm();
 	const { deleteNote, favouriteNote, loading } = useNotes();
 	const classes = useStyles();
 	const [{ settings }] = useStateValue();
 	const { sort, sortFavourite } = settings;
 	const [contextAnchor, setContextAnchor] = useState(null);
+	const listEl = useRef(null);
 	const sortNoteFunction = {
 		'date-asc': (a, b) => b.date - a.date,
 		'date-dsc': (a, b) => a.date - b.date,
@@ -67,10 +67,9 @@ const NotesList = ({ notes, locationSelector }) => {
 
 	const handleContextMenuOpen = (event) => {
 		const closestContextMenuOption = event.target.closest('.context-menu-select');
-		const closestLocationSelector = event.target.closest(locationSelector);
 
 		// Only render if the right click occurs within the locationSelector
-		if (closestContextMenuOption && closestLocationSelector) {
+		if (closestContextMenuOption) {
 			event.preventDefault();
 			setContextAnchor({
 				left: event.pageX,
@@ -94,13 +93,14 @@ const NotesList = ({ notes, locationSelector }) => {
 	};
 
 	useEffect(() => {
-		document.addEventListener('contextmenu', handleContextMenuOpen);
+		const { current } = listEl;
+		current.addEventListener('contextmenu', handleContextMenuOpen);
 
-		return () => document.removeEventListener('contextmenu', handleContextMenuOpen);
-	}, []); // eslint-disable-line
+		return () => current.removeEventListener('contextmenu', handleContextMenuOpen);
+	}, [listEl]);
 
 	return (
-		<List className={classes.list}>
+		<List className={classes.list} ref={listEl}>
 			{notes.length === 0 && loading === false && (
 				<ListItem>
 					<ListItemText primary="No notes" />
