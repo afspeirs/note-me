@@ -39,24 +39,19 @@ function useNotesProvider() {
 				title: getTitle(text),
 			};
 
-			notes.unshift(value);
 			newNote.set(value).then(() => history.push(`/note/${value.id}`));
 		}
 	};
 
 	const deleteNote = (note = currentNote) => {
-		const index = notes.indexOf(note);
-
 		db.collection(user.uid)
 			.doc(note.id)
 			.delete();
 
-		notes.splice(index, 1);
 		history.replace('/');
 	};
 
 	const favouriteNote = (note = currentNote) => {
-		const index = notes.indexOf(note);
 		const value = {
 			...note,
 			favourite: !note.favourite,
@@ -65,12 +60,9 @@ function useNotesProvider() {
 		db.collection(user.uid)
 			.doc(note.id)
 			.set(value);
-
-		notes[index] = value;
 	};
 
 	const updateNote = (text, note = currentNote) => {
-		const index = notes.indexOf(note);
 		const value = {
 			...note,
 			date: +new Date(),
@@ -81,8 +73,6 @@ function useNotesProvider() {
 		db.collection(user.uid)
 			.doc(note.id)
 			.set(value);
-
-		notes[index] = value;
 	};
 
 	// Subscribe to user on mount
