@@ -70,31 +70,24 @@ function useNotesProvider() {
 		notes[index] = value;
 	};
 
-	const renameFolder = (value, index) => {
-		// console.log(value, index);
+	const renameFolder = (index, value) => {
+		const batch = db.batch();
 		const oldFolderName = folders[index].name;
-		// console.log(oldFolderName);
-
 		const notesToUpdate = notes
 			.filter((note) => note.folder === oldFolderName)
 			.map((note) => ({
 				...note,
 				folder: value,
 			}));
+		// console.log(notesToUpdate);
 
+		// Rename all notes in one update as it causes error when you try and update one at a time
 		notesToUpdate.forEach((note) => {
-			db.collection(user.uid)
-				.doc(note.id)
-				.set(note);
+			const noteRef = db.collection(user.uid).doc(note.id);
+			batch.set(noteRef, note);
 		});
 
-		console.log(notesToUpdate);
-
-		// Do I not need to set notes?
-		// setNotes([
-		// 	...notes,
-		// 	notesToUpdate,
-		// ]);
+		batch.commit();
 	};
 
 	const updateNote = (text, note = currentNote) => {
