@@ -53,8 +53,7 @@ const NotesList = ({ notes, locationSelector }) => {
 	const [{ settings }] = useStateValue();
 	const { sort, sortFavourite } = settings;
 	const [contextAnchor, setContextAnchor] = useState(null);
-	const [renameModalOpen, setRenameModalOpen] = useState(false);
-	const [openFolders, setOpenFolders] = useState(null);
+	const [localFolders, setLocalFolders] = useState([]);
 	const sortNoteFunction = {
 		'date-asc': (a, b) => b.date - a.date,
 		'date-dsc': (a, b) => a.date - b.date,
@@ -113,18 +112,29 @@ const NotesList = ({ notes, locationSelector }) => {
 	};
 
 	const handleFolderClick = (index) => {
-		const newOpenFolders = [...openFolders];
-		newOpenFolders[index] = !newOpenFolders[index];
-		setOpenFolders(newOpenFolders);
+		const newLocalFolders = [...localFolders];
+		newLocalFolders[index].expand = !newLocalFolders[index].expand;
+		setLocalFolders(newLocalFolders);
 	};
 
-	const handleRenameFolderClick = (key) => {
+	const handleRenameFolderModalOpen = (index) => {
 		handleContextMenuClose();
-		setRenameModalOpen(key);
+		const newLocalFolders = [...localFolders];
+		newLocalFolders[index].renameModalOpen = !newLocalFolders[index].renameModalOpen;
+		setLocalFolders(newLocalFolders);
 	};
 
-	const handleRenameFolder = (value, index) => {
-		renameFolder(value, index);
+	const handleRenameFolderClick = (index) => {
+		const value = localFolders[index].renameModalValue;
+
+		handleRenameFolderModalOpen(index);
+		renameFolder(index, value);
+	};
+
+	const handleRenameModalValueChange = (index, value) => {
+		const newLocalFolders = [...localFolders];
+		newLocalFolders[index].renameModalValue = value;
+		setLocalFolders(newLocalFolders);
 	};
 
 	useEffect(() => {
@@ -134,7 +144,12 @@ const NotesList = ({ notes, locationSelector }) => {
 	}, []); // eslint-disable-line
 
 	useEffect(() => {
-		setOpenFolders(folders.map(() => true));
+		setLocalFolders(folders.map((folder) => ({
+			...folder,
+			expand: false,
+			renameModalOpen: false,
+			renameModalValue: folder.name,
+		})));
 	}, [folders]); // eslint-disable-line
 
 	return (
@@ -150,14 +165,14 @@ const NotesList = ({ notes, locationSelector }) => {
 				</ListItem>
 			)}
 
-			{openFolders && folders.map((folder, index) => {
+			{localFolders.map((folder, index) => {
 				const folderName = folder.name;
 				const folderNotes = notes.filter((note) => note.folder === folder.name);
 				// console.log(folderName);
 				// console.log(folderNotes);
 				const folderKey = `folder-${folder.id}`;
 
-				return (
+				return folderNotes.length !== 0 && (
 					<React.Fragment key={folderKey}>
 						<ListItem
 							button
@@ -169,7 +184,7 @@ const NotesList = ({ notes, locationSelector }) => {
 								<FolderIcon />
 							</ListItemIcon>
 							<ListItemText primary={folderName} />
-							{openFolders[index] ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+							{localFolders[index].expand ? <ExpandLessIcon /> : <ExpandMoreIcon />}
 						</ListItem>
 
 						<Popover
@@ -182,7 +197,7 @@ const NotesList = ({ notes, locationSelector }) => {
 							}}
 						>
 							<List className={classes.list} dense>
-								<ListItem button onClick={() => handleRenameFolderClick(folderKey)}>
+								<ListItem button onClick={() => handleRenameFolderModalOpen(index)}>
 									<ListItemIcon>
 										<EditIcon color="primary" />
 									</ListItemIcon>
@@ -195,36 +210,34 @@ const NotesList = ({ notes, locationSelector }) => {
 						</Popover>
 
 						<Dialog
-							open={renameModalOpen === folderKey}
+							open={folder.renameModalOpen}
 							maxWidth="xs"
 							aria-labelledby={`rename-${folderKey}-dialog-title`}
-							onClose={() => setRenameModalOpen(null)}
+							onClose={() => handleRenameFolderModalOpen(index)}
 						>
 							<DialogTitle id={`rename-${folderKey}-dialog-title`}>{`Rename ${folderName}`}</DialogTitle>
 							<DialogContent>
-								{/*
-									TODO: do not use state for the text field and get the value ...
-									... if the user clicks a save button
-
-									use useRef to store the textField onBlur
-
-									Add save button that gets the value from the ref
-								*/}
 								<TextField
 									autoFocus
 									fullWidth
 									id={`rename-${folderKey}`}
 									margin="dense"
-									// onChange={(event) => handleRenameFolder(event.target.value, index)}
-									defaultValue={folderName}
+									onChange={(event) => handleRenameModalValueChange(index, event.target.value)}
+									value={folder.renameModalValue}
 								/>
 							</DialogContent>
 							<DialogActions>
-								<Button onClick={() => setRenameModalOpen(false)}>Close</Button>
+								<Button onClick={() => handleRenameFolderModalOpen(index)}>Cancel</Button>
+								<Button
+									color="primary"
+									onClick={() => handleRenameFolderClick(index)}
+								>
+									Rename
+								</Button>
 							</DialogActions>
 						</Dialog>
 
-						<Collapse in={openFolders[index]} timeout="auto" unmountOnExit>
+						<Collapse in={localFolders[index].expand} timeout="auto" unmountOnExit>
 							<List component="div" disablePadding>
 								{sortArray(folderNotes).map((note) => (
 									<React.Fragment key={`note-${note.id}`}>
