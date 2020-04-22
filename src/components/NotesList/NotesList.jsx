@@ -85,6 +85,7 @@ const NotesList = ({ notes }) => {
 	};
 
 	const handleDeleteNote = (note) => {
+		handleContextMenuClose();
 		confirm({
 			title: `Are you sure you want to delete "${note.title}"?`,
 			confirmationText: 'Delete',
