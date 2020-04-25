@@ -65,7 +65,7 @@ function useNotesProvider() {
 
 	const renameFolder = (index, value) => {
 		const batch = db.batch();
-		const oldFolderName = folders[index].name;
+		const oldFolderName = folders[index];
 		const notesToUpdate = notes
 			.filter((note) => note.folder === oldFolderName)
 			.map((note) => ({
@@ -74,7 +74,7 @@ function useNotesProvider() {
 			}));
 		// console.log(notesToUpdate);
 
-		// Rename all notes in one update as it causes error when you try and update one at a time
+		// Rename all notes in one batch as it errors when you try and update one at a time
 		notesToUpdate.forEach((note) => {
 			const noteRef = db.collection(user.uid).doc(note.id);
 			batch.set(noteRef, note);
@@ -114,13 +114,9 @@ function useNotesProvider() {
 	// Update folder name when notes change
 	useEffect(() => {
 		// Filter out undefined folder names and remove duplicates
-		const newFolders = [...new Set(notes.map((note) => note.folder))]
-			.filter(Boolean)
-			.map((folder) => ({
-				name: folder,
-				id: Math.floor(Math.random() * notes.length * 2),
-			}));
+		const newFolders = [...new Set(notes.map((note) => note.folder))];
 
+		// TODO: Check if it needs to be updated
 		setFolders(newFolders);
 	}, [notes]); // eslint-disable-line
 

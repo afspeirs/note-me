@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import {
 	InputBase,
 	List,
@@ -10,10 +11,12 @@ import {
 
 import useStyles from './NotesSearch.styled';
 import NotesList from '../NotesList';
-import { useNotes } from '../../hooks/NotesContext';
 
-const NotesSearch = () => {
-	const { notes } = useNotes();
+const propTypes = {
+	notes: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
+
+const NotesSearch = ({ notes }) => {
 	const classes = useStyles();
 	const [text, setText] = useState('');
 	const [items, setItems] = useState(notes);
@@ -50,5 +53,7 @@ const NotesSearch = () => {
 		</List>
 	);
 };
+
+NotesSearch.propTypes = propTypes;
 
 export default NotesSearch;
