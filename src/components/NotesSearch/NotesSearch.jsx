@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import {
 	InputBase,
 	List,
@@ -13,11 +12,7 @@ import useStyles from './NotesSearch.styled';
 import NotesList from '../NotesList';
 import { useNotes } from '../../hooks/NotesContext';
 
-const propTypes = {
-	locationSelector: PropTypes.string.isRequired,
-};
-
-const NotesSearch = ({ locationSelector }) => {
+const NotesSearch = () => {
 	const { notes } = useNotes();
 	const classes = useStyles();
 	const [text, setText] = useState('');
@@ -51,14 +46,9 @@ const NotesSearch = ({ locationSelector }) => {
 				</div>
 			</ListItem>
 
-			<NotesList
-				notes={items}
-				locationSelector={locationSelector}
-			/>
+			<NotesList notes={items} />
 		</List>
 	);
 };
-
-NotesSearch.propTypes = propTypes;
 
 export default NotesSearch;

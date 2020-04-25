@@ -37,7 +37,7 @@ const HomePage = () => {
 					{drawerOpen && !mobile ? (
 						<span className={classes.centered}>Select a note from the list</span>
 					) : (
-						<NotesSearch locationSelector=".MuiPage" />
+						<NotesSearch />
 					)}
 				</>
 			)}
