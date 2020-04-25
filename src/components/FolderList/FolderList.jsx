@@ -186,10 +186,10 @@ const FolderList = () => {
 									<Paper className={classes.box} elevation={4}>
 										<Toolbar>
 											<IconButton
-												edge="start"
+												aria-label="Show Folders"
 												className={classes.menuButton}
 												color="inherit"
-												aria-label="Show Folders"
+												edge="start"
 												onClick={() => handleFolderOpen(index)}
 											>
 												<ArrowBackIcon />

@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
+	IconButton,
 	InputBase,
 	List,
 	ListItem,
 } from '@material-ui/core';
 import {
+	Clear as ClearIcon,
 	Search as SearchIcon,
 } from '@material-ui/icons';
 
@@ -20,6 +22,8 @@ const NotesSearch = ({ notes }) => {
 	const classes = useStyles();
 	const [text, setText] = useState('');
 	const [items, setItems] = useState(notes);
+
+	const handleTextClear = () => setText('');
 
 	const handleTextInput = (event) => setText(event.target.value);
 
@@ -42,9 +46,21 @@ const NotesSearch = ({ notes }) => {
 							root: classes.inputRoot,
 							input: classes.inputInput,
 						}}
-						placeholder="Search Notes"
 						inputProps={{ 'aria-label': 'search' }}
 						onChange={handleTextInput}
+						placeholder="Search Notes"
+						value={text}
+						endAdornment={text.length !== 0 && (
+							<IconButton
+								aria-label="Clear Search"
+								className={classes.searchClear}
+								color="inherit"
+								onClick={handleTextClear}
+								size="small"
+							>
+								<ClearIcon fontSize="inherit" />
+							</IconButton>
+						)}
 					/>
 				</div>
 			</ListItem>
