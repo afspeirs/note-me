@@ -21,9 +21,10 @@ function useNotesProvider() {
 	const history = useHistory();
 	const [loading, setLoading] = useState(true);
 	const [notes, setNotes] = useState([]);
+	const [folders, setFolders] = useState([]);
 	const [currentNote, setCurrentNote] = useState(null);
 
-	const addNote = (text) => {
+	const addNote = (text = '') => {
 		const untitledNotes = notes.filter((note) => note.text === '');
 
 		if (untitledNotes.length !== 0) {
@@ -62,6 +63,26 @@ function useNotesProvider() {
 			.set(value);
 	};
 
+	const renameFolder = (index, value) => {
+		const batch = db.batch();
+		const oldFolderName = folders[index].name;
+		const notesToUpdate = notes
+			.filter((note) => note.folder === oldFolderName)
+			.map((note) => ({
+				...note,
+				folder: value,
+			}));
+		// console.log(notesToUpdate);
+
+		// Rename all notes in one update as it causes error when you try and update one at a time
+		notesToUpdate.forEach((note) => {
+			const noteRef = db.collection(user.uid).doc(note.id);
+			batch.set(noteRef, note);
+		});
+
+		batch.commit();
+	};
+
 	const updateNote = (text, note = currentNote) => {
 		const value = {
 			...note,
@@ -90,13 +111,28 @@ function useNotesProvider() {
 		}
 	}, [user]); // eslint-disable-line
 
+	// Update folder name when notes change
+	useEffect(() => {
+		// Filter out undefined folder names and remove duplicates
+		const newFolders = [...new Set(notes.map((note) => note.folder))]
+			.filter(Boolean)
+			.map((folder) => ({
+				name: folder,
+				id: Math.floor(Math.random() * notes.length * 2),
+			}));
+
+		setFolders(newFolders);
+	}, [notes]); // eslint-disable-line
+
 	return {
 		addNote,
 		currentNote,
 		deleteNote,
 		favouriteNote,
+		folders,
 		loading,
 		notes,
+		renameFolder,
 		setCurrentNote,
 		updateNote,
 	};
