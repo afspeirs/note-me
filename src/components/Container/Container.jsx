@@ -61,7 +61,7 @@ const Container = ({ children }) => {
 
 	return (
 		<div className={classes.container}>
-			<AppBar position="fixed">
+			<AppBar position="fixed" className={classes.appBar}>
 				<Toolbar>
 					{!(!isHomeVisible && persistentDrawer) && (
 						// Show if not on the HomePage and in mobile
