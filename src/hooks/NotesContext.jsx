@@ -63,6 +63,17 @@ function useNotesProvider() {
 			.set(value);
 	};
 
+	const moveNote = (note, folderName) => {
+		const value = {
+			...note,
+			folder: folderName,
+		};
+
+		db.collection(user.uid)
+			.doc(note.id)
+			.set(value);
+	};
+
 	const renameFolder = (index, value) => {
 		const batch = db.batch();
 		const oldFolderName = folders[index];
@@ -128,6 +139,7 @@ function useNotesProvider() {
 		folders,
 		loading,
 		notes,
+		moveNote,
 		renameFolder,
 		setCurrentNote,
 		updateNote,
