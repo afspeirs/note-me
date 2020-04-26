@@ -4,7 +4,4 @@ export default {
 			main: '#ee6e00',
 		},
 	},
-	zIndex: {
-		appBar: 1350,
-	},
 };

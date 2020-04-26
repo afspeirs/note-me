@@ -11,10 +11,6 @@ const useStyles = makeStyles((theme) => ({
 	children: {
 		overflowY: 'auto',
 	},
-	dialog: {
-		// TODO - Remove !important
-		zIndex: `${theme.zIndex.appBar + 10} !important`,
-	},
 	menuButton: {
 		marginRight: theme.spacing(2),
 	},

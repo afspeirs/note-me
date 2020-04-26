@@ -11,7 +11,6 @@ import {
 	Sort as SortIcon,
 } from '@material-ui/icons';
 
-import useStyles from './SortNotes.styled';
 import { useStateValue } from '../../hooks/StateContext';
 
 const options = [
@@ -30,7 +29,6 @@ const propTypes = {
 };
 
 const SortNotes = ({ icon }) => {
-	const classes = useStyles();
 	const [{ settings }, dispatch] = useStateValue();
 	const { sort } = settings;
 	const [anchorEl, setAnchorEl] = useState(null);
@@ -72,7 +70,6 @@ const SortNotes = ({ icon }) => {
 			</ListItem>
 			<Menu
 				id="sort-menu"
-				className={classes.menu}
 				anchorEl={anchorEl}
 				keepMounted
 				open={Boolean(anchorEl)}

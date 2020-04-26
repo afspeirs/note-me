@@ -61,7 +61,7 @@ const Container = ({ children }) => {
 
 	return (
 		<div className={classes.container}>
-			<AppBar position="fixed">
+			<AppBar position="fixed" className={classes.appBar}>
 				<Toolbar>
 					{!(!isHomeVisible && persistentDrawer) && (
 						// Show if not on the HomePage and in mobile
@@ -89,7 +89,9 @@ const Container = ({ children }) => {
 				variant={persistentDrawer ? 'temporary' : 'persistent'}
 				anchor="left"
 				open={drawerOpen}
-				className={clsx(classes.drawer, 'MuiDrawer')}
+				className={clsx(classes.drawer, {
+					[classes.drawerBehind]: !persistentDrawer,
+				})}
 				classes={{
 					paper: classes.drawerPaper,
 				}}
@@ -97,11 +99,11 @@ const Container = ({ children }) => {
 				onClose={handleDrawerToggle}
 				ModalProps={{ keepMounted: true }}
 			>
-				<div className={classes.drawerHeader} />
+				{!persistentDrawer && <div className={classes.drawerHeader} />}
 				<DrawerContent />
 			</SwipeableDrawer>
 			<div
-				className={clsx(classes.content, 'MuiPage', {
+				className={clsx(classes.content, {
 					[classes.contentShift]: drawerOpen && !disablePersistentDrawer,
 				})}
 			>
