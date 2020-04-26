@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import {
 	IconButton,
 	InputBase,
@@ -68,5 +69,7 @@ const NotesSearch = ({ notes }) => {
 		</List>
 	);
 };
+
+NotesSearch.propTypes = propTypes;
 
 export default NotesSearch;

@@ -61,7 +61,7 @@ const Container = ({ children }) => {
 
 	return (
 		<div className={classes.container}>
-			<AppBar position="fixed" className={classes.appBar}>
+			<AppBar position="fixed">
 				<Toolbar>
 					{!(!isHomeVisible && persistentDrawer) && (
 						// Show if not on the HomePage and in mobile
@@ -89,9 +89,7 @@ const Container = ({ children }) => {
 				variant={persistentDrawer ? 'temporary' : 'persistent'}
 				anchor="left"
 				open={drawerOpen}
-				className={clsx(classes.drawer, {
-					[classes.drawerBehind]: !persistentDrawer,
-				})}
+				className={classes.drawer}
 				classes={{
 					paper: classes.drawerPaper,
 				}}
