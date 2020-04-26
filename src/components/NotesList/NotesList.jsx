@@ -4,26 +4,16 @@ import clsx from 'clsx';
 import { NavLink } from 'react-router-dom';
 import Swipeout from 'rc-swipeout';
 import {
-	Button,
-	Collapse,
-	Dialog,
-	DialogActions,
-	DialogContent,
-	DialogTitle,
 	List,
 	ListItem,
 	ListItemIcon,
 	ListItemSecondaryAction,
 	ListItemText,
 	Popover,
-	TextField,
 } from '@material-ui/core';
 import {
 	Alarm as AlarmIcon,
 	Delete as DeleteIcon,
-	Edit as EditIcon,
-	ExpandLess as ExpandLessIcon,
-	ExpandMore as ExpandMoreIcon,
 	Folder as FolderIcon,
 	Star as StarIcon,
 	StarBorder as StarBorderIcon,
@@ -34,6 +24,7 @@ import useStyles from './NotesList.styled';
 import TimeAgo from '../TimeAgo';
 import { useNotes } from '../../hooks/NotesContext';
 import { useStateValue } from '../../hooks/StateContext';
+import DialogMoveNote from '../DialogMoveNote';
 
 const propTypes = {
 	notes: PropTypes.arrayOf(PropTypes.object).isRequired,
@@ -41,19 +32,13 @@ const propTypes = {
 
 const NotesList = ({ notes }) => {
 	const confirm = useConfirm();
-	const {
-		deleteNote,
-		favouriteNote,
-		folders,
-		loading,
-		renameFolder,
-	} = useNotes();
+	const { deleteNote, favouriteNote, loading } = useNotes();
 	const classes = useStyles();
 	const [{ settings }] = useStateValue();
 	const { sort, sortFavourite } = settings;
 	const [contextAnchor, setContextAnchor] = useState(null);
-	const [localFolders, setLocalFolders] = useState([]);
-  const listEl = useRef(null);
+	const [openMoveNote, setOpenMoveNote] = useState(null);
+	const listEl = useRef(null);
 	const sortNoteFunction = {
 		'date-asc': (a, b) => b.date - a.date,
 		'date-dsc': (a, b) => a.date - b.date,
@@ -111,30 +96,9 @@ const NotesList = ({ notes }) => {
 			.then(() => deleteNote(note));
 	};
 
-	const handleFolderClick = (index) => {
-		const newLocalFolders = [...localFolders];
-		newLocalFolders[index].expand = !newLocalFolders[index].expand;
-		setLocalFolders(newLocalFolders);
-	};
-
-	const handleRenameFolderModalOpen = (index) => {
+	const handleMoveNoteClick = (note) => {
 		handleContextMenuClose();
-		const newLocalFolders = [...localFolders];
-		newLocalFolders[index].renameModalOpen = !newLocalFolders[index].renameModalOpen;
-		setLocalFolders(newLocalFolders);
-	};
-
-	const handleRenameFolderClick = (index) => {
-		const value = localFolders[index].renameModalValue;
-
-		handleRenameFolderModalOpen(index);
-		renameFolder(index, value);
-	};
-
-	const handleRenameModalValueChange = (index, value) => {
-		const newLocalFolders = [...localFolders];
-		newLocalFolders[index].renameModalValue = value;
-		setLocalFolders(newLocalFolders);
+		setOpenMoveNote(note);
 	};
 
 	useEffect(() => {
@@ -144,52 +108,73 @@ const NotesList = ({ notes }) => {
 		return () => current.removeEventListener('contextmenu', handleContextMenuOpen);
 	}, [listEl]);
 
-	useEffect(() => {
-		setLocalFolders(folders.map((folder) => ({
-			...folder,
-			expand: false,
-			renameModalOpen: false,
-			renameModalValue: folder.name,
-		})));
-	}, [folders]); // eslint-disable-line
-
 	return (
-		<List className={classes.list} ref={listEl}>
-			{notes.length === 0 && loading === false && (
-				<ListItem>
-					<ListItemText primary="No notes" />
-				</ListItem>
-			)}
-			{loading && (
-				<ListItem>
-					<ListItemText primary="Loading, please wait while we gather your notes" />
-				</ListItem>
-			)}
+		<>
+			<List className={classes.list} ref={listEl}>
+				{notes.length === 0 && loading === false && (
+					<ListItem>
+						<ListItemText primary="No notes" />
+					</ListItem>
+				)}
+				{loading && (
+					<ListItem>
+						<ListItemText primary="Loading, please wait while we gather your notes" />
+					</ListItem>
+				)}
 
-			{localFolders.map((folder, index) => {
-				const folderName = folder.name;
-				const folderNotes = notes.filter((note) => note.folder === folder.name);
-				// console.log(folderName);
-				// console.log(folderNotes);
-				const folderKey = `folder-${folder.id}`;
-
-				return folderNotes.length !== 0 && (
-					<React.Fragment key={folderKey}>
-						<ListItem
-							button
-							className="context-menu-select"
-							data-id={folderKey}
-							onClick={() => handleFolderClick(index)}
+				{sortArray(notes).map((note) => (
+					<React.Fragment key={`note-${note.id}`}>
+						<Swipeout
+							className={classes.swipeout}
+							left={[
+								{
+									text: <TimeAgo date={note.date / 1000} />,
+									autoClose: true,
+									style: {
+										backgroundColor: '#9e9e9e',
+										color: 'white',
+									},
+								},
+								{
+									text: note.favourite ? <StarIcon color="inherit" /> : <StarBorderIcon />,
+									onPress: () => handleFavouriteNote(note),
+									autoClose: true,
+									style: {
+										backgroundColor: '#ee6e00',
+										color: 'white',
+										width: 56,
+									},
+								},
+								{
+									text: <DeleteIcon />,
+									onPress: () => handleDeleteNote(note),
+									autoClose: true,
+									style: {
+										backgroundColor: 'red',
+										color: 'white',
+										width: 56,
+									},
+								},
+							]}
 						>
-							<ListItemIcon>
-								<FolderIcon />
-							</ListItemIcon>
-							<ListItemText primary={folderName} />
-							{localFolders[index].expand ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-						</ListItem>
+							<ListItem
+								button
+								to={`/note/${note.id}`}
+								className={clsx(classes.listItem, 'context-menu-select')}
+								component={renderLink}
+								data-id={note.id}
+							>
+								<ListItemText className={classes.listItemText} primary={note.title} />
+								{note.favourite && (
+									<ListItemSecondaryAction className={classes.secondaryAction}>
+										<StarIcon color="primary" edge="end" />
+									</ListItemSecondaryAction>
+								)}
+							</ListItem>
+						</Swipeout>
 
 						<Popover
-							open={contextAnchor?.id === folderKey}
+							open={contextAnchor?.id === note.id}
 							onClose={handleContextMenuClose}
 							anchorReference="anchorPosition"
 							anchorPosition={{
@@ -198,240 +183,51 @@ const NotesList = ({ notes }) => {
 							}}
 						>
 							<List className={classes.list} dense>
-								<ListItem button onClick={() => handleRenameFolderModalOpen(index)}>
+								<ListItem>
 									<ListItemIcon>
-										<EditIcon color="primary" />
+										<AlarmIcon color="primary" />
 									</ListItemIcon>
 									<ListItemText
 										className={classes.listItemText}
-										primary={`Rename "${folderName}"`}
+										primary={<TimeAgo date={note.date / 1000} />}
+									/>
+								</ListItem>
+								<ListItem button onClick={() => handleFavouriteNote(note)}>
+									<ListItemIcon>
+										{note.favourite ? <StarIcon color="primary" /> : <StarBorderIcon />}
+									</ListItemIcon>
+									<ListItemText
+										className={classes.listItemText}
+										primary={`${note.favourite ? 'Unfavourite' : 'Favourite'} "${note.title}"`}
+									/>
+								</ListItem>
+								<ListItem button onClick={() => handleMoveNoteClick(note)}>
+									<ListItemIcon>
+										<FolderIcon color="primary" />
+									</ListItemIcon>
+									<ListItemText
+										className={classes.listItemText}
+										primary="Move"
+									/>
+								</ListItem>
+								<ListItem button onClick={() => handleDeleteNote(note)}>
+									<ListItemIcon>
+										<DeleteIcon color="error" />
+									</ListItemIcon>
+									<ListItemText
+										className={classes.listItemText}
+										primary={`Delete "${note.title}"`}
 									/>
 								</ListItem>
 							</List>
 						</Popover>
 
-						<Dialog
-							open={folder.renameModalOpen}
-							maxWidth="xs"
-							aria-labelledby={`rename-${folderKey}-dialog-title`}
-							onClose={() => handleRenameFolderModalOpen(index)}
-						>
-							<DialogTitle id={`rename-${folderKey}-dialog-title`}>{`Rename ${folderName}`}</DialogTitle>
-							<DialogContent>
-								<TextField
-									autoFocus
-									fullWidth
-									id={`rename-${folderKey}`}
-									margin="dense"
-									onChange={(event) => handleRenameModalValueChange(index, event.target.value)}
-									value={folder.renameModalValue}
-								/>
-							</DialogContent>
-							<DialogActions>
-								<Button onClick={() => handleRenameFolderModalOpen(index)}>Cancel</Button>
-								<Button
-									color="primary"
-									onClick={() => handleRenameFolderClick(index)}
-								>
-									Rename
-								</Button>
-							</DialogActions>
-						</Dialog>
-
-						<Collapse in={localFolders[index].expand} timeout="auto" unmountOnExit>
-							<List component="div" disablePadding>
-								{sortArray(folderNotes).map((note) => (
-									<React.Fragment key={`note-${note.id}`}>
-										<Swipeout
-											className={classes.swipeout}
-											left={[
-												{
-													text: <TimeAgo date={note.date / 1000} />,
-													autoClose: true,
-													style: {
-														backgroundColor: '#9e9e9e',
-														color: 'white',
-													},
-												},
-												{
-													text: note.favourite ? <StarIcon color="inherit" /> : <StarBorderIcon />,
-													onPress: () => handleFavouriteNote(note),
-													autoClose: true,
-													style: {
-														backgroundColor: '#ee6e00',
-														color: 'white',
-														width: 56,
-													},
-												},
-												{
-													text: <DeleteIcon />,
-													onPress: () => handleDeleteNote(note),
-													autoClose: true,
-													style: {
-														backgroundColor: 'red',
-														color: 'white',
-														width: 56,
-													},
-												},
-											]}
-										>
-											<ListItem
-												button
-												to={`/note/${note.id}`}
-												className={clsx(classes.listItem, classes.nested, 'context-menu-select')}
-												component={renderLink}
-												data-id={note.id}
-											>
-												<ListItemText className={classes.listItemText} primary={note.title} />
-												{note.favourite && (
-													<ListItemSecondaryAction className={classes.secondaryAction}>
-														<StarIcon color="primary" edge="end" />
-													</ListItemSecondaryAction>
-												)}
-											</ListItem>
-										</Swipeout>
-
-										<Popover
-											open={contextAnchor?.id === note.id}
-											onClose={handleContextMenuClose}
-											anchorReference="anchorPosition"
-											anchorPosition={{
-												top: contextAnchor?.top || 0,
-												left: contextAnchor?.left || 0,
-											}}
-										>
-											<List className={classes.list} dense>
-												<ListItem>
-													<ListItemIcon>
-														<AlarmIcon color="primary" />
-													</ListItemIcon>
-													<ListItemText
-														className={classes.listItemText}
-														primary={<TimeAgo date={note.date / 1000} />}
-													/>
-												</ListItem>
-												<ListItem button onClick={() => handleFavouriteNote(note)}>
-													<ListItemIcon>
-														{note.favourite ? <StarIcon color="primary" /> : <StarBorderIcon />}
-													</ListItemIcon>
-													<ListItemText
-														className={classes.listItemText}
-														primary={`${note.favourite ? 'Unfavourite' : 'Favourite'} "${note.title}"`}
-													/>
-												</ListItem>
-												<ListItem button onClick={() => handleDeleteNote(note)}>
-													<ListItemIcon>
-														<DeleteIcon color="error" />
-													</ListItemIcon>
-													<ListItemText
-														className={classes.listItemText}
-														primary={`Delete "${note.title}"`}
-													/>
-												</ListItem>
-											</List>
-										</Popover>
-									</React.Fragment>
-								))}
-							</List>
-						</Collapse>
 					</React.Fragment>
-				);
-			})}
+				))}
+			</List>
 
-			{notes.filter((note) => !note.folder).map((note) => (
-				<React.Fragment key={`note-${note.id}`}>
-					{/* TODO: turn into component */}
-					<Swipeout
-						className={classes.swipeout}
-						left={[
-							{
-								text: <TimeAgo date={note.date / 1000} />,
-								autoClose: true,
-								style: {
-									backgroundColor: '#9e9e9e',
-									color: 'white',
-								},
-							},
-							{
-								text: note.favourite ? <StarIcon color="inherit" /> : <StarBorderIcon />,
-								onPress: () => handleFavouriteNote(note),
-								autoClose: true,
-								style: {
-									backgroundColor: '#ee6e00',
-									color: 'white',
-									width: 56,
-								},
-							},
-							{
-								text: <DeleteIcon />,
-								onPress: () => handleDeleteNote(note),
-								autoClose: true,
-								style: {
-									backgroundColor: 'red',
-									color: 'white',
-									width: 56,
-								},
-							},
-						]}
-					>
-						<ListItem
-							button
-							to={`/note/${note.id}`}
-							className={clsx(classes.listItem, 'context-menu-select')}
-							component={renderLink}
-							data-id={note.id}
-						>
-							<ListItemText className={classes.listItemText} primary={note.title} />
-							{note.favourite && (
-								<ListItemSecondaryAction className={classes.secondaryAction}>
-									<StarIcon color="primary" edge="end" />
-								</ListItemSecondaryAction>
-							)}
-						</ListItem>
-					</Swipeout>
-
-					<Popover
-						open={contextAnchor?.id === note.id}
-						onClose={handleContextMenuClose}
-						anchorReference="anchorPosition"
-						anchorPosition={{
-							top: contextAnchor?.top || 0,
-							left: contextAnchor?.left || 0,
-						}}
-					>
-						<List className={classes.list} dense>
-							<ListItem>
-								<ListItemIcon>
-									<AlarmIcon color="primary" />
-								</ListItemIcon>
-								<ListItemText
-									className={classes.listItemText}
-									primary={<TimeAgo date={note.date / 1000} />}
-								/>
-							</ListItem>
-							<ListItem button onClick={() => handleFavouriteNote(note)}>
-								<ListItemIcon>
-									{note.favourite ? <StarIcon color="primary" /> : <StarBorderIcon />}
-								</ListItemIcon>
-								<ListItemText
-									className={classes.listItemText}
-									primary={`${note.favourite ? 'Unfavourite' : 'Favourite'} "${note.title}"`}
-								/>
-							</ListItem>
-							<ListItem button onClick={() => handleDeleteNote(note)}>
-								<ListItemIcon>
-									<DeleteIcon color="error" />
-								</ListItemIcon>
-								<ListItemText
-									className={classes.listItemText}
-									primary={`Delete "${note.title}"`}
-								/>
-							</ListItem>
-						</List>
-					</Popover>
-				</React.Fragment>
-			))}
-		</List>
+			<DialogMoveNote note={openMoveNote} setOpen={setOpenMoveNote} />
+		</>
 	);
 };
 

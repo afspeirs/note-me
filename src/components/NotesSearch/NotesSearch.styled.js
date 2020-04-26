@@ -24,6 +24,10 @@ const useStyles = makeStyles((theme) => ({
 		alignItems: 'center',
 		justifyContent: 'center',
 	},
+	searchClear: {
+		marginRight: theme.spacing(0.5),
+		marginLeft: -theme.spacing(0.5),
+	},
 	inputRoot: {
 		color: 'inherit',
 		width: 'inherit',
