@@ -89,9 +89,7 @@ const Container = ({ children }) => {
 				variant={persistentDrawer ? 'temporary' : 'persistent'}
 				anchor="left"
 				open={drawerOpen}
-				className={clsx(classes.drawer, {
-					[classes.drawerBehind]: !persistentDrawer,
-				})}
+				className={classes.drawer}
 				classes={{
 					paper: classes.drawerPaper,
 				}}

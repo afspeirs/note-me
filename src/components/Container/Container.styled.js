@@ -37,8 +37,9 @@ const useStyles = makeStyles((theme) => ({
 		},
 	},
 	drawer: {
-		width: drawerWidth,
 		flexShrink: 0,
+		width: drawerWidth,
+		zIndex: 0,
 	},
 	drawerBehind: {
 		zIndex: theme.zIndex.appBar - 10,

@@ -84,7 +84,6 @@ const FolderList = () => {
 	useEffect(() => {
 		setLocalFolders(folders.map((folder) => ({
 			name: folder,
-			id: Math.floor(Math.random() * notes.length * 2),
 			notes: notes.filter((note) => note.folder === folder),
 			open: false,
 			renameModalOpen: false,
@@ -104,14 +103,13 @@ const FolderList = () => {
 			{(localFolders.length !== 0 && localFolders[0].name) ? (
 				<>
 					{localFolders.map((folder, index) => {
-						// TODO: rename back to name, notes and key
 						const {
-							name: folderName,
+							name,
 							notes: folderNotes,
 							open,
 						} = folder;
-						const folderKey = `folder-${folder.id}`;
-						// console.log(folderName);
+						const folderKey = `folder-${folder.name}`;
+						// console.log(name);
 						// console.log(folderNotes);
 
 						return folderNotes.length !== 0 && (
@@ -125,7 +123,7 @@ const FolderList = () => {
 									<ListItemIcon>
 										<FolderIcon />
 									</ListItemIcon>
-									<ListItemText primary={folderName || 'Unsorted Notes'} />
+									<ListItemText primary={name || 'Unsorted Notes'} />
 								</ListItem>
 
 								<Popover
@@ -141,14 +139,14 @@ const FolderList = () => {
 										<ListItem
 											button
 											onClick={() => handleRenameFolderModalOpen(index)}
-											disabled={!folderName}
+											disabled={!name}
 										>
 											<ListItemIcon>
 												<EditIcon color="primary" />
 											</ListItemIcon>
 											<ListItemText
 												className={classes.listItemText}
-												primary={`Rename "${folderName || 'Unsorted Notes'}"`}
+												primary={`Rename "${name || 'Unsorted Notes'}"`}
 											/>
 										</ListItem>
 									</List>
@@ -160,7 +158,7 @@ const FolderList = () => {
 									aria-labelledby={`rename-${folderKey}-dialog-title`}
 									onClose={() => handleRenameFolderModalOpen(index)}
 								>
-									<DialogTitle id={`rename-${folderKey}-dialog-title`}>{`Rename ${folderName}`}</DialogTitle>
+									<DialogTitle id={`rename-${folderKey}-dialog-title`}>{`Rename ${name}`}</DialogTitle>
 									<DialogContent>
 										<TextField
 											autoFocus
@@ -194,7 +192,7 @@ const FolderList = () => {
 											>
 												<ArrowBackIcon />
 											</IconButton>
-											<Typography variant="h6">{folderName || 'Unsorted Notes'}</Typography>
+											<Typography variant="h6">{name || 'Unsorted Notes'}</Typography>
 										</Toolbar>
 
 										<NotesSearch notes={folderNotes} />

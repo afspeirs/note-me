@@ -39,18 +39,15 @@ const DialogMoveFolder = ({ note, setOpen }) => {
 	const handleClose = () => setOpen(null);
 
 	const handleMove = () => {
+		const title = (typeof value === 'string') ? value : value.title;
+
 		confirm({
-			title: `Are you sure you want to move the note to "${value}"`,
+			title: `Are you sure you want to move "${note.title}" to "${title}"`,
 			cancellationText: 'No',
 			confirmationText: 'Yes',
-			dialogProps: {
-				classes: {
-					root: classes.dialog,
-				},
-			},
 		}).then(() => {
 			handleClose();
-			console.log('wwop');
+			moveNote(note, title);
 		});
 	};
 
@@ -102,8 +99,7 @@ const DialogMoveFolder = ({ note, setOpen }) => {
 						return filtered;
 					}}
 					id="free-solo-with-text-demo"
-					options={folders.map((folder) => ({ title: folder }))}
-					// options={top100Films}
+					options={folders.filter(Boolean).map((folder) => ({ title: folder }))}
 					getOptionLabel={(option) => {
 						// e.g value selected with enter, right from the input
 						if (typeof option === 'string') {
@@ -127,7 +123,7 @@ const DialogMoveFolder = ({ note, setOpen }) => {
 				<Button color="inherit" onClick={handleClose}>
 					Cancel
 				</Button>
-				<Button color="primary" disabled={value !== ''} onClick={handleMove}>
+				<Button color="primary" disabled={!value} onClick={handleMove}>
 					Move
 				</Button>
 			</DialogActions>
