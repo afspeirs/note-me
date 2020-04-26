@@ -19,7 +19,6 @@ import {
 } from '@material-ui/icons';
 import { useConfirm } from 'material-ui-confirm';
 
-import useStyles from './HeaderContent.styled';
 import AdapterLink from '../AdapterLink';
 import { useAuth } from '../../hooks/AuthContext';
 import { useNotes } from '../../hooks/NotesContext';
@@ -30,7 +29,6 @@ const propTypes = {
 };
 
 const HeaderContent = ({ isHomeVisible, mobile }) => {
-	const classes = useStyles();
 	const confirm = useConfirm();
 	const { isSignedIn } = useAuth();
 	const {
@@ -122,7 +120,6 @@ const HeaderContent = ({ isHomeVisible, mobile }) => {
 
 					<Menu
 						id="more-menu"
-						className={classes.menu}
 						anchorEl={anchorEl}
 						keepMounted
 						open={Boolean(anchorEl)}

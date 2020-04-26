@@ -10,10 +10,6 @@ const useStyles = makeStyles((theme) => ({
 		right: theme.spacing(1),
 		top: theme.spacing(1),
 	},
-	dialog: {
-		// TODO - Remove !important
-		zIndex: `${theme.zIndex.appBar + 10} !important`,
-	},
 	listItemText: {
 		overflow: 'hidden',
 		textOverflow: 'ellipsis',
