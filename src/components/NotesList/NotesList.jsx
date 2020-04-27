@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { NavLink } from 'react-router-dom';
-import Swipeout from 'rc-swipeout';
 import {
 	List,
 	ListItem,
@@ -124,54 +123,20 @@ const NotesList = ({ notes }) => {
 
 				{sortArray(notes).map((note) => (
 					<React.Fragment key={`note-${note.id}`}>
-						<Swipeout
-							className={classes.swipeout}
-							left={[
-								{
-									text: <TimeAgo date={note.date / 1000} />,
-									autoClose: true,
-									style: {
-										backgroundColor: '#9e9e9e',
-										color: 'white',
-									},
-								},
-								{
-									text: note.favourite ? <StarIcon color="inherit" /> : <StarBorderIcon />,
-									onPress: () => handleFavouriteNote(note),
-									autoClose: true,
-									style: {
-										backgroundColor: '#ee6e00',
-										color: 'white',
-										width: 56,
-									},
-								},
-								{
-									text: <DeleteIcon />,
-									onPress: () => handleDeleteNote(note),
-									autoClose: true,
-									style: {
-										backgroundColor: 'red',
-										color: 'white',
-										width: 56,
-									},
-								},
-							]}
+						<ListItem
+							button
+							to={`/note/${note.id}`}
+							className={clsx(classes.listItem, 'context-menu-select')}
+							component={renderLink}
+							data-id={note.id}
 						>
-							<ListItem
-								button
-								to={`/note/${note.id}`}
-								className={clsx(classes.listItem, 'context-menu-select')}
-								component={renderLink}
-								data-id={note.id}
-							>
-								<ListItemText className={classes.listItemText} primary={note.title} />
-								{note.favourite && (
-									<ListItemSecondaryAction className={classes.secondaryAction}>
-										<StarIcon color="primary" edge="end" />
-									</ListItemSecondaryAction>
-								)}
-							</ListItem>
-						</Swipeout>
+							<ListItemText className={classes.listItemText} primary={note.title} />
+							{note.favourite && (
+								<ListItemSecondaryAction className={classes.secondaryAction}>
+									<StarIcon color="primary" edge="end" />
+								</ListItemSecondaryAction>
+							)}
+						</ListItem>
 
 						<Popover
 							open={contextAnchor?.id === note.id}

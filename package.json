@@ -18,7 +18,6 @@
     "firebase": "^7.9.3",
     "material-ui-confirm": "^2.0.4",
     "prop-types": "^15.7.2",
-    "rc-swipeout": "^2.0.11",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
     "react-markdown": "^4.3.1",

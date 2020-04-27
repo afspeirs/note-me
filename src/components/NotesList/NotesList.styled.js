@@ -20,12 +20,6 @@ const useStyles = makeStyles((theme) => ({
 	secondaryAction: {
 		pointerEvents: 'none',
 	},
-	swipeout: {
-		position: 'relative',
-		'& .rc-swipeout-content': {
-			backgroundColor: theme.palette.background.paper,
-		},
-	},
 }));
 
 export default useStyles;
