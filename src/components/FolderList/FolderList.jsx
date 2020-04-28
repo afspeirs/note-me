@@ -31,13 +31,22 @@ import {
 import useStyles from './FolderList.styled';
 import NotesSearch from '../NotesSearch';
 import { useNotes } from '../../hooks/NotesContext';
+import { useStateValue } from '../../hooks/StateContext';
 
 const FolderList = () => {
 	const classes = useStyles();
+	const [{ settings }] = useStateValue();
+	const { sortFolders } = settings;
 	const { folders, notes, renameFolder } = useNotes();
 	const [contextAnchor, setContextAnchor] = useState(null);
 	const [localFolders, setLocalFolders] = useState([]);
 	const listEl = useRef(null);
+	const untitledFolder = 'Unsorted Notes';
+
+	const sortFoldersFunction = {
+		'name-asc': (a, b) => a.name.localeCompare(b.name),
+		'name-dsc': (a, b) => b.name.localeCompare(a.name),
+	}[sortFolders];
 
 	const handleContextMenuOpen = (event) => {
 		const closestContextMenuOption = event.target.closest('.context-menu-select');
@@ -83,7 +92,7 @@ const FolderList = () => {
 
 	useEffect(() => {
 		setLocalFolders(folders.map((folder) => ({
-			name: folder,
+			name: folder || untitledFolder,
 			notes: notes.filter((note) => note.folder === folder),
 			open: false,
 			renameModalOpen: false,
@@ -100,9 +109,9 @@ const FolderList = () => {
 
 	return (
 		<List className={classes.root} ref={listEl}>
-			{(localFolders.length !== 0 && localFolders[0].name) ? (
+			{(localFolders.length >= 1) ? (
 				<>
-					{localFolders.map((folder, index) => {
+					{localFolders.sort(sortFoldersFunction).map((folder, index) => {
 						const {
 							name,
 							notes: folderNotes,
@@ -112,7 +121,7 @@ const FolderList = () => {
 						// console.log(name);
 						// console.log(folderNotes);
 
-						return folderNotes.length !== 0 && (
+						return folderNotes.length && (
 							<Fragment key={folderKey}>
 								<ListItem
 									button
@@ -123,7 +132,7 @@ const FolderList = () => {
 									<ListItemIcon>
 										<FolderIcon />
 									</ListItemIcon>
-									<ListItemText primary={name || 'Unsorted Notes'} />
+									<ListItemText primary={name} />
 								</ListItem>
 
 								<Popover
@@ -139,14 +148,14 @@ const FolderList = () => {
 										<ListItem
 											button
 											onClick={() => handleRenameFolderModalOpen(index)}
-											disabled={!name}
+											disabled={name === untitledFolder}
 										>
 											<ListItemIcon>
 												<EditIcon color="primary" />
 											</ListItemIcon>
 											<ListItemText
 												className={classes.listItemText}
-												primary={`Rename "${name || 'Unsorted Notes'}"`}
+												primary={`Rename "${name}"`}
 											/>
 										</ListItem>
 									</List>

@@ -6,6 +6,7 @@ export const initialState = {
 		darkTheme: JSON.parse(localStorage.getItem('settings-darkTheme')) || false,
 		sort: localStorage.getItem('settings-sort') || 'date-asc',
 		sortFavourite: JSON.parse(localStorage.getItem('settings-sortFavourite')) || false,
+		sortFolders: localStorage.getItem('settings-sortFolders') || 'name-asc',
 	},
 	updateAvailable: false,
 };
