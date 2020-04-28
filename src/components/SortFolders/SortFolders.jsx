@@ -26,7 +26,7 @@ const propTypes = {
 	icon: PropTypes.bool,
 };
 
-const SortNotes = ({ icon }) => {
+const SortFolders = ({ icon }) => {
 	const [{ settings }, dispatch] = useStateValue();
 	const { sortFolders } = settings;
 	const [anchorEl, setAnchorEl] = useState(null);
@@ -53,7 +53,7 @@ const SortNotes = ({ icon }) => {
 				button
 				aria-haspopup="true"
 				aria-controls="sort-menu"
-				aria-label="sort notes"
+				aria-label="sort folders"
 				onClick={handleClickListItem}
 			>
 				{icon && (
@@ -88,7 +88,7 @@ const SortNotes = ({ icon }) => {
 	);
 };
 
-SortNotes.defaultProps = defaultProps;
-SortNotes.propTypes = propTypes;
+SortFolders.defaultProps = defaultProps;
+SortFolders.propTypes = propTypes;
 
-export default SortNotes;
+export default SortFolders;
