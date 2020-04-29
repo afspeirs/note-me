@@ -30,10 +30,10 @@ const propTypes = {
 
 const SortNotes = ({ icon }) => {
 	const [{ settings }, dispatch] = useStateValue();
-	const { sort } = settings;
+	const { sortNotes } = settings;
 	const [anchorEl, setAnchorEl] = useState(null);
 	// eslint-disable-next-line max-len
-	const [selectedIndex, setSelectedIndex] = useState(options.findIndex((item) => item.value === sort));
+	const [selectedIndex, setSelectedIndex] = useState(options.findIndex((item) => item.value === sortNotes));
 
 	const handleClose = () => setAnchorEl(null);
 
@@ -44,7 +44,7 @@ const SortNotes = ({ icon }) => {
 		setAnchorEl(null);
 
 		dispatch({
-			type: 'settings-sort',
+			type: 'settings-sortNotes',
 			value: options[index].value,
 		});
 	};

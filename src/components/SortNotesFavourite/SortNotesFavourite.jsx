@@ -10,9 +10,9 @@ import { useStateValue } from '../../hooks/StateContext';
 
 const SortNotesFavourite = () => {
 	const [{ settings }, dispatch] = useStateValue();
-	const { sortFavourite } = settings;
+	const { sortNotesFavourite } = settings;
 
-	const handleToggle = () => dispatch({ type: 'settings-sortFavourite' });
+	const handleToggle = () => dispatch({ type: 'settings-sortNotesFavourite' });
 
 	return (
 		<ListItem>
@@ -25,7 +25,7 @@ const SortNotesFavourite = () => {
 					color="primary"
 					edge="end"
 					onChange={handleToggle}
-					checked={sortFavourite}
+					checked={sortNotesFavourite}
 					inputProps={{ 'aria-labelledby': 'change-sort-favourite' }}
 				/>
 			</ListItemSecondaryAction>

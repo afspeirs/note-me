@@ -34,7 +34,7 @@ const NotesList = ({ notes }) => {
 	const { deleteNote, favouriteNote, loading } = useNotes();
 	const classes = useStyles();
 	const [{ settings }] = useStateValue();
-	const { sort, sortFavourite } = settings;
+	const { sortNotes, sortNotesFavourite } = settings;
 	const [contextAnchor, setContextAnchor] = useState(null);
 	const [openMoveNote, setOpenMoveNote] = useState(null);
 	const listEl = useRef(null);
@@ -43,9 +43,9 @@ const NotesList = ({ notes }) => {
 		'date-dsc': (a, b) => a.date - b.date,
 		'title-asc': (a, b) => a.text.localeCompare(b.text),
 		'title-dsc': (a, b) => b.text.localeCompare(a.text),
-	}[sort];
-	const sortFavouriteFunction = (a, b) => {
-		if (sortFavourite) {
+	}[sortNotes];
+	const sortNotesFavouriteFunction = (a, b) => {
+		if (sortNotesFavourite) {
 			if (a.favourite === b.favourite) return 0;
 			if (a.favourite) return -1;
 			return 1;
@@ -55,7 +55,7 @@ const NotesList = ({ notes }) => {
 
 	const sortArray = (array) => array
 		.sort(sortNoteFunction)
-		.sort(sortFavouriteFunction);
+		.sort(sortNotesFavouriteFunction);
 
 	const renderLink = React.useMemo(
 		() => React.forwardRef((props, ref) => (
