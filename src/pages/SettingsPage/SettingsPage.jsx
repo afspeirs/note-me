@@ -12,6 +12,7 @@ import NotesExport from '../../components/NotesExport';
 import NotesImport from '../../components/NotesImport';
 import Modal from '../../components/Modal';
 import SortFolders from '../../components/SortFolders';
+import SortFoldersDisable from '../../components/SortFoldersDisable';
 import SortNotes from '../../components/SortNotes';
 import SortNotesFavourite from '../../components/SortNotesFavourite';
 import UserInformation from '../../components/UserInformation';
@@ -33,6 +34,7 @@ const SettingsPage = () => (
 			<SortNotesFavourite />
 			<SortNotes />
 			<SortFolders />
+			<SortFoldersDisable />
 
 			<Divider />
 

@@ -7,6 +7,7 @@ export const initialState = {
 		sort: localStorage.getItem('settings-sort') || 'date-asc',
 		sortFavourite: JSON.parse(localStorage.getItem('settings-sortFavourite')) || false,
 		sortFolders: localStorage.getItem('settings-sortFolders') || 'name-asc',
+		sortFoldersDisable: JSON.parse(localStorage.getItem('settings-sortFoldersDisable')) || false,
 	},
 	updateAvailable: false,
 };

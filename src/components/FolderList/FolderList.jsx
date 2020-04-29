@@ -36,7 +36,7 @@ import { useStateValue } from '../../hooks/StateContext';
 const FolderList = () => {
 	const classes = useStyles();
 	const [{ settings }] = useStateValue();
-	const { sortFolders } = settings;
+	const { sortFolders, sortFoldersDisable } = settings;
 	const { folders, notes, renameFolder } = useNotes();
 	const [contextAnchor, setContextAnchor] = useState(null);
 	const [localFolders, setLocalFolders] = useState([]);
@@ -109,7 +109,7 @@ const FolderList = () => {
 
 	return (
 		<List className={classes.root} ref={listEl}>
-			{(localFolders.length >= 1) ? (
+			{(localFolders.length >= 1 && !sortFoldersDisable) ? (
 				<>
 					{localFolders.sort(sortFoldersFunction).map((folder, index) => {
 						const {
