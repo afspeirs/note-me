@@ -190,7 +190,7 @@ const FolderList = () => {
 								</Dialog>
 
 								<Slide direction="left" in={open} mountOnEnter unmountOnExit>
-									<Paper className={classes.box} elevation={4}>
+									<Paper className={classes.paper} elevation={4}>
 										<Toolbar>
 											<IconButton
 												aria-label="Show Folders"
