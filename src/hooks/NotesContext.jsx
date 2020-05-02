@@ -74,9 +74,8 @@ function useNotesProvider() {
 			.set(value);
 	};
 
-	const renameFolder = (index, value) => {
+	const renameFolder = (oldFolderName, value) => {
 		const batch = db.batch();
-		const oldFolderName = folders[index];
 		const notesToUpdate = notes
 			.filter((note) => note.folder === oldFolderName)
 			.map((note) => ({

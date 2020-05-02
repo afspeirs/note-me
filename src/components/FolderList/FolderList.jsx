@@ -78,10 +78,13 @@ const FolderList = () => {
 	};
 
 	const handleRenameFolderClick = (index) => {
-		const value = localFolders[index].renameModalValue;
+		const {
+			name: oldFolderName,
+			renameModalValue: newFolderName,
+		} = localFolders[index];
 
 		handleRenameFolderModalOpen(index);
-		renameFolder(index, value);
+		renameFolder(oldFolderName, newFolderName);
 	};
 
 	const handleRenameModalValueChange = (index, value) => {
