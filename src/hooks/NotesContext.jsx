@@ -35,6 +35,7 @@ function useNotesProvider() {
 				created: +new Date(),
 				date: +new Date(),
 				favourite: false,
+				folder: '',
 				id: newNote.id,
 				text,
 				title: getTitle(text),
@@ -74,13 +75,13 @@ function useNotesProvider() {
 			.set(value);
 	};
 
-	const renameFolder = (oldFolderName, value) => {
+	const renameFolder = (oldFolderName, newFolderName) => {
 		const batch = db.batch();
 		const notesToUpdate = notes
 			.filter((note) => note.folder === oldFolderName)
 			.map((note) => ({
 				...note,
-				folder: value,
+				folder: newFolderName,
 			}));
 		// console.log(notesToUpdate);
 
