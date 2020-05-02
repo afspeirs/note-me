@@ -79,9 +79,11 @@ const FolderList = () => {
 
 	const handleRenameFolderClick = (index) => {
 		const {
-			name: oldFolderName,
+			name,
 			renameModalValue: newFolderName,
 		} = localFolders[index];
+
+		const oldFolderName = name === untitledFolder ? '' : name;
 
 		handleRenameFolderModalOpen(index);
 		renameFolder(oldFolderName, newFolderName);
@@ -151,7 +153,6 @@ const FolderList = () => {
 										<ListItem
 											button
 											onClick={() => handleRenameFolderModalOpen(index)}
-											disabled={name === untitledFolder}
 										>
 											<ListItemIcon>
 												<EditIcon color="primary" />
