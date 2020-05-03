@@ -7,6 +7,7 @@ import React, {
 import { useHistory } from 'react-router-dom';
 
 import { useAuth } from './AuthContext';
+import { useStateValue } from './StateContext';
 import { db } from '../firebase';
 import { getTitle } from '../ultils';
 
@@ -23,6 +24,7 @@ function useNotesProvider() {
 	const [notes, setNotes] = useState([]);
 	const [folders, setFolders] = useState([]);
 	const [currentNote, setCurrentNote] = useState(null);
+	const [{ untitledFolder }] = useStateValue();
 
 	const addNote = (text = '') => {
 		const untitledNotes = notes.filter((note) => note.text === '');
@@ -35,7 +37,7 @@ function useNotesProvider() {
 				created: +new Date(),
 				date: +new Date(),
 				favourite: false,
-				folder: '',
+				folder: untitledFolder,
 				id: newNote.id,
 				text,
 				title: getTitle(text),
@@ -81,7 +83,7 @@ function useNotesProvider() {
 			.filter((note) => note.folder === oldFolderName)
 			.map((note) => ({
 				...note,
-				folder: newFolderName,
+				folder: newFolderName || untitledFolder,
 			}));
 		// console.log(notesToUpdate);
 

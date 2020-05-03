@@ -10,6 +10,7 @@ export const initialState = {
 		sortFoldersDisable: JSON.parse(localStorage.getItem('settings-sortFoldersDisable')) || false,
 	},
 	updateAvailable: false,
+	untitledFolder: 'Unsorted Notes',
 };
 
 export const reducer = (state, action) => {

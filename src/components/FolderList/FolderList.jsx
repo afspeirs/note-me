@@ -41,7 +41,6 @@ const FolderList = () => {
 	const [contextAnchor, setContextAnchor] = useState(null);
 	const [localFolders, setLocalFolders] = useState([]);
 	const listEl = useRef(null);
-	const untitledFolder = 'Unsorted Notes';
 
 	const sortFoldersFunction = {
 		'name-asc': (a, b) => a.name.localeCompare(b.name),
@@ -79,11 +78,9 @@ const FolderList = () => {
 
 	const handleRenameFolderClick = (index) => {
 		const {
-			name,
+			name: oldFolderName,
 			renameModalValue: newFolderName,
 		} = localFolders[index];
-
-		const oldFolderName = name === untitledFolder ? '' : name;
 
 		handleRenameFolderModalOpen(index);
 		renameFolder(oldFolderName, newFolderName);
@@ -97,7 +94,7 @@ const FolderList = () => {
 
 	useEffect(() => {
 		setLocalFolders(folders.map((folder) => ({
-			name: folder || untitledFolder,
+			name: folder,
 			notes: notes.filter((note) => note.folder === folder),
 			open: false,
 			renameModalOpen: false,
