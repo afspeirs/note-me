@@ -35,6 +35,7 @@ const DialogMoveFolder = ({ note, setOpen }) => {
 	const confirm = useConfirm();
 	const { folders, moveNote } = useNotes();
 	const [value, setValue] = useState(null);
+	const localFolders = folders.map((folder) => ({ title: folder }));
 
 	const handleClose = () => setOpen(null);
 
@@ -99,7 +100,7 @@ const DialogMoveFolder = ({ note, setOpen }) => {
 						return filtered;
 					}}
 					id="free-solo-with-text-demo"
-					options={folders.filter(Boolean).map((folder) => ({ title: folder }))}
+					options={localFolders}
 					getOptionLabel={(option) => {
 						// e.g value selected with enter, right from the input
 						if (typeof option === 'string') {
