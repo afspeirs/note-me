@@ -8,29 +8,29 @@ import {
 
 import { useStateValue } from '../../hooks/StateContext';
 
-const SortNotesFavourite = () => {
+const SortFoldersDisable = () => {
 	const [{ settings }, dispatch] = useStateValue();
-	const { sortNotesFavourite } = settings;
+	const { sortFoldersDisable } = settings;
 
-	const handleToggle = () => dispatch({ type: 'settings-sortNotesFavourite' });
+	const handleToggle = () => dispatch({ type: 'settings-sortFoldersDisable' });
 
 	return (
 		<ListItem>
 			<ListItemText
-				id="change-sort-favourite"
-				primary="Show Favourites at the top of the list"
+				id="change-sort-folders-disable"
+				primary="Disable folders"
 			/>
 			<ListItemSecondaryAction>
 				<Switch
 					color="primary"
 					edge="end"
 					onChange={handleToggle}
-					checked={sortNotesFavourite}
-					inputProps={{ 'aria-labelledby': 'change-sort-favourite' }}
+					checked={sortFoldersDisable}
+					inputProps={{ 'aria-labelledby': 'change-sort-folders-disable' }}
 				/>
 			</ListItemSecondaryAction>
 		</ListItem>
 	);
 };
 
-export default SortNotesFavourite;
+export default SortFoldersDisable;

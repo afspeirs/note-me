@@ -14,10 +14,8 @@ import {
 import { useStateValue } from '../../hooks/StateContext';
 
 const options = [
-	{ text: 'Modified Date (Newest First)', value: 'date-asc' },
-	{ text: 'Modified Date (Oldest First)', value: 'date-dsc' },
-	{ text: 'Title (A-Z)', value: 'title-asc' },
-	{ text: 'Title (Z-A)', value: 'title-dsc' },
+	{ text: 'Name (A-Z)', value: 'name-asc' },
+	{ text: 'Name (Z-A)', value: 'name-dsc' },
 ];
 
 const defaultProps = {
@@ -28,12 +26,12 @@ const propTypes = {
 	icon: PropTypes.bool,
 };
 
-const SortNotes = ({ icon }) => {
+const SortFolders = ({ icon }) => {
 	const [{ settings }, dispatch] = useStateValue();
-	const { sortNotes } = settings;
+	const { sortFolders } = settings;
 	const [anchorEl, setAnchorEl] = useState(null);
 	// eslint-disable-next-line max-len
-	const [selectedIndex, setSelectedIndex] = useState(options.findIndex((item) => item.value === sortNotes));
+	const [selectedIndex, setSelectedIndex] = useState(options.findIndex((item) => item.value === sortFolders));
 
 	const handleClose = () => setAnchorEl(null);
 
@@ -44,7 +42,7 @@ const SortNotes = ({ icon }) => {
 		setAnchorEl(null);
 
 		dispatch({
-			type: 'settings-sortNotes',
+			type: 'settings-sortFolders',
 			value: options[index].value,
 		});
 	};
@@ -55,7 +53,7 @@ const SortNotes = ({ icon }) => {
 				button
 				aria-haspopup="true"
 				aria-controls="sort-menu"
-				aria-label="sort notes"
+				aria-label="sort folders"
 				onClick={handleClickListItem}
 			>
 				{icon && (
@@ -64,7 +62,7 @@ const SortNotes = ({ icon }) => {
 					</ListItemIcon>
 				)}
 				<ListItemText
-					primary="Sort Notes"
+					primary="Sort Folders"
 					secondary={options[selectedIndex].text}
 				/>
 			</ListItem>
@@ -90,7 +88,7 @@ const SortNotes = ({ icon }) => {
 	);
 };
 
-SortNotes.defaultProps = defaultProps;
-SortNotes.propTypes = propTypes;
+SortFolders.defaultProps = defaultProps;
+SortFolders.propTypes = propTypes;
 
-export default SortNotes;
+export default SortFolders;

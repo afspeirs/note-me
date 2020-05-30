@@ -8,7 +8,7 @@ import {
 } from '@material-ui/core';
 
 import useStyles from './HomePage.styled';
-import NotesSearch from '../../components/NotesSearch';
+import FolderList from '../../components/FolderList';
 import { useAuth } from '../../hooks/AuthContext';
 import { useNotes } from '../../hooks/NotesContext';
 import { useStateValue } from '../../hooks/StateContext';
@@ -37,7 +37,7 @@ const HomePage = () => {
 					{drawerOpen && !mobile ? (
 						<span className={classes.centered}>Select a note from the list</span>
 					) : (
-						<NotesSearch locationSelector=".MuiPage" />
+						<FolderList />
 					)}
 				</>
 			)}

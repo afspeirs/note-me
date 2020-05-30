@@ -10,6 +10,9 @@ const useStyles = makeStyles((theme) => ({
 		right: theme.spacing(1),
 		top: theme.spacing(1),
 	},
+	dialogContent: {
+		overflow: 'hidden',
+	},
 	listItemText: {
 		overflow: 'hidden',
 		textOverflow: 'ellipsis',

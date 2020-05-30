@@ -7,6 +7,7 @@ import React, {
 import { useHistory } from 'react-router-dom';
 
 import { useAuth } from './AuthContext';
+import { useStateValue } from './StateContext';
 import { db } from '../firebase';
 import { getTitle } from '../ultils';
 
@@ -21,9 +22,11 @@ function useNotesProvider() {
 	const history = useHistory();
 	const [loading, setLoading] = useState(true);
 	const [notes, setNotes] = useState([]);
+	const [folders, setFolders] = useState([]);
 	const [currentNote, setCurrentNote] = useState(null);
+	const [{ untitledFolder }] = useStateValue();
 
-	const addNote = (text) => {
+	const addNote = (text = '') => {
 		const untitledNotes = notes.filter((note) => note.text === '');
 
 		if (untitledNotes.length !== 0) {
@@ -34,29 +37,25 @@ function useNotesProvider() {
 				created: +new Date(),
 				date: +new Date(),
 				favourite: false,
+				folder: untitledFolder,
 				id: newNote.id,
 				text,
 				title: getTitle(text),
 			};
 
-			notes.unshift(value);
 			newNote.set(value).then(() => history.push(`/note/${value.id}`));
 		}
 	};
 
 	const deleteNote = (note = currentNote) => {
-		const index = notes.indexOf(note);
-
 		db.collection(user.uid)
 			.doc(note.id)
 			.delete();
 
-		notes.splice(index, 1);
 		history.replace('/');
 	};
 
 	const favouriteNote = (note = currentNote) => {
-		const index = notes.indexOf(note);
 		const value = {
 			...note,
 			favourite: !note.favourite,
@@ -65,12 +64,39 @@ function useNotesProvider() {
 		db.collection(user.uid)
 			.doc(note.id)
 			.set(value);
+	};
 
-		notes[index] = value;
+	const moveNote = (note, folderName) => {
+		const value = {
+			...note,
+			folder: folderName,
+		};
+
+		db.collection(user.uid)
+			.doc(note.id)
+			.set(value);
+	};
+
+	const renameFolder = (oldFolderName, newFolderName) => {
+		const batch = db.batch();
+		const notesToUpdate = notes
+			.filter((note) => note.folder === oldFolderName)
+			.map((note) => ({
+				...note,
+				folder: newFolderName || untitledFolder,
+			}));
+		// console.log(notesToUpdate);
+
+		// Rename all notes in one batch as it errors when you try and update one at a time
+		notesToUpdate.forEach((note) => {
+			const noteRef = db.collection(user.uid).doc(note.id);
+			batch.set(noteRef, note);
+		});
+
+		batch.commit();
 	};
 
 	const updateNote = (text, note = currentNote) => {
-		const index = notes.indexOf(note);
 		const value = {
 			...note,
 			date: +new Date(),
@@ -81,8 +107,6 @@ function useNotesProvider() {
 		db.collection(user.uid)
 			.doc(note.id)
 			.set(value);
-
-		notes[index] = value;
 	};
 
 	// Subscribe to user on mount
@@ -100,13 +124,25 @@ function useNotesProvider() {
 		}
 	}, [user]); // eslint-disable-line
 
+	// Update folder name when notes change
+	useEffect(() => {
+		// Filter out undefined folder names and remove duplicates
+		const newFolders = [...new Set(notes.map((note) => note.folder))];
+
+		// TODO: Check if it needs to be updated
+		setFolders(newFolders);
+	}, [notes]); // eslint-disable-line
+
 	return {
 		addNote,
 		currentNote,
 		deleteNote,
 		favouriteNote,
+		folders,
 		loading,
 		notes,
+		moveNote,
+		renameFolder,
 		setCurrentNote,
 		updateNote,
 	};

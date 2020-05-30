@@ -4,10 +4,13 @@ export const initialState = {
 	settings: {
 		disablePersistentDrawer: JSON.parse(localStorage.getItem('settings-disablePersistentDrawer')) || false,
 		darkTheme: JSON.parse(localStorage.getItem('settings-darkTheme')) || false,
-		sort: localStorage.getItem('settings-sort') || 'date-asc',
-		sortFavourite: JSON.parse(localStorage.getItem('settings-sortFavourite')) || false,
+		sortNotes: localStorage.getItem('settings-sortNotes') || 'date-asc',
+		sortNotesFavourite: JSON.parse(localStorage.getItem('settings-sortNotesFavourite')) || false,
+		sortFolders: localStorage.getItem('settings-sortFolders') || 'name-asc',
+		sortFoldersDisable: JSON.parse(localStorage.getItem('settings-sortFoldersDisable')) || false,
 	},
 	updateAvailable: false,
+	untitledFolder: 'Unsorted Notes',
 };
 
 export const reducer = (state, action) => {

@@ -70,11 +70,6 @@ const NotesExport = () => {
 			title: `Do you want to export ${selectedNotes.length === 1 ? 'this note' : `these ${selectedNotes.length} notes`}?`,
 			cancellationText: 'No',
 			confirmationText: 'Yes',
-			dialogProps: {
-				classes: {
-					root: classes.dialog,
-				},
-			},
 		}).then(() => {
 			handleClose();
 			selectedNotes.forEach((note) => {
