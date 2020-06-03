@@ -9,7 +9,7 @@ import UserConfirmation from './components/UserConfirmation';
 import { AuthProvider } from './hooks/AuthContext';
 import { NotesProvider } from './hooks/NotesContext';
 import { StateProvider } from './hooks/StateContext';
-import { initialState, reducer } from './reducers';
+import { initialState, reducer } from './reducer';
 
 
 ReactDOM.render((
