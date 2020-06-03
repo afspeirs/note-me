@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { ConfirmProvider } from 'material-ui-confirm';
 
-import Container from './Container';
-import Routes from './Routes';
-import SimpleSnackbar from './SimpleSnackbar';
-import theme from '../theme';
-import { useStateValue } from '../hooks/StateContext';
+import theme from './theme';
+import Container from './components/Container';
+import Routes from './components/Routes';
+import SimpleSnackbar from './components/SimpleSnackbar';
+import { useStateValue } from './hooks/StateContext';
 
 const App = () => {
 	const [{ settings }, dispatch] = useStateValue();
