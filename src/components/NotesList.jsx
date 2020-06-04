@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { NavLink } from 'react-router-dom';
 import {
+	Chip,
 	List,
 	ListItem,
 	ListItemIcon,
@@ -13,7 +14,6 @@ import {
 import {
 	Alarm as AlarmIcon,
 	Delete as DeleteIcon,
-	Folder as FolderIcon,
 	Star as StarIcon,
 	StarBorder as StarBorderIcon,
 } from '@material-ui/icons';
@@ -23,7 +23,7 @@ import useStyles from './NotesList.styled';
 import TimeAgo from './TimeAgo';
 import { useNotes } from '../hooks/NotesContext';
 import { useStateValue } from '../hooks/StateContext';
-import DialogMoveNote from './DialogMoveNote';
+// import DialogAddLabel from './DialogAddLabel';
 
 const propTypes = {
 	notes: PropTypes.arrayOf(PropTypes.object).isRequired,
@@ -36,7 +36,7 @@ const NotesList = ({ notes }) => {
 	const [{ settings }] = useStateValue();
 	const { sortNotes, sortNotesFavourite } = settings;
 	const [contextAnchor, setContextAnchor] = useState(null);
-	const [openMoveNote, setOpenMoveNote] = useState(null);
+	// const [openAddLabel, setOpenAddLabel] = useState(null);
 	const listEl = useRef(null);
 	const sortNoteFunction = {
 		'date-asc': (a, b) => b.date - a.date,
@@ -95,11 +95,6 @@ const NotesList = ({ notes }) => {
 			.then(() => deleteNote(note));
 	};
 
-	const handleMoveNoteClick = (note) => {
-		handleContextMenuClose();
-		setOpenMoveNote(note);
-	};
-
 	useEffect(() => {
 		const { current } = listEl;
 		current.addEventListener('contextmenu', handleContextMenuOpen);
@@ -130,7 +125,10 @@ const NotesList = ({ notes }) => {
 							component={renderLink}
 							data-id={note.id}
 						>
-							<ListItemText className={classes.listItemText} primary={note.title} />
+							<ListItemText
+								className={classes.listItemText}
+								primary={note.title}
+							/>
 							{note.favourite && (
 								<ListItemSecondaryAction className={classes.secondaryAction}>
 									<StarIcon color="primary" edge="end" />
@@ -166,15 +164,6 @@ const NotesList = ({ notes }) => {
 										primary={`${note.favourite ? 'Unfavourite' : 'Favourite'} "${note.title}"`}
 									/>
 								</ListItem>
-								<ListItem button onClick={() => handleMoveNoteClick(note)}>
-									<ListItemIcon>
-										<FolderIcon color="primary" />
-									</ListItemIcon>
-									<ListItemText
-										className={classes.listItemText}
-										primary="Move"
-									/>
-								</ListItem>
 								<ListItem button onClick={() => handleDeleteNote(note)}>
 									<ListItemIcon>
 										<DeleteIcon color="error" />
@@ -184,14 +173,21 @@ const NotesList = ({ notes }) => {
 										primary={`Delete "${note.title}"`}
 									/>
 								</ListItem>
+								{/* TODO: Only show this if there are labels */}
+								<ListItem>
+									{/* // TODO: Loop through all the labels */}
+									<Chip
+										label="Label"
+										// TODO: add onClick to add the text in the chip to the search box
+									/>
+								</ListItem>
 							</List>
 						</Popover>
-
 					</React.Fragment>
 				))}
 			</List>
 
-			<DialogMoveNote note={openMoveNote} setOpen={setOpenMoveNote} />
+			{/* <DialogAddLabel note={openMoveNote} setOpen={setOpenMoveNote} /> */}
 		</>
 	);
 };
