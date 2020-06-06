@@ -19,6 +19,7 @@ export const useNotes = () => useContext(NotesContext);
 function useNotesProvider() {
 	const { user } = useAuth();
 	const history = useHistory();
+	const [labels, setLabels] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [notes, setNotes] = useState([]);
 	const [currentNote, setCurrentNote] = useState(null);
@@ -62,6 +63,17 @@ function useNotesProvider() {
 			.set(value);
 	};
 
+	const updateLabels = (newLabels, note = currentNote) => {
+		const value = {
+			...note,
+			labels: newLabels,
+		};
+
+		db.collection(user.uid)
+			.doc(note.id)
+			.set(value);
+	};
+
 	const updateNote = (text, note = currentNote) => {
 		const value = {
 			...note,
@@ -81,8 +93,10 @@ function useNotesProvider() {
 			db.collection(user.uid)
 				.onSnapshot((snapshot) => {
 					const authNotes = snapshot.docs.map((doc) => doc.data());
+					const authLabels = authNotes.map((note) => note.labels).filter(Boolean).flat();
 					setLoading(false);
 					setNotes(authNotes);
+					setLabels([...new Set(authLabels)]);
 				});
 		} else if (user !== null) {
 			setLoading(false);
@@ -95,10 +109,12 @@ function useNotesProvider() {
 		currentNote,
 		deleteNote,
 		favouriteNote,
+		labels,
 		loading,
 		notes,
 		setCurrentNote,
 		updateNote,
+		updateLabels,
 	};
 }
 

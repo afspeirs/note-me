@@ -14,6 +14,7 @@ import {
 import {
 	Alarm as AlarmIcon,
 	Delete as DeleteIcon,
+	Label as LabelIcon,
 	Star as StarIcon,
 	StarBorder as StarBorderIcon,
 } from '@material-ui/icons';
@@ -23,7 +24,7 @@ import useStyles from './NotesList.styled';
 import TimeAgo from './TimeAgo';
 import { useNotes } from '../hooks/NotesContext';
 import { useStateValue } from '../hooks/StateContext';
-// import DialogAddLabel from './DialogAddLabel';
+import DialogAddLabel from './DialogAddLabel';
 
 const propTypes = {
 	notes: PropTypes.arrayOf(PropTypes.object).isRequired,
@@ -36,7 +37,7 @@ const NotesList = ({ notes }) => {
 	const [{ settings }] = useStateValue();
 	const { sortNotes, sortNotesFavourite } = settings;
 	const [contextAnchor, setContextAnchor] = useState(null);
-	// const [openAddLabel, setOpenAddLabel] = useState(null);
+	const [openAddLabel, setOpenAddLabel] = useState(null);
 	const listEl = useRef(null);
 	const sortNoteFunction = {
 		'date-asc': (a, b) => b.date - a.date,
@@ -84,6 +85,11 @@ const NotesList = ({ notes }) => {
 	const handleFavouriteNote = (note) => {
 		handleContextMenuClose();
 		favouriteNote(note);
+	};
+
+	const handleAddLabelsClick = (note) => {
+		handleContextMenuClose();
+		setOpenAddLabel(note);
 	};
 
 	const handleDeleteNote = (note) => {
@@ -164,6 +170,15 @@ const NotesList = ({ notes }) => {
 										primary={`${note.favourite ? 'Unfavourite' : 'Favourite'} "${note.title}"`}
 									/>
 								</ListItem>
+								<ListItem button onClick={() => handleAddLabelsClick(note)}>
+									<ListItemIcon>
+										<LabelIcon color="primary" />
+									</ListItemIcon>
+									<ListItemText
+										className={classes.listItemText}
+										primary={`${note?.labels ? 'Change' : 'Add'} Labels`}
+									/>
+								</ListItem>
 								<ListItem button onClick={() => handleDeleteNote(note)}>
 									<ListItemIcon>
 										<DeleteIcon color="error" />
@@ -173,21 +188,25 @@ const NotesList = ({ notes }) => {
 										primary={`Delete "${note.title}"`}
 									/>
 								</ListItem>
-								{/* TODO: Only show this if there are labels */}
-								<ListItem>
-									{/* // TODO: Loop through all the labels */}
-									<Chip
-										label="Label"
-										// TODO: add onClick to add the text in the chip to the search box
-									/>
-								</ListItem>
+								{note.labels && (
+									<ListItem>
+										{note.labels.map((label) => (
+											<Chip
+												key={label}
+												label={label}
+												clickable
+												// TODO: add onClick to add the text in the chip to the search box
+											/>
+										))}
+									</ListItem>
+								)}
 							</List>
 						</Popover>
 					</React.Fragment>
 				))}
 			</List>
 
-			{/* <DialogAddLabel note={openMoveNote} setOpen={setOpenMoveNote} /> */}
+			<DialogAddLabel note={openAddLabel} setOpen={setOpenAddLabel} />
 		</>
 	);
 };
