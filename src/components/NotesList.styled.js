@@ -1,6 +1,9 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
+	chip: {
+		marginLeft: theme.spacing(1),
+	},
 	list: {
 		width: '100%',
 	},

@@ -198,6 +198,7 @@ const NotesList = ({ notes, updateSearchText }) => {
 									<ListItem>
 										{note.labels.map((label) => (
 											<Chip
+												className={classes.chip}
 												key={label}
 												label={label}
 												clickable
