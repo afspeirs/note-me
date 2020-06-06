@@ -182,7 +182,7 @@ const NotesList = ({ notes, updateSearchText }) => {
 									</ListItemIcon>
 									<ListItemText
 										className={classes.listItemText}
-										primary={`${note?.labels ? 'Change' : 'Add'} Labels`}
+										primary={`${note?.labels?.length !== 0 ? 'Change' : 'Add'} Labels`}
 									/>
 								</ListItem>
 								<ListItem button onClick={() => handleDeleteNote(note)}>
