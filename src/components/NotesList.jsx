@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { NavLink } from 'react-router-dom';
 import {
+	Chip,
 	List,
 	ListItem,
 	ListItemIcon,
@@ -13,7 +14,7 @@ import {
 import {
 	Alarm as AlarmIcon,
 	Delete as DeleteIcon,
-	Folder as FolderIcon,
+	Label as LabelIcon,
 	Star as StarIcon,
 	StarBorder as StarBorderIcon,
 } from '@material-ui/icons';
@@ -23,20 +24,21 @@ import useStyles from './NotesList.styled';
 import TimeAgo from './TimeAgo';
 import { useNotes } from '../hooks/NotesContext';
 import { useStateValue } from '../hooks/StateContext';
-import DialogMoveNote from './DialogMoveNote';
+import DialogAddLabel from './DialogAddLabel';
 
 const propTypes = {
 	notes: PropTypes.arrayOf(PropTypes.object).isRequired,
+	updateSearchText: PropTypes.func.isRequired,
 };
 
-const NotesList = ({ notes }) => {
+const NotesList = ({ notes, updateSearchText }) => {
 	const confirm = useConfirm();
 	const { deleteNote, favouriteNote, loading } = useNotes();
 	const classes = useStyles();
 	const [{ settings }] = useStateValue();
 	const { sortNotes, sortNotesFavourite } = settings;
 	const [contextAnchor, setContextAnchor] = useState(null);
-	const [openMoveNote, setOpenMoveNote] = useState(null);
+	const [openAddLabel, setOpenAddLabel] = useState(null);
 	const listEl = useRef(null);
 	const sortNoteFunction = {
 		'date-asc': (a, b) => b.date - a.date,
@@ -86,6 +88,11 @@ const NotesList = ({ notes }) => {
 		favouriteNote(note);
 	};
 
+	const handleAddLabelsClick = (note) => {
+		handleContextMenuClose();
+		setOpenAddLabel(note);
+	};
+
 	const handleDeleteNote = (note) => {
 		handleContextMenuClose();
 		confirm({
@@ -95,9 +102,9 @@ const NotesList = ({ notes }) => {
 			.then(() => deleteNote(note));
 	};
 
-	const handleMoveNoteClick = (note) => {
+	const handleLabelClick = (label) => {
 		handleContextMenuClose();
-		setOpenMoveNote(note);
+		updateSearchText(label);
 	};
 
 	useEffect(() => {
@@ -130,7 +137,10 @@ const NotesList = ({ notes }) => {
 							component={renderLink}
 							data-id={note.id}
 						>
-							<ListItemText className={classes.listItemText} primary={note.title} />
+							<ListItemText
+								className={classes.listItemText}
+								primary={note.title}
+							/>
 							{note.favourite && (
 								<ListItemSecondaryAction className={classes.secondaryAction}>
 									<StarIcon color="primary" edge="end" />
@@ -166,13 +176,13 @@ const NotesList = ({ notes }) => {
 										primary={`${note.favourite ? 'Unfavourite' : 'Favourite'} "${note.title}"`}
 									/>
 								</ListItem>
-								<ListItem button onClick={() => handleMoveNoteClick(note)}>
+								<ListItem button onClick={() => handleAddLabelsClick(note)}>
 									<ListItemIcon>
-										<FolderIcon color="primary" />
+										<LabelIcon color="primary" />
 									</ListItemIcon>
 									<ListItemText
 										className={classes.listItemText}
-										primary="Move"
+										primary={`${note?.labels?.length !== 0 ? 'Change' : 'Add'} Labels`}
 									/>
 								</ListItem>
 								<ListItem button onClick={() => handleDeleteNote(note)}>
@@ -184,14 +194,26 @@ const NotesList = ({ notes }) => {
 										primary={`Delete "${note.title}"`}
 									/>
 								</ListItem>
+								{note.labels && (
+									<ListItem>
+										{note.labels.map((label) => (
+											<Chip
+												className={classes.chip}
+												key={label}
+												label={label}
+												clickable
+												onClick={() => handleLabelClick(label)}
+											/>
+										))}
+									</ListItem>
+								)}
 							</List>
 						</Popover>
-
 					</React.Fragment>
 				))}
 			</List>
 
-			<DialogMoveNote note={openMoveNote} setOpen={setOpenMoveNote} />
+			<DialogAddLabel note={openAddLabel} setOpen={setOpenAddLabel} />
 		</>
 	);
 };

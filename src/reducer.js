@@ -6,11 +6,8 @@ export const initialState = {
 		darkTheme: JSON.parse(localStorage.getItem('settings-darkTheme')) || false,
 		sortNotes: localStorage.getItem('settings-sortNotes') || 'date-asc',
 		sortNotesFavourite: JSON.parse(localStorage.getItem('settings-sortNotesFavourite')) || false,
-		sortFolders: localStorage.getItem('settings-sortFolders') || 'name-asc',
-		sortFoldersDisable: JSON.parse(localStorage.getItem('settings-sortFoldersDisable')) || false,
 	},
 	updateAvailable: false,
-	untitledFolder: 'Unsorted Notes',
 };
 
 export const reducer = (state, action) => {

@@ -10,7 +10,7 @@ import {
 	Add as AddIcon,
 } from '@material-ui/icons';
 
-import FolderList from './FolderList';
+import NotesSearch from './NotesSearch';
 import { useAuth } from '../hooks/AuthContext';
 import { useNotes } from '../hooks/NotesContext';
 
@@ -20,7 +20,7 @@ const DrawerContent = () => {
 
 	return (
 		<>
-			<FolderList />
+			<NotesSearch />
 
 			{isSignedIn && (
 				<>

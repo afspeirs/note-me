@@ -7,7 +7,6 @@ import React, {
 import { useHistory } from 'react-router-dom';
 
 import { useAuth } from './AuthContext';
-import { useStateValue } from './StateContext';
 import { db } from '../firebase';
 import { getTitle } from '../ultils';
 
@@ -20,11 +19,10 @@ export const useNotes = () => useContext(NotesContext);
 function useNotesProvider() {
 	const { user } = useAuth();
 	const history = useHistory();
+	const [labels, setLabels] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [notes, setNotes] = useState([]);
-	const [folders, setFolders] = useState([]);
 	const [currentNote, setCurrentNote] = useState(null);
-	const [{ untitledFolder }] = useStateValue();
 
 	const addNote = (text = '') => {
 		const untitledNotes = notes.filter((note) => note.text === '');
@@ -37,7 +35,6 @@ function useNotesProvider() {
 				created: +new Date(),
 				date: +new Date(),
 				favourite: false,
-				folder: untitledFolder,
 				id: newNote.id,
 				text,
 				title: getTitle(text),
@@ -66,34 +63,15 @@ function useNotesProvider() {
 			.set(value);
 	};
 
-	const moveNote = (note, folderName) => {
+	const updateLabels = (newLabels, note = currentNote) => {
 		const value = {
 			...note,
-			folder: folderName,
+			labels: newLabels,
 		};
 
 		db.collection(user.uid)
 			.doc(note.id)
 			.set(value);
-	};
-
-	const renameFolder = (oldFolderName, newFolderName) => {
-		const batch = db.batch();
-		const notesToUpdate = notes
-			.filter((note) => note.folder === oldFolderName)
-			.map((note) => ({
-				...note,
-				folder: newFolderName || untitledFolder,
-			}));
-		// console.log(notesToUpdate);
-
-		// Rename all notes in one batch as it errors when you try and update one at a time
-		notesToUpdate.forEach((note) => {
-			const noteRef = db.collection(user.uid).doc(note.id);
-			batch.set(noteRef, note);
-		});
-
-		batch.commit();
 	};
 
 	const updateNote = (text, note = currentNote) => {
@@ -115,8 +93,10 @@ function useNotesProvider() {
 			db.collection(user.uid)
 				.onSnapshot((snapshot) => {
 					const authNotes = snapshot.docs.map((doc) => doc.data());
+					const authLabels = authNotes.map((note) => note.labels).filter(Boolean).flat();
 					setLoading(false);
 					setNotes(authNotes);
+					setLabels([...new Set(authLabels)].sort());
 				});
 		} else if (user !== null) {
 			setLoading(false);
@@ -124,27 +104,17 @@ function useNotesProvider() {
 		}
 	}, [user]); // eslint-disable-line
 
-	// Update folder name when notes change
-	useEffect(() => {
-		// Filter out undefined folder names and remove duplicates
-		const newFolders = [...new Set(notes.map((note) => note.folder))];
-
-		// TODO: Check if it needs to be updated
-		setFolders(newFolders);
-	}, [notes]); // eslint-disable-line
-
 	return {
 		addNote,
 		currentNote,
 		deleteNote,
 		favouriteNote,
-		folders,
+		labels,
 		loading,
 		notes,
-		moveNote,
-		renameFolder,
 		setCurrentNote,
 		updateNote,
+		updateLabels,
 	};
 }
 
