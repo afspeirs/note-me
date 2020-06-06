@@ -20,13 +20,13 @@ const NotesSearch = () => {
 	const [text, setText] = useState('');
 	const [items, setItems] = useState(notes);
 
-
 	const handleTextClear = () => setText('');
 
 	const handleTextInput = (event) => setText(event.target.value);
 
 	const updateItems = () => setItems(
-		notes.filter((item) => item.text.toLowerCase().search(text.toLowerCase()) !== -1),
+		notes.filter((note) => note.text.toLowerCase().search(text.toLowerCase()) !== -1
+			|| note?.labels?.find((label) => label.toLowerCase().search(text.toLowerCase()) !== -1)),
 	);
 
 	// updateItems based on the search field input
@@ -63,7 +63,7 @@ const NotesSearch = () => {
 				</div>
 			</ListItem>
 
-			<NotesList notes={items} />
+			<NotesList notes={items} updateSearchText={setText} />
 		</List>
 	);
 };

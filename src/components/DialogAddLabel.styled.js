@@ -10,18 +10,6 @@ const useStyles = makeStyles((theme) => ({
 		right: theme.spacing(1),
 		top: theme.spacing(1),
 	},
-	listItemText: {
-		overflow: 'hidden',
-		textOverflow: 'ellipsis',
-		whiteSpace: 'nowrap',
-	},
-	numberSelected: {
-		paddingLeft: theme.spacing(1),
-		marginRight: 'auto',
-	},
-	maxSelected: {
-		color: theme.palette.info.main,
-	},
 }));
 
 export default useStyles;

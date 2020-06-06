@@ -9,9 +9,14 @@ import {
 	DialogTitle,
 	FormControlLabel,
 	IconButton,
+	InputAdornment,
+	List,
+	ListItem,
+	TextField,
 	Typography,
 } from '@material-ui/core';
 import {
+	Add as AddIcon,
 	Close as CloseIcon,
 } from '@material-ui/icons';
 
@@ -31,6 +36,23 @@ const DialogAddLabel = ({ note, setOpen }) => {
 	const classes = useStyles();
 	const { labels, updateLabels } = useNotes();
 	const [controlledLabels, setControlledLabels] = useState({});
+	const [localAddLabel, setLocalAddLabel] = useState('');
+
+	const handleAddLabelChange = (event) => setLocalAddLabel(event.target.value);
+
+	const handleAddLabel = (event) => {
+		event.preventDefault();
+
+		if (localAddLabel.length !== 0) {
+			const prevControlledLabels = {
+				...controlledLabels,
+				[localAddLabel]: true,
+			};
+
+			setControlledLabels(prevControlledLabels);
+			setLocalAddLabel('');
+		}
+	};
 
 	const handleClose = () => {
 		if (note) {
@@ -83,20 +105,56 @@ const DialogAddLabel = ({ note, setOpen }) => {
 			</DialogTitle>
 
 			<DialogContent dividers>
-				{labels.map((label) => (
-					<FormControlLabel
-						control={(
-							<Checkbox
-								checked={controlledLabels[label]}
-								color="primary"
-								name={label}
-								onChange={handleCheckboxChange}
-							/>
-						)}
-						key={label}
-						label={label}
+				<form
+					autoComplete="off"
+					className={classes.form}
+					noValidate
+					onSubmit={handleAddLabel}
+				>
+					<TextField
+						fullWidth
+						id="local-add-labels"
+						label="Add Label"
+						onChange={handleAddLabelChange}
+						value={localAddLabel}
+						variant="outlined"
+						InputProps={{
+							endAdornment: (
+								<InputAdornment position="end">
+									<Button
+										className={classes.button}
+										color="primary"
+										disabled={localAddLabel.length <= 0}
+										onClick={handleAddLabel}
+										startIcon={<AddIcon />}
+										variant="contained"
+									>
+										Add
+									</Button>
+								</InputAdornment>
+							),
+						}}
 					/>
-				))}
+				</form>
+
+				<List>
+					{Object.keys(controlledLabels).map((label) => (
+						<ListItem dense>
+							<FormControlLabel
+								control={(
+									<Checkbox
+										checked={controlledLabels[label]}
+										color="primary"
+										name={label}
+										onChange={handleCheckboxChange}
+									/>
+								)}
+								key={label}
+								label={label}
+							/>
+						</ListItem>
+					))}
+				</List>
 				{/* TODO: add checkbox with input to allow you to add a new label */}
 			</DialogContent>
 

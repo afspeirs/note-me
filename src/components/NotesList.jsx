@@ -28,9 +28,10 @@ import DialogAddLabel from './DialogAddLabel';
 
 const propTypes = {
 	notes: PropTypes.arrayOf(PropTypes.object).isRequired,
+	updateSearchText: PropTypes.func.isRequired,
 };
 
-const NotesList = ({ notes }) => {
+const NotesList = ({ notes, updateSearchText }) => {
 	const confirm = useConfirm();
 	const { deleteNote, favouriteNote, loading } = useNotes();
 	const classes = useStyles();
@@ -99,6 +100,11 @@ const NotesList = ({ notes }) => {
 			confirmationText: 'Delete',
 		})
 			.then(() => deleteNote(note));
+	};
+
+	const handleLabelClick = (label) => {
+		handleContextMenuClose();
+		updateSearchText(label);
 	};
 
 	useEffect(() => {
@@ -195,7 +201,7 @@ const NotesList = ({ notes }) => {
 												key={label}
 												label={label}
 												clickable
-												// TODO: add onClick to add the text in the chip to the search box
+												onClick={() => handleLabelClick(label)}
 											/>
 										))}
 									</ListItem>
