@@ -96,7 +96,7 @@ function useNotesProvider() {
 					const authLabels = authNotes.map((note) => note.labels).filter(Boolean).flat();
 					setLoading(false);
 					setNotes(authNotes);
-					setLabels([...new Set(authLabels)]);
+					setLabels([...new Set(authLabels)].sort());
 				});
 		} else if (user !== null) {
 			setLoading(false);
