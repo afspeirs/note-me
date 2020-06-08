@@ -57,7 +57,8 @@ const DialogAddLabel = ({ note, setOpen }) => {
 	const handleClose = () => {
 		if (note) {
 			const newFilterNames = Object.keys(controlledLabels)
-				.filter((label) => controlledLabels[label] !== false);
+				.filter((label) => controlledLabels[label] !== false)
+				.sort();
 			updateLabels(newFilterNames, note);
 		}
 		setOpen(null);
