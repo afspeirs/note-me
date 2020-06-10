@@ -140,7 +140,7 @@ const DialogAddLabel = ({ note, setOpen }) => {
 
 				<List>
 					{Object.keys(controlledLabels).map((label) => (
-						<ListItem dense>
+						<ListItem dense key={label}>
 							<FormControlLabel
 								control={(
 									<Checkbox
