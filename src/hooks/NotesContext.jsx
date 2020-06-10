@@ -45,46 +45,28 @@ function useNotesProvider() {
 	};
 
 	const deleteNote = (note = currentNote) => {
-		db.collection(user.uid)
-			.doc(note.id)
-			.delete();
-
+		db.collection(user.uid).doc(note.id).delete();
 		history.replace('/');
 	};
 
 	const favouriteNote = (note = currentNote) => {
-		const value = {
-			...note,
+		db.collection(user.uid).doc(note.id).update({
 			favourite: !note.favourite,
-		};
-
-		db.collection(user.uid)
-			.doc(note.id)
-			.set(value);
+		});
 	};
 
 	const updateLabels = (newLabels, note = currentNote) => {
-		const value = {
-			...note,
+		db.collection(user.uid).doc(note.id).update({
 			labels: newLabels,
-		};
-
-		db.collection(user.uid)
-			.doc(note.id)
-			.set(value);
+		});
 	};
 
 	const updateNote = (text, note = currentNote) => {
-		const value = {
-			...note,
+		db.collection(user.uid).doc(note.id).update({
 			date: +new Date(),
 			text,
 			title: getTitle(text),
-		};
-
-		db.collection(user.uid)
-			.doc(note.id)
-			.set(value);
+		});
 	};
 
 	// Subscribe to user on mount
