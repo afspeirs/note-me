@@ -30,7 +30,7 @@ function useNotesProvider() {
 		if (untitledNotes.length !== 0) {
 			history.push(`/note/${untitledNotes[0].id}`);
 		} else {
-			const newNote = db.collection(user.uid).doc();
+			const newNote = db.collection(`users/${user.uid}/notes`).doc();
 			const value = {
 				created: +new Date(),
 				date: +new Date(),
@@ -45,40 +45,70 @@ function useNotesProvider() {
 	};
 
 	const deleteNote = (note = currentNote) => {
-		db.collection(user.uid).doc(note.id).delete();
+		db.collection(`users/${user.uid}/notes`).doc(note.id).delete();
 		history.replace('/');
 	};
 
 	const favouriteNote = (note = currentNote) => {
-		db.collection(user.uid).doc(note.id).update({
+		db.collection(`users/${user.uid}/notes`).doc(note.id).update({
 			favourite: !note.favourite,
 		});
 	};
 
 	const updateLabels = (newLabels, note = currentNote) => {
-		db.collection(user.uid).doc(note.id).update({
+		db.collection(`users/${user.uid}/notes`).doc(note.id).update({
 			labels: newLabels,
 		});
 	};
 
 	const updateNote = (text, note = currentNote) => {
-		db.collection(user.uid).doc(note.id).update({
+		db.collection(`users/${user.uid}/notes`).doc(note.id).update({
 			date: +new Date(),
 			text,
 			title: getTitle(text),
 		});
 	};
 
+	const updateDatabase = () => {
+		if (user) {
+			db.collection(user.uid).get()
+				.then((collection) => {
+					if (!collection.empty) {
+						const collectionArray = collection.docs.map((doc) => doc.data());
+						// console.log(collectionArray);
+
+						const batch = db.batch();
+						collectionArray.forEach((doc) => {
+							const docRef = db.collection('users').doc(user.uid).collection('notes').doc();
+							batch.set(docRef, doc);
+						});
+						batch.commit();
+
+						return 'success';
+					}
+					return 'no notes';
+				}).catch((error) => {
+					console.log('ERROR:', error); // eslint-disable-line no-console
+				});
+		}
+	};
+
 	// Subscribe to user on mount
 	useEffect(() => {
 		if (user) {
-			db.collection(user.uid)
+			db.collection(`users/${user.uid}/notes`)
 				.onSnapshot((snapshot) => {
 					const authNotes = snapshot.docs.map((doc) => doc.data());
 					const authLabels = authNotes.map((note) => note.labels).filter(Boolean).flat();
 					setLoading(false);
 					setNotes(authNotes);
 					setLabels([...new Set(authLabels)].sort());
+				});
+
+			db.collection('users').doc(user.uid)
+				.onSnapshot((doc) => {
+					const authSettings = doc.data();
+					console.log(authSettings);
 				});
 		} else if (user !== null) {
 			setLoading(false);
@@ -95,8 +125,9 @@ function useNotesProvider() {
 		loading,
 		notes,
 		setCurrentNote,
-		updateNote,
+		updateDatabase,
 		updateLabels,
+		updateNote,
 	};
 }
 
