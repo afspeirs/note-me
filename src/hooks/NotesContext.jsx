@@ -74,7 +74,7 @@ function useNotesProvider() {
 
 	const updateDatabase = () => {
 		if (user) {
-			db.collection('notes').get()
+			db.collection(user.uid).get()
 				.then((collection) => {
 					if (!collection.empty) {
 						const collectionArray = collection.docs.map((doc) => doc.data());
