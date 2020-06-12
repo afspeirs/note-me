@@ -30,12 +30,12 @@ function useNotesProvider() {
 		if (untitledNotes.length !== 0) {
 			history.push(`/note/${untitledNotes[0].id}`);
 		} else {
-			const newNote = db.collection('notes').doc();
-			const value = {
+			const docRef = db.collection('notes').doc();
+			const newDoc = {
 				created: +new Date(),
 				date: +new Date(),
 				favourite: false,
-				id: newNote.id,
+				id: docRef.id,
 				text,
 				title: getTitle(text),
 				users: [
@@ -43,7 +43,7 @@ function useNotesProvider() {
 				],
 			};
 
-			newNote.set(value).then(() => history.push(`/note/${value.id}`));
+			docRef.set(newDoc).then(() => history.push(`/note/${newDoc.id}`));
 		}
 	};
 
@@ -78,14 +78,13 @@ function useNotesProvider() {
 				.then((collection) => {
 					if (!collection.empty) {
 						const collectionArray = collection.docs.map((doc) => doc.data());
-						// console.log(collectionArray);
 
 						const batch = db.batch();
 						collectionArray.forEach((doc) => {
 							const docRef = db.collection('notes').doc();
-
 							const newDoc = {
 								...doc,
+								id: docRef.id,
 								users: [
 									user.uid,
 								],
