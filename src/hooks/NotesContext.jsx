@@ -33,6 +33,7 @@ function useNotesProvider() {
 			const docRef = db.collection('notes').doc();
 			const newDoc = {
 				created: +new Date(),
+				createdBy: user.uid,
 				date: +new Date(),
 				favourite: false,
 				id: docRef.id,
@@ -83,6 +84,7 @@ function useNotesProvider() {
 						const docRef = db.collection('notes').doc();
 						const newDoc = {
 							...doc,
+							createdBy: user.uid,
 							id: docRef.id,
 							users: [
 								user.uid,
