@@ -94,9 +94,9 @@ function useNotesProvider() {
 						});
 						batch.commit();
 
-						return 'success';
+						return true;
 					}
-					return 'no notes';
+					return false;
 				}).catch((error) => {
 					console.log('ERROR:', error); // eslint-disable-line no-console
 				});

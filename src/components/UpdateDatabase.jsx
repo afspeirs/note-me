@@ -20,7 +20,11 @@ const UpdateDatabase = () => {
 			cancellationText: 'Cancel',
 			confirmationText: 'Yes',
 		}).then(() => {
-			updateDatabase();
+			if (updateDatabase()) {
+				console.log('wooo');
+			} else {
+				console.log('booo');
+			}
 		});
 	};
 
