@@ -25,10 +25,10 @@ function useNotesProvider() {
 	const [currentNote, setCurrentNote] = useState(null);
 
 	const addNote = (text = '') => {
-		const untitledNotes = notes.filter((note) => note.text === '');
+		const untitledNote = notes.find((note) => note.text === '');
 
-		if (untitledNotes.length !== 0) {
-			history.push(`/note/${untitledNotes[0].id}`);
+		if (untitledNote) {
+			history.push(`/note/${untitledNote.id}`);
 		} else {
 			const docRef = db.collection('notes').doc();
 			const newDoc = {
@@ -74,29 +74,28 @@ function useNotesProvider() {
 
 	const updateDatabase = () => {
 		if (user) {
-			db.collection(user.uid).get()
-				.then((collection) => {
-					if (!collection.empty) {
-						const collectionArray = collection.docs.map((doc) => doc.data());
+			db.collection(user.uid).get().then((collection) => {
+				if (!collection.empty) {
+					const collectionArray = collection.docs.map((doc) => doc.data());
 
-						const batch = db.batch();
-						collectionArray.forEach((doc) => {
-							const docRef = db.collection('notes').doc();
-							const newDoc = {
-								...doc,
-								id: docRef.id,
-								users: [
-									user.uid,
-								],
-							};
+					const batch = db.batch();
+					collectionArray.forEach((doc) => {
+						const docRef = db.collection('notes').doc();
+						const newDoc = {
+							...doc,
+							id: docRef.id,
+							users: [
+								user.uid,
+							],
+						};
 
-							batch.set(docRef, newDoc);
-						});
-						batch.commit();
-					}
-				}).catch((error) => {
-					console.log('ERROR:', error); // eslint-disable-line no-console
-				});
+						batch.set(docRef, newDoc);
+					});
+					batch.commit();
+				}
+			}).catch((error) => {
+				console.log('ERROR:', error); // eslint-disable-line no-console
+			});
 		}
 	};
 
