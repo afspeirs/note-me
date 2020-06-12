@@ -93,10 +93,7 @@ function useNotesProvider() {
 							batch.set(docRef, newDoc);
 						});
 						batch.commit();
-
-						return true;
 					}
-					return false;
 				}).catch((error) => {
 					console.log('ERROR:', error); // eslint-disable-line no-console
 				});

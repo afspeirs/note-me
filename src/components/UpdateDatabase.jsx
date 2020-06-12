@@ -19,13 +19,7 @@ const UpdateDatabase = () => {
 			description: 'This will move any notes from the old database to the new location. This can be done multiple times and create multiple notes',
 			cancellationText: 'Cancel',
 			confirmationText: 'Yes',
-		}).then(() => {
-			if (updateDatabase()) {
-				console.log('wooo');
-			} else {
-				console.log('booo');
-			}
-		});
+		}).then(updateDatabase);
 	};
 
 	return (
