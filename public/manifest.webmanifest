@@ -25,5 +25,12 @@
 			"sizes": "512x512",
 			"type": "image/png"
 		}
+	],
+	"shortcuts": [
+		{
+			"name": "Create Note",
+			"description": "View the list of podcasts you listen to",
+			"url": "/note/"
+		}
 	]
 }

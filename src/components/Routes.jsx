@@ -9,6 +9,7 @@ import {
 import { useAuth } from '../hooks/AuthContext';
 import HomePage from '../pages/HomePage';
 import NoPage from '../pages/NoPage';
+import NewNotePage from '../pages/NewNotePage';
 import NotePage from '../pages/NotePage';
 import SettingsPage from '../pages/SettingsPage';
 
@@ -30,29 +31,16 @@ const Routes = () => {
 	return (
 		<>
 			<Switch location={isModal ? window.previousLocation : location}>
-				<Route
-					exact
-					path="/"
-					component={HomePage}
-				/>
-
-				<Route
-					path="/note/:id"
-					component={NotePage}
-				/>
-
+				<Route exact path="/" component={HomePage} />
+				<Route exact path="/note/" component={NewNotePage} />
+				<Route path="/note/:id" component={NotePage} />
 				<Redirect from="/settings/" to="/" />
 				<Route component={NoPage} />
 			</Switch>
 
 			{user === false && <Redirect from="/note/" to="/" />}
 
-			{isModal && (
-				<Route
-					path="/settings/"
-					component={SettingsPage}
-				/>
-			)}
+			{isModal && <Route path="/settings/" component={SettingsPage} />}
 		</>
 	);
 };
