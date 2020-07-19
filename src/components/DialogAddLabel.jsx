@@ -57,7 +57,8 @@ const DialogAddLabel = ({ note, setOpen }) => {
 	const handleClose = () => {
 		if (note) {
 			const newFilterNames = Object.keys(controlledLabels)
-				.filter((label) => controlledLabels[label] !== false);
+				.filter((label) => controlledLabels[label] !== false)
+				.sort();
 			updateLabels(newFilterNames, note);
 		}
 		setOpen(null);
@@ -139,7 +140,7 @@ const DialogAddLabel = ({ note, setOpen }) => {
 
 				<List>
 					{Object.keys(controlledLabels).map((label) => (
-						<ListItem dense>
+						<ListItem dense key={label}>
 							<FormControlLabel
 								control={(
 									<Checkbox
