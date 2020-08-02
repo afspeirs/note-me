@@ -1,11 +1,11 @@
 {
   "name": "note-me",
-  "version": "5.1.0",
+  "version": "5.2.0",
   "description": "Create and store markdown notes",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "postbuild": "cat src/serviceWorker-custom.js >> build/service-worker.js"
+    "postbuild": "cross-cat src/serviceWorker-custom.js >> build/service-worker.js"
   },
   "keywords": [],
   "author": "AFSpeirs",
@@ -15,6 +15,7 @@
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.56",
     "clsx": "^1.1.1",
+    "cross-cat": "^1.0.0",
     "firebase": "^7.17.1",
     "material-ui-confirm": "^2.1.1",
     "prop-types": "^15.7.2",
