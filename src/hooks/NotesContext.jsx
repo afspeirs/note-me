@@ -8,7 +8,7 @@ import { useHistory } from 'react-router-dom';
 
 import { useAuth } from './AuthContext';
 import { db } from '../firebase';
-import { getTitle } from '../ultils';
+import { getTitle } from '../utils';
 
 const NotesContext = createContext();
 
