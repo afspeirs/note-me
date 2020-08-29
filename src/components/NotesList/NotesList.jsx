@@ -164,7 +164,7 @@ const NotesList = ({ notes, updateSearchText }) => {
 									</ListItemIcon>
 									<ListItemText
 										className={classes.listItemText}
-										primary={<TimeAgo date={note.date / 1000} />}
+										primary={<TimeAgo date={note.date} />}
 									/>
 								</ListItem>
 								<ListItem button onClick={() => handleFavouriteNote(note)}>
