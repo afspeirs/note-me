@@ -15,25 +15,22 @@ const useStyles = makeStyles((theme) => ({
 			backgroundColor: fade(theme.palette.common.black, 0.15),
 		},
 	},
-	searchIcon: {
-		position: 'absolute',
-		width: theme.spacing(5),
-		height: '100%',
-		pointerEvents: 'none',
-		display: 'flex',
-		alignItems: 'center',
-		justifyContent: 'center',
-	},
 	searchClear: {
 		marginRight: theme.spacing(0.5),
 		marginLeft: -theme.spacing(0.5),
+	},
+	searchIcon: {
+		position: 'absolute',
+		right: 0,
+		width: theme.spacing(5),
+		pointerEvents: 'none',
 	},
 	inputRoot: {
 		color: 'inherit',
 		width: 'inherit',
 	},
 	inputInput: {
-		padding: theme.spacing(1, 1, 1, 5),
+		padding: theme.spacing(1),
 	},
 }));
 

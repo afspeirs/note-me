@@ -36,9 +36,6 @@ const NotesSearch = () => {
 		<List className={classes.list}>
 			<ListItem>
 				<div className={classes.search}>
-					<div className={classes.searchIcon}>
-						<SearchIcon />
-					</div>
 					<InputBase
 						classes={{
 							root: classes.inputRoot,
@@ -48,7 +45,7 @@ const NotesSearch = () => {
 						onChange={handleTextInput}
 						placeholder="Search Notes"
 						value={text}
-						endAdornment={text.length !== 0 && (
+						endAdornment={text.length !== 0 ? (
 							<IconButton
 								aria-label="Clear Search"
 								className={classes.searchClear}
@@ -56,7 +53,16 @@ const NotesSearch = () => {
 								onClick={handleTextClear}
 								size="small"
 							>
-								<ClearIcon fontSize="inherit" />
+								<ClearIcon />
+							</IconButton>
+						) : (
+							<IconButton
+								aria-label="Clear Search"
+								className={classes.searchIcon}
+								color="inherit"
+								size="small"
+							>
+								<SearchIcon />
 							</IconButton>
 						)}
 					/>
