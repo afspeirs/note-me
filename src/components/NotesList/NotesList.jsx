@@ -119,7 +119,7 @@ const NotesList = ({ notes, updateSearchText }) => {
 			<List className={classes.list} ref={listEl}>
 				{notes.length === 0 && loading === false && (
 					<ListItem>
-						<ListItemText primary="No notes" />
+						<ListItemText primary="No notes found" />
 					</ListItem>
 				)}
 				{loading && (
