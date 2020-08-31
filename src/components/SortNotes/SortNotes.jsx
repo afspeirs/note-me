@@ -11,7 +11,7 @@ import {
 	Sort as SortIcon,
 } from '@material-ui/icons';
 
-import { useStateValue } from '../../hooks/StateContext';
+import { useGlobalState } from '../../hooks/GlobalState';
 
 const options = [
 	{ text: 'Modified Date (Newest First)', value: 'date-asc' },
@@ -29,7 +29,7 @@ const propTypes = {
 };
 
 const SortNotes = ({ icon }) => {
-	const [{ settings }, dispatch] = useStateValue();
+	const [{ settings }, dispatch] = useGlobalState();
 	const { sortNotes } = settings;
 	const [anchorEl, setAnchorEl] = useState(null);
 	// eslint-disable-next-line max-len

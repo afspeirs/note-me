@@ -6,11 +6,11 @@ import theme from './theme';
 import Container from './components/Container';
 import Routes from './components/Routes';
 import ServiceWorkerContent from './components/ServiceWorkerContent';
+import { useGlobalState } from './hooks/GlobalState';
 import { SnackbarProvider } from './hooks/Snackbar';
-import { useStateValue } from './hooks/StateContext';
 
 const App = () => {
-	const [{ settings }, dispatch] = useStateValue();
+	const [{ settings }, dispatch] = useGlobalState();
 
 	const handleKeyDown = (event) => {
 		// If CTRL or CMD is pressed

@@ -6,10 +6,10 @@ import {
 	useLocation,
 } from 'react-router-dom';
 
-import { useAuth } from '../../hooks/AuthContext';
+import { useAuth } from '../../hooks/Auth';
 import HomePage from '../../pages/HomePage';
-import NoPage from '../../pages/NoPage';
 import NewNotePage from '../../pages/NewNotePage';
+import NoPage from '../../pages/NoPage';
 import NotePage from '../../pages/NotePage';
 import SettingsPage from '../../pages/SettingsPage';
 

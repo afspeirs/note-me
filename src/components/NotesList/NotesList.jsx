@@ -23,8 +23,8 @@ import { useConfirm } from 'material-ui-confirm';
 import useStyles from './NotesList.styled';
 import DialogAddLabel from '../DialogAddLabel';
 import TimeAgo from '../TimeAgo';
-import { useNotes } from '../../hooks/NotesContext';
-import { useStateValue } from '../../hooks/StateContext';
+import { useGlobalState } from '../../hooks/GlobalState';
+import { useNotes } from '../../hooks/Notes';
 
 const propTypes = {
 	notes: PropTypes.arrayOf(PropTypes.object).isRequired,
@@ -35,7 +35,7 @@ const NotesList = ({ notes, updateSearchText }) => {
 	const confirm = useConfirm();
 	const { deleteNote, favouriteNote, loading } = useNotes();
 	const classes = useStyles();
-	const [{ settings }] = useStateValue();
+	const [{ settings }] = useGlobalState();
 	const { sortNotes, sortNotesFavourite } = settings;
 	const [contextAnchor, setContextAnchor] = useState(null);
 	const [openAddLabel, setOpenAddLabel] = useState(null);

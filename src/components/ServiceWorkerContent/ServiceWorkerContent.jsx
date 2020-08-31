@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 import { useSnackbar } from '../../hooks/Snackbar';
-import { useStateValue } from '../../hooks/StateContext';
+import { useGlobalState } from '../../hooks/GlobalState';
 
 const ServiceWorkerContent = () => {
-	const dispatch = [...useStateValue()].pop(); // I don't need to access any of the reducer state
+	const dispatch = [...useGlobalState()].pop(); // I don't need to access any of the reducer state
 	const snackbar = useSnackbar();
 
 	const swNewContentAvailable = () => {

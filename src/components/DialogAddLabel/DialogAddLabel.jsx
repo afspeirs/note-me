@@ -22,7 +22,7 @@ import {
 } from '@material-ui/icons';
 
 import useStyles from './DialogAddLabel.styled';
-import { useNotes } from '../../hooks/NotesContext';
+import { useNotes } from '../../hooks/Notes';
 
 const defaultProps = {
 	note: null,
