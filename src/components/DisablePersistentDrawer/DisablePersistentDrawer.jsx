@@ -6,10 +6,10 @@ import {
 	Switch,
 } from '@material-ui/core';
 
-import { useStateValue } from '../../hooks/StateContext';
+import { useGlobalState } from '../../hooks/GlobalState';
 
 const DisablePersistentDrawer = () => {
-	const [{ settings }, dispatch] = useStateValue();
+	const [{ settings }, dispatch] = useGlobalState();
 	const { disablePersistentDrawer } = settings;
 
 	const handleToggle = () => dispatch({ type: 'settings-disablePersistentDrawer' });

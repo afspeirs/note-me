@@ -11,8 +11,8 @@ import {
 } from '@material-ui/icons';
 
 import NotesSearch from '../NotesSearch';
-import { useAuth } from '../../hooks/AuthContext';
-import { useNotes } from '../../hooks/NotesContext';
+import { useAuth } from '../../hooks/Auth';
+import { useNotes } from '../../hooks/Notes';
 
 const DrawerContent = () => {
 	const { isSignedIn } = useAuth();

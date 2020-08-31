@@ -6,10 +6,10 @@ import {
 	Switch,
 } from '@material-ui/core';
 
-import { useStateValue } from '../../hooks/StateContext';
+import { useGlobalState } from '../../hooks/GlobalState';
 
 const ChangeTheme = () => {
-	const [{ settings }, dispatch] = useStateValue();
+	const [{ settings }, dispatch] = useGlobalState();
 	const { darkTheme } = settings;
 
 	const handleToggle = () => dispatch({ type: 'settings-darkTheme' });

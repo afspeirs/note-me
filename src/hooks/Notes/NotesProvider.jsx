@@ -1,21 +1,12 @@
-import React, {
-	createContext,
-	useContext,
-	useEffect,
-	useState,
-} from 'react';
+import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 
-import { useAuth } from './AuthContext';
-import { db } from '../firebase';
-import { getTitle } from '../utils';
+import NotesContext from './NotesContext';
+import { useAuth } from '../Auth';
+import { db } from '../../firebase';
+import { getTitle } from '../../utils';
 
-const NotesContext = createContext();
-
-// Hook for child components to get the notes object and re-render when it changes.
-export const useNotes = () => useContext(NotesContext);
-
-// Provider hook that creates notes object and handles state
 function useNotesProvider() {
 	const { user } = useAuth();
 	const history = useHistory();
@@ -69,7 +60,6 @@ function useNotesProvider() {
 		});
 	};
 
-	// Subscribe to user on mount
 	useEffect(() => {
 		if (user) {
 			db.collection(user.uid)
@@ -100,9 +90,18 @@ function useNotesProvider() {
 	};
 }
 
-// Provider component that wraps your app and makes notes object ...
-// ... available to any child component that calls useNotes().
-export function NotesProvider({ children }) { // eslint-disable-line react/prop-types
+const propTypes = {
+	children: PropTypes.oneOfType([
+		PropTypes.arrayOf(PropTypes.node),
+		PropTypes.node,
+	]).isRequired,
+};
+
+const NotesProvider = ({ children }) => {
 	const value = useNotesProvider();
 	return <NotesContext.Provider value={value}>{children}</NotesContext.Provider>;
-}
+};
+
+NotesProvider.propTypes = propTypes;
+
+export default NotesProvider;

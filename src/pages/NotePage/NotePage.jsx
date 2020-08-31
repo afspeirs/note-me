@@ -13,14 +13,14 @@ import {
 
 import useStyles from './NotePage.styled';
 import LinkRenderer from '../../components/LinkRenderer';
-import { useNotes } from '../../hooks/NotesContext';
-import { useStateValue } from '../../hooks/StateContext';
+import { useNotes } from '../../hooks/Notes';
+import { useGlobalState } from '../../hooks/GlobalState';
 
 const NotePage = () => {
 	const { id } = useParams();
 	const { notes, setCurrentNote, updateNote } = useNotes();
 	const [localNote, setLocalNote] = useState(undefined);
-	const [{ edit }, dispatch] = useStateValue();
+	const [{ edit }, dispatch] = useGlobalState();
 	const classes = useStyles();
 	const currentNote = notes.find((note) => note.id === id);
 

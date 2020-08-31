@@ -18,8 +18,8 @@ import {
 import useStyles from './Container.styled';
 import DrawerContent from '../DrawerContent';
 import HeaderContent from '../HeaderContent';
-import { useNotes } from '../../hooks/NotesContext';
-import { useStateValue } from '../../hooks/StateContext';
+import { useGlobalState } from '../../hooks/GlobalState';
+import { useNotes } from '../../hooks/Notes';
 import { isPathVisible } from '../../utils';
 
 const propTypes = {
@@ -31,7 +31,7 @@ const propTypes = {
 
 const Container = ({ children }) => {
 	const { currentNote } = useNotes();
-	const [{ drawerOpen, settings }, dispatch] = useStateValue();
+	const [{ drawerOpen, settings }, dispatch] = useGlobalState();
 	const { disablePersistentDrawer } = settings;
 	const classes = useStyles();
 	const history = useHistory();

@@ -12,6 +12,7 @@ import {
 	InputAdornment,
 	List,
 	ListItem,
+	ListItemText,
 	TextField,
 	Typography,
 } from '@material-ui/core';
@@ -21,7 +22,7 @@ import {
 } from '@material-ui/icons';
 
 import useStyles from './DialogAddLabel.styled';
-import { useNotes } from '../../hooks/NotesContext';
+import { useNotes } from '../../hooks/Notes';
 
 const defaultProps = {
 	note: null,
@@ -139,6 +140,11 @@ const DialogAddLabel = ({ note, setOpen }) => {
 				</form>
 
 				<List>
+					{Object.keys(controlledLabels).length === 0 && (
+						<ListItem>
+							<ListItemText primary="No labels found" />
+						</ListItem>
+					)}
 					{Object.keys(controlledLabels).map((label) => (
 						<ListItem dense key={label}>
 							<FormControlLabel
@@ -156,7 +162,6 @@ const DialogAddLabel = ({ note, setOpen }) => {
 						</ListItem>
 					))}
 				</List>
-				{/* TODO: add checkbox with input to allow you to add a new label */}
 			</DialogContent>
 
 			<DialogActions>

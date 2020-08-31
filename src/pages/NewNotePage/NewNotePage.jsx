@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
-import { useAuth } from '../../hooks/AuthContext';
-import { useNotes } from '../../hooks/NotesContext';
+import { useAuth } from '../../hooks/Auth';
+import { useNotes } from '../../hooks/Notes';
 
 const NotePage = () => {
 	const { isSignedIn } = useAuth();

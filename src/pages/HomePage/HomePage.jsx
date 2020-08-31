@@ -9,14 +9,14 @@ import {
 
 import useStyles from './HomePage.styled';
 import NotesSearch from '../../components/NotesSearch';
-import { useAuth } from '../../hooks/AuthContext';
-import { useNotes } from '../../hooks/NotesContext';
-import { useStateValue } from '../../hooks/StateContext';
+import { useAuth } from '../../hooks/Auth';
+import { useNotes } from '../../hooks/Notes';
+import { useGlobalState } from '../../hooks/GlobalState';
 
 const HomePage = () => {
 	const { signIn, user } = useAuth();
 	const { loading } = useNotes();
-	const [{ drawerOpen, settings }] = useStateValue();
+	const [{ drawerOpen, settings }] = useGlobalState();
 	const { disablePersistentDrawer } = settings;
 	const classes = useStyles();
 	const mobile = useMediaQuery('(max-width:600px)') || disablePersistentDrawer;

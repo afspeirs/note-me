@@ -6,10 +6,10 @@ import {
 	Switch,
 } from '@material-ui/core';
 
-import { useStateValue } from '../../hooks/StateContext';
+import { useGlobalState } from '../../hooks/GlobalState';
 
 const SortNotesFavourite = () => {
-	const [{ settings }, dispatch] = useStateValue();
+	const [{ settings }, dispatch] = useGlobalState();
 	const { sortNotesFavourite } = settings;
 
 	const handleToggle = () => dispatch({ type: 'settings-sortNotesFavourite' });

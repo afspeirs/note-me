@@ -12,7 +12,7 @@ import {
 
 import useStyles from './NotesSearch.styled';
 import NotesList from '../NotesList';
-import { useNotes } from '../../hooks/NotesContext';
+import { useNotes } from '../../hooks/Notes';
 
 const NotesSearch = () => {
 	const classes = useStyles();

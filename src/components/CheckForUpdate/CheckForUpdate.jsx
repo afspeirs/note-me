@@ -11,10 +11,10 @@ import {
 	Refresh as RefreshIcon,
 } from '@material-ui/icons';
 
-import { useStateValue } from '../../hooks/StateContext';
+import { useGlobalState } from '../../hooks/GlobalState';
 
 const CheckForUpdate = () => {
-	const [{ updateAvailable }] = useStateValue();
+	const [{ updateAvailable }] = useGlobalState();
 	const [loading, setLoading] = React.useState(false);
 	const timer = React.useRef();
 

@@ -20,8 +20,8 @@ import {
 import { useConfirm } from 'material-ui-confirm';
 
 import AdapterLink from '../AdapterLink';
-import { useAuth } from '../../hooks/AuthContext';
-import { useNotes } from '../../hooks/NotesContext';
+import { useAuth } from '../../hooks/Auth';
+import { useNotes } from '../../hooks/Notes';
 
 const propTypes = {
 	isHomeVisible: PropTypes.bool.isRequired,

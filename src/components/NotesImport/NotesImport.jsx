@@ -7,7 +7,7 @@ import {
 } from '@material-ui/core';
 
 import useStyles from './NotesImport.styled';
-import { useNotes } from '../../hooks/NotesContext';
+import { useNotes } from '../../hooks/Notes';
 
 const ImportExport = () => {
 	const { addNote } = useNotes();

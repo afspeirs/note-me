@@ -21,7 +21,7 @@ import {
 import { useConfirm } from 'material-ui-confirm';
 
 import useStyles from './NotesExport.styled';
-import { useNotes } from '../../hooks/NotesContext';
+import { useNotes } from '../../hooks/Notes';
 
 const NotesExport = () => {
 	const classes = useStyles();
