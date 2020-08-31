@@ -10,7 +10,7 @@ import { useAuth } from './AuthContext';
 import { db } from '../firebase';
 import { getTitle } from '../utils';
 
-const NotesContext = createContext();
+const NotesContext = createContext(null);
 
 // Hook for child components to get the notes object and re-render when it changes.
 export const useNotes = () => useContext(NotesContext);
