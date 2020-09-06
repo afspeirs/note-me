@@ -10,6 +10,9 @@ const useStyles = makeStyles((theme) => ({
 		right: theme.spacing(1),
 		top: theme.spacing(1),
 	},
+	title: {
+		maxWidth: '90%',
+	},
 }));
 
 export default useStyles;
