@@ -1,5 +1,5 @@
 import { createContext } from 'react';
 
-const SnackbarContext = createContext(null);
+const NotesContext = createContext(null);
 
-export default SnackbarContext;
+export default NotesContext;

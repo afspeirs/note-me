@@ -96,7 +96,12 @@ const DialogAddLabel = ({ note, setOpen }) => {
 				disableTypography
 				id="export-dialog-title"
 			>
-				<Typography variant="h6">{`Add labels to "${note?.title}"`}</Typography>
+				<Typography
+					className={classes.title}
+					variant="h6"
+				>
+					{`Add labels to "${note?.title}"`}
+				</Typography>
 				<IconButton
 					aria-label="close"
 					className={classes.closeButton}
@@ -165,9 +170,7 @@ const DialogAddLabel = ({ note, setOpen }) => {
 			</DialogContent>
 
 			<DialogActions>
-				<Button color="inherit" onClick={handleClose}>
-					Done
-				</Button>
+				<Button color="inherit" onClick={handleClose}>Done</Button>
 			</DialogActions>
 		</Dialog>
 	);
