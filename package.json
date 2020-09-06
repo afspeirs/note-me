@@ -15,7 +15,7 @@
     "@material-ui/icons": "^4.9.1",
     "clsx": "^1.1.1",
     "cross-cat": "^1.0.0",
-    "dayjs": "^1.8.34",
+    "dayjs": "^1.8.35",
     "firebase": "^7.19.1",
     "material-ui-confirm": "^2.1.1",
     "prop-types": "^15.7.2",
