@@ -28,10 +28,9 @@ import { useNotes } from '../../hooks/Notes';
 
 const propTypes = {
 	notes: PropTypes.arrayOf(PropTypes.object).isRequired,
-	updateSearchText: PropTypes.func.isRequired,
 };
 
-const NotesList = ({ notes, updateSearchText }) => {
+const NotesList = ({ notes }) => {
 	const confirm = useConfirm();
 	const { deleteNote, favouriteNote, loading } = useNotes();
 	const classes = useStyles();
@@ -59,6 +58,7 @@ const NotesList = ({ notes, updateSearchText }) => {
 		.sort(sortNoteFunction)
 		.sort(sortNotesFavouriteFunction);
 
+	// TODO: Refactor into its own file
 	const renderLink = React.useMemo(
 		() => React.forwardRef((props, ref) => (
 			// eslint-disable-next-line react/jsx-props-no-spreading
@@ -100,11 +100,6 @@ const NotesList = ({ notes, updateSearchText }) => {
 			confirmationText: 'Delete',
 		})
 			.then(() => deleteNote(note));
-	};
-
-	const handleLabelClick = (label) => {
-		handleContextMenuClose();
-		updateSearchText(label);
 	};
 
 	useEffect(() => {
@@ -198,11 +193,13 @@ const NotesList = ({ notes, updateSearchText }) => {
 									<ListItem>
 										{note.labels.map((label) => (
 											<Chip
-												className={classes.chip}
 												key={label}
-												label={label}
 												clickable
-												onClick={() => handleLabelClick(label)}
+												to={`/${label}`}
+												component={renderLink}
+												className={classes.chip}
+												label={label}
+												onClick={handleContextMenuClose} // TODO: Remove onClick
 											/>
 										))}
 									</ListItem>

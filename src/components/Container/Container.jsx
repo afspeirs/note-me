@@ -12,6 +12,7 @@ import {
 	useMediaQuery,
 } from '@material-ui/core';
 import {
+	ArrowBack as ArrowBackIcon,
 	Menu as MenuIcon,
 } from '@material-ui/icons';
 
@@ -20,7 +21,7 @@ import DrawerContent from '../DrawerContent';
 import HeaderContent from '../HeaderContent';
 import { useGlobalState } from '../../hooks/GlobalState';
 import { useNotes } from '../../hooks/Notes';
-import { isPathVisible } from '../../utils';
+import { isPathOnPage, isPathVisible } from '../../utils';
 
 const propTypes = {
 	children: PropTypes.oneOfType([
@@ -39,6 +40,7 @@ const Container = ({ children }) => {
 	const mobile = useMediaQuery('(max-width:600px)');
 	const persistentDrawer = mobile || disablePersistentDrawer;
 	const isHomeVisible = isPathVisible(location, '/');
+	const isNoteVisible = isPathOnPage(location, '/note/');
 
 	// Close drawer only in mobile
 	const handleDrawerClose = () => persistentDrawer && dispatch({
@@ -63,16 +65,24 @@ const Container = ({ children }) => {
 		<div className={classes.container}>
 			<AppBar position="fixed" className={classes.appBar}>
 				<Toolbar>
-					{!(!isHomeVisible && persistentDrawer) && (
-						// Show if not on the HomePage and in mobile
+					<IconButton
+						className={classes.menuButton}
+						color="inherit"
+						aria-label="Open drawer"
+						edge="start"
+						onClick={() => handleDrawerToggle(true)}
+					>
+						<MenuIcon />
+					</IconButton>
+					{isNoteVisible && (
 						<IconButton
 							className={classes.menuButton}
 							color="inherit"
-							aria-label="Open drawer"
+							aria-label="Back"
 							edge="start"
-							onClick={() => handleDrawerToggle(true)}
+							onClick={history.goBack}
 						>
-							<MenuIcon />
+							<ArrowBackIcon />
 						</IconButton>
 					)}
 					<Typography className={classes.title} variant="h6" noWrap>

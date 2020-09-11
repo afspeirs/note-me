@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import {
 	IconButton,
 	InputBase,
@@ -12,11 +13,13 @@ import {
 
 import useStyles from './NotesSearch.styled';
 import NotesList from '../NotesList';
-import { useNotes } from '../../hooks/Notes';
 
-const NotesSearch = () => {
+const propTypes = {
+	notes: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
+
+const NotesSearch = ({ notes }) => {
 	const classes = useStyles();
-	const { notes } = useNotes();
 	const [text, setText] = useState('');
 	const [items, setItems] = useState(notes);
 
@@ -69,9 +72,11 @@ const NotesSearch = () => {
 				</div>
 			</ListItem>
 
-			<NotesList notes={items} updateSearchText={setText} />
+			<NotesList notes={items} />
 		</List>
 	);
 };
+
+NotesSearch.propTypes = propTypes;
 
 export default NotesSearch;

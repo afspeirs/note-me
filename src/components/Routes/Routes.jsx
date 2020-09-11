@@ -32,9 +32,10 @@ const Routes = () => {
 		<>
 			<Switch location={isModal ? window.previousLocation : location}>
 				<Route exact path="/" component={HomePage} />
+				<Route exact path="/:label" component={HomePage} />
 				<Route exact path="/note/" component={NewNotePage} />
 				<Route path="/note/:id" component={NotePage} />
-				<Redirect from="/settings/" to="/" />
+				{/* <Redirect from="/settings/" to="/" /> */}
 				<Route component={NoPage} />
 			</Switch>
 

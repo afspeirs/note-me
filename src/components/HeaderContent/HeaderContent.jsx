@@ -11,7 +11,6 @@ import {
 import {
 	Add as AddIcon,
 	Delete as DeleteIcon,
-	Home as HomeIcon,
 	MoreVert as MoreIcon,
 	Settings as SettingsIcon,
 	Star as StarIcon,
@@ -82,14 +81,6 @@ const HeaderContent = ({ isHomeVisible, mobile }) => {
 			onClick: handleDeleteNote,
 			text: 'Delete Note',
 			visible: Boolean(currentNote),
-		},
-		{
-			component: AdapterLink,
-			icon: <HomeIcon />,
-			onClick: handleClose,
-			text: 'Home',
-			to: '/',
-			visible: isHomeVisible,
 		},
 		{
 			component: AdapterLink,
