@@ -72,7 +72,7 @@ const NotesSearch = ({ notes }) => {
 				</div>
 			</ListItem>
 
-			<NotesList notes={items} />
+			<NotesList notes={items} updateSearchText={setText} />
 		</List>
 	);
 };

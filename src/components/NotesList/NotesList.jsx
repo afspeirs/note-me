@@ -28,9 +28,10 @@ import { useNotes } from '../../hooks/Notes';
 
 const propTypes = {
 	notes: PropTypes.arrayOf(PropTypes.object).isRequired,
+	updateSearchText: PropTypes.func.isRequired,
 };
 
-const NotesList = ({ notes }) => {
+const NotesList = ({ notes, updateSearchText }) => {
 	const confirm = useConfirm();
 	const { deleteNote, favouriteNote, loading } = useNotes();
 	const classes = useStyles();
@@ -100,6 +101,11 @@ const NotesList = ({ notes }) => {
 			confirmationText: 'Delete',
 		})
 			.then(() => deleteNote(note));
+	};
+
+	const handleLabelClick = (label) => {
+		handleContextMenuClose();
+		updateSearchText(label);
 	};
 
 	useEffect(() => {
@@ -195,11 +201,9 @@ const NotesList = ({ notes }) => {
 											<Chip
 												key={label}
 												clickable
-												to={`/${label}`}
-												component={renderLink}
 												className={classes.chip}
 												label={label}
-												onClick={handleContextMenuClose} // TODO: Remove onClick
+												onClick={() => handleLabelClick(label)}
 											/>
 										))}
 									</ListItem>
