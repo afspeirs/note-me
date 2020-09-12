@@ -24,7 +24,7 @@ const LabelsList = () => {
 				className={classes.list}
 				aria-labelledby="labels-list-subheader"
 				subheader={(
-					<ListSubheader component="div" id="labels-list-subheader">
+					<ListSubheader component="div" className={classes.subheader} id="labels-list-subheader">
 						Labels
 					</ListSubheader>
 				)}
