@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import { NavLink } from 'react-router-dom';
 import {
 	Chip,
 	List,
@@ -22,6 +21,7 @@ import { useConfirm } from 'material-ui-confirm';
 
 import useStyles from './NotesList.styled';
 import DialogAddLabel from '../DialogAddLabel';
+import RenderLink from '../RenderLink';
 import TimeAgo from '../TimeAgo';
 import { useGlobalState } from '../../hooks/GlobalState';
 import { useNotes } from '../../hooks/Notes';
@@ -35,8 +35,7 @@ const NotesList = ({ notes, updateSearchText }) => {
 	const confirm = useConfirm();
 	const { deleteNote, favouriteNote, loading } = useNotes();
 	const classes = useStyles();
-	const [{ settings }] = useGlobalState();
-	const { sortNotes, sortNotesFavourite } = settings;
+	const [{ settings: { sortNotes, sortNotesFavourite } }] = useGlobalState();
 	const [contextAnchor, setContextAnchor] = useState(null);
 	const [openAddLabel, setOpenAddLabel] = useState(null);
 	const listEl = useRef(null);
@@ -58,14 +57,6 @@ const NotesList = ({ notes, updateSearchText }) => {
 	const sortArray = (array) => array
 		.sort(sortNoteFunction)
 		.sort(sortNotesFavouriteFunction);
-
-	const renderLink = React.useMemo(
-		() => React.forwardRef((props, ref) => (
-			// eslint-disable-next-line react/jsx-props-no-spreading
-			<NavLink {...props} innerRef={ref} />
-		)),
-		[],
-	);
 
 	const handleContextMenuClose = () => setContextAnchor(null);
 
@@ -132,9 +123,12 @@ const NotesList = ({ notes, updateSearchText }) => {
 					<React.Fragment key={`note-${note.id}`}>
 						<ListItem
 							button
-							to={`/note/${note.id}`}
+							to={{
+								pathname: `/note/${note.id}`,
+								state: { modal: true },
+							}}
 							className={clsx(classes.listItem, 'context-menu-select')}
-							component={renderLink}
+							component={RenderLink}
 							data-id={note.id}
 						>
 							<ListItemText
@@ -198,10 +192,10 @@ const NotesList = ({ notes, updateSearchText }) => {
 									<ListItem>
 										{note.labels.map((label) => (
 											<Chip
-												className={classes.chip}
 												key={label}
-												label={label}
 												clickable
+												className={classes.chip}
+												label={label}
 												onClick={() => handleLabelClick(label)}
 											/>
 										))}

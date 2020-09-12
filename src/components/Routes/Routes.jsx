@@ -18,12 +18,18 @@ const Routes = () => {
 	const location = useLocation();
 	const isModal = !!(location?.state?.modal && window.previousLocation !== location);
 
+	// Save window.previousLocation to sessionStorage for later
+	// If the page reloads with a modal open it renders the 404 page instead of the HomePage
 	useEffect(() => {
-		window.previousLocation = location;
-	}, []); // eslint-disable-line
+		if (window.previousLocation) {
+			sessionStorage.setItem('previousLocation', JSON.stringify(window.previousLocation));
+		} else {
+			window.previousLocation = JSON.parse(sessionStorage.getItem('previousLocation'));
+		}
+	}, []);
 
 	useEffect(() => {
-		if (!location.state || !location.state.modal) {
+		if (!location?.state?.modal) {
 			window.previousLocation = location;
 		}
 	}, [location]);
@@ -32,15 +38,24 @@ const Routes = () => {
 		<>
 			<Switch location={isModal ? window.previousLocation : location}>
 				<Route exact path="/" component={HomePage} />
+				<Route exact path="/:label" component={HomePage} />
 				<Route exact path="/note/" component={NewNotePage} />
-				<Route path="/note/:id" component={NotePage} />
-				<Redirect from="/settings/" to="/" />
 				<Route component={NoPage} />
 			</Switch>
 
-			{user === false && <Redirect from="/note/" to="/" />}
+			{user === false && (
+				<>
+					<Redirect from="/note/" to="/" />
+					<Redirect from="/note/:id" to="/" />
+				</>
+			)}
 
-			{isModal && <Route path="/settings/" component={SettingsPage} />}
+			{isModal && (
+				<Switch>
+					<Route path="/note/:id" component={NotePage} />
+					<Route path="/settings/" component={SettingsPage} />
+				</Switch>
+			)}
 		</>
 	);
 };

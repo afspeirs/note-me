@@ -8,19 +8,41 @@ import {
 } from '@material-ui/core';
 import {
 	Add as AddIcon,
+	Create as NotesIcon,
 } from '@material-ui/icons';
 
-import NotesSearch from '../NotesSearch';
+import useStyles from './DrawerContent.styled';
+import LabelsList from '../LabelsList';
+import RenderLink from '../RenderLink';
 import { useAuth } from '../../hooks/Auth';
 import { useNotes } from '../../hooks/Notes';
 
 const DrawerContent = () => {
 	const { isSignedIn } = useAuth();
 	const { addNote } = useNotes();
+	const classes = useStyles();
 
 	return (
 		<>
-			<NotesSearch />
+			<List>
+				<ListItem
+					button
+					exact
+					to="/"
+					className={classes.listItem}
+					component={RenderLink}
+				>
+					<ListItemIcon>
+						<NotesIcon />
+					</ListItemIcon>
+					<ListItemText
+						className={classes.listItemText}
+						primary="All Notes"
+					/>
+				</ListItem>
+			</List>
+
+			<LabelsList />
 
 			{isSignedIn && (
 				<>

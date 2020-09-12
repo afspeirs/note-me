@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useMemo, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import clsx from 'clsx';
 import {
 	AppBar,
@@ -12,15 +12,18 @@ import {
 	useMediaQuery,
 } from '@material-ui/core';
 import {
+	Add as AddIcon,
 	Menu as MenuIcon,
+	Settings as SettingsIcon,
 } from '@material-ui/icons';
 
 import useStyles from './Container.styled';
+import AdapterLink from '../AdapterLink';
 import DrawerContent from '../DrawerContent';
 import HeaderContent from '../HeaderContent';
+import { useAuth } from '../../hooks/Auth';
 import { useGlobalState } from '../../hooks/GlobalState';
 import { useNotes } from '../../hooks/Notes';
-import { isPathVisible } from '../../utils';
 
 const propTypes = {
 	children: PropTypes.oneOfType([
@@ -30,15 +33,31 @@ const propTypes = {
 };
 
 const Container = ({ children }) => {
-	const { currentNote } = useNotes();
-	const [{ drawerOpen, settings }, dispatch] = useGlobalState();
-	const { disablePersistentDrawer } = settings;
-	const classes = useStyles();
+	const { isSignedIn } = useAuth();
+	const [{ drawerOpen, settings: { disablePersistentDrawer } }, dispatch] = useGlobalState();
 	const history = useHistory();
-	const location = useLocation();
+	const { addNote, currentNote } = useNotes();
+	const classes = useStyles();
 	const mobile = useMediaQuery('(max-width:600px)');
 	const persistentDrawer = mobile || disablePersistentDrawer;
-	const isHomeVisible = isPathVisible(location, '/');
+
+	const headerItems = useMemo(() => [
+		{
+			icon: <AddIcon />,
+			onClick: () => addNote(''),
+			text: 'Create Note',
+			visible: isSignedIn,
+		},
+		{
+			component: AdapterLink,
+			icon: <SettingsIcon />,
+			text: 'Settings',
+			to: {
+				pathname: '/settings/',
+				state: { modal: true },
+			},
+		},
+	].filter((item) => item.visible !== false), [currentNote, isSignedIn]); // eslint-disable-line
 
 	// Close drawer only in mobile
 	const handleDrawerClose = () => persistentDrawer && dispatch({
@@ -63,25 +82,19 @@ const Container = ({ children }) => {
 		<div className={classes.container}>
 			<AppBar position="fixed" className={classes.appBar}>
 				<Toolbar>
-					{!(!isHomeVisible && persistentDrawer) && (
-						// Show if not on the HomePage and in mobile
-						<IconButton
-							className={classes.menuButton}
-							color="inherit"
-							aria-label="Open drawer"
-							edge="start"
-							onClick={() => handleDrawerToggle(true)}
-						>
-							<MenuIcon />
-						</IconButton>
-					)}
+					<IconButton
+						className={classes.menuButton}
+						color="inherit"
+						aria-label="Open drawer"
+						edge="start"
+						onClick={() => handleDrawerToggle(true)}
+					>
+						<MenuIcon />
+					</IconButton>
 					<Typography className={classes.title} variant="h6" noWrap>
-						{currentNote?.title || 'NoteMe'}
+						NoteMe
 					</Typography>
-					<HeaderContent
-						isHomeVisible={isHomeVisible}
-						mobile={mobile}
-					/>
+					<HeaderContent headerItems={headerItems} forceLastIconEdge />
 				</Toolbar>
 			</AppBar>
 			<Hidden className={classes.placeholder} smUp={!persistentDrawer} implementation="css" />
