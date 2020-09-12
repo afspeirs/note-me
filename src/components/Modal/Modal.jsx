@@ -19,7 +19,7 @@ import useStyles from './Modal.styled';
 import HeaderContent from '../HeaderContent';
 
 // eslint-disable-next-line react/jsx-props-no-spreading
-const Transition = React.forwardRef((props, ref) => <Slide direction="up" ref={ref} {...props} />);
+const Transition = React.forwardRef((props, ref) => <Slide ref={ref} {...props} />);
 
 const defaultProps = {
 	fullscreen: false,
@@ -75,6 +75,9 @@ const Modal = ({
 			open={open}
 			onClose={handleClose}
 			TransitionComponent={Transition}
+			TransitionProps={{
+				direction: mobile ? 'left' : 'up',
+			}}
 			aria-labelledby={`${title}-modal-title`}
 			PaperProps={{
 				className: classes.root,
