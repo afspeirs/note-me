@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { forwardRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import {
@@ -19,7 +19,7 @@ import useStyles from './Modal.styled';
 import HeaderContent from '../HeaderContent';
 
 // eslint-disable-next-line react/jsx-props-no-spreading
-const Transition = React.forwardRef((props, ref) => <Slide ref={ref} {...props} />);
+const Transition = forwardRef((props, ref) => <Slide ref={ref} {...props} />);
 
 const defaultProps = {
 	fullscreen: false,

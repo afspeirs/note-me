@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
 	Button,
 	CircularProgress,
@@ -15,11 +15,11 @@ import { useGlobalState } from '../../hooks/GlobalState';
 
 const CheckForUpdate = () => {
 	const [{ updateAvailable }] = useGlobalState();
-	const [loading, setLoading] = React.useState(false);
-	const timer = React.useRef();
+	const [loading, setLoading] = useState(false);
+	const timer = useRef();
 
 	// This abominable one-liner will clear the timer if CheckForUpdate unmounts
-	React.useEffect(() => () => clearTimeout(timer.current), []);
+	useEffect(() => () => clearTimeout(timer.current), []);
 
 	const updateServiceWorker = () => {
 		if ('serviceWorker' in navigator) {
