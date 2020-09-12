@@ -34,8 +34,7 @@ const propTypes = {
 
 const Container = ({ children }) => {
 	const { isSignedIn } = useAuth();
-	const [{ drawerOpen, settings }, dispatch] = useGlobalState();
-	const { disablePersistentDrawer } = settings;
+	const [{ drawerOpen, settings: { disablePersistentDrawer } }, dispatch] = useGlobalState();
 	const history = useHistory();
 	const { addNote, currentNote } = useNotes();
 	const classes = useStyles();

@@ -35,8 +35,7 @@ const NotesList = ({ notes, updateSearchText }) => {
 	const confirm = useConfirm();
 	const { deleteNote, favouriteNote, loading } = useNotes();
 	const classes = useStyles();
-	const [{ settings }] = useGlobalState();
-	const { sortNotes, sortNotesFavourite } = settings;
+	const [{ settings: { sortNotes, sortNotesFavourite } }] = useGlobalState();
 	const [contextAnchor, setContextAnchor] = useState(null);
 	const [openAddLabel, setOpenAddLabel] = useState(null);
 	const listEl = useRef(null);

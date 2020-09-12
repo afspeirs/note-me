@@ -29,8 +29,7 @@ const propTypes = {
 };
 
 const SortNotes = ({ icon }) => {
-	const [{ settings }, dispatch] = useGlobalState();
-	const { sortNotes } = settings;
+	const [{ settings: { sortNotes } }, dispatch] = useGlobalState();
 	const [anchorEl, setAnchorEl] = useState(null);
 	// eslint-disable-next-line max-len
 	const [selectedIndex, setSelectedIndex] = useState(options.findIndex((item) => item.value === sortNotes));

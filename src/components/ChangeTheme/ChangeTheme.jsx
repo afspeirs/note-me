@@ -9,8 +9,7 @@ import {
 import { useGlobalState } from '../../hooks/GlobalState';
 
 const ChangeTheme = () => {
-	const [{ settings }, dispatch] = useGlobalState();
-	const { darkTheme } = settings;
+	const [{ settings: { darkTheme } }, dispatch] = useGlobalState();
 
 	const handleToggle = () => dispatch({ type: 'settings-darkTheme' });
 
