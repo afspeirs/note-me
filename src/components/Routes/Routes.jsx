@@ -18,8 +18,18 @@ const Routes = () => {
 	const location = useLocation();
 	const isModal = !!(location?.state?.modal && window.previousLocation !== location);
 
+	// Save window.previousLocation to sessionStorage for later
+	// If the page reloads with a modal open it renders the 404 page instead of the HomePage
 	useEffect(() => {
-		if (!location.state || !location.state.modal) {
+		if (window.previousLocation) {
+			sessionStorage.setItem('previousLocation', JSON.stringify(window.previousLocation));
+		} else {
+			window.previousLocation = JSON.parse(sessionStorage.getItem('previousLocation'));
+		}
+	}, []);
+
+	useEffect(() => {
+		if (!location?.state?.modal) {
 			window.previousLocation = location;
 		}
 	}, [location]);
