@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles({
 	list: {
 		flexGrow: 1,
 		overflowY: 'auto',
@@ -19,6 +19,6 @@ const useStyles = makeStyles(() => ({
 	secondaryAction: {
 		pointerEvents: 'none',
 	},
-}));
+});
 
 export default useStyles;
