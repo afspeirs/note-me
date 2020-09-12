@@ -1,5 +1,4 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
 import {
 	List,
 	ListItem,
@@ -12,20 +11,12 @@ import {
 } from '@material-ui/icons';
 
 import useStyles from './LabelsList.styled';
+import RenderLink from '../RenderLink';
 import { useNotes } from '../../hooks/Notes';
 
 const LabelsList = () => {
 	const { labels, loading } = useNotes();
 	const classes = useStyles();
-
-	// TODO: Refactor into its own file
-	const renderLink = React.useMemo(
-		() => React.forwardRef((props, ref) => (
-			// eslint-disable-next-line react/jsx-props-no-spreading
-			<NavLink {...props} innerRef={ref} />
-		)),
-		[],
-	);
 
 	return (
 		<>
@@ -49,7 +40,7 @@ const LabelsList = () => {
 						button
 						to={`/${label}`}
 						className={classes.listItem}
-						component={renderLink}
+						component={RenderLink}
 					>
 						<ListItemIcon>
 							<LabelIcon />

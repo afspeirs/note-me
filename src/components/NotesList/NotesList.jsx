@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import { NavLink } from 'react-router-dom';
 import {
 	Chip,
 	List,
@@ -22,6 +21,7 @@ import { useConfirm } from 'material-ui-confirm';
 
 import useStyles from './NotesList.styled';
 import DialogAddLabel from '../DialogAddLabel';
+import RenderLink from '../RenderLink';
 import TimeAgo from '../TimeAgo';
 import { useGlobalState } from '../../hooks/GlobalState';
 import { useNotes } from '../../hooks/Notes';
@@ -57,15 +57,6 @@ const NotesList = ({ notes, updateSearchText }) => {
 	const sortArray = (array) => array
 		.sort(sortNoteFunction)
 		.sort(sortNotesFavouriteFunction);
-
-	// TODO: Refactor into its own file
-	const renderLink = React.useMemo(
-		() => React.forwardRef((props, ref) => (
-			// eslint-disable-next-line react/jsx-props-no-spreading
-			<NavLink {...props} innerRef={ref} />
-		)),
-		[],
-	);
 
 	const handleContextMenuClose = () => setContextAnchor(null);
 
@@ -137,7 +128,7 @@ const NotesList = ({ notes, updateSearchText }) => {
 								state: { modal: true },
 							}}
 							className={clsx(classes.listItem, 'context-menu-select')}
-							component={renderLink}
+							component={RenderLink}
 							data-id={note.id}
 						>
 							<ListItemText

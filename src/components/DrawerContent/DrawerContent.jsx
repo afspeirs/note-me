@@ -1,5 +1,4 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
 import {
 	Divider,
 	List,
@@ -14,6 +13,7 @@ import {
 
 import useStyles from './DrawerContent.styled';
 import LabelsList from '../LabelsList';
+import RenderLink from '../RenderLink';
 import { useAuth } from '../../hooks/Auth';
 import { useNotes } from '../../hooks/Notes';
 
@@ -21,15 +21,6 @@ const DrawerContent = () => {
 	const { isSignedIn } = useAuth();
 	const { addNote } = useNotes();
 	const classes = useStyles();
-
-	// TODO: Refactor into its own file
-	const renderLink = React.useMemo(
-		() => React.forwardRef((props, ref) => (
-			// eslint-disable-next-line react/jsx-props-no-spreading
-			<NavLink {...props} innerRef={ref} />
-		)),
-		[],
-	);
 
 	return (
 		<>
@@ -39,7 +30,7 @@ const DrawerContent = () => {
 					exact
 					to="/"
 					className={classes.listItem}
-					component={renderLink}
+					component={RenderLink}
 				>
 					<ListItemIcon>
 						<NotesIcon />
