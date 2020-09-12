@@ -9,8 +9,7 @@ import {
 import { useGlobalState } from '../../hooks/GlobalState';
 
 const SortNotesFavourite = () => {
-	const [{ settings }, dispatch] = useGlobalState();
-	const { sortNotesFavourite } = settings;
+	const [{ settings: { sortNotesFavourite } }, dispatch] = useGlobalState();
 
 	const handleToggle = () => dispatch({ type: 'settings-sortNotesFavourite' });
 

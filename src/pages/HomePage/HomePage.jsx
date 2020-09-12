@@ -1,25 +1,27 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import {
 	Button,
 	List,
 	ListItem,
 	ListItemText,
-	useMediaQuery,
 } from '@material-ui/core';
 
 import useStyles from './HomePage.styled';
 import NotesSearch from '../../components/NotesSearch';
 import { useAuth } from '../../hooks/Auth';
 import { useNotes } from '../../hooks/Notes';
-import { useGlobalState } from '../../hooks/GlobalState';
 
 const HomePage = () => {
 	const { signIn, user } = useAuth();
-	const { loading } = useNotes();
-	const [{ drawerOpen, settings }] = useGlobalState();
-	const { disablePersistentDrawer } = settings;
+	const { loading, notes } = useNotes();
+	const { label } = useParams();
 	const classes = useStyles();
-	const mobile = useMediaQuery('(max-width:600px)') || disablePersistentDrawer;
+	const [filteredNotes, setFilteredNotes] = useState([]);
+
+	useEffect(() => {
+		setFilteredNotes(label ? notes.filter((note) => note?.labels?.includes(label)) : []);
+	}, [label, notes]); // eslint-disable-line
 
 	return (
 		<div className={classes.page}>
@@ -33,13 +35,7 @@ const HomePage = () => {
 					</ListItem>
 				</List>
 			) : (
-				<>
-					{drawerOpen && !mobile ? (
-						<span className={classes.centered}>Select a note from the list</span>
-					) : (
-						<NotesSearch />
-					)}
-				</>
+				<NotesSearch notes={filteredNotes.length ? filteredNotes : notes} />
 			)}
 		</div>
 	);
