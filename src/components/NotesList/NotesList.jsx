@@ -133,7 +133,10 @@ const NotesList = ({ notes, updateSearchText }) => {
 					<React.Fragment key={`note-${note.id}`}>
 						<ListItem
 							button
-							to={`/note/${note.id}`}
+							to={{
+								pathname: `/note/${note.id}`,
+								state: { modal: true },
+							}}
 							className={clsx(classes.listItem, 'context-menu-select')}
 							component={renderLink}
 							data-id={note.id}

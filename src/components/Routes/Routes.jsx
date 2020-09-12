@@ -19,10 +19,6 @@ const Routes = () => {
 	const isModal = !!(location?.state?.modal && window.previousLocation !== location);
 
 	useEffect(() => {
-		window.previousLocation = location;
-	}, []); // eslint-disable-line
-
-	useEffect(() => {
 		if (!location.state || !location.state.modal) {
 			window.previousLocation = location;
 		}
@@ -34,14 +30,17 @@ const Routes = () => {
 				<Route exact path="/" component={HomePage} />
 				<Route exact path="/:label" component={HomePage} />
 				<Route exact path="/note/" component={NewNotePage} />
-				<Route path="/note/:id" component={NotePage} />
-				{/* <Redirect from="/settings/" to="/" /> */}
 				<Route component={NoPage} />
 			</Switch>
 
-			{user === false && <Redirect from="/note/" to="/" />}
+			{user === false && <Redirect from="/note/:id" to="/" />}
 
-			{isModal && <Route path="/settings/" component={SettingsPage} />}
+			{isModal && (
+				<Switch>
+					<Route path="/note/:id" component={NotePage} />
+					<Route path="/settings/" component={SettingsPage} />
+				</Switch>
+			)}
 		</>
 	);
 };

@@ -19,7 +19,10 @@ function useNotesProvider() {
 		const untitledNotes = notes.filter((note) => note.text === '');
 
 		if (untitledNotes.length !== 0) {
-			history.push(`/note/${untitledNotes[0].id}`);
+			history.push({
+				pathname: `/note/${untitledNotes[0].id}`,
+				state: { modal: true },
+			});
 		} else {
 			const newNote = db.collection(user.uid).doc();
 			const value = {
@@ -31,7 +34,10 @@ function useNotesProvider() {
 				title: getTitle(text),
 			};
 
-			newNote.set(value).then(() => history.push(`/note/${value.id}`));
+			newNote.set(value).then(() => history.push({
+				pathname: `/note/${value.id}`,
+				state: { modal: true },
+			}));
 		}
 	};
 

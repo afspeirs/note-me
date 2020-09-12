@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import {
@@ -16,6 +16,7 @@ import {
 } from '@material-ui/icons';
 
 import useStyles from './Modal.styled';
+import HeaderContent from '../HeaderContent';
 
 // eslint-disable-next-line react/jsx-props-no-spreading
 const Transition = React.forwardRef((props, ref) => <Slide direction="up" ref={ref} {...props} />);
@@ -23,6 +24,9 @@ const Transition = React.forwardRef((props, ref) => <Slide direction="up" ref={r
 const defaultProps = {
 	fullscreen: false,
 	title: 'Modal',
+	maxHeight: false,
+	maxWidth: 'sm',
+	headerItems: [],
 };
 
 const propTypes = {
@@ -31,17 +35,29 @@ const propTypes = {
 		PropTypes.node,
 	]).isRequired,
 	fullscreen: PropTypes.bool,
+	headerItems: PropTypes.arrayOf(
+		PropTypes.shape({
+			icon: PropTypes.node,
+			onClick: PropTypes.func,
+			text: PropTypes.string,
+		}),
+	),
+	maxHeight: PropTypes.bool,
+	maxWidth: PropTypes.string,
 	title: PropTypes.string,
 };
 
 const Modal = ({
 	children,
 	fullscreen,
+	headerItems,
+	maxHeight,
+	maxWidth,
 	title,
 }) => {
-	const classes = useStyles();
+	const classes = useStyles({ maxHeight });
 	const history = useHistory();
-	const [open, setOpen] = React.useState(true);
+	const [open, setOpen] = useState(true);
 	const mobile = useMediaQuery('(max-width:600px)');
 	const fullScreenModal = fullscreen || mobile;
 
@@ -54,13 +70,17 @@ const Modal = ({
 	return (
 		<Dialog
 			fullWidth
+			maxWidth={maxWidth}
 			fullScreen={fullScreenModal}
 			open={open}
 			onClose={handleClose}
 			TransitionComponent={Transition}
 			aria-labelledby={`${title}-modal-title`}
+			PaperProps={{
+				className: classes.root,
+			}}
 		>
-			<AppBar className={classes.appbar}>
+			<AppBar className={classes.appBar}>
 				<Toolbar>
 					{fullScreenModal && (
 						<IconButton
@@ -73,7 +93,14 @@ const Modal = ({
 							<ArrowBackIcon />
 						</IconButton>
 					)}
-					<Typography className={classes.title} variant="h6" id={`${title}-modal-title`}>{title}</Typography>
+					<Typography
+						className={classes.title}
+						variant="h6"
+						id={`${title}-modal-title`}
+					>
+						{title}
+					</Typography>
+					<HeaderContent headerItems={headerItems} />
 					{!fullScreenModal && (
 						<IconButton
 							aria-label="close"
