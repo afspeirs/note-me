@@ -1,16 +1,19 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
 	ListItem,
 	ListItemIcon,
+	ListItemSecondaryAction,
 	ListItemText,
 	Menu,
 	MenuItem,
+	Typography,
 } from '@material-ui/core';
 import {
 	Sort as SortIcon,
 } from '@material-ui/icons';
 
+import useStyles from './SortNotes.styled';
 import { useGlobalState } from '../../hooks/GlobalState';
 
 const options = [
@@ -31,12 +34,14 @@ const propTypes = {
 const SortNotes = ({ icon }) => {
 	const [{ settings: { sortNotes } }, dispatch] = useGlobalState();
 	const [anchorEl, setAnchorEl] = useState(null);
+	const anchorRef = useRef(null);
+	const classes = useStyles();
 	// eslint-disable-next-line max-len
 	const [selectedIndex, setSelectedIndex] = useState(options.findIndex((item) => item.value === sortNotes));
 
 	const handleClose = () => setAnchorEl(null);
 
-	const handleClickListItem = (event) => setAnchorEl(event.currentTarget);
+	const handleClickListItem = () => setAnchorEl(anchorRef.current);
 
 	const handleClickMenuItem = (event, index) => {
 		setSelectedIndex(index);
@@ -62,10 +67,12 @@ const SortNotes = ({ icon }) => {
 						<SortIcon />
 					</ListItemIcon>
 				)}
-				<ListItemText
-					primary="Sort Notes"
-					secondary={options[selectedIndex].text}
-				/>
+				<ListItemText primary="Sort Notes" />
+				<ListItemSecondaryAction className={classes.secondaryText} ref={anchorRef}>
+					<Typography variant="body2" color="textSecondary">
+						{options[selectedIndex].text}
+					</Typography>
+				</ListItemSecondaryAction>
 			</ListItem>
 			<Menu
 				id="sort-menu"
