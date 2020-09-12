@@ -70,7 +70,7 @@ const NotePage = () => {
 		<Modal
 			title={currentNote?.title}
 			maxHeight
-			// maxWidth="md"
+			maxWidth="lg"
 			headerItems={[
 				{
 					icon: currentNote?.favourite ? <StarIcon color="inherit" /> : <StarBorderIcon />,
