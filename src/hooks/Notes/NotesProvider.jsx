@@ -4,12 +4,14 @@ import { useHistory } from 'react-router-dom';
 
 import NotesContext from './NotesContext';
 import { useAuth } from '../Auth';
+import { useSnackbar } from '../Snackbar';
 import { db } from '../../firebase';
 import { getTitle } from '../../utils';
 
 function useNotesProvider() {
 	const { user } = useAuth();
 	const history = useHistory();
+	const snackbar = useSnackbar();
 	const [labels, setLabels] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [notes, setNotes] = useState([]);
@@ -53,6 +55,14 @@ function useNotesProvider() {
 	const deleteNote = (note = currentNote) => {
 		db.collection(user.uid).doc(note.id).delete();
 		history.replace('/');
+
+		snackbar.showMessage({
+			message: `"${note.title}" has been deleted`,
+			actionText: 'Undo',
+			actionFunction() {
+				db.collection(user.uid).doc(note.id).set(note);
+			},
+		});
 	};
 
 	/**

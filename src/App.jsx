@@ -7,6 +7,7 @@ import Container from './components/Container';
 import Routes from './components/Routes';
 import ServiceWorkerContent from './components/ServiceWorkerContent';
 import { useGlobalState } from './hooks/GlobalState';
+import { NotesProvider } from './hooks/Notes';
 import { SnackbarProvider } from './hooks/Snackbar';
 
 const App = () => {
@@ -52,11 +53,13 @@ const App = () => {
 		<ThemeProvider theme={muiTheme}>
 			<ConfirmProvider>
 				<SnackbarProvider>
-					<Container>
-						<Routes />
-					</Container>
+					<NotesProvider>
+						<Container>
+							<Routes />
+						</Container>
 
-					<ServiceWorkerContent />
+						<ServiceWorkerContent />
+					</NotesProvider>
 				</SnackbarProvider>
 			</ConfirmProvider>
 		</ThemeProvider>
