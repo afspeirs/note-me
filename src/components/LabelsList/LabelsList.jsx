@@ -20,14 +20,12 @@ const LabelsList = () => {
 
 	return (
 		<>
+			<ListSubheader component="div" className={classes.subheader} id="labels-list-subheader">
+				Labels
+			</ListSubheader>
 			<List
 				className={classes.list}
 				aria-labelledby="labels-list-subheader"
-				subheader={(
-					<ListSubheader component="div" className={classes.subheader} id="labels-list-subheader">
-						Labels
-					</ListSubheader>
-				)}
 			>
 				{labels.length === 0 && loading === false && (
 					<ListItem>
