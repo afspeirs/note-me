@@ -11,7 +11,7 @@ import { NotesProvider } from './hooks/Notes';
 import { SnackbarProvider } from './hooks/Snackbar';
 
 const App = () => {
-	const [{ settings }, dispatch] = useGlobalState();
+	const [{ settings: { darkTheme } }, dispatch] = useGlobalState();
 
 	const handleKeyDown = (event) => {
 		// If CTRL or CMD is pressed
@@ -37,7 +37,7 @@ const App = () => {
 		...theme,
 		palette: {
 			...theme.palette,
-			type: settings.darkTheme === true ? 'dark' : 'light',
+			type: darkTheme === true ? 'dark' : 'light',
 		},
 	});
 
