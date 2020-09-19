@@ -9,7 +9,7 @@ const AppVersion = () => (
 	<ListItem>
 		<ListItemText primary="App version:" />
 		<ListItemSecondaryAction>
-			{`v${process.env.REACT_APP_VERSION}`}
+			{process.env.REACT_APP_VERSION}
 		</ListItemSecondaryAction>
 	</ListItem>
 );
