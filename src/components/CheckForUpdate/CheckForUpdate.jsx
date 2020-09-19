@@ -30,7 +30,9 @@ const CheckForUpdate = () => {
 	};
 
 	const handleButtonClick = () => {
-		if (!loading) {
+		if (updateAvailable) {
+			window.location.reload();
+		} else if (!loading) {
 			setLoading(true);
 			updateServiceWorker();
 			timer.current = setTimeout(() => setLoading(false), 2000);
@@ -45,7 +47,7 @@ const CheckForUpdate = () => {
 					<Button
 						variant="contained"
 						color="primary"
-						onClick={() => window.location.reload(true)}
+						onClick={handleButtonClick}
 					>
 						Update
 					</Button>
