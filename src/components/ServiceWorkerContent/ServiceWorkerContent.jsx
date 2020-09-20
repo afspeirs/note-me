@@ -10,7 +10,7 @@ const ServiceWorkerContent = () => {
 		snackbar.showMessage({
 			message: 'A new version is available',
 			actionText: 'Update',
-			actionFunction: () => window.location.reload(true),
+			actionFunction: () => window.location.reload(),
 		});
 		dispatch({
 			type: 'app-updateAvailable',

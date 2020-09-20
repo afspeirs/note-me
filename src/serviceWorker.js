@@ -10,13 +10,13 @@
 // resources are updated in the background.
 
 // To learn more about the benefits of this model and instructions on how to
-// opt-in, read http://bit.ly/CRA-PWA
+// opt-in, read https://bit.ly/CRA-PWA
 
 const isLocalhost = Boolean(
   window.location.hostname === 'localhost' ||
     // [::1] is the IPv6 localhost address.
     window.location.hostname === '[::1]' ||
-    // 127.0.0.1/8 is considered localhost for IPv4.
+    // 127.0.0.0/8 are considered localhost for IPv4.
     window.location.hostname.match(
       /^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/
     )
@@ -73,7 +73,7 @@ function registerValidSW(swUrl, config) {
               // content until all client tabs are closed.
               console.log(
                 'New content is available and will be used when all ' +
-                  'tabs for this page are closed. See http://bit.ly/CRA-PWA.'
+                  'tabs for this page are closed. See https://bit.ly/CRA-PWA.'
               );
 
               // New Content Available event
@@ -138,8 +138,12 @@ function checkValidServiceWorker(swUrl, config) {
 
 export function unregister() {
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.ready.then(registration => {
-      registration.unregister();
-    });
+    navigator.serviceWorker.ready
+      .then(registration => {
+        registration.unregister();
+      })
+      .catch(error => {
+        console.error(error.message);
+      });
   }
 }
