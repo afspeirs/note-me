@@ -106,7 +106,10 @@ const Modal = ({
 					>
 						{title}
 					</Typography>
-					<HeaderContent headerItems={headerItems} />
+					<HeaderContent
+						forceLastIconEdge={mobile}
+						headerItems={headerItems}
+					/>
 					{!fullScreenModal && (
 						<IconButton
 							aria-label="close"
