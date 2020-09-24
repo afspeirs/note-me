@@ -1,6 +1,7 @@
 import React, { forwardRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
+import { useTheme } from '@material-ui/core/styles';
 import {
 	AppBar,
 	Dialog,
@@ -58,7 +59,8 @@ const Modal = ({
 	const classes = useStyles({ maxHeight });
 	const history = useHistory();
 	const [open, setOpen] = useState(true);
-	const mobile = useMediaQuery('(max-width:600px)');
+	const { breakpoints } = useTheme();
+	const mobile = !useMediaQuery(breakpoints.up(maxWidth)); // Matches below the breakpoint
 	const fullScreenModal = fullscreen || mobile;
 
 	const handleClose = (event) => {
@@ -98,12 +100,16 @@ const Modal = ({
 					)}
 					<Typography
 						className={classes.title}
+						component="h2"
 						variant="h6"
 						id={`${title}-modal-title`}
 					>
 						{title}
 					</Typography>
-					<HeaderContent headerItems={headerItems} />
+					<HeaderContent
+						forceLastIconEdge={mobile}
+						headerItems={headerItems}
+					/>
 					{!fullScreenModal && (
 						<IconButton
 							aria-label="close"

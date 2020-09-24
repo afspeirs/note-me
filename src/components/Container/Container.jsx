@@ -91,7 +91,7 @@ const Container = ({ children }) => {
 					>
 						<MenuIcon />
 					</IconButton>
-					<Typography className={classes.title} variant="h6" noWrap>
+					<Typography className={classes.title} component="h1" variant="h6" noWrap>
 						NoteMe
 					</Typography>
 					<HeaderContent headerItems={headerItems} forceLastIconEdge />
