@@ -100,6 +100,7 @@ const Modal = ({
 					)}
 					<Typography
 						className={classes.title}
+						component="h2"
 						variant="h6"
 						id={`${title}-modal-title`}
 					>
