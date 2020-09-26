@@ -1,6 +1,6 @@
 import React, { forwardRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useHistory } from 'react-router-dom';
+import { Prompt, useHistory } from 'react-router-dom';
 import { useTheme } from '@material-ui/core/styles';
 import {
 	AppBar,
@@ -24,10 +24,11 @@ const Transition = forwardRef((props, ref) => <Slide ref={ref} {...props} />);
 
 const defaultProps = {
 	fullscreen: false,
-	title: 'Modal',
+	headerItems: [],
 	maxHeight: false,
 	maxWidth: 'sm',
-	headerItems: [],
+	showPrompt: false,
+	title: 'Modal',
 };
 
 const propTypes = {
@@ -45,6 +46,7 @@ const propTypes = {
 	),
 	maxHeight: PropTypes.bool,
 	maxWidth: PropTypes.string,
+	showPrompt: PropTypes.bool,
 	title: PropTypes.string,
 };
 
@@ -54,6 +56,7 @@ const Modal = ({
 	headerItems,
 	maxHeight,
 	maxWidth,
+	showPrompt,
 	title,
 }) => {
 	const classes = useStyles({ maxHeight });
@@ -65,67 +68,71 @@ const Modal = ({
 
 	const handleClose = (event) => {
 		event.stopPropagation();
-		setOpen(false);
 		setTimeout(() => history.goBack(), 250);
+		if (!showPrompt) setOpen(false);
 	};
 
 	return (
-		<Dialog
-			fullWidth
-			maxWidth={maxWidth}
-			fullScreen={fullScreenModal}
-			open={open}
-			onClose={handleClose}
-			TransitionComponent={Transition}
-			TransitionProps={{
-				direction: mobile ? 'left' : 'up',
-			}}
-			aria-labelledby={`${title}-modal-title`}
-			PaperProps={{
-				className: classes.root,
-			}}
-		>
-			<AppBar className={classes.appBar}>
-				<Toolbar>
-					{fullScreenModal && (
-						<IconButton
-							className={classes.menuButton}
-							aria-label="close"
-							color="inherit"
-							edge="start"
-							onClick={handleClose}
+		<>
+			<Dialog
+				aria-labelledby={`${title}-modal-title`}
+				fullScreen={fullScreenModal}
+				fullWidth
+				maxWidth={maxWidth}
+				onClose={handleClose}
+				open={open}
+				PaperProps={{
+					className: classes.root,
+				}}
+				TransitionComponent={Transition}
+				TransitionProps={{
+					direction: mobile ? 'left' : 'up',
+				}}
+			>
+				<AppBar className={classes.appBar}>
+					<Toolbar>
+						{fullScreenModal && (
+							<IconButton
+								aria-label="close"
+								className={classes.menuButton}
+								color="inherit"
+								edge="start"
+								onClick={handleClose}
+							>
+								<ArrowBackIcon />
+							</IconButton>
+						)}
+						<Typography
+							className={classes.title}
+							component="h2"
+							id={`${title}-modal-title`}
+							variant="h6"
 						>
-							<ArrowBackIcon />
-						</IconButton>
-					)}
-					<Typography
-						className={classes.title}
-						component="h2"
-						variant="h6"
-						id={`${title}-modal-title`}
-					>
-						{title}
-					</Typography>
-					<HeaderContent
-						forceLastIconEdge={mobile}
-						headerItems={headerItems}
-					/>
-					{!fullScreenModal && (
-						<IconButton
-							aria-label="close"
-							color="inherit"
-							edge="end"
-							onClick={handleClose}
-						>
-							<CloseIcon />
-						</IconButton>
-					)}
-				</Toolbar>
-			</AppBar>
-			<div className={classes.children}>
-				{children}
-			</div>
-		</Dialog>
+							{title}
+						</Typography>
+						<HeaderContent
+							forceLastIconEdge={mobile}
+							headerItems={headerItems}
+						/>
+						{!fullScreenModal && (
+							<IconButton
+								aria-label="close"
+								color="inherit"
+								edge="end"
+								onClick={handleClose}
+							>
+								<CloseIcon />
+							</IconButton>
+						)}
+					</Toolbar>
+				</AppBar>
+				<div className={classes.children}>
+					{children}
+				</div>
+			</Dialog>
+
+			<Prompt when={showPrompt} message="Are you sure you want to leave without saving?" />
+		</>
 	);
 };
 

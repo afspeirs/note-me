@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
-import { Prompt, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import Markdown from 'react-markdown';
 import {
 	Fab,
@@ -71,6 +71,7 @@ const NotePage = () => {
 			title={currentNote?.title}
 			maxHeight
 			maxWidth="lg"
+			showPrompt={localNote !== currentNote?.text}
 			headerItems={[
 				{
 					icon: currentNote?.favourite ? <StarIcon color="inherit" /> : <StarBorderIcon />,
@@ -97,13 +98,6 @@ const NotePage = () => {
 					escapeHtml
 					renderers={{ link: LinkRenderer }}
 					source={localNote}
-				/>
-			)}
-
-			{currentNote && (
-				<Prompt
-					when={localNote !== currentNote.text}
-					message="Are you sure you want to leave without saving?"
 				/>
 			)}
 
