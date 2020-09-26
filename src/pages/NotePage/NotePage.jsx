@@ -35,16 +35,24 @@ const NotePage = () => {
 	const [{ edit }, dispatch] = useGlobalState();
 	const classes = useStyles();
 	const currentNote = notes.find((note) => note.id === id);
-
-	const handleDeleteNote = () => {
-		confirm({
-			title: `Are you sure you want to delete "${currentNote.title}"?`,
-			confirmationText: 'Delete',
-		})
-			.then(deleteNote);
-	};
-
-	const handleFavouriteNote = () => favouriteNote();
+	const headerItems = [
+		{
+			icon: currentNote?.favourite ? <StarIcon color="inherit" /> : <StarBorderIcon />,
+			onClick: () => favouriteNote(),
+			text: currentNote?.favourite ? 'Unfavourite' : 'Favourite',
+		},
+		{
+			icon: <DeleteIcon />,
+			onClick: () => {
+				confirm({
+					title: `Are you sure you want to delete "${currentNote.title}"?`,
+					confirmationText: 'Delete',
+				})
+					.then(deleteNote);
+			},
+			text: 'Delete Note',
+		},
+	];
 
 	useEffect(() => {
 		if (currentNote) {
@@ -68,22 +76,11 @@ const NotePage = () => {
 
 	return (
 		<Modal
-			title={currentNote?.title}
+			headerItems={headerItems}
 			maxHeight
 			maxWidth="lg"
 			showPrompt={localNote !== currentNote?.text}
-			headerItems={[
-				{
-					icon: currentNote?.favourite ? <StarIcon color="inherit" /> : <StarBorderIcon />,
-					onClick: handleFavouriteNote,
-					text: currentNote?.favourite ? 'Unfavourite' : 'Favourite',
-				},
-				{
-					icon: <DeleteIcon />,
-					onClick: handleDeleteNote,
-					text: 'Delete Note',
-				},
-			]}
+			title={currentNote?.title}
 		>
 			{edit ? (
 				<textarea
