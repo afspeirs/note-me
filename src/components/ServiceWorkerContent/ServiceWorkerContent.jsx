@@ -16,6 +16,10 @@ const ServiceWorkerContent = () => {
 			actionText: 'Install',
 			actionFunction: () => event.prompt(),
 		});
+		dispatch({
+			type: 'app-beforeInstallPrompt',
+			value: event,
+		});
 	};
 
 	const swNewContentAvailable = () => {

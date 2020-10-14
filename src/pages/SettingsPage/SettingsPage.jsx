@@ -4,6 +4,7 @@ import {
 	List,
 } from '@material-ui/core';
 
+import CheckForInstallPrompt from '../../components/CheckForInstallPrompt';
 import AppVersion from '../../components/AppVersion';
 import ChangeTheme from '../../components/ChangeTheme';
 import CheckForUpdate from '../../components/CheckForUpdate';
@@ -21,6 +22,7 @@ const SettingsPage = () => (
 			<UserInformation />
 			<AppVersion />
 			<CheckForUpdate />
+			<CheckForInstallPrompt />
 
 			<Divider />
 

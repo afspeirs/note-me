@@ -1,4 +1,5 @@
 export const initialState = {
+	beforeInstallPrompt: null,
 	drawerOpen: false,
 	edit: false,
 	settings: {
