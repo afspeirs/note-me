@@ -42,7 +42,7 @@ const ServiceWorkerContent = () => {
 		window.addEventListener('swContentCached', swContentCached);
 
 		return () => {
-			window.removeEventListener('swBeforeInstallPrompt', swBeforeInstallPrompt);
+			window.removeEventListener('beforeinstallprompt', swBeforeInstallPrompt);
 			window.removeEventListener('swNewContentAvailable', swNewContentAvailable);
 			window.removeEventListener('swContentCached', swContentCached);
 		};
