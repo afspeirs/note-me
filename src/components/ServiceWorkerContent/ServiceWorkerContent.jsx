@@ -6,6 +6,11 @@ const ServiceWorkerContent = () => {
 	const dispatch = [...useGlobalState()].pop(); // I don't need to access any of the reducer state
 	const snackbar = useSnackbar();
 
+	const swBeforeInstallPrompt = (event) => {
+		// eslint-disable-next-line no-console
+		console.log(event);
+	};
+
 	const swNewContentAvailable = () => {
 		snackbar.showMessage({
 			message: 'A new version is available',
@@ -25,10 +30,12 @@ const ServiceWorkerContent = () => {
 	};
 
 	useEffect(() => {
+		window.addEventListener('swBeforeInstallPrompt', swBeforeInstallPrompt);
 		window.addEventListener('swNewContentAvailable', swNewContentAvailable);
 		window.addEventListener('swContentCached', swContentCached);
 
 		return () => {
+			window.removeEventListener('swBeforeInstallPrompt', swBeforeInstallPrompt);
 			window.removeEventListener('swNewContentAvailable', swNewContentAvailable);
 			window.removeEventListener('swContentCached', swContentCached);
 		};
