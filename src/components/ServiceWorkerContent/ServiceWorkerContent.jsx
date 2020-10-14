@@ -12,9 +12,9 @@ const ServiceWorkerContent = () => {
 		console.log(event);
 
 		snackbar.showMessage({
-			message: 'beforeinstallprompt',
-			// actionText: 'Install',
-			// actionFunction: () => event.installPrompt.prompt(),
+			message: 'Add NoteMe to your Homescreen',
+			actionText: 'Install',
+			actionFunction: () => event.installPrompt.prompt(),
 		});
 	};
 
