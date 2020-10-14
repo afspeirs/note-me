@@ -14,7 +14,7 @@ const ServiceWorkerContent = () => {
 		snackbar.showMessage({
 			message: 'Add NoteMe to your Homescreen',
 			actionText: 'Install',
-			actionFunction: () => event.installPrompt.prompt(),
+			actionFunction: () => event.prompt(),
 		});
 	};
 
