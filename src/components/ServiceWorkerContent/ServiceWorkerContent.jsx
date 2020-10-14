@@ -9,6 +9,12 @@ const ServiceWorkerContent = () => {
 	const swBeforeInstallPrompt = (event) => {
 		// eslint-disable-next-line no-console
 		console.log(event);
+
+		snackbar.showMessage({
+			message: 'beforeinstallprompt',
+			// actionText: 'Install',
+			// actionFunction: () => event.installPrompt.prompt(),
+		});
 	};
 
 	const swNewContentAvailable = () => {
