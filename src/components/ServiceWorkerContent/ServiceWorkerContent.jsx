@@ -7,6 +7,7 @@ const ServiceWorkerContent = () => {
 	const snackbar = useSnackbar();
 
 	const swBeforeInstallPrompt = (event) => {
+		event.preventDefault();
 		// eslint-disable-next-line no-console
 		console.log(event);
 
@@ -36,7 +37,7 @@ const ServiceWorkerContent = () => {
 	};
 
 	useEffect(() => {
-		window.addEventListener('swBeforeInstallPrompt', swBeforeInstallPrompt);
+		window.addEventListener('beforeinstallprompt', swBeforeInstallPrompt);
 		window.addEventListener('swNewContentAvailable', swNewContentAvailable);
 		window.addEventListener('swContentCached', swContentCached);
 
