@@ -9,10 +9,21 @@ import {
 import { useGlobalState } from '../../hooks/GlobalState';
 
 const AddToHomescreen = () => {
-	const [{ beforeInstallPrompt }] = useGlobalState();
+	const [{ beforeInstallPrompt }, dispatch] = useGlobalState();
 
-	const handleButtonClick = () => {
+	const handleButtonClick = async () => {
 		beforeInstallPrompt.prompt();
+
+		const outcome = await beforeInstallPrompt.userChoice;
+		if (outcome.outcome === 'accepted') {
+			console.log('App Installed');
+		} else {
+			console.log('App not installed');
+		}
+		dispatch({
+			type: 'app-beforeInstallPrompt',
+			value: false,
+		});
 	};
 
 	return Boolean(beforeInstallPrompt) && (

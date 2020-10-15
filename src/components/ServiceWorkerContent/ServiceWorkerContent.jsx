@@ -3,7 +3,7 @@ import { useSnackbar } from '../../hooks/Snackbar';
 import { useGlobalState } from '../../hooks/GlobalState';
 
 const ServiceWorkerContent = () => {
-	const dispatch = [...useGlobalState()].pop(); // I don't need to access any of the reducer state
+	const [{ beforeInstallPrompt }, dispatch] = useGlobalState();
 	const snackbar = useSnackbar();
 
 	const swBeforeInstallPrompt = (event) => {
@@ -11,15 +11,24 @@ const ServiceWorkerContent = () => {
 		// eslint-disable-next-line no-console
 		console.log(event);
 
-		snackbar.showMessage({
-			message: 'Add NoteMe to your Homescreen',
-			actionText: 'Install',
-			actionFunction: () => event.prompt(),
-		});
-		dispatch({
-			type: 'app-beforeInstallPrompt',
-			value: event,
-		});
+		if (beforeInstallPrompt === null) {
+			snackbar.showMessage({
+				message: 'Add NoteMe to your Homescreen',
+				actionText: 'Install',
+				actionFunction: () => {
+					event.prompt();
+
+					dispatch({
+						type: 'app-beforeInstallPrompt',
+						value: null,
+					});
+				},
+			});
+			dispatch({
+				type: 'app-beforeInstallPrompt',
+				value: event,
+			});
+		}
 	};
 
 	const swNewContentAvailable = () => {
