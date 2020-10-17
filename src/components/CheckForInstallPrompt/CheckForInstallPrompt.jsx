@@ -16,14 +16,11 @@ const AddToHomescreen = () => {
 
 		const outcome = await beforeInstallPrompt.userChoice;
 		if (outcome.outcome === 'accepted') {
-			console.log('App Installed');
-		} else {
-			console.log('App not installed');
+			dispatch({
+				type: 'app-beforeInstallPrompt',
+				value: false,
+			});
 		}
-		dispatch({
-			type: 'app-beforeInstallPrompt',
-			value: false,
-		});
 	};
 
 	return Boolean(beforeInstallPrompt) && (

@@ -24,11 +24,14 @@ const ServiceWorkerContent = () => {
 					});
 				},
 			});
+
 			dispatch({
 				type: 'app-beforeInstallPrompt',
 				value: event,
 			});
 		}
+
+		window.removeEventListener('beforeinstallprompt', swBeforeInstallPrompt);
 	};
 
 	const swNewContentAvailable = () => {
