@@ -12,6 +12,10 @@ const useStyles = makeStyles((theme) => ({
 			backgroundColor: 'rgba(0, 0, 0, 0.15)',
 		},
 	},
+	listItemSecondary: {
+		display: 'flex',
+		pointerEvents: 'none',
+	},
 	listItemText: {
 		overflow: 'hidden',
 		textOverflow: 'ellipsis',
@@ -19,9 +23,6 @@ const useStyles = makeStyles((theme) => ({
 	},
 	nested: {
 		paddingLeft: theme.spacing(4),
-	},
-	secondaryAction: {
-		pointerEvents: 'none',
 	},
 }));
 

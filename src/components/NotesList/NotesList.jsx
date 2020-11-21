@@ -12,6 +12,7 @@ import {
 } from '@material-ui/core';
 import {
 	Alarm as AlarmIcon,
+	KeyboardArrowRight as ArrowIcon,
 	Delete as DeleteIcon,
 	Label as LabelIcon,
 	Star as StarIcon,
@@ -135,11 +136,12 @@ const NotesList = ({ notes, updateSearchText }) => {
 								className={classes.listItemText}
 								primary={note.title}
 							/>
-							{note.favourite && (
-								<ListItemSecondaryAction className={classes.secondaryAction}>
+							<ListItemSecondaryAction className={classes.listItemSecondary}>
+								{note.favourite && (
 									<StarIcon color="primary" edge="end" />
-								</ListItemSecondaryAction>
-							)}
+								)}
+								<ArrowIcon color="disabled" />
+							</ListItemSecondaryAction>
 						</ListItem>
 
 						<Popover
