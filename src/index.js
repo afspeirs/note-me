@@ -15,9 +15,7 @@ ReactDOM.render((
 		initialState={initialState}
 		reducer={reducer}
 	>
-		<BrowserRouter
-			getUserConfirmation={(message, callback) => UserConfirmation(message, callback)}
-		>
+		<BrowserRouter getUserConfirmation={(message, callback) => UserConfirmation(message, callback)}>
 			<AuthProvider>
 				<App />
 			</AuthProvider>

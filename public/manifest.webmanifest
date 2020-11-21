@@ -29,7 +29,7 @@
 	"shortcuts": [
 		{
 			"name": "Create Note",
-			"description": "View the list of podcasts you listen to",
+			"description": "Create a new note",
 			"url": "/note/"
 		}
 	]
