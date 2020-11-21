@@ -23,11 +23,11 @@ function useNotesProvider() {
 	 * @param {string} [text] - Initial text to use for the note
 	 */
 	const addNote = (text = '') => {
-		const untitledNotes = notes.filter((note) => note.text === '');
+		const untitledNote = notes.find((note) => note.text === '');
 
-		if (untitledNotes.length !== 0) {
+		if (untitledNote) {
 			history.push({
-				pathname: `/note/${untitledNotes[0].id}`,
+				pathname: `/note/${untitledNote.id}`,
 				state: { modal: true },
 			});
 		} else {
