@@ -5,7 +5,9 @@ const useStyles = makeStyles((theme) => ({
 		marginLeft: theme.spacing(1),
 	},
 	list: {
-		width: '100%',
+		flexGrow: 1,
+		overflowY: 'auto',
+		overflowX: 'hidden',
 	},
 	listItem: {
 		'&:hover,&.active': {

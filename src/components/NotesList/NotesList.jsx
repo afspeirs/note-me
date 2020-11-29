@@ -29,17 +29,17 @@ import { useNotes } from '../../hooks/Notes';
 
 const propTypes = {
 	notes: PropTypes.arrayOf(PropTypes.object).isRequired,
-	updateSearchText: PropTypes.func.isRequired,
 };
 
-const NotesList = ({ notes, updateSearchText }) => {
+const NotesList = ({ notes }) => {
 	const confirm = useConfirm();
 	const { deleteNote, favouriteNote, loading } = useNotes();
 	const classes = useStyles();
-	const [{ settings: { sortNotes, sortNotesFavourite } }] = useGlobalState();
+	const [{ search, settings: { sortNotes, sortNotesFavourite } }, dispatch] = useGlobalState();
 	const [contextAnchor, setContextAnchor] = useState(null);
 	const [openAddLabel, setOpenAddLabel] = useState(null);
 	const listEl = useRef(null);
+	const [filteredNotes, setFilteredNotes] = useState([]);
 	const sortNoteFunction = {
 		'date-asc': (a, b) => b.date - a.date,
 		'date-dsc': (a, b) => a.date - b.date,
@@ -53,6 +53,17 @@ const NotesList = ({ notes, updateSearchText }) => {
 			return 1;
 		}
 		return 0;
+	};
+
+	// TODO: Remove the duplicated function
+	const updateSearchText = (text) => {
+		dispatch({
+			type: 'app-search',
+			value: {
+				...search,
+				text,
+			},
+		});
 	};
 
 	const sortArray = (array) => array
@@ -106,10 +117,17 @@ const NotesList = ({ notes, updateSearchText }) => {
 		return () => current.removeEventListener('contextmenu', handleContextMenuOpen);
 	}, [listEl]);
 
+	useEffect(() => {
+		setFilteredNotes(
+			notes.filter((note) => note.text.toLowerCase().search(search.text.toLowerCase()) !== -1
+		|| note?.labels?.find((label) => label.toLowerCase().search(search.text.toLowerCase()) !== -1)),
+		);
+	}, [search.text, notes]);
+
 	return (
 		<>
 			<List className={classes.list} ref={listEl}>
-				{notes.length === 0 && loading === false && (
+				{filteredNotes.length === 0 && loading === false && (
 					<ListItem>
 						<ListItemText primary="No notes found" />
 					</ListItem>
@@ -120,7 +138,7 @@ const NotesList = ({ notes, updateSearchText }) => {
 					</ListItem>
 				)}
 
-				{sortArray(notes).map((note) => (
+				{sortArray(filteredNotes).map((note) => (
 					<React.Fragment key={`note-${note.id}`}>
 						<ListItem
 							button

@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 import {
 	IconButton,
 	InputBase,
@@ -12,31 +11,29 @@ import {
 } from '@material-ui/icons';
 
 import useStyles from './NotesSearch.styled';
-import NotesList from '../NotesList';
+import { useGlobalState } from '../../hooks/GlobalState';
 
-const propTypes = {
-	notes: PropTypes.arrayOf(PropTypes.object).isRequired,
-};
-
-const NotesSearch = ({ notes }) => {
+const NotesSearch = () => {
 	const classes = useStyles();
-	const [text, setText] = useState('');
-	const [items, setItems] = useState(notes);
+	const [{ search }, dispatch] = useGlobalState();
 
-	const handleTextClear = () => setText('');
+	// TODO: Remove the duplicated function
+	const updateSearchText = (text) => {
+		dispatch({
+			type: 'app-search',
+			value: {
+				...search,
+				text,
+			},
+		});
+	};
 
-	const handleTextInput = (event) => setText(event.target.value);
+	const handleTextClear = () => updateSearchText('');
 
-	const updateItems = () => setItems(
-		notes.filter((note) => note.text.toLowerCase().search(text.toLowerCase()) !== -1
-			|| note?.labels?.find((label) => label.toLowerCase().search(text.toLowerCase()) !== -1)),
-	);
+	const handleTextInput = (event) => updateSearchText(event.target.value);
 
-	// updateItems based on the search field input
-	useEffect(updateItems, [notes, text]);
-
-	return (
-		<List className={classes.list}>
+	return search.show && (
+		<List>
 			<ListItem>
 				<div className={classes.search}>
 					<InputBase
@@ -47,8 +44,8 @@ const NotesSearch = ({ notes }) => {
 						inputProps={{ 'aria-label': 'search' }}
 						onChange={handleTextInput}
 						placeholder="Search Notes"
-						value={text}
-						endAdornment={text.length !== 0 ? (
+						value={search.text}
+						endAdornment={search.text.length !== 0 ? (
 							<IconButton
 								aria-label="Clear Search"
 								className={classes.searchClear}
@@ -71,12 +68,8 @@ const NotesSearch = ({ notes }) => {
 					/>
 				</div>
 			</ListItem>
-
-			<NotesList notes={items} updateSearchText={setText} />
 		</List>
 	);
 };
-
-NotesSearch.propTypes = propTypes;
 
 export default NotesSearch;
