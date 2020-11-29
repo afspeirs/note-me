@@ -171,7 +171,7 @@ const NotesList = ({ notes }) => {
 								left: contextAnchor?.left || 0,
 							}}
 						>
-							<List className={classes.list} dense>
+							<List dense>
 								<ListItem>
 									<ListItemIcon>
 										<AlarmIcon color="primary" />
@@ -208,7 +208,7 @@ const NotesList = ({ notes }) => {
 										primary={`Delete "${note.title}"`}
 									/>
 								</ListItem>
-								{note.labels && (
+								{note.labels?.length ? (
 									<ListItem>
 										{note.labels.map((label) => (
 											<Chip
@@ -220,7 +220,7 @@ const NotesList = ({ notes }) => {
 											/>
 										))}
 									</ListItem>
-								)}
+								) : null}
 							</List>
 						</Popover>
 					</React.Fragment>
