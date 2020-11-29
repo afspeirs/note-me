@@ -1,82 +1,93 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 import {
+	AppBar,
+	Fade,
 	IconButton,
 	InputBase,
-	List,
-	ListItem,
+	Slide,
+	Toolbar,
 } from '@material-ui/core';
 import {
+	ArrowBack as ArrowBackIcon,
 	Clear as ClearIcon,
-	Search as SearchIcon,
 } from '@material-ui/icons';
 
 import useStyles from './NotesSearch.styled';
-import NotesList from '../NotesList';
+import { useGlobalState } from '../../hooks/GlobalState';
 
-const propTypes = {
-	notes: PropTypes.arrayOf(PropTypes.object).isRequired,
-};
-
-const NotesSearch = ({ notes }) => {
+const NotesSearch = () => {
 	const classes = useStyles();
-	const [text, setText] = useState('');
-	const [items, setItems] = useState(notes);
+	const [{ search }, dispatch] = useGlobalState();
 
-	const handleTextClear = () => setText('');
+	const hideSearch = () => {
+		dispatch({
+			type: 'app-search',
+			value: {
+				show: false,
+				text: '',
+			},
+		});
+	};
 
-	const handleTextInput = (event) => setText(event.target.value);
+	// TODO: Remove the duplicated function
+	const updateSearchText = (text) => {
+		dispatch({
+			type: 'app-search',
+			value: {
+				...search,
+				text,
+			},
+		});
+	};
 
-	const updateItems = () => setItems(
-		notes.filter((note) => note.text.toLowerCase().search(text.toLowerCase()) !== -1
-			|| note?.labels?.find((label) => label.toLowerCase().search(text.toLowerCase()) !== -1)),
-	);
+	const handleTextClear = () => updateSearchText('');
 
-	// updateItems based on the search field input
-	useEffect(updateItems, [notes, text]);
+	const handleTextInput = (event) => updateSearchText(event.target.value);
 
 	return (
-		<List className={classes.list}>
-			<ListItem>
-				<div className={classes.search}>
-					<InputBase
-						classes={{
-							root: classes.inputRoot,
-							input: classes.inputInput,
-						}}
-						inputProps={{ 'aria-label': 'search' }}
-						onChange={handleTextInput}
-						placeholder="Search Notes"
-						value={text}
-						endAdornment={text.length !== 0 ? (
+		<Fade in={search.show} timeout={512}>
+			{/* This div makes the Transitions work */}
+			<div>
+				<Slide in={search.show} direction="left" timeout={256} mountOnEnter unmountOnExit>
+					<AppBar position="absolute" elevation={0}>
+						<Toolbar>
 							<IconButton
-								aria-label="Clear Search"
-								className={classes.searchClear}
+								className={classes.menuButton}
 								color="inherit"
-								onClick={handleTextClear}
-								size="small"
+								aria-label="Hide Search"
+								edge="start"
+								onClick={hideSearch}
 							>
-								<ClearIcon />
+								<ArrowBackIcon />
 							</IconButton>
-						) : (
-							<IconButton
-								aria-label="Clear Search"
-								className={classes.searchIcon}
-								color="inherit"
-								size="small"
-							>
-								<SearchIcon />
-							</IconButton>
-						)}
-					/>
-				</div>
-			</ListItem>
-
-			<NotesList notes={items} updateSearchText={setText} />
-		</List>
+							<InputBase
+								autoFocus
+								className={classes.search}
+								classes={{
+									root: classes.inputRoot,
+									input: classes.inputInput,
+								}}
+								inputProps={{ 'aria-label': 'search' }}
+								onChange={handleTextInput}
+								placeholder="Search Notes"
+								value={search.text}
+								endAdornment={search.text.length !== 0 && (
+									<IconButton
+										aria-label="Clear Search"
+										edge="end"
+										color="inherit"
+										onClick={handleTextClear}
+									>
+										<ClearIcon />
+									</IconButton>
+								)}
+							/>
+						</Toolbar>
+					</AppBar>
+				</Slide>
+			</div>
+		</Fade>
 	);
 };
-
-NotesSearch.propTypes = propTypes;
 
 export default NotesSearch;
