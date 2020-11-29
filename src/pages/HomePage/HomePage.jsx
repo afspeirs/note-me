@@ -2,10 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import {
 	Button,
+	Fab,
 	List,
 	ListItem,
 	ListItemText,
+	Tooltip,
 } from '@material-ui/core';
+import {
+	Add as AddIcon,
+} from '@material-ui/icons';
 
 import useStyles from './HomePage.styled';
 import NotesList from '../../components/NotesList';
@@ -14,7 +19,7 @@ import { useNotes } from '../../hooks/Notes';
 
 const HomePage = () => {
 	const { signIn, user } = useAuth();
-	const { loading, notes } = useNotes();
+	const { addNote, loading, notes } = useNotes();
 	const { label } = useParams();
 	const classes = useStyles();
 	const [filteredNotes, setFilteredNotes] = useState([]);
@@ -35,7 +40,20 @@ const HomePage = () => {
 					</ListItem>
 				</List>
 			) : (
-				<NotesList notes={filteredNotes.length ? filteredNotes : notes} />
+				<>
+					<NotesList notes={filteredNotes.length ? filteredNotes : notes} />
+
+					<Tooltip title="Create Note">
+						<Fab
+							color="primary"
+							aria-label="Create Note"
+							className={classes.fab}
+							onClick={() => addNote('')}
+						>
+							<AddIcon />
+						</Fab>
+					</Tooltip>
+				</>
 			)}
 		</div>
 	);
