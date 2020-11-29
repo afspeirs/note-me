@@ -1,6 +1,9 @@
 import { fade, makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
+	menuButton: {
+		marginRight: theme.spacing(2),
+	},
 	search: {
 		position: 'relative',
 		width: '100%',

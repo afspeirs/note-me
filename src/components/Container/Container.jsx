@@ -99,7 +99,7 @@ const Container = ({ children }) => {
 
 	return (
 		<div className={classes.container}>
-			<AppBar position="fixed" className={classes.appBar}>
+			<AppBar>
 				<Toolbar>
 					<IconButton
 						className={classes.menuButton}

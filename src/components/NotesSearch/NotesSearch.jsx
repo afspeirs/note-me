@@ -1,13 +1,15 @@
 import React from 'react';
 import {
+	AppBar,
+	Fade,
 	IconButton,
 	InputBase,
-	List,
-	ListItem,
+	Slide,
+	Toolbar,
 } from '@material-ui/core';
 import {
+	ArrowBack as ArrowBackIcon,
 	Clear as ClearIcon,
-	Search as SearchIcon,
 } from '@material-ui/icons';
 
 import useStyles from './NotesSearch.styled';
@@ -16,6 +18,16 @@ import { useGlobalState } from '../../hooks/GlobalState';
 const NotesSearch = () => {
 	const classes = useStyles();
 	const [{ search }, dispatch] = useGlobalState();
+
+	const hideSearch = () => {
+		dispatch({
+			type: 'app-search',
+			value: {
+				show: false,
+				text: '',
+			},
+		});
+	};
 
 	// TODO: Remove the duplicated function
 	const updateSearchText = (text) => {
@@ -32,43 +44,51 @@ const NotesSearch = () => {
 
 	const handleTextInput = (event) => updateSearchText(event.target.value);
 
-	return search.show && (
-		<List>
-			<ListItem>
-				<div className={classes.search}>
-					<InputBase
-						classes={{
-							root: classes.inputRoot,
-							input: classes.inputInput,
-						}}
-						inputProps={{ 'aria-label': 'search' }}
-						onChange={handleTextInput}
-						placeholder="Search Notes"
-						value={search.text}
-						endAdornment={search.text.length !== 0 ? (
+	return (
+		<Fade in={search.show} timeout={512}>
+			{/* This div makes the Transitions work */}
+			<div>
+				<Slide in={search.show} direction="left" timeout={256} mountOnEnter unmountOnExit>
+					<AppBar position="fixed">
+						<Toolbar>
 							<IconButton
-								aria-label="Clear Search"
-								className={classes.searchClear}
+								className={classes.menuButton}
 								color="inherit"
-								onClick={handleTextClear}
-								size="small"
+								aria-label="Hide Search"
+								edge="start"
+								onClick={hideSearch}
 							>
-								<ClearIcon />
+								<ArrowBackIcon />
 							</IconButton>
-						) : (
-							<IconButton
-								aria-label="Clear Search"
-								className={classes.searchIcon}
-								color="inherit"
-								size="small"
-							>
-								<SearchIcon />
-							</IconButton>
-						)}
-					/>
-				</div>
-			</ListItem>
-		</List>
+							<div className={classes.search}>
+								<InputBase
+									autoFocus
+									classes={{
+										root: classes.inputRoot,
+										input: classes.inputInput,
+									}}
+									inputProps={{ 'aria-label': 'search' }}
+									onChange={handleTextInput}
+									placeholder="Search Notes"
+									value={search.text}
+									endAdornment={search.text.length !== 0 && (
+										<IconButton
+											aria-label="Clear Search"
+											className={classes.searchClear}
+											color="inherit"
+											onClick={handleTextClear}
+											size="small"
+										>
+											<ClearIcon />
+										</IconButton>
+									)}
+								/>
+							</div>
+						</Toolbar>
+					</AppBar>
+				</Slide>
+			</div>
+		</Fade>
 	);
 };
 
