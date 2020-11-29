@@ -1,6 +1,10 @@
 export const initialState = {
 	drawerOpen: false,
 	edit: false,
+	search: {
+		show: false,
+		text: '',
+	},
 	settings: {
 		disablePersistentDrawer: JSON.parse(localStorage.getItem('settings-disablePersistentDrawer')) || false,
 		darkTheme: JSON.parse(localStorage.getItem('settings-darkTheme')) || false,

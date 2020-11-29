@@ -14,6 +14,7 @@ import {
 import {
 	Add as AddIcon,
 	Menu as MenuIcon,
+	Search as SearchIcon,
 	Settings as SettingsIcon,
 } from '@material-ui/icons';
 
@@ -21,6 +22,7 @@ import useStyles from './Container.styled';
 import AdapterLink from '../AdapterLink';
 import DrawerContent from '../DrawerContent';
 import HeaderContent from '../HeaderContent';
+import NotesSearch from '../NotesSearch';
 import { useAuth } from '../../hooks/Auth';
 import { useGlobalState } from '../../hooks/GlobalState';
 import { useNotes } from '../../hooks/Notes';
@@ -34,7 +36,13 @@ const propTypes = {
 
 const Container = ({ children }) => {
 	const { isSignedIn } = useAuth();
-	const [{ drawerOpen, settings: { disablePersistentDrawer } }, dispatch] = useGlobalState();
+	const [{
+		drawerOpen,
+		search,
+		settings: {
+			disablePersistentDrawer,
+		},
+	}, dispatch] = useGlobalState();
 	const history = useHistory();
 	const { addNote, currentNote } = useNotes();
 	const classes = useStyles();
@@ -47,6 +55,17 @@ const Container = ({ children }) => {
 			onClick: () => addNote(''),
 			text: 'Create Note',
 			visible: isSignedIn,
+		},
+		{
+			icon: <SearchIcon />,
+			onClick: () => dispatch({
+				type: 'app-search',
+				value: {
+					...search,
+					show: true,
+				},
+			}),
+			text: 'Search Notes',
 		},
 		{
 			component: AdapterLink,
@@ -80,7 +99,7 @@ const Container = ({ children }) => {
 
 	return (
 		<div className={classes.container}>
-			<AppBar position="fixed" className={classes.appBar}>
+			<AppBar>
 				<Toolbar>
 					<IconButton
 						className={classes.menuButton}
@@ -95,6 +114,7 @@ const Container = ({ children }) => {
 						NoteMe
 					</Typography>
 					<HeaderContent headerItems={headerItems} forceLastIconEdge />
+					<NotesSearch />
 				</Toolbar>
 			</AppBar>
 			<Hidden className={classes.placeholder} smUp={!persistentDrawer} implementation="css" />

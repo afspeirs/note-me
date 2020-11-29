@@ -8,7 +8,7 @@ import {
 } from '@material-ui/core';
 
 import useStyles from './HomePage.styled';
-import NotesSearch from '../../components/NotesSearch';
+import NotesList from '../../components/NotesList';
 import { useAuth } from '../../hooks/Auth';
 import { useNotes } from '../../hooks/Notes';
 
@@ -35,7 +35,7 @@ const HomePage = () => {
 					</ListItem>
 				</List>
 			) : (
-				<NotesSearch notes={filteredNotes.length ? filteredNotes : notes} />
+				<NotesList notes={filteredNotes.length ? filteredNotes : notes} />
 			)}
 		</div>
 	);
