@@ -5,7 +5,7 @@ const useStyles = makeStyles((theme) => ({
 		width: 'inherit',
 		flexGrow: 1,
 		padding: theme.spacing(2),
-		paddingBottom: theme.spacing(10),
+		paddingBottom: 56 + theme.spacing(4),
 		overflowY: 'auto',
 	},
 	fab: {
