@@ -66,6 +66,7 @@ const Container = ({ children }) => {
 				},
 			}),
 			text: 'Search Notes',
+			visible: isSignedIn,
 		},
 		{
 			component: AdapterLink,
