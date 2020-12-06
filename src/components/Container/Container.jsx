@@ -15,11 +15,9 @@ import {
 	Add as AddIcon,
 	Menu as MenuIcon,
 	Search as SearchIcon,
-	Settings as SettingsIcon,
 } from '@material-ui/icons';
 
 import useStyles from './Container.styled';
-import AdapterLink from '../AdapterLink';
 import DrawerContent from '../DrawerContent';
 import HeaderContent from '../HeaderContent';
 import NotesSearch from '../NotesSearch';
@@ -67,15 +65,6 @@ const Container = ({ children }) => {
 			}),
 			text: 'Search Notes',
 			visible: isSignedIn,
-		},
-		{
-			component: AdapterLink,
-			icon: <SettingsIcon />,
-			text: 'Settings',
-			to: {
-				pathname: '/settings/',
-				state: { modal: true },
-			},
 		},
 	].filter((item) => item.visible !== false), [currentNote, isSignedIn]); // eslint-disable-line
 

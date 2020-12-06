@@ -7,19 +7,16 @@ import {
 	ListItemText,
 } from '@material-ui/core';
 import {
-	Add as AddIcon,
 	Create as NotesIcon,
+	Settings as SettingsIcon,
 } from '@material-ui/icons';
 
 import useStyles from './DrawerContent.styled';
+import AdapterLink from '../AdapterLink';
 import LabelsList from '../LabelsList';
 import RenderLink from '../RenderLink';
-import { useAuth } from '../../hooks/Auth';
-import { useNotes } from '../../hooks/Notes';
 
 const DrawerContent = () => {
-	const { isSignedIn } = useAuth();
-	const { addNote } = useNotes();
 	const classes = useStyles();
 
 	return (
@@ -44,20 +41,23 @@ const DrawerContent = () => {
 
 			<LabelsList />
 
-			{isSignedIn && (
-				<>
-					<Divider />
+			<Divider />
 
-					<List disablePadding>
-						<ListItem button onClick={() => addNote('')}>
-							<ListItemIcon>
-								<AddIcon />
-							</ListItemIcon>
-							<ListItemText primary="Create Note" />
-						</ListItem>
-					</List>
-				</>
-			)}
+			<List disablePadding>
+				<ListItem
+					button
+					component={AdapterLink}
+					to={{
+						pathname: '/settings/',
+						state: { modal: true },
+					}}
+				>
+					<ListItemIcon>
+						<SettingsIcon />
+					</ListItemIcon>
+					<ListItemText primary="Settings" />
+				</ListItem>
+			</List>
 		</>
 	);
 };
