@@ -11,7 +11,7 @@ import { NotesProvider } from './hooks/Notes';
 import { SnackbarProvider } from './hooks/Snackbar';
 
 const App = () => {
-	const [{ settings: { darkTheme } }, dispatch] = useGlobalState();
+	const [{ search, settings: { darkTheme } }, dispatch] = useGlobalState();
 
 	const handleKeyDown = (event) => {
 		// If CTRL or CMD is pressed
@@ -25,6 +25,20 @@ const App = () => {
 			if (event.key === 'e' || event.key === 's') {
 				event.preventDefault();
 				dispatch({ type: 'app-edit' });
+			}
+			// Disable some keyboard shortcuts
+			if (event.key === 'f') {
+				event.preventDefault();
+
+				if (window?.currentLocation?.pathname === '/') {
+					dispatch({
+						type: 'app-search',
+						value: {
+							...search,
+							show: true,
+						},
+					});
+				}
 			}
 			// Disable some keyboard shortcuts
 			if ((event.key === 'p')) {
