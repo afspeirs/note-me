@@ -87,12 +87,10 @@ const DialogAddLabel = ({ note, setOpen }) => {
 			aria-labelledby="export-dialog-title"
 			maxWidth="xs"
 			fullWidth
-			className={classes.dialog}
 			onClose={handleClose}
 			open={Boolean(note)}
 		>
 			<DialogTitle
-				className={classes.root}
 				disableTypography
 				id="export-dialog-title"
 			>
@@ -151,7 +149,11 @@ const DialogAddLabel = ({ note, setOpen }) => {
 						</ListItem>
 					)}
 					{Object.keys(controlledLabels).map((label) => (
-						<ListItem dense key={label}>
+						<ListItem
+							dense
+							disableGutters
+							key={label}
+						>
 							<FormControlLabel
 								control={(
 									<Checkbox
