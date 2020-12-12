@@ -9,6 +9,7 @@ import {
 import {
 	Delete as DeleteIcon,
 	Edit as EditIcon,
+	Label as LabelIcon,
 	Save as SaveIcon,
 	Star as StarIcon,
 	StarBorder as StarBorderIcon,
@@ -16,6 +17,7 @@ import {
 import { useConfirm } from 'material-ui-confirm';
 
 import useStyles from './NotePage.styled';
+import DialogAddLabel from '../../components/DialogAddLabel';
 import LinkRenderer from '../../components/LinkRenderer';
 import Modal from '../../components/Modal';
 import { useNotes } from '../../hooks/Notes';
@@ -31,15 +33,21 @@ const NotePage = () => {
 		favouriteNote,
 		deleteNote,
 	} = useNotes();
-	const [localNote, setLocalNote] = useState(undefined);
+	const [localNote, setLocalNote] = useState();
+	const [openAddLabel, setOpenAddLabel] = useState(null);
 	const [{ edit }, dispatch] = useGlobalState();
 	const classes = useStyles();
 	const currentNote = notes.find((note) => note.id === id);
 	const headerItems = [
 		{
 			icon: currentNote?.favourite ? <StarIcon color="inherit" /> : <StarBorderIcon />,
-			onClick: favouriteNote,
+			onClick: () => favouriteNote(currentNote),
 			text: currentNote?.favourite ? 'Unfavourite' : 'Favourite',
+		},
+		{
+			icon: <LabelIcon />,
+			onClick: () => setOpenAddLabel(currentNote),
+			text: `${currentNote?.labels?.length !== 0 ? 'Change' : 'Add'} Labels`,
 		},
 		{
 			icon: <DeleteIcon />,
@@ -75,40 +83,44 @@ const NotePage = () => {
 	}, [edit]); // eslint-disable-line
 
 	return (
-		<Modal
-			headerItems={headerItems}
-			maxHeight
-			maxWidth="lg"
-			showPrompt={localNote !== currentNote?.text}
-			title={currentNote?.title}
-		>
-			{edit ? (
-				<textarea
-					className={clsx(classes.page, classes.textarea)}
-					type="text"
-					value={localNote}
-					onChange={(event) => setLocalNote(event.target.value)}
-				/>
-			) : (
-				<Markdown
-					className={classes.page}
-					escapeHtml
-					renderers={{ link: LinkRenderer }}
-					source={localNote}
-				/>
-			)}
+		<>
+			<Modal
+				headerItems={headerItems}
+				maxHeight
+				maxWidth="lg"
+				showPrompt={localNote !== currentNote?.text}
+				title={currentNote?.title}
+			>
+				{edit ? (
+					<textarea
+						className={clsx(classes.page, classes.textarea)}
+						type="text"
+						value={localNote}
+						onChange={(event) => setLocalNote(event.target.value)}
+					/>
+				) : (
+					<Markdown
+						className={classes.page}
+						escapeHtml
+						renderers={{ link: LinkRenderer }}
+						source={localNote}
+					/>
+				)}
 
-			<Tooltip title={edit ? 'Save' : 'Edit'}>
-				<Fab
-					color="primary"
-					aria-label={edit ? 'Save' : 'Edit'}
-					className={classes.fab}
-					onClick={() => dispatch({ type: 'app-edit' })}
-				>
-					{edit ? <SaveIcon /> : <EditIcon />}
-				</Fab>
-			</Tooltip>
-		</Modal>
+				<Tooltip title={edit ? 'Save' : 'Edit'}>
+					<Fab
+						color="primary"
+						aria-label={edit ? 'Save' : 'Edit'}
+						className={classes.fab}
+						onClick={() => dispatch({ type: 'app-edit' })}
+					>
+						{edit ? <SaveIcon /> : <EditIcon />}
+					</Fab>
+				</Tooltip>
+			</Modal>
+
+			<DialogAddLabel note={openAddLabel} setOpen={setOpenAddLabel} />
+		</>
 	);
 };
 
