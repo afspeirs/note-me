@@ -38,7 +38,7 @@ const NotePage = () => {
 	const headerItems = [
 		{
 			icon: currentNote?.favourite ? <StarIcon color="inherit" /> : <StarBorderIcon />,
-			onClick: favouriteNote,
+			onClick: () => favouriteNote(currentNote),
 			text: currentNote?.favourite ? 'Unfavourite' : 'Favourite',
 		},
 		{
