@@ -76,6 +76,9 @@ const Modal = ({
 		<>
 			<Dialog
 				aria-labelledby={`${title}-modal-title`}
+				BackdropProps={{
+					invisible: mobile,
+				}}
 				fullScreen={fullScreenModal}
 				fullWidth
 				maxWidth={maxWidth}
