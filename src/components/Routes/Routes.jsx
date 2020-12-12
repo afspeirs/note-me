@@ -29,6 +29,7 @@ const Routes = () => {
 	}, []);
 
 	useEffect(() => {
+		window.currentLocation = location;
 		if (!location?.state?.modal) {
 			window.previousLocation = location;
 		}
