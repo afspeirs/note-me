@@ -100,7 +100,7 @@ const NotePage = () => {
 					/>
 				) : (
 					<Markdown
-						className={classes.page}
+						className={clsx(classes.page, classes.markdown)}
 						escapeHtml
 						renderers={{ link: LinkRenderer }}
 						source={localNote}

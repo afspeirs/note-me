@@ -16,6 +16,21 @@ const useStyles = makeStyles((theme) => ({
 	extendedIcon: {
 		marginRight: theme.spacing(1),
 	},
+	markdown: {
+		'& p + p': {
+			marginTop: theme.spacing(2),
+		},
+		'& h1': {
+			fontSize: '1.75em',
+		},
+		'& ol, ul': {
+			paddingLeft: theme.spacing(4),
+		},
+		'& h1, h2, h3, h4, h5, h6, p, ol, ul': {
+			margin: 0,
+			marginBottom: theme.spacing(2),
+		},
+	},
 	textarea: {
 		resize: 'none',
 		border: 'none',
