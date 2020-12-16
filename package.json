@@ -1,6 +1,6 @@
 {
   "name": "note-me",
-  "version": "6.9.0",
+  "version": "6.10.0",
   "description": "Create and store markdown notes",
   "scripts": {
     "start": "react-scripts start",
