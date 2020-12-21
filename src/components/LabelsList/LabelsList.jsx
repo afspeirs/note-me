@@ -11,7 +11,7 @@ import {
 } from '@material-ui/icons';
 
 import useStyles from './LabelsList.styled';
-import RenderLink from '../RenderLink';
+import RouterNavLink from '../RouterNavLink';
 import { useNotes } from '../../hooks/Notes';
 
 const LabelsList = () => {
@@ -38,7 +38,7 @@ const LabelsList = () => {
 						button
 						to={`/${label}`}
 						className={classes.listItem}
-						component={RenderLink}
+						component={RouterNavLink}
 					>
 						<ListItemIcon>
 							<LabelIcon />

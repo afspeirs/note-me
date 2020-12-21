@@ -21,8 +21,8 @@ import {
 import { useConfirm } from 'material-ui-confirm';
 
 import useStyles from './NotesList.styled';
-import DialogAddLabel from '../DialogAddLabel';
-import RenderLink from '../RenderLink';
+import LabelsAddDialog from '../LabelsAddDialog';
+import RouterNavLink from '../RouterNavLink';
 import TimeAgo from '../TimeAgo';
 import { useGlobalState } from '../../hooks/GlobalState';
 import { useNotes } from '../../hooks/Notes';
@@ -147,7 +147,7 @@ const NotesList = ({ notes }) => {
 								state: { modal: true },
 							}}
 							className={clsx(classes.listItem, 'context-menu-select')}
-							component={RenderLink}
+							component={RouterNavLink}
 							data-id={note.id}
 						>
 							<ListItemText
@@ -227,7 +227,7 @@ const NotesList = ({ notes }) => {
 				))}
 			</List>
 
-			<DialogAddLabel note={openAddLabel} setOpen={setOpenAddLabel} />
+			<LabelsAddDialog note={openAddLabel} setOpen={setOpenAddLabel} />
 		</>
 	);
 };

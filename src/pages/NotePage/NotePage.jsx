@@ -17,8 +17,8 @@ import {
 import { useConfirm } from 'material-ui-confirm';
 
 import useStyles from './NotePage.styled';
-import DialogAddLabel from '../../components/DialogAddLabel';
-import LinkRenderer from '../../components/LinkRenderer';
+import LabelsAddDialog from '../../components/LabelsAddDialog';
+import RendererLink from '../../components/RendererLink';
 import Modal from '../../components/Modal';
 import { useNotes } from '../../hooks/Notes';
 import { useGlobalState } from '../../hooks/GlobalState';
@@ -102,7 +102,7 @@ const NotePage = () => {
 					<Markdown
 						className={clsx(classes.page, classes.markdown)}
 						escapeHtml
-						renderers={{ link: LinkRenderer }}
+						renderers={{ link: RendererLink }}
 						source={localNote}
 					/>
 				)}
@@ -119,7 +119,7 @@ const NotePage = () => {
 				</Tooltip>
 			</Modal>
 
-			<DialogAddLabel note={openAddLabel} setOpen={setOpenAddLabel} />
+			<LabelsAddDialog note={openAddLabel} setOpen={setOpenAddLabel} />
 		</>
 	);
 };

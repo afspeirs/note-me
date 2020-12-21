@@ -9,10 +9,12 @@ const propTypes = {
 	href: PropTypes.string.isRequired,
 };
 
-const LinkRenderer = ({ children, href }) => (
-	<a href={href} target="_blank" rel="noopener noreferrer">{children}</a>
+const RendererLink = ({ children, href }) => (
+	<a href={href} target="_blank" rel="noopener noreferrer">
+		{children}
+	</a>
 );
 
-LinkRenderer.propTypes = propTypes;
+RendererLink.propTypes = propTypes;
 
-export default LinkRenderer;
+export default RendererLink;
