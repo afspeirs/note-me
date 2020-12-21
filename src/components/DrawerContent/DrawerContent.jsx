@@ -12,9 +12,9 @@ import {
 } from '@material-ui/icons';
 
 import useStyles from './DrawerContent.styled';
-import AdapterLink from '../AdapterLink';
 import LabelsList from '../LabelsList';
-import RenderLink from '../RenderLink';
+import RouterNavLink from '../RouterNavLink';
+import RouterLink from '../RouterLink';
 
 const DrawerContent = () => {
 	const classes = useStyles();
@@ -27,7 +27,7 @@ const DrawerContent = () => {
 					exact
 					to="/"
 					className={classes.listItem}
-					component={RenderLink}
+					component={RouterNavLink}
 				>
 					<ListItemIcon>
 						<NotesIcon />
@@ -46,7 +46,7 @@ const DrawerContent = () => {
 			<List disablePadding>
 				<ListItem
 					button
-					component={AdapterLink}
+					component={RouterLink}
 					to={{
 						pathname: '/settings/',
 						state: { modal: true },

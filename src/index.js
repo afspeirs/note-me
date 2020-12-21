@@ -11,10 +11,7 @@ import { GlobalStateProvider } from './hooks/GlobalState';
 import { initialState, reducer } from './reducer';
 
 ReactDOM.render((
-	<GlobalStateProvider
-		initialState={initialState}
-		reducer={reducer}
-	>
+	<GlobalStateProvider initialState={initialState} reducer={reducer}>
 		<BrowserRouter getUserConfirmation={(message, callback) => UserConfirmation(message, callback)}>
 			<AuthProvider>
 				<App />
