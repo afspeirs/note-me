@@ -22,20 +22,14 @@ function useNotesProvider() {
 	 * If an Untitled note already exists, navigate to that note
 	 * @param {string} [text] - Initial text to use for the note
 	 */
-	const addNote = (text = '', replace = false) => {
+	const addNote = (text = '') => {
 		const untitledNote = notes.find((note) => note.text === '');
 
 		if (untitledNote) {
-			const location = {
+			history.push({
 				pathname: `/note/${untitledNote.id}`,
 				state: { modal: true },
-			};
-
-			if (replace) {
-				history.replace(location);
-			} else {
-				history.push(location);
-			}
+			});
 		} else {
 			const newNote = db.collection(user.uid).doc();
 			const value = {
@@ -46,18 +40,11 @@ function useNotesProvider() {
 				text,
 				title: getTitle(text),
 			};
-			const location = {
+
+			newNote.set(value).then(() => history.push({
 				pathname: `/note/${value.id}`,
 				state: { modal: true },
-			};
-
-			newNote.set(value).then(() => {
-				if (replace) {
-					history.replace(location);
-				} else {
-					history.push(location);
-				}
-			});
+			}));
 		}
 	};
 
