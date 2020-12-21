@@ -3,9 +3,11 @@ import { useEffect } from 'react';
 import { useAuth } from '../../hooks/Auth';
 import { useNotes } from '../../hooks/Notes';
 
-const NotePage = () => {
+const CreateNotePage = () => {
 	const { isSignedIn } = useAuth();
 	const { addNote } = useNotes();
+
+	console.log(isSignedIn);
 
 	useEffect(() => {
 		if (isSignedIn) addNote();
@@ -14,4 +16,4 @@ const NotePage = () => {
 	return null;
 };
 
-export default NotePage;
+export default CreateNotePage;
