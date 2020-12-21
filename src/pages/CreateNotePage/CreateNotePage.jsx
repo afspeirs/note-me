@@ -10,7 +10,7 @@ const CreateNotePage = () => {
 	console.log(isSignedIn);
 
 	useEffect(() => {
-		if (isSignedIn) addNote();
+		if (isSignedIn) addNote('', true);
 	}, [isSignedIn]); // eslint-disable-line
 
 	return null;
