@@ -111,6 +111,7 @@ function useNotesProvider() {
 				});
 		} else if (user !== null) {
 			setLoading(false);
+			setLabels([]);
 			setNotes([]);
 		}
 	}, [user]); // eslint-disable-line
