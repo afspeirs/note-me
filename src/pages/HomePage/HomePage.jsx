@@ -33,10 +33,15 @@ const HomePage = () => {
 			{!user && !loading ? (
 				<List>
 					<ListItem>
-						<ListItemText primary="Please sign in below with a Google account to use this app" />
+						<ListItemText primary="Hello and welcome to NoteMe" />
 					</ListItem>
 					<ListItem>
-						<Button variant="contained" color="primary" onClick={signIn}>Sign In</Button>
+						<ListItemText primary="Please sign in below to be able to store and edit your markdown notes from any device" />
+					</ListItem>
+					<ListItem>
+						<Button variant="contained" color="primary" onClick={signIn}>
+							Sign in with Google
+						</Button>
 					</ListItem>
 				</List>
 			) : (
