@@ -35,6 +35,7 @@ const propTypes = {
 const Container = ({ children }) => {
 	const { isSignedIn } = useAuth();
 	const [{
+		containerTitle,
 		drawerOpen,
 		search,
 		settings: {
@@ -44,7 +45,7 @@ const Container = ({ children }) => {
 	const history = useHistory();
 	const { addNote, currentNote } = useNotes();
 	const classes = useStyles();
-	const mobile = useMediaQuery('(max-width:600px)');
+	const mobile = useMediaQuery('(max-width:960px)');
 	const persistentDrawer = mobile || disablePersistentDrawer;
 
 	const headerItems = useMemo(() => [
@@ -101,7 +102,7 @@ const Container = ({ children }) => {
 						<MenuIcon />
 					</IconButton>
 					<Typography className={classes.title} component="h1" variant="h6" noWrap>
-						NoteMe
+						{containerTitle}
 					</Typography>
 					<HeaderContent headerItems={headerItems} forceLastIconEdge />
 					<NotesSearch />

@@ -40,7 +40,7 @@ const Routes = () => {
 			<Switch location={isModal ? window.previousLocation : location}>
 				<Route path="/create-note/" component={CreateNotePage} />
 				<Route exact path="/" component={HomePage} />
-				<Route exact path="/:label" component={HomePage} />
+				<Route exact path="/label/:label" component={HomePage} />
 				<Route component={NoPage} />
 			</Switch>
 
