@@ -85,8 +85,9 @@ const Container = ({ children }) => {
 		event.preventDefault();
 		setDrawerOpen((prevState) => !prevState);
 	});
-	// P = Prevent Print dialog
-	useHotkeys('ctrl+p, command+p', (event) => {
+	// P = Disable Print dialog
+	// S = Disable Save dialog
+	useHotkeys('ctrl+p, command+p, ctrl+s, command+s', (event) => {
 		event.preventDefault();
 	});
 

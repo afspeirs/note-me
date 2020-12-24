@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
-import { useParams } from 'react-router-dom';
+import { useHotkeys } from 'react-hotkeys-hook';
 import Markdown from 'react-markdown';
+import { useParams } from 'react-router-dom';
 import {
 	Fab,
 	Tooltip,
@@ -21,7 +22,6 @@ import LabelsAddDialog from '../../components/LabelsAddDialog';
 import RendererLink from '../../components/RendererLink';
 import Modal from '../../components/Modal';
 import { useNotes } from '../../hooks/Notes';
-import { useGlobalState } from '../../hooks/GlobalState';
 
 const NotePage = () => {
 	const { id } = useParams();
@@ -35,7 +35,7 @@ const NotePage = () => {
 	} = useNotes();
 	const [localNote, setLocalNote] = useState();
 	const [openAddLabel, setOpenAddLabel] = useState(null);
-	const [{ edit }, dispatch] = useGlobalState();
+	const [edit, setEdit] = useState(false);
 	const classes = useStyles();
 	const currentNote = notes.find((note) => note.id === id);
 	const headerItems = [
@@ -62,14 +62,18 @@ const NotePage = () => {
 		},
 	];
 
+	// E = Toggle edit
+	// S = Toggle edit
+	useHotkeys('ctrl+e, command+e, ctrl+s, command+s', (event) => {
+		event.preventDefault();
+		setEdit((prevState) => !prevState);
+	});
+
 	useEffect(() => {
 		if (currentNote) {
 			setCurrentNote(currentNote);
 			setLocalNote(currentNote.text);
-			dispatch({
-				type: 'app-edit',
-				value: currentNote.text === '',
-			});
+			setEdit(currentNote.text === '');
 		}
 		return () => setCurrentNote(null);
 	}, [currentNote]); // eslint-disable-line
@@ -112,7 +116,7 @@ const NotePage = () => {
 						color="primary"
 						aria-label={edit ? 'Save' : 'Edit'}
 						className={classes.fab}
-						onClick={() => dispatch({ type: 'app-edit' })}
+						onClick={() => setEdit((prevState) => !prevState)}
 					>
 						{edit ? <SaveIcon /> : <EditIcon />}
 					</Fab>

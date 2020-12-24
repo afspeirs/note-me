@@ -1,6 +1,5 @@
 export const initialState = {
 	containerTitle: null,
-	edit: false,
 	search: {
 		show: false,
 		text: '',
