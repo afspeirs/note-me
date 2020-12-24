@@ -5,7 +5,7 @@ export const initialState = {
 		text: '',
 	},
 	settings: {
-		disablePersistentDrawer: JSON.parse(localStorage.getItem('settings-disablePersistentDrawer')) || false,
+		disablePersistentDrawer: JSON.parse(localStorage.getItem('settings-disablePersistentDrawer')) || true,
 		darkTheme: JSON.parse(localStorage.getItem('settings-darkTheme')) || false,
 		sortNotes: localStorage.getItem('settings-sortNotes') || 'date-asc',
 		sortNotesFavourite: JSON.parse(localStorage.getItem('settings-sortNotesFavourite')) || false,
