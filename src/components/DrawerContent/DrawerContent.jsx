@@ -21,7 +21,18 @@ const DrawerContent = () => {
 
 	return (
 		<>
-			<List>
+			<List className={classes.list} disablePadding>
+				<ListItem>
+					<ListItemText
+						primary="NoteMe"
+						primaryTypographyProps={{
+							color: 'textSecondary',
+							component: 'h1',
+							variant: 'h6',
+						}}
+						secondary={process.env.REACT_APP_VERSION}
+					/>
+				</ListItem>
 				<ListItem
 					button
 					exact
@@ -37,9 +48,9 @@ const DrawerContent = () => {
 						primary="All Notes"
 					/>
 				</ListItem>
-			</List>
 
-			<LabelsList />
+				<LabelsList />
+			</List>
 
 			<Divider />
 
