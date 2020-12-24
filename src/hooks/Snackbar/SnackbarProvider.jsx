@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Snackbar from '@material-ui/core/Snackbar';
 import Button from '@material-ui/core/Button';
-import { makeStyles } from '@material-ui/core/styles';
 
 import SnackbarContext from './SnackbarContext';
 
@@ -13,17 +12,8 @@ const propTypes = {
 	]).isRequired,
 };
 
-const useStyles = makeStyles((theme) => ({
-	snackbar: {
-		[theme.breakpoints.down('xs')]: {
-			bottom: 90,
-		},
-	},
-}));
-
 const SnackbarProvider = ({ children }) => {
 	const [content, setContent] = useState(null);
-	const classes = useStyles();
 
 	const showMessage = ({ message, actionText, actionFunction }) => {
 		setContent({
@@ -55,7 +45,6 @@ const SnackbarProvider = ({ children }) => {
 					vertical: 'bottom',
 					horizontal: 'left',
 				}}
-				className={classes.snackbar}
 				open={Boolean(content?.message)}
 				autoHideDuration={6000}
 				onClose={handleClose}
