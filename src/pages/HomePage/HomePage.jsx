@@ -27,10 +27,12 @@ const HomePage = () => {
 	const [filteredNotes, setFilteredNotes] = useState([]);
 
 	useEffect(() => {
-		dispatch({
-			type: 'app-containerTitle',
-			value: label || 'All Notes',
-		});
+		if (user) {
+			dispatch({
+				type: 'app-containerTitle',
+				value: label || 'All Notes',
+			});
+		}
 
 		setFilteredNotes(label ? notes.filter((note) => note?.labels?.includes(label)) : []);
 	}, [label, notes]); // eslint-disable-line
