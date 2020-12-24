@@ -28,9 +28,12 @@ const DrawerContent = () => {
 						primaryTypographyProps={{
 							color: 'textSecondary',
 							component: 'h1',
-							variant: 'h6',
+							variant: 'h5',
 						}}
 						secondary={process.env.REACT_APP_VERSION}
+						secondaryTypographyProps={{
+							component: 'span',
+						}}
 					/>
 				</ListItem>
 				<ListItem
