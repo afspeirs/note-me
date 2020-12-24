@@ -15,16 +15,25 @@ import {
 import useStyles from './HomePage.styled';
 import NotesList from '../../components/NotesList';
 import { useAuth } from '../../hooks/Auth';
+import { useGlobalState } from '../../hooks/GlobalState';
 import { useNotes } from '../../hooks/Notes';
 
 const HomePage = () => {
 	const { signIn, user } = useAuth();
+	const dispatch = [...useGlobalState()].pop(); // I don't need to access any of the reducer state
 	const { addNote, loading, notes } = useNotes();
 	const { label } = useParams();
 	const classes = useStyles();
 	const [filteredNotes, setFilteredNotes] = useState([]);
 
 	useEffect(() => {
+		if (user) {
+			dispatch({
+				type: 'app-containerTitle',
+				value: label || 'All Notes',
+			});
+		}
+
 		setFilteredNotes(label ? notes.filter((note) => note?.labels?.includes(label)) : []);
 	}, [label, notes]); // eslint-disable-line
 
@@ -33,10 +42,15 @@ const HomePage = () => {
 			{!user && !loading ? (
 				<List>
 					<ListItem>
-						<ListItemText primary="Please sign in below with a Google account to use this app" />
+						<ListItemText primary="Hello and welcome to NoteMe" />
 					</ListItem>
 					<ListItem>
-						<Button variant="contained" color="primary" onClick={signIn}>Sign In</Button>
+						<ListItemText primary="Please sign in below to be able to store and edit your markdown notes from any device" />
+					</ListItem>
+					<ListItem>
+						<Button variant="contained" color="primary" onClick={signIn}>
+							Sign in with Google
+						</Button>
 					</ListItem>
 				</List>
 			) : (

@@ -21,7 +21,7 @@ import {
 	Close as CloseIcon,
 } from '@material-ui/icons';
 
-import useStyles from './DialogAddLabel.styled';
+import useStyles from './LabelsAddDialog.styled';
 import { useNotes } from '../../hooks/Notes';
 
 const defaultProps = {
@@ -33,7 +33,7 @@ const propTypes = {
 	setOpen: PropTypes.func.isRequired,
 };
 
-const DialogAddLabel = ({ note, setOpen }) => {
+const LabelsAddDialog = ({ note, setOpen }) => {
 	const classes = useStyles();
 	const { labels, updateLabels } = useNotes();
 	const [controlledLabels, setControlledLabels] = useState({});
@@ -178,7 +178,7 @@ const DialogAddLabel = ({ note, setOpen }) => {
 	);
 };
 
-DialogAddLabel.defaultProps = defaultProps;
-DialogAddLabel.propTypes = propTypes;
+LabelsAddDialog.defaultProps = defaultProps;
+LabelsAddDialog.propTypes = propTypes;
 
-export default DialogAddLabel;
+export default LabelsAddDialog;

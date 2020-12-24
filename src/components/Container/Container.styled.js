@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
 			easing: theme.transitions.easing.easeOut,
 			duration: theme.transitions.duration.enteringScreen,
 		}),
-		[theme.breakpoints.up('sm')]: {
+		[theme.breakpoints.up('md')]: {
 			marginLeft: 0,
 		},
 	},

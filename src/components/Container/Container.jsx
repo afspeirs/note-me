@@ -1,5 +1,6 @@
-import React, { useMemo, useEffect } from 'react';
+import React, { useMemo, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { useHotkeys } from 'react-hotkeys-hook';
 import { useHistory } from 'react-router-dom';
 import clsx from 'clsx';
 import {
@@ -35,16 +36,17 @@ const propTypes = {
 const Container = ({ children }) => {
 	const { isSignedIn } = useAuth();
 	const [{
-		drawerOpen,
+		containerTitle,
 		search,
 		settings: {
 			disablePersistentDrawer,
 		},
 	}, dispatch] = useGlobalState();
 	const history = useHistory();
+	const mobile = useMediaQuery('(max-width:960px)');
 	const { addNote, currentNote } = useNotes();
+	const [drawerOpen, setDrawerOpen] = useState(false);
 	const classes = useStyles();
-	const mobile = useMediaQuery('(max-width:600px)');
 	const persistentDrawer = mobile || disablePersistentDrawer;
 
 	const headerItems = useMemo(() => [
@@ -69,17 +71,25 @@ const Container = ({ children }) => {
 	].filter((item) => item.visible !== false), [currentNote, isSignedIn]); // eslint-disable-line
 
 	// Close drawer only in mobile
-	const handleDrawerClose = () => persistentDrawer && dispatch({
-		type: 'app-drawerOpen',
-		value: false,
-	});
+	const handleDrawerClose = () => persistentDrawer && setDrawerOpen(false);
 
 	// Toggle drawer only in mobile unless toggle is true
 	const handleDrawerToggle = (toggle = false) => {
 		if (toggle || persistentDrawer) {
-			dispatch({ type: 'app-drawerOpen' });
+			setDrawerOpen((prevState) => !prevState);
 		}
 	};
+
+	// B = Toggle sidebar
+	useHotkeys('ctrl+b, command+b', (event) => {
+		event.preventDefault();
+		setDrawerOpen((prevState) => !prevState);
+	});
+	// P = Disable Print dialog
+	// S = Disable Save dialog
+	useHotkeys('ctrl+p, command+p, ctrl+s, command+s', (event) => {
+		event.preventDefault();
+	});
 
 	// Run handleDrawerClose if the history changes
 	useEffect(() => {
@@ -101,7 +111,7 @@ const Container = ({ children }) => {
 						<MenuIcon />
 					</IconButton>
 					<Typography className={classes.title} component="h1" variant="h6" noWrap>
-						NoteMe
+						{containerTitle}
 					</Typography>
 					<HeaderContent headerItems={headerItems} forceLastIconEdge />
 					<NotesSearch />

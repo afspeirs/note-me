@@ -8,7 +8,7 @@ import {
 
 import { useAuth } from '../../hooks/Auth';
 import HomePage from '../../pages/HomePage';
-import NewNotePage from '../../pages/NewNotePage';
+import CreateNotePage from '../../pages/CreateNotePage';
 import NoPage from '../../pages/NoPage';
 import NotePage from '../../pages/NotePage';
 import SettingsPage from '../../pages/SettingsPage';
@@ -38,9 +38,9 @@ const Routes = () => {
 	return (
 		<>
 			<Switch location={isModal ? window.previousLocation : location}>
+				<Route path="/create-note/" component={CreateNotePage} />
 				<Route exact path="/" component={HomePage} />
-				<Route exact path="/:label" component={HomePage} />
-				<Route exact path="/note/" component={NewNotePage} />
+				<Route exact path="/label/:label" component={HomePage} />
 				<Route component={NoPage} />
 			</Switch>
 

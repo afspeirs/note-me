@@ -12,22 +12,36 @@ import {
 } from '@material-ui/icons';
 
 import useStyles from './DrawerContent.styled';
-import AdapterLink from '../AdapterLink';
 import LabelsList from '../LabelsList';
-import RenderLink from '../RenderLink';
+import RouterNavLink from '../RouterNavLink';
+import RouterLink from '../RouterLink';
 
 const DrawerContent = () => {
 	const classes = useStyles();
 
 	return (
 		<>
-			<List>
+			<List className={classes.list} disablePadding>
+				<ListItem>
+					<ListItemText
+						primary="NoteMe"
+						primaryTypographyProps={{
+							color: 'textSecondary',
+							component: 'h1',
+							variant: 'h5',
+						}}
+						secondary={process.env.REACT_APP_VERSION}
+						secondaryTypographyProps={{
+							component: 'span',
+						}}
+					/>
+				</ListItem>
 				<ListItem
 					button
 					exact
 					to="/"
 					className={classes.listItem}
-					component={RenderLink}
+					component={RouterNavLink}
 				>
 					<ListItemIcon>
 						<NotesIcon />
@@ -37,16 +51,16 @@ const DrawerContent = () => {
 						primary="All Notes"
 					/>
 				</ListItem>
-			</List>
 
-			<LabelsList />
+				<LabelsList />
+			</List>
 
 			<Divider />
 
 			<List disablePadding>
 				<ListItem
 					button
-					component={AdapterLink}
+					component={RouterLink}
 					to={{
 						pathname: '/settings/',
 						state: { modal: true },

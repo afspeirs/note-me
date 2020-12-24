@@ -1,6 +1,5 @@
 export const initialState = {
-	drawerOpen: false,
-	edit: false,
+	containerTitle: null,
 	search: {
 		show: false,
 		text: '',

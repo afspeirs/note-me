@@ -30,7 +30,14 @@
 		{
 			"name": "Create Note",
 			"description": "Create a new note",
-			"url": "/note/"
+			"icons": [
+				{
+					"src": "/create-note-96x96.png",
+					"sizes": "96x96",
+					"type": "image/png"
+				}
+			],
+			"url": "/create-note/"
 		}
 	]
 }
