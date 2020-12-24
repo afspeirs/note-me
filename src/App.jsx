@@ -16,11 +16,6 @@ const App = () => {
 	const handleKeyDown = (event) => {
 		// If CTRL or CMD is pressed
 		if (event.ctrlKey || event.metaKey) {
-			// B = Toggle sidebar
-			if (event.key === 'b') {
-				event.preventDefault();
-				dispatch({ type: 'app-drawerOpen' });
-			}
 			// E or S = Toggle edit
 			if (event.key === 'e' || event.key === 's') {
 				event.preventDefault();
@@ -39,10 +34,6 @@ const App = () => {
 						},
 					});
 				}
-			}
-			// Disable some keyboard shortcuts
-			if ((event.key === 'p')) {
-				event.preventDefault();
 			}
 		}
 	};

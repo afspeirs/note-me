@@ -1,5 +1,6 @@
-import React, { useMemo, useEffect } from 'react';
+import React, { useMemo, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { useHotkeys } from 'react-hotkeys-hook';
 import { useHistory } from 'react-router-dom';
 import clsx from 'clsx';
 import {
@@ -36,16 +37,16 @@ const Container = ({ children }) => {
 	const { isSignedIn } = useAuth();
 	const [{
 		containerTitle,
-		drawerOpen,
 		search,
 		settings: {
 			disablePersistentDrawer,
 		},
 	}, dispatch] = useGlobalState();
 	const history = useHistory();
-	const { addNote, currentNote } = useNotes();
-	const classes = useStyles();
 	const mobile = useMediaQuery('(max-width:960px)');
+	const { addNote, currentNote } = useNotes();
+	const [drawerOpen, setDrawerOpen] = useState(false);
+	const classes = useStyles();
 	const persistentDrawer = mobile || disablePersistentDrawer;
 
 	const headerItems = useMemo(() => [
@@ -70,17 +71,24 @@ const Container = ({ children }) => {
 	].filter((item) => item.visible !== false), [currentNote, isSignedIn]); // eslint-disable-line
 
 	// Close drawer only in mobile
-	const handleDrawerClose = () => persistentDrawer && dispatch({
-		type: 'app-drawerOpen',
-		value: false,
-	});
+	const handleDrawerClose = () => persistentDrawer && setDrawerOpen(false);
 
 	// Toggle drawer only in mobile unless toggle is true
 	const handleDrawerToggle = (toggle = false) => {
 		if (toggle || persistentDrawer) {
-			dispatch({ type: 'app-drawerOpen' });
+			setDrawerOpen((prevState) => !prevState);
 		}
 	};
+
+	// B = Toggle sidebar
+	useHotkeys('ctrl+b, command+b', (event) => {
+		event.preventDefault();
+		setDrawerOpen((prevState) => !prevState);
+	});
+	// P = Prevent Print dialog
+	useHotkeys('ctrl+p, command+p', (event) => {
+		event.preventDefault();
+	});
 
 	// Run handleDrawerClose if the history changes
 	useEffect(() => {
