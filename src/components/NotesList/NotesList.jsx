@@ -60,7 +60,7 @@ const NotesList = ({ notes }) => {
 		dispatch({
 			type: 'app-search',
 			value: {
-				...search,
+				show: true,
 				text,
 			},
 		});
