@@ -1,7 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-const drawerWidth = 256;
-
 const useStyles = makeStyles((theme) => ({
 	container: {
 		position: 'absolute',
@@ -23,12 +21,14 @@ const useStyles = makeStyles((theme) => ({
 	},
 	drawer: {
 		flexShrink: 0,
-		width: drawerWidth,
+		width: '80%',
+		maxWidth: 320,
 		zIndex: 0,
 	},
 	drawerHeader: theme.mixins.toolbar,
 	drawerPaper: {
 		width: 'inherit',
+		maxWidth: 'inherit',
 	},
 	menuButton: {
 		marginRight: theme.spacing(2),
