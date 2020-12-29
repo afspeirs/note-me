@@ -7,7 +7,6 @@ import {
 import AppVersion from '../../components/AppVersion';
 import ChangeTheme from '../../components/ChangeTheme';
 import CheckForUpdate from '../../components/CheckForUpdate';
-import DisablePersistentDrawer from '../../components/DisablePersistentDrawer';
 import NotesExport from '../../components/NotesExport';
 import NotesImport from '../../components/NotesImport';
 import Modal from '../../components/Modal';
@@ -25,7 +24,6 @@ const SettingsPage = () => (
 			<Divider />
 
 			<ChangeTheme />
-			<DisablePersistentDrawer />
 
 			<Divider />
 
