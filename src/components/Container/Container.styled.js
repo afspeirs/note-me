@@ -1,7 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-const drawerWidth = 256;
-
 const useStyles = makeStyles((theme) => ({
 	container: {
 		position: 'absolute',
@@ -19,37 +17,21 @@ const useStyles = makeStyles((theme) => ({
 		display: 'flex',
 		flexDirection: 'column',
 		width: '100%',
-		marginLeft: -drawerWidth,
 		overflowX: 'hidden',
-		transition: theme.transitions.create('margin', {
-			easing: theme.transitions.easing.sharp,
-			duration: theme.transitions.duration.leavingScreen,
-		}),
-	},
-	contentShift: {
-		marginLeft: -drawerWidth,
-		transition: theme.transitions.create('margin', {
-			easing: theme.transitions.easing.easeOut,
-			duration: theme.transitions.duration.enteringScreen,
-		}),
-		[theme.breakpoints.up('md')]: {
-			marginLeft: 0,
-		},
 	},
 	drawer: {
 		flexShrink: 0,
-		width: drawerWidth,
+		width: '80%',
+		maxWidth: 320,
 		zIndex: 0,
 	},
 	drawerHeader: theme.mixins.toolbar,
 	drawerPaper: {
-		width: drawerWidth,
+		width: 'inherit',
+		maxWidth: 'inherit',
 	},
 	menuButton: {
 		marginRight: theme.spacing(2),
-	},
-	placeholder: {
-		width: drawerWidth,
 	},
 	title: {
 		flexGrow: 1,
