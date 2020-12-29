@@ -19,22 +19,7 @@ const useStyles = makeStyles((theme) => ({
 		display: 'flex',
 		flexDirection: 'column',
 		width: '100%',
-		marginLeft: -drawerWidth,
 		overflowX: 'hidden',
-		transition: theme.transitions.create('margin', {
-			easing: theme.transitions.easing.sharp,
-			duration: theme.transitions.duration.leavingScreen,
-		}),
-	},
-	contentShift: {
-		marginLeft: -drawerWidth,
-		transition: theme.transitions.create('margin', {
-			easing: theme.transitions.easing.easeOut,
-			duration: theme.transitions.duration.enteringScreen,
-		}),
-		[theme.breakpoints.up('md')]: {
-			marginLeft: 0,
-		},
 	},
 	drawer: {
 		flexShrink: 0,
@@ -43,13 +28,10 @@ const useStyles = makeStyles((theme) => ({
 	},
 	drawerHeader: theme.mixins.toolbar,
 	drawerPaper: {
-		width: drawerWidth,
+		width: 'inherit',
 	},
 	menuButton: {
 		marginRight: theme.spacing(2),
-	},
-	placeholder: {
-		width: drawerWidth,
 	},
 	title: {
 		flexGrow: 1,

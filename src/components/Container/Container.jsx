@@ -2,10 +2,8 @@ import React, { useMemo, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { useHistory } from 'react-router-dom';
-import clsx from 'clsx';
 import {
 	AppBar,
-	Hidden,
 	IconButton,
 	SwipeableDrawer,
 	Toolbar,
@@ -35,19 +33,12 @@ const propTypes = {
 
 const Container = ({ children }) => {
 	const { isSignedIn } = useAuth();
-	const [{
-		containerTitle,
-		search,
-		settings: {
-			disablePersistentDrawer,
-		},
-	}, dispatch] = useGlobalState();
+	const [{ containerTitle, search }, dispatch] = useGlobalState();
 	const history = useHistory();
 	const mobile = useMediaQuery('(max-width:960px)');
 	const { addNote, currentNote } = useNotes();
 	const [drawerOpen, setDrawerOpen] = useState(false);
 	const classes = useStyles();
-	const persistentDrawer = mobile || disablePersistentDrawer;
 
 	const headerItems = useMemo(() => [
 		{
@@ -71,14 +62,10 @@ const Container = ({ children }) => {
 	].filter((item) => item.visible !== false), [currentNote, isSignedIn]); // eslint-disable-line
 
 	// Close drawer only in mobile
-	const handleDrawerClose = () => persistentDrawer && setDrawerOpen(false);
+	const handleDrawerClose = () => setDrawerOpen(false);
 
 	// Toggle drawer only in mobile unless toggle is true
-	const handleDrawerToggle = (toggle = false) => {
-		if (toggle || persistentDrawer) {
-			setDrawerOpen((prevState) => !prevState);
-		}
-	};
+	const handleDrawerToggle = () => setDrawerOpen((prevState) => !prevState);
 
 	// B = Toggle sidebar
 	useHotkeys('ctrl+b, command+b', (event) => {
@@ -95,7 +82,7 @@ const Container = ({ children }) => {
 	useEffect(() => {
 		const unlisten = history.listen(handleDrawerClose);
 		return unlisten;
-	}, [history, persistentDrawer]); // eslint-disable-line
+	}, [history, mobile]); // eslint-disable-line
 
 	return (
 		<div className={classes.container}>
@@ -106,7 +93,7 @@ const Container = ({ children }) => {
 						color="inherit"
 						aria-label="Open drawer"
 						edge="start"
-						onClick={() => handleDrawerToggle(true)}
+						onClick={handleDrawerToggle}
 					>
 						<MenuIcon />
 					</IconButton>
@@ -117,9 +104,8 @@ const Container = ({ children }) => {
 					<NotesSearch />
 				</Toolbar>
 			</AppBar>
-			<Hidden className={classes.placeholder} smUp={!persistentDrawer} implementation="css" />
 			<SwipeableDrawer
-				variant={persistentDrawer ? 'temporary' : 'persistent'}
+				variant="temporary"
 				anchor="left"
 				open={drawerOpen}
 				className={classes.drawer}
@@ -130,14 +116,9 @@ const Container = ({ children }) => {
 				onClose={handleDrawerToggle}
 				ModalProps={{ keepMounted: true }}
 			>
-				{!persistentDrawer && <div className={classes.drawerHeader} />}
 				<DrawerContent />
 			</SwipeableDrawer>
-			<div
-				className={clsx(classes.content, {
-					[classes.contentShift]: drawerOpen && !disablePersistentDrawer,
-				})}
-			>
+			<div className={classes.content}>
 				<div className={classes.drawerHeader} />
 				{children}
 			</div>
