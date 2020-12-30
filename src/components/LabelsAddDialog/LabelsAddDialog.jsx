@@ -8,7 +8,6 @@ import {
 	DialogContent,
 	DialogTitle,
 	ListItemIcon,
-	FormControlLabel,
 	IconButton,
 	InputAdornment,
 	List,
@@ -19,6 +18,7 @@ import {
 } from '@material-ui/core';
 import {
 	Add as AddIcon,
+	Clear as ClearIcon,
 	Close as CloseIcon,
 } from '@material-ui/icons';
 
@@ -38,21 +38,23 @@ const LabelsAddDialog = ({ note, setOpen }) => {
 	const classes = useStyles();
 	const { labels, updateLabels } = useNotes();
 	const [controlledLabels, setControlledLabels] = useState({});
-	const [localAddLabel, setLocalAddLabel] = useState('');
+	const [searchLabelsText, setSearchLabelsText] = useState('');
 
-	const handleAddLabelChange = (event) => setLocalAddLabel(event.target.value);
+	const handleSearchLabelsTextChange = (event) => setSearchLabelsText(event.target.value);
+	const doesLabelExist = !Object.keys(controlledLabels)
+		.find((label) => label.toLowerCase() === searchLabelsText.toLowerCase());
+	const filteredLabels = searchLabelsText.length !== 0
+		? Object.keys(controlledLabels)
+			.filter((label) => label.toLowerCase().search(searchLabelsText.toLowerCase()) !== -1)
+		: Object.keys(controlledLabels);
 
-	const handleAddLabel = (event) => {
-		event.preventDefault();
-
-		if (localAddLabel.length !== 0) {
-			const prevControlledLabels = {
-				...controlledLabels,
-				[localAddLabel]: true,
-			};
-
-			setControlledLabels(prevControlledLabels);
-			setLocalAddLabel('');
+	const handleAddLabel = () => {
+		if (searchLabelsText.length !== 0) {
+			setControlledLabels((prevState) => ({
+				...prevState,
+				[searchLabelsText]: true,
+			}));
+			// setSearchLabelsText('');
 		}
 	};
 
@@ -81,16 +83,18 @@ const LabelsAddDialog = ({ note, setOpen }) => {
 
 	return (
 		<Dialog
-			aria-labelledby="export-dialog-title"
+			aria-labelledby="add-dialog-dialog-title"
 			fullWidth
 			maxWidth="xs"
 			onClose={handleClose}
 			open={Boolean(note)}
-			scroll="body"
+			PaperProps={{
+				className: classes.dialog,
+			}}
 		>
 			<DialogTitle
 				disableTypography
-				id="export-dialog-title"
+				id="add-dialog-dialog-title"
 			>
 				<Typography
 					className={classes.title}
@@ -108,36 +112,27 @@ const LabelsAddDialog = ({ note, setOpen }) => {
 			</DialogTitle>
 
 			<DialogContent dividers>
-				<form
-					autoComplete="off"
-					noValidate
-					onSubmit={handleAddLabel}
-				>
-					<TextField
-						fullWidth
-						id="local-add-labels"
-						label="Add Label"
-						onChange={handleAddLabelChange}
-						value={localAddLabel}
-						variant="outlined"
-						InputProps={{
-							endAdornment: (
-								<InputAdornment position="end">
-									<Button
-										className={classes.button}
-										color="primary"
-										disabled={localAddLabel.length <= 0}
-										onClick={handleAddLabel}
-										startIcon={<AddIcon />}
-										variant="contained"
-									>
-										Add
-									</Button>
-								</InputAdornment>
-							),
-						}}
-					/>
-				</form>
+				<TextField
+					fullWidth
+					label="Search Labels"
+					onChange={handleSearchLabelsTextChange}
+					value={searchLabelsText}
+					variant="outlined"
+					InputProps={{
+						endAdornment: searchLabelsText.length !== 0 && (
+							<InputAdornment position="end">
+								<IconButton
+									aria-label="Clear Search"
+									edge="end"
+									color="inherit"
+									onClick={() => setSearchLabelsText('')}
+								>
+									<ClearIcon />
+								</IconButton>
+							</InputAdornment>
+						),
+					}}
+				/>
 
 				<List>
 					{Object.keys(controlledLabels).length === 0 && (
@@ -145,7 +140,7 @@ const LabelsAddDialog = ({ note, setOpen }) => {
 							<ListItemText primary="No labels found" />
 						</ListItem>
 					)}
-					{Object.keys(controlledLabels).map((label) => {
+					{filteredLabels.map((label) => {
 						const labelId = `label-${label}`;
 
 						return (
@@ -172,6 +167,18 @@ const LabelsAddDialog = ({ note, setOpen }) => {
 							</ListItem>
 						);
 					})}
+					{searchLabelsText.length !== 0 && doesLabelExist && (
+						<ListItem
+							button
+							dense
+							onClick={handleAddLabel}
+						>
+							<ListItemIcon>
+								<AddIcon />
+							</ListItemIcon>
+							<ListItemText primary={`Add "${searchLabelsText}" as a new label`} />
+						</ListItem>
+					)}
 				</List>
 			</DialogContent>
 
