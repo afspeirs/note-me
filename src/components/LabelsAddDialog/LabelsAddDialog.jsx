@@ -7,6 +7,7 @@ import {
 	DialogActions,
 	DialogContent,
 	DialogTitle,
+	ListItemIcon,
 	FormControlLabel,
 	IconButton,
 	InputAdornment,
@@ -65,14 +66,10 @@ const LabelsAddDialog = ({ note, setOpen }) => {
 		setOpen(null);
 	};
 
-	const handleCheckboxChange = (event) => {
-		const prevControlledLabels = {
-			...controlledLabels,
-			[event.target.name]: event.target.checked,
-		};
-
-		setControlledLabels(prevControlledLabels);
-	};
+	const handleCheckboxChange = (label) => setControlledLabels((prevState) => ({
+		...prevState,
+		[label]: !prevState[label],
+	}));
 
 	useEffect(() => {
 		setControlledLabels(
@@ -85,10 +82,11 @@ const LabelsAddDialog = ({ note, setOpen }) => {
 	return (
 		<Dialog
 			aria-labelledby="export-dialog-title"
-			maxWidth="xs"
 			fullWidth
+			maxWidth="xs"
 			onClose={handleClose}
 			open={Boolean(note)}
+			scroll="body"
 		>
 			<DialogTitle
 				disableTypography
@@ -112,7 +110,6 @@ const LabelsAddDialog = ({ note, setOpen }) => {
 			<DialogContent dividers>
 				<form
 					autoComplete="off"
-					className={classes.form}
 					noValidate
 					onSubmit={handleAddLabel}
 				>
@@ -148,31 +145,43 @@ const LabelsAddDialog = ({ note, setOpen }) => {
 							<ListItemText primary="No labels found" />
 						</ListItem>
 					)}
-					{Object.keys(controlledLabels).map((label) => (
-						<ListItem
-							dense
-							disableGutters
-							key={label}
-						>
-							<FormControlLabel
-								control={(
+					{Object.keys(controlledLabels).map((label) => {
+						const labelId = `label-${label}`;
+
+						return (
+							<ListItem
+								button
+								dense
+								key={labelId}
+								onClick={() => handleCheckboxChange(label)}
+							>
+								<ListItemIcon>
 									<Checkbox
 										checked={controlledLabels[label]}
 										color="primary"
-										name={label}
-										onChange={handleCheckboxChange}
+										disableRipple
+										edge="start"
+										inputProps={{ 'aria-labelledby': labelId }}
+										tabIndex={-1}
 									/>
-								)}
-								key={label}
-								label={label}
-							/>
-						</ListItem>
-					))}
+								</ListItemIcon>
+								<ListItemText
+									id={labelId}
+									primary={label}
+								/>
+							</ListItem>
+						);
+					})}
 				</List>
 			</DialogContent>
 
 			<DialogActions>
-				<Button color="inherit" onClick={handleClose}>Done</Button>
+				<Button
+					color="inherit"
+					onClick={handleClose}
+				>
+					Done
+				</Button>
 			</DialogActions>
 		</Dialog>
 	);
