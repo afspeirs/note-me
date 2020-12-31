@@ -96,6 +96,28 @@ const useNotesValue = () => {
 	};
 
 	/**
+	 * Creates notes from an array
+	 * @param {array} [listOfNotes]
+	 */
+	const importNotes = (listOfNotes) => {
+		const batch = firestore.batch();
+
+		listOfNotes.forEach((note) => {
+			const newNote = firestore.collection(user.uid).doc();
+			const value = returnNoteObject({
+				...note,
+				id: newNote.id,
+			});
+
+			batch.set(newNote, value);
+		});
+
+		batch.commit().then(() => snackbar.showMessage({
+			message: `${listOfNotes.length} note${listOfNotes.length === 1 ? ' has' : 's have'} been imported`,
+		}));
+	};
+
+	/**
 	 * Update the labels on a note
 	 * @param {array} newLabels
 	 * @param {object} [note=currentNote]
@@ -141,6 +163,7 @@ const useNotesValue = () => {
 		currentNote,
 		deleteNote,
 		favouriteNote,
+		importNotes,
 		labels,
 		loading,
 		notes,
