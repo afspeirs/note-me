@@ -73,16 +73,17 @@ const useNotesValue = () => {
 	 * @param {object} [note=currentNote]
 	 */
 	const deleteNote = (note = currentNote) => {
-		firestore.collection(user.uid).doc(note.id).delete();
-		history.replace('/');
+		firestore.collection(user.uid).doc(note.id)
+			.delete()
+			.then(() => snackbar.showMessage({
+				actionFunction() {
+					firestore.collection(user.uid).doc(note.id).set(note);
+				},
+				actionText: 'Undo',
+				message: `"${note.title}" has been deleted`,
+			}));
 
-		snackbar.showMessage({
-			actionFunction() {
-				firestore.collection(user.uid).doc(note.id).set(note);
-			},
-			actionText: 'Undo',
-			message: `"${note.title}" has been deleted`,
-		});
+		history.replace('/');
 	};
 
 	/**
@@ -90,9 +91,17 @@ const useNotesValue = () => {
 	 * @param {object} [note=currentNote]
 	 */
 	const favouriteNote = (note = currentNote) => {
-		firestore.collection(user.uid).doc(note.id).update({
-			favourite: !note.favourite,
-		});
+		firestore.collection(user.uid).doc(note.id)
+			.update({
+				favourite: !note.favourite,
+			})
+			.then(() => snackbar.showMessage({
+				actionFunction() {
+					firestore.collection(user.uid).doc(note.id).set(note);
+				},
+				actionText: 'Undo',
+				message: `"${note.title}" has been ${note.favourite ? 'removed' : 'added'} as a favourite`,
+			}));
 	};
 
 	/**
