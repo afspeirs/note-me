@@ -15,6 +15,32 @@ const useNotesValue = () => {
 	const [notes, setNotes] = useState([]);
 	const [currentNote, setCurrentNote] = useState(null);
 
+	const returnNoteObject = ({
+		created,
+		date,
+		favourite,
+		id,
+		text,
+		title,
+	}) => {
+		if (!id) {
+			// eslint-disable-next-line no-console
+			console.error(`An id needs to be provided. "${id}" is not valid`);
+			return null;
+		}
+
+		const newNote = {
+			created: created || +new Date(),
+			date: date || +new Date(),
+			favourite: favourite || false,
+			id,
+			text: text || '',
+			title: title || getTitle(text),
+		};
+
+		return newNote;
+	};
+
 	/**
 	 * Create a note based on the text provided, and navigate to the new note.
 	 * If an Untitled note already exists, navigate to that note
@@ -30,14 +56,10 @@ const useNotesValue = () => {
 			});
 		} else {
 			const newNote = firestore.collection(user.uid).doc();
-			const value = {
-				created: +new Date(),
-				date: +new Date(),
-				favourite: false,
+			const value = returnNoteObject({
 				id: newNote.id,
 				text,
-				title: getTitle(text),
-			};
+			});
 
 			newNote.set(value).then(() => history.push({
 				pathname: `/note/${value.id}`,
@@ -71,6 +93,28 @@ const useNotesValue = () => {
 		firestore.collection(user.uid).doc(note.id).update({
 			favourite: !note.favourite,
 		});
+	};
+
+	/**
+	 * Creates notes from an array
+	 * @param {array} [listOfNotes]
+	 */
+	const importNotes = (listOfNotes) => {
+		const batch = firestore.batch();
+
+		listOfNotes.forEach((note) => {
+			const newNote = firestore.collection(user.uid).doc();
+			const value = returnNoteObject({
+				...note,
+				id: newNote.id,
+			});
+
+			batch.set(newNote, value);
+		});
+
+		batch.commit().then(() => snackbar.showMessage({
+			message: `${listOfNotes.length} note${listOfNotes.length === 1 ? ' has' : 's have'} been imported`,
+		}));
 	};
 
 	/**
@@ -119,6 +163,7 @@ const useNotesValue = () => {
 		currentNote,
 		deleteNote,
 		favouriteNote,
+		importNotes,
 		labels,
 		loading,
 		notes,

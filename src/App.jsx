@@ -3,6 +3,7 @@ import { ConfirmProvider } from 'material-ui-confirm';
 
 import theme from './theme';
 import Container from './components/Container';
+import FilesDragAndDrop from './components/FilesDragAndDrop';
 import Routes from './components/Routes';
 import ServiceWorkerContent from './components/ServiceWorkerContent';
 import { useGlobalState } from './hooks/GlobalState';
@@ -29,6 +30,7 @@ const App = () => {
 							<Routes />
 						</Container>
 
+						<FilesDragAndDrop />
 						<ServiceWorkerContent />
 					</NotesProvider>
 				</SnackbarProvider>
