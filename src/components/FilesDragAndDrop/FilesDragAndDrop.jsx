@@ -29,7 +29,7 @@ const FilesDragAndDrop = () => {
 		if (files?.length === 0) return;
 		if (files.length === 1) {
 			const [file] = files;
-			console.log(file);
+			// console.log(file);
 
 			if (
 				file.name.toLowerCase().endsWith('json')
