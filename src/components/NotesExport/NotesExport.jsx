@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import clsx from 'clsx';
+import dayjs from 'dayjs';
 import {
 	Button,
 	Checkbox,
@@ -22,18 +22,22 @@ import { useConfirm } from 'material-ui-confirm';
 
 import useStyles from './NotesExport.styled';
 import { useNotes } from '../../hooks/Notes';
+import { useSnackbar } from '../../hooks/Snackbar';
 
 const NotesExport = () => {
 	const classes = useStyles();
 	const confirm = useConfirm();
 	const { notes } = useNotes();
+	const snackbar = useSnackbar();
 	const [checkedNotes, setCheckedNotes] = useState([]);
 	const [open, setOpen] = useState(false);
-	const [maxSelectable] = useState(10);
-	const isCheckedNotesSelected = checkedNotes.every((note) => note === false);
-	const numberOfCheckedNotes = checkedNotes.filter((note) => note === true).length;
+	const isEveryNoteSelected = checkedNotes.every((note) => note === true);
+	const isEveryNoteUnSelected = checkedNotes.every((note) => note === false);
+	const selectedNotes = notes.filter((note, index) => checkedNotes[index]);
 
 	const resetSelectedNotes = () => setCheckedNotes([...Array(notes.length)].map(() => false));
+	const toggleSelectedNotes = () => setCheckedNotes([...Array(notes.length)]
+		.map(() => !isEveryNoteSelected));
 
 	const handleClose = () => {
 		resetSelectedNotes();
@@ -46,18 +50,17 @@ const NotesExport = () => {
 		const local = [...checkedNotes];
 		const value = checkedNotes[index];
 
-		// Limit the number of selectable notes to maxSelectable
-		if (!(numberOfCheckedNotes === maxSelectable && !value)) {
-			local[index] = !value;
-			setCheckedNotes(local);
-		}
+		local[index] = !value;
+		setCheckedNotes(local);
 	};
 
-	const exportMarkdownFile = (name, text) => {
+	const exportMarkdownFile = (exportedNotes) => {
 		const element = document.createElement('a');
+		const currentDate = dayjs().format('YYYY-MM-DD');
+		const stringOfNotes = JSON.stringify(exportedNotes);
 
-		element.setAttribute('href', `data:text/plain;charset=utf-8,${encodeURIComponent(text)}`);
-		element.setAttribute('download', `${name}.md`);
+		element.setAttribute('href', `data:text/plain;charset=utf-8,${encodeURIComponent(stringOfNotes)}`);
+		element.setAttribute('download', `NoteMe-${currentDate}.json`);
 		element.style.display = 'none';
 		document.body.appendChild(element);
 		element.click();
@@ -65,16 +68,19 @@ const NotesExport = () => {
 	};
 
 	const handleExportClick = () => {
-		const selectedNotes = notes.filter((note, index) => checkedNotes[index]);
+		const notesToExport = isEveryNoteUnSelected ? notes : selectedNotes;
+		// console.log(notesToExport);
+
 		confirm({
-			title: `Do you want to export ${selectedNotes.length === 1 ? 'this note' : `these ${selectedNotes.length} notes`}?`,
+			title: `Are you sure you want to export ${notesToExport.length === 1 ? 'this note' : `${notesToExport.length} notes`}?`,
 			cancellationText: 'No',
 			confirmationText: 'Yes',
 		}).then(() => {
 			handleClose();
-			selectedNotes.forEach((note) => {
-				const { text, title } = note;
-				exportMarkdownFile(title.substring(0, 100), text);
+			exportMarkdownFile(notesToExport);
+
+			snackbar.showMessage({
+				message: `${notesToExport.length} note${notesToExport.length === 1 ? ' has' : 's have'} been exported`,
 			});
 		});
 	};
@@ -122,17 +128,10 @@ const NotesExport = () => {
 
 				<DialogContent dividers>
 					<Typography gutterBottom>
-						Select which notes you would like to export. They will be saved as Markdown files
+						Select which notes you would like to export. They will be saved as a JSON file
 					</Typography>
 					<Typography>
-						<span
-							className={clsx({
-								[classes.maxSelected]: numberOfCheckedNotes === maxSelectable,
-							})}
-						>
-							{`${numberOfCheckedNotes}/${maxSelectable}`}
-						</span>
-						&nbsp;notes selected for export
+						{selectedNotes.length} note(s) selected
 					</Typography>
 
 					<List className={classes.list} dense>
@@ -170,34 +169,18 @@ const NotesExport = () => {
 				</DialogContent>
 
 				<DialogActions>
-					<Typography
-						className={clsx(classes.numberSelected, {
-							[classes.maxSelected]: numberOfCheckedNotes === maxSelectable,
-						})}
-					>
-						{`${numberOfCheckedNotes}/${maxSelectable}`}
-					</Typography>
-
 					<Button
 						color="inherit"
-						onClick={handleClose}
+						onClick={toggleSelectedNotes}
 					>
-						Cancel
-					</Button>
-					<Button
-						color="inherit"
-						disabled={isCheckedNotesSelected}
-						onClick={resetSelectedNotes}
-					>
-						Reset
+						Select All
 					</Button>
 					<Button
 						autoFocus
 						color="primary"
-						disabled={isCheckedNotesSelected}
 						onClick={handleExportClick}
 					>
-						Export
+						Export {isEveryNoteUnSelected ? 'All' : 'Selected'}
 					</Button>
 				</DialogActions>
 			</Dialog>
