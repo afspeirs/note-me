@@ -1,5 +1,3 @@
-import React from 'react';
-
 const NoPage = () => (
 	<h4>404: Page not found</h4>
 );

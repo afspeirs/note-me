@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { Fragment, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import {
@@ -139,7 +139,7 @@ const NotesList = ({ notes }) => {
 				)}
 
 				{sortArray(filteredNotes).map((note) => (
-					<React.Fragment key={`note-${note.id}`}>
+					<Fragment key={`note-${note.id}`}>
 						<ListItem
 							button
 							to={{
@@ -223,7 +223,7 @@ const NotesList = ({ notes }) => {
 								) : null}
 							</List>
 						</Popover>
-					</React.Fragment>
+					</Fragment>
 				))}
 			</List>
 
