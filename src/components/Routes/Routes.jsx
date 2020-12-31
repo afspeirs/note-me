@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import {
 	Switch,
 	Redirect,
@@ -7,8 +7,8 @@ import {
 } from 'react-router-dom';
 
 import { useAuth } from '../../hooks/Auth';
-import HomePage from '../../pages/HomePage';
 import CreateNotePage from '../../pages/CreateNotePage';
+import HomePage from '../../pages/HomePage';
 import NoPage from '../../pages/NoPage';
 import NotePage from '../../pages/NotePage';
 import SettingsPage from '../../pages/SettingsPage';

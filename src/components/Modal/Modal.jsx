@@ -1,4 +1,4 @@
-import React, { forwardRef, useState } from 'react';
+import { forwardRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Prompt, useHistory } from 'react-router-dom';
 import { useTheme } from '@material-ui/core/styles';

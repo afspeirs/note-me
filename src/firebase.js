@@ -22,10 +22,6 @@ const config = {
 
 firebase.initializeApp(config);
 
-export const auth = firebase.auth();
-export const db = firebase.firestore();
-export const provider = new firebase.auth.GoogleAuthProvider();
-
 // This enables offline support
 // Firebase is smart enough to update the changes when the user
 // goes online again
@@ -44,3 +40,13 @@ firebase.firestore()
 			window.dispatchEvent(event);
 		}
 	});
+
+const auth = firebase.auth();
+const firestore = firebase.firestore();
+const provider = new firebase.auth.GoogleAuthProvider();
+
+export {
+	auth,
+	firestore,
+	provider,
+};
