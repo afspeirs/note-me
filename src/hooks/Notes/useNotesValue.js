@@ -55,11 +55,11 @@ const useNotesValue = () => {
 		history.replace('/');
 
 		snackbar.showMessage({
-			message: `"${note.title}" has been deleted`,
-			actionText: 'Undo',
 			actionFunction() {
 				firestore.collection(user.uid).doc(note.id).set(note);
 			},
+			actionText: 'Undo',
+			message: `"${note.title}" has been deleted`,
 		});
 	};
 
@@ -123,8 +123,8 @@ const useNotesValue = () => {
 		loading,
 		notes,
 		setCurrentNote,
-		updateNote,
 		updateLabels,
+		updateNote,
 	};
 };
 

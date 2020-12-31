@@ -1,4 +1,4 @@
-import React, { useMemo, useEffect, useState } from 'react';
+import { useMemo, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { useHistory } from 'react-router-dom';

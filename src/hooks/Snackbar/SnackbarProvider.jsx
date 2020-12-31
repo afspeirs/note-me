@@ -17,9 +17,9 @@ const SnackbarProvider = ({ children }) => {
 
 	const showMessage = ({ message, actionText, actionFunction }) => {
 		setContent({
-			message,
-			actionText,
 			actionFunction,
+			actionText,
+			message,
 		});
 	};
 
@@ -42,8 +42,8 @@ const SnackbarProvider = ({ children }) => {
 
 			<Snackbar
 				anchorOrigin={{
-					vertical: 'bottom',
 					horizontal: 'left',
+					vertical: 'bottom',
 				}}
 				open={Boolean(content?.message)}
 				autoHideDuration={6000}
