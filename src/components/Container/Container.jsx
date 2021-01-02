@@ -1,6 +1,5 @@
 import { useMemo, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useHotkeys } from 'react-hotkeys-hook';
 import { useHistory } from 'react-router-dom';
 import {
 	AppBar,
@@ -67,16 +66,26 @@ const Container = ({ children }) => {
 	// Toggle drawer only in mobile unless toggle is true
 	const handleDrawerToggle = () => setDrawerOpen((prevState) => !prevState);
 
-	// B = Toggle sidebar
-	useHotkeys('ctrl+b, command+b', (event) => {
-		event.preventDefault();
-		setDrawerOpen((prevState) => !prevState);
-	});
-	// P = Disable Print dialog
-	// S = Disable Save dialog
-	useHotkeys('ctrl+p, command+p, ctrl+s, command+s', (event) => {
-		event.preventDefault();
-	});
+	const handleKeyDown = (event) => {
+		// If CTRL or CMD is pressed
+		if (event.ctrlKey || event.metaKey) {
+			// B = Toggle sidebar
+			if (event.key === 'b') {
+				event.preventDefault();
+				setDrawerOpen((prevState) => !prevState);
+			}
+			// P = Disable Print dialog
+			// S = Disable Save dialog
+			if (event.key === 'p' || event.key === 's') {
+				event.preventDefault();
+			}
+		}
+	};
+
+	useEffect(() => {
+		window.addEventListener('keydown', handleKeyDown);
+		return () => window.removeEventListener('keydown', handleKeyDown);
+	}, []); // eslint-disable-line
 
 	// Run handleDrawerClose if the history changes
 	useEffect(() => {

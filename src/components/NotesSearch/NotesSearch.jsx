@@ -1,4 +1,4 @@
-import { useHotkeys } from 'react-hotkeys-hook';
+import { useEffect } from 'react';
 import {
 	AppBar,
 	Fade,
@@ -44,32 +44,40 @@ const NotesSearch = () => {
 
 	const handleTextInput = (event) => updateSearchText(event.target.value);
 
-	// F = Show Search bar
-	useHotkeys('ctrl+f, command+f', (event) => {
-		event.preventDefault();
+	const handleKeyDown = (event) => {
+		// If CTRL or CMD is pressed
+		if (event.ctrlKey || event.metaKey) {
+			// F = Show Search bar
+			if (event.key === 'f') {
+				event.preventDefault();
 
-		if (window?.currentLocation?.pathname === '/') {
-			dispatch({
-				type: 'app-search',
-				value: {
-					...search,
-					show: true,
-				},
-			});
+				if (window?.currentLocation?.pathname === '/') {
+					dispatch({
+						type: 'app-search',
+						value: {
+							...search,
+							show: true,
+						},
+					});
+				}
+			}
+			// ESC = Hide search bar
+			if (event.key === 'esc' && window?.currentLocation?.pathname === '/') {
+				dispatch({
+					type: 'app-search',
+					value: {
+						show: false,
+						text: '',
+					},
+				});
+			}
 		}
-	});
-	// ESC = Hide search bar
-	useHotkeys('esc', () => {
-		if (window?.currentLocation?.pathname === '/') {
-			dispatch({
-				type: 'app-search',
-				value: {
-					show: false,
-					text: '',
-				},
-			});
-		}
-	});
+	};
+
+	useEffect(() => {
+		window.addEventListener('keydown', handleKeyDown);
+		return () => window.removeEventListener('keydown', handleKeyDown);
+	}, []); // eslint-disable-line
 
 	return (
 		<Fade in={search.show} timeout={512}>

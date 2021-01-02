@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import clsx from 'clsx';
-import { useHotkeys } from 'react-hotkeys-hook';
 import Markdown from 'react-markdown';
 import { useParams } from 'react-router-dom';
 import {
@@ -62,12 +61,21 @@ const NotePage = () => {
 		},
 	];
 
-	// E = Toggle edit
-	// S = Toggle edit
-	useHotkeys('ctrl+e, command+e, ctrl+s, command+s', (event) => {
-		event.preventDefault();
-		setEdit((prevState) => !prevState);
-	});
+	const handleKeyDown = (event) => {
+		// If CTRL or CMD is pressed
+		if (event.ctrlKey || event.metaKey) {
+			// E or S = Toggle edit
+			if (event.key === 'e' || event.key === 's') {
+				event.preventDefault();
+				setEdit((prevState) => !prevState);
+			}
+		}
+	};
+
+	useEffect(() => {
+		window.addEventListener('keydown', handleKeyDown);
+		return () => window.removeEventListener('keydown', handleKeyDown);
+	}, []); // eslint-disable-line
 
 	useEffect(() => {
 		if (currentNote) {
