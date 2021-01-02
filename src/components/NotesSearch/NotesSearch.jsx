@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import {
 	AppBar,
 	Fade,
@@ -14,6 +13,7 @@ import {
 
 import useStyles from './NotesSearch.styled';
 import { useGlobalState } from '../../hooks/GlobalState';
+import { useHotkeys } from '../../hooks/Hotkeys';
 
 const NotesSearch = () => {
 	const classes = useStyles();
@@ -44,11 +44,11 @@ const NotesSearch = () => {
 
 	const handleTextInput = (event) => updateSearchText(event.target.value);
 
-	const handleKeyDown = (event) => {
-		// If CTRL or CMD is pressed
-		if (event.ctrlKey || event.metaKey) {
-			// F = Show Search bar
-			if (event.key === 'f') {
+	useHotkeys([
+		// F = Show Search bar
+		{
+			keys: ['f'],
+			callback: (event) => {
 				event.preventDefault();
 
 				if (window?.currentLocation?.pathname === '/') {
@@ -60,24 +60,25 @@ const NotesSearch = () => {
 						},
 					});
 				}
-			}
-			// ESC = Hide search bar
-			if (event.key === 'esc' && window?.currentLocation?.pathname === '/') {
-				dispatch({
-					type: 'app-search',
-					value: {
-						show: false,
-						text: '',
-					},
-				});
-			}
-		}
-	};
-
-	useEffect(() => {
-		window.addEventListener('keydown', handleKeyDown);
-		return () => window.removeEventListener('keydown', handleKeyDown);
-	}, []); // eslint-disable-line
+			},
+			metaModifier: true,
+		},
+		// Escape = Hide search bar
+		{
+			keys: ['Escape'],
+			callback: () => {
+				if (window?.currentLocation?.pathname === '/') {
+					dispatch({
+						type: 'app-search',
+						value: {
+							show: false,
+							text: '',
+						},
+					});
+				}
+			},
+		},
+	]);
 
 	return (
 		<Fade in={search.show} timeout={512}>

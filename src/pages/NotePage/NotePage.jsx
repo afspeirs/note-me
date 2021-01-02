@@ -20,6 +20,7 @@ import useStyles from './NotePage.styled';
 import LabelsAddDialog from '../../components/LabelsAddDialog';
 import RendererLink from '../../components/RendererLink';
 import Modal from '../../components/Modal';
+import { useHotkeys } from '../../hooks/Hotkeys';
 import { useNotes } from '../../hooks/Notes';
 
 const NotePage = () => {
@@ -61,21 +62,14 @@ const NotePage = () => {
 		},
 	];
 
-	const handleKeyDown = (event) => {
-		// If CTRL or CMD is pressed
-		if (event.ctrlKey || event.metaKey) {
-			// E or S = Toggle edit
-			if (event.key === 'e' || event.key === 's') {
-				event.preventDefault();
-				setEdit((prevState) => !prevState);
-			}
-		}
-	};
-
-	useEffect(() => {
-		window.addEventListener('keydown', handleKeyDown);
-		return () => window.removeEventListener('keydown', handleKeyDown);
-	}, []); // eslint-disable-line
+	useHotkeys({
+		keys: ['e', 's'],
+		callback: (event) => {
+			event.preventDefault();
+			setEdit((prevState) => !prevState);
+		},
+		metaModifier: true,
+	});
 
 	useEffect(() => {
 		if (currentNote) {

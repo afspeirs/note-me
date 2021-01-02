@@ -21,6 +21,7 @@ import HeaderContent from '../HeaderContent';
 import NotesSearch from '../NotesSearch';
 import { useAuth } from '../../hooks/Auth';
 import { useGlobalState } from '../../hooks/GlobalState';
+import { useHotkeys } from '../../hooks/Hotkeys';
 import { useNotes } from '../../hooks/Notes';
 
 const propTypes = {
@@ -66,26 +67,23 @@ const Container = ({ children }) => {
 	// Toggle drawer only in mobile unless toggle is true
 	const handleDrawerToggle = () => setDrawerOpen((prevState) => !prevState);
 
-	const handleKeyDown = (event) => {
-		// If CTRL or CMD is pressed
-		if (event.ctrlKey || event.metaKey) {
-			// B = Toggle sidebar
-			if (event.key === 'b') {
+	useHotkeys([
+		// B = Toggle sidebar
+		{
+			keys: ['b'],
+			callback: (event) => {
 				event.preventDefault();
 				setDrawerOpen((prevState) => !prevState);
-			}
-			// P = Disable Print dialog
-			// S = Disable Save dialog
-			if (event.key === 'p' || event.key === 's') {
-				event.preventDefault();
-			}
-		}
-	};
-
-	useEffect(() => {
-		window.addEventListener('keydown', handleKeyDown);
-		return () => window.removeEventListener('keydown', handleKeyDown);
-	}, []); // eslint-disable-line
+			},
+			metaModifier: true,
+		},
+		// P or S = Disable Event
+		{
+			keys: ['p', 's'],
+			callback: (event) => event.preventDefault(),
+			metaModifier: true,
+		},
+	]);
 
 	// Run handleDrawerClose if the history changes
 	useEffect(() => {
