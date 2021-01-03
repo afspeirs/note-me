@@ -9,7 +9,7 @@ import { useSnackbar } from '../../hooks/Snackbar';
 const FilesDragAndDrop = () => {
 	const classes = useStyles();
 	const confirm = useConfirm();
-	const { importNotes } = useNotes();
+	const { addNote, importNotes } = useNotes();
 	const drop = useRef(null);
 	const snackbar = useSnackbar();
 	const [dragging, setDragging] = useState(false);
@@ -31,18 +31,22 @@ const FilesDragAndDrop = () => {
 			const [file] = files;
 			// console.log(file);
 
-			if (file.name.toLowerCase().endsWith('json')) {
+			if (
+				file.name.toLowerCase().endsWith('json')
+				|| file.name.toLowerCase().endsWith('md')
+				|| file.type.toLowerCase().startsWith('text/')
+			) {
 				const reader = new FileReader();
 				reader.onload = () => setFileContent(reader.result);
 				reader.readAsText(file);
 			} else {
 				snackbar.showMessage({
-					message: 'Only JSON files exported from NoteMe are supported',
+					message: 'Only JSON/markdown/text files are supported',
 				});
 			}
 		} else {
 			snackbar.showMessage({
-				message: 'Only one JSON file can be uploaded at a time',
+				message: 'Only one file can be imported at a time',
 			});
 		}
 
@@ -81,9 +85,15 @@ const FilesDragAndDrop = () => {
 					setFileContent(null);
 				}).catch(() => setFileContent(null));
 			} else {
-				snackbar.showMessage({
-					message: 'The JSON is not properly formatted to be input',
-				});
+				confirm({
+					title: 'Do you want to import the file with the following contents?',
+					description: fileContent,
+					cancellationText: 'No',
+					confirmationText: 'Yes',
+				}).then(() => {
+					addNote(fileContent);
+					setFileContent(null);
+				}).catch(() => setFileContent(null));
 				setFileContent(null);
 			}
 		}
