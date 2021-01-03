@@ -1,17 +1,12 @@
 import { useRef, useState } from 'react';
-import PropTypes from 'prop-types';
 import {
 	ListItem,
-	ListItemIcon,
 	ListItemSecondaryAction,
 	ListItemText,
 	Menu,
 	MenuItem,
 	Typography,
 } from '@material-ui/core';
-import {
-	Sort as SortIcon,
-} from '@material-ui/icons';
 
 import useStyles from './SortNotes.styled';
 import { useGlobalState } from '../../hooks/GlobalState';
@@ -23,15 +18,7 @@ const options = [
 	{ text: 'Title (Z-A)', value: 'title-dsc' },
 ];
 
-const defaultProps = {
-	icon: false,
-};
-
-const propTypes = {
-	icon: PropTypes.bool,
-};
-
-const SortNotes = ({ icon }) => {
+const SortNotes = () => {
 	const [{ settings: { sortNotes } }, dispatch] = useGlobalState();
 	const [anchorEl, setAnchorEl] = useState(null);
 	const anchorRef = useRef(null);
@@ -62,11 +49,6 @@ const SortNotes = ({ icon }) => {
 				aria-label="sort notes"
 				onClick={handleClickListItem}
 			>
-				{icon && (
-					<ListItemIcon>
-						<SortIcon />
-					</ListItemIcon>
-				)}
 				<ListItemText primary="Sort Notes" />
 				<ListItemSecondaryAction className={classes.secondaryText} ref={anchorRef}>
 					<Typography variant="body2" color="textSecondary">
@@ -95,8 +77,5 @@ const SortNotes = ({ icon }) => {
 		</>
 	);
 };
-
-SortNotes.defaultProps = defaultProps;
-SortNotes.propTypes = propTypes;
 
 export default SortNotes;
