@@ -44,12 +44,7 @@ const Routes = () => {
 				<Route component={NoPage} />
 			</Switch>
 
-			{user === false && (
-				<>
-					<Redirect from="/note/" to="/" />
-					<Redirect from="/note/:id" to="/" />
-				</>
-			)}
+			{user === false && <Redirect to="/" />}
 
 			{isModal && (
 				<Switch>
