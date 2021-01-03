@@ -1,6 +1,5 @@
 import { useMemo, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useHotkeys } from 'react-hotkeys-hook';
 import { useHistory } from 'react-router-dom';
 import {
 	AppBar,
@@ -22,6 +21,7 @@ import HeaderContent from '../HeaderContent';
 import NotesSearch from '../NotesSearch';
 import { useAuth } from '../../hooks/Auth';
 import { useGlobalState } from '../../hooks/GlobalState';
+import { useHotkeys } from '../../hooks/Hotkeys';
 import { useNotes } from '../../hooks/Notes';
 
 const propTypes = {
@@ -67,16 +67,23 @@ const Container = ({ children }) => {
 	// Toggle drawer only in mobile unless toggle is true
 	const handleDrawerToggle = () => setDrawerOpen((prevState) => !prevState);
 
-	// B = Toggle sidebar
-	useHotkeys('ctrl+b, command+b', (event) => {
-		event.preventDefault();
-		setDrawerOpen((prevState) => !prevState);
-	});
-	// P = Disable Print dialog
-	// S = Disable Save dialog
-	useHotkeys('ctrl+p, command+p, ctrl+s, command+s', (event) => {
-		event.preventDefault();
-	});
+	useHotkeys([
+		// B = Toggle sidebar
+		{
+			keys: ['b'],
+			callback: (event) => {
+				event.preventDefault();
+				setDrawerOpen((prevState) => !prevState);
+			},
+			metaModifier: true,
+		},
+		// P or S = Disable Event
+		{
+			keys: ['p', 's'],
+			callback: (event) => event.preventDefault(),
+			metaModifier: true,
+		},
+	]);
 
 	// Run handleDrawerClose if the history changes
 	useEffect(() => {
