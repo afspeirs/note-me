@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import clsx from 'clsx';
-import { useHotkeys } from 'react-hotkeys-hook';
 import Markdown from 'react-markdown';
 import { useParams } from 'react-router-dom';
 import {
@@ -21,6 +20,7 @@ import useStyles from './NotePage.styled';
 import LabelsAddDialog from '../../components/LabelsAddDialog';
 import RendererLink from '../../components/RendererLink';
 import Modal from '../../components/Modal';
+import { useHotkeys } from '../../hooks/Hotkeys';
 import { useNotes } from '../../hooks/Notes';
 
 const NotePage = () => {
@@ -62,11 +62,13 @@ const NotePage = () => {
 		},
 	];
 
-	// E = Toggle edit
-	// S = Toggle edit
-	useHotkeys('ctrl+e, command+e, ctrl+s, command+s', (event) => {
-		event.preventDefault();
-		setEdit((prevState) => !prevState);
+	useHotkeys({
+		keys: ['e', 's'],
+		callback: (event) => {
+			event.preventDefault();
+			setEdit((prevState) => !prevState);
+		},
+		metaModifier: true,
 	});
 
 	useEffect(() => {

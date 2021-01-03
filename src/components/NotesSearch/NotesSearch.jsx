@@ -1,4 +1,3 @@
-import { useHotkeys } from 'react-hotkeys-hook';
 import {
 	AppBar,
 	Fade,
@@ -14,6 +13,7 @@ import {
 
 import useStyles from './NotesSearch.styled';
 import { useGlobalState } from '../../hooks/GlobalState';
+import { useHotkeys } from '../../hooks/Hotkeys';
 
 const NotesSearch = () => {
 	const classes = useStyles();
@@ -44,32 +44,41 @@ const NotesSearch = () => {
 
 	const handleTextInput = (event) => updateSearchText(event.target.value);
 
-	// F = Show Search bar
-	useHotkeys('ctrl+f, command+f', (event) => {
-		event.preventDefault();
+	useHotkeys([
+		// F = Show Search bar
+		{
+			keys: ['f'],
+			callback: (event) => {
+				event.preventDefault();
 
-		if (window?.currentLocation?.pathname === '/') {
-			dispatch({
-				type: 'app-search',
-				value: {
-					...search,
-					show: true,
-				},
-			});
-		}
-	});
-	// ESC = Hide search bar
-	useHotkeys('esc', () => {
-		if (window?.currentLocation?.pathname === '/') {
-			dispatch({
-				type: 'app-search',
-				value: {
-					show: false,
-					text: '',
-				},
-			});
-		}
-	});
+				if (window?.currentLocation?.pathname === '/') {
+					dispatch({
+						type: 'app-search',
+						value: {
+							...search,
+							show: true,
+						},
+					});
+				}
+			},
+			metaModifier: true,
+		},
+		// Escape = Hide search bar
+		{
+			keys: ['Escape'],
+			callback: () => {
+				if (window?.currentLocation?.pathname === '/') {
+					dispatch({
+						type: 'app-search',
+						value: {
+							show: false,
+							text: '',
+						},
+					});
+				}
+			},
+		},
+	]);
 
 	return (
 		<Fade in={search.show} timeout={512}>
