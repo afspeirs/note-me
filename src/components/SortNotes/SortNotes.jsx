@@ -9,6 +9,7 @@ import {
 } from '@material-ui/core';
 
 import useStyles from './SortNotes.styled';
+import { useAuth } from '../../hooks/Auth';
 import { useGlobalState } from '../../hooks/GlobalState';
 
 const options = [
@@ -19,6 +20,7 @@ const options = [
 ];
 
 const SortNotes = () => {
+	const { isSignedIn } = useAuth();
 	const [{ settings: { sortNotes } }, dispatch] = useGlobalState();
 	const [anchorEl, setAnchorEl] = useState(null);
 	const anchorRef = useRef(null);
@@ -47,11 +49,12 @@ const SortNotes = () => {
 				aria-haspopup="true"
 				aria-controls="sort-menu"
 				aria-label="sort notes"
+				disabled={!isSignedIn}
 				onClick={handleClickListItem}
 			>
 				<ListItemText primary="Sort Notes" />
 				<ListItemSecondaryAction className={classes.secondaryText} ref={anchorRef}>
-					<Typography variant="body2" color="textSecondary">
+					<Typography variant="body2" color={isSignedIn ? '' : 'textSecondary'}>
 						{options[selectedIndex].text}
 					</Typography>
 				</ListItemSecondaryAction>

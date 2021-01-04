@@ -5,9 +5,11 @@ import {
 	Switch,
 } from '@material-ui/core';
 
+import { useAuth } from '../../hooks/Auth';
 import { useGlobalState } from '../../hooks/GlobalState';
 
 const SortNotesFavourite = () => {
+	const { isSignedIn } = useAuth();
 	const [{ settings: { sortNotesFavourite } }, dispatch] = useGlobalState();
 
 	const handleToggle = () => dispatch({ type: 'settings-sortNotesFavourite' });
@@ -21,6 +23,7 @@ const SortNotesFavourite = () => {
 			<ListItemSecondaryAction>
 				<Switch
 					color="primary"
+					disabled={!isSignedIn}
 					edge="end"
 					onChange={handleToggle}
 					checked={sortNotesFavourite}
