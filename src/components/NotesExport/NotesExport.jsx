@@ -21,11 +21,13 @@ import {
 import { useConfirm } from 'material-ui-confirm';
 
 import useStyles from './NotesExport.styled';
+import { useAuth } from '../../hooks/Auth';
 import { useNotes } from '../../hooks/Notes';
 import { useSnackbar } from '../../hooks/Snackbar';
 
 const NotesExport = () => {
 	const classes = useStyles();
+	const { isSignedIn } = useAuth();
 	const confirm = useConfirm();
 	const { notes } = useNotes();
 	const snackbar = useSnackbar();
@@ -95,6 +97,7 @@ const NotesExport = () => {
 				<ListItemSecondaryAction>
 					<Button
 						color="primary"
+						disabled={!isSignedIn}
 						variant="contained"
 						onClick={handleOpen}
 					>

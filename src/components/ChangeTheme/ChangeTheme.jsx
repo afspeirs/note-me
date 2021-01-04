@@ -5,7 +5,6 @@ import {
 	ListItemText,
 	Menu,
 	MenuItem,
-	Typography,
 } from '@material-ui/core';
 
 import useStyles from './ChangeTheme.styled';
@@ -50,9 +49,7 @@ const ChangeTheme = () => {
 			>
 				<ListItemText primary="Theme" />
 				<ListItemSecondaryAction className={classes.secondaryText} ref={anchorRef}>
-					<Typography variant="body2" color="textSecondary">
-						{options[selectedIndex].text}
-					</Typography>
+					{options[selectedIndex].text}
 				</ListItemSecondaryAction>
 			</ListItem>
 			<Menu
