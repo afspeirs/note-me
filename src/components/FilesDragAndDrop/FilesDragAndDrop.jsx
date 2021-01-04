@@ -26,7 +26,6 @@ const FilesDragAndDrop = () => {
 
 		const { files } = event.dataTransfer;
 
-		if (files?.length === 0) return;
 		if (files.length === 1) {
 			const [file] = files;
 			// console.log(file);
@@ -44,7 +43,7 @@ const FilesDragAndDrop = () => {
 					message: 'Only JSON/markdown/text files are supported',
 				});
 			}
-		} else {
+		} else if (files.length > 1) {
 			snackbar.showMessage({
 				message: 'Only one file can be imported at a time',
 			});
