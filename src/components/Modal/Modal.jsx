@@ -45,7 +45,14 @@ const propTypes = {
 		}),
 	),
 	maxHeight: PropTypes.bool,
-	maxWidth: PropTypes.string,
+	maxWidth: PropTypes.oneOf([
+		'xs',
+		'sm',
+		'md',
+		'lg',
+		'xl',
+		false,
+	]),
 	showPrompt: PropTypes.bool,
 	title: PropTypes.string,
 };
