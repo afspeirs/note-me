@@ -28,7 +28,7 @@ const defaultProps = {
 	maxHeight: false,
 	maxWidth: 'sm',
 	showPrompt: false,
-	title: 'Modal',
+	title: '',
 };
 
 const propTypes = {
