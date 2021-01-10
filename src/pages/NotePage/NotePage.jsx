@@ -93,7 +93,7 @@ const NotePage = () => {
 			<Modal
 				headerItems={headerItems}
 				maxHeight
-				maxWidth="lg"
+				maxWidth={false}
 				showPrompt={localNote !== currentNote?.text}
 				title={currentNote?.title}
 			>
