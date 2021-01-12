@@ -28,7 +28,7 @@ const defaultProps = {
 	maxHeight: false,
 	maxWidth: 'sm',
 	showPrompt: false,
-	title: 'Modal',
+	title: '',
 };
 
 const propTypes = {
@@ -45,7 +45,14 @@ const propTypes = {
 		}),
 	),
 	maxHeight: PropTypes.bool,
-	maxWidth: PropTypes.string,
+	maxWidth: PropTypes.oneOf([
+		'xs',
+		'sm',
+		'md',
+		'lg',
+		'xl',
+		false,
+	]),
 	showPrompt: PropTypes.bool,
 	title: PropTypes.string,
 };
