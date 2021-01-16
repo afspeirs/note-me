@@ -9,7 +9,7 @@ import { useSnackbar } from '../../hooks/Snackbar';
 const FilesDragAndDrop = () => {
 	const classes = useStyles();
 	const confirm = useConfirm();
-	const { addNote, importNotes } = useNotes();
+	const { createNote, importNotes } = useNotes();
 	const drop = useRef(null);
 	const snackbar = useSnackbar();
 	const [dragging, setDragging] = useState(false);
@@ -90,7 +90,7 @@ const FilesDragAndDrop = () => {
 					cancellationText: 'No',
 					confirmationText: 'Yes',
 				}).then(() => {
-					addNote(fileContent);
+					createNote(fileContent);
 					setFileContent(null);
 				}).catch(() => setFileContent(null));
 				setFileContent(null);

@@ -36,14 +36,14 @@ const Container = ({ children }) => {
 	const [{ containerTitle, search }, dispatch] = useGlobalState();
 	const history = useHistory();
 	const mobile = useMediaQuery('(max-width:960px)');
-	const { addNote, currentNote } = useNotes();
+	const { createNote, currentNote } = useNotes();
 	const [drawerOpen, setDrawerOpen] = useState(false);
 	const classes = useStyles();
 
 	const headerItems = useMemo(() => [
 		{
 			icon: <AddIcon />,
-			onClick: () => addNote(''),
+			onClick: () => createNote(''),
 			text: 'Create Note',
 			visible: isSignedIn,
 		},

@@ -46,7 +46,7 @@ const useNotesValue = () => {
 	 * If an Untitled note already exists, navigate to that note
 	 * @param {string} [text] - Initial text to use for the note
 	 */
-	const addNote = (text = '') => {
+	const createNote = (text = '') => {
 		const untitledNote = notes.find((note) => note.text === '');
 
 		if (untitledNote) {
@@ -168,7 +168,7 @@ const useNotesValue = () => {
 	}, [user]); // eslint-disable-line
 
 	return {
-		addNote,
+		createNote,
 		currentNote,
 		deleteNote,
 		favouriteNote,

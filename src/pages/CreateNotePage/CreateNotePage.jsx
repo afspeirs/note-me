@@ -7,12 +7,12 @@ import { useNotes } from '../../hooks/Notes';
 const CreateNotePage = () => {
 	const { isSignedIn } = useAuth();
 	const history = useHistory();
-	const { addNote } = useNotes();
+	const { createNote } = useNotes();
 
 	useEffect(() => {
 		if (isSignedIn) {
 			history.replace('/');
-			addNote('');
+			createNote('');
 		}
 	}, [isSignedIn]); // eslint-disable-line
 

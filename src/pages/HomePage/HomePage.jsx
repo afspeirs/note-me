@@ -21,7 +21,7 @@ import { useNotes } from '../../hooks/Notes';
 const HomePage = () => {
 	const { signIn, user } = useAuth();
 	const dispatch = [...useGlobalState()].pop(); // I don't need to access any of the reducer state
-	const { addNote, loading, notes } = useNotes();
+	const { createNote, loading, notes } = useNotes();
 	const { label } = useParams();
 	const classes = useStyles();
 	const [filteredNotes, setFilteredNotes] = useState([]);
@@ -62,7 +62,7 @@ const HomePage = () => {
 							color="primary"
 							aria-label="Create Note"
 							className={classes.fab}
-							onClick={() => addNote('')}
+							onClick={() => createNote('')}
 						>
 							<AddIcon />
 						</Fab>
