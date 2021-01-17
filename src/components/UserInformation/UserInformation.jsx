@@ -26,7 +26,10 @@ const UserInformation = () => {
 					<ListItemAvatar>
 						<Avatar alt={user.displayName} src={user.photoURL} />
 					</ListItemAvatar>
-					<ListItemText primary={user.displayName} secondary={user.email} />
+					<ListItemText
+						primary={user.displayName}
+						secondary={user.email.replace(/(?!^).(?=[^@]+@)/g, '*')}
+					/>
 					<ListItemSecondaryAction>
 						<Tooltip title="Sign Out" placement="left">
 							<IconButton

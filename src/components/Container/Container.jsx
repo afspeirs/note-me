@@ -10,7 +10,6 @@ import {
 	useMediaQuery,
 } from '@material-ui/core';
 import {
-	Add as AddIcon,
 	Menu as MenuIcon,
 	Search as SearchIcon,
 } from '@material-ui/icons';
@@ -22,7 +21,6 @@ import NotesSearch from '../NotesSearch';
 import { useAuth } from '../../hooks/Auth';
 import { useGlobalState } from '../../hooks/GlobalState';
 import { useHotkeys } from '../../hooks/Hotkeys';
-import { useNotes } from '../../hooks/Notes';
 
 const propTypes = {
 	children: PropTypes.oneOfType([
@@ -36,17 +34,10 @@ const Container = ({ children }) => {
 	const [{ containerTitle, search }, dispatch] = useGlobalState();
 	const history = useHistory();
 	const mobile = useMediaQuery('(max-width:960px)');
-	const { addNote, currentNote } = useNotes();
 	const [drawerOpen, setDrawerOpen] = useState(false);
 	const classes = useStyles();
 
 	const headerItems = useMemo(() => [
-		{
-			icon: <AddIcon />,
-			onClick: () => addNote(''),
-			text: 'Create Note',
-			visible: isSignedIn,
-		},
 		{
 			icon: <SearchIcon />,
 			onClick: () => dispatch({
@@ -59,7 +50,7 @@ const Container = ({ children }) => {
 			text: 'Search Notes',
 			visible: isSignedIn,
 		},
-	].filter((item) => item.visible !== false), [currentNote, isSignedIn]); // eslint-disable-line
+	].filter((item) => item.visible !== false), [isSignedIn]); // eslint-disable-line
 
 	// Close drawer only in mobile
 	const handleDrawerClose = () => setDrawerOpen(false);
