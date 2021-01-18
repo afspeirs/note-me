@@ -1,5 +1,6 @@
 import { forwardRef, useState } from 'react';
 import PropTypes from 'prop-types';
+import { Helmet } from 'react-helmet';
 import { Prompt, useHistory } from 'react-router-dom';
 import { useTheme } from '@material-ui/core/styles';
 import {
@@ -81,6 +82,10 @@ const Modal = ({
 
 	return (
 		<>
+			<Helmet>
+				<title>{`${title} | NoteMe`}</title>
+			</Helmet>
+
 			<Dialog
 				aria-labelledby={`${title}-modal-title`}
 				BackdropProps={{
