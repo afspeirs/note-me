@@ -58,7 +58,7 @@ const NotesExport = () => {
 
 	const exportMarkdownFile = (exportedNotes) => {
 		const element = document.createElement('a');
-		const currentDate = dayjs().format('YYYY-MM-DD');
+		const currentDate = dayjs().format('YYYYMMDD-HHmm');
 		const stringOfNotes = JSON.stringify(exportedNotes);
 
 		element.setAttribute('href', `data:text/plain;charset=utf-8,${encodeURIComponent(stringOfNotes)}`);

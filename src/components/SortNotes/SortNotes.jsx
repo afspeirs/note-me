@@ -54,7 +54,7 @@ const SortNotes = () => {
 			>
 				<ListItemText primary="Sort Notes" />
 				<ListItemSecondaryAction className={classes.secondaryText} ref={anchorRef}>
-					<Typography variant="body2" color={isSignedIn ? '' : 'textSecondary'}>
+					<Typography variant="body2" color={isSignedIn ? 'initial' : 'textSecondary'}>
 						{options[selectedIndex].text}
 					</Typography>
 				</ListItemSecondaryAction>

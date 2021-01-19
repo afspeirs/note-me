@@ -15,7 +15,7 @@ const SortNotesFavourite = () => {
 	const handleToggle = () => dispatch({ type: 'settings-sortNotesFavourite' });
 
 	return (
-		<ListItem>
+		<ListItem disabled={!isSignedIn}>
 			<ListItemText
 				id="change-sort-favourite"
 				primary="Show Favourites at the top of the list"
