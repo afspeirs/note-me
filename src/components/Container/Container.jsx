@@ -1,5 +1,6 @@
 import { useMemo, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { Helmet } from 'react-helmet';
 import { useHistory } from 'react-router-dom';
 import {
 	AppBar,
@@ -84,6 +85,10 @@ const Container = ({ children }) => {
 
 	return (
 		<div className={classes.container}>
+			<Helmet>
+				<title>{`${containerTitle} | NoteMe`}</title>
+			</Helmet>
+
 			<AppBar>
 				<Toolbar>
 					<IconButton
