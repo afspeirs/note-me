@@ -34,17 +34,19 @@ const NotesList = ({ notes }) => {
 	const confirm = useConfirm();
 	const { deleteNote, favouriteNote, loading } = useNotes();
 	const classes = useStyles();
-	const [{ search, settings: { sortNotes, sortNotesFavourite } }, dispatch] = useGlobalState();
+	const [{ search, settings: { sortNotesFavourite, sortNotesOrder } }, dispatch] = useGlobalState();
 	const [contextAnchor, setContextAnchor] = useState(null);
 	const [openAddLabel, setOpenAddLabel] = useState(null);
 	const listEl = useRef(null);
 	const [filteredNotes, setFilteredNotes] = useState([]);
 	const sortNoteFunction = {
-		'date-asc': (a, b) => b.date - a.date,
-		'date-dsc': (a, b) => a.date - b.date,
+		'date-created-asc': (a, b) => b.dateCreated - a.dateCreated,
+		'date-created-dsc': (a, b) => a.dateCreated - b.dateCreated,
+		'date-modified-asc': (a, b) => b.dateModified - a.dateModified,
+		'date-modified-dsc': (a, b) => a.dateModified - b.dateModified,
 		'title-asc': (a, b) => a.text.localeCompare(b.text),
 		'title-dsc': (a, b) => b.text.localeCompare(a.text),
-	}[sortNotes];
+	}[sortNotesOrder];
 	const sortNotesFavouriteFunction = (a, b) => {
 		if (sortNotesFavourite) {
 			if (a.favourite === b.favourite) return 0;
@@ -177,7 +179,7 @@ const NotesList = ({ notes }) => {
 									</ListItemIcon>
 									<ListItemText
 										className={classes.listItemText}
-										primary={<TimeAgo date={note.date} />}
+										primary={<TimeAgo date={note.dateModified} />}
 									/>
 								</ListItem>
 								<ListItem button onClick={() => handleFavouriteNote(note)}>
