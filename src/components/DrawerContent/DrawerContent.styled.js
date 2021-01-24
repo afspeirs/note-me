@@ -8,17 +8,9 @@ const useStyles = makeStyles((theme) => ({
 		backgroundColor: theme.palette.background.paper,
 	},
 	listItem: {
-		'&:hover,&.active': {
-			backgroundColor: 'rgba(0, 0, 0, 0.15)',
+		'&.active': {
+			backgroundColor: theme.palette.action.focus,
 		},
-	},
-	listItemText: {
-		overflow: 'hidden',
-		textOverflow: 'ellipsis',
-		whiteSpace: 'nowrap',
-	},
-	secondaryAction: {
-		pointerEvents: 'none',
 	},
 }));
 

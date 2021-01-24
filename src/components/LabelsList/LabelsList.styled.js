@@ -7,17 +7,17 @@ const useStyles = makeStyles((theme) => ({
 		overflowX: 'hidden',
 	},
 	listItem: {
-		'&:hover,&.active': {
-			backgroundColor: 'rgba(0, 0, 0, 0.15)',
+		'&.active': {
+			backgroundColor: theme.palette.action.focus,
 		},
 	},
-	listItemText: {
+	listItemTypography: {
 		overflow: 'hidden',
 		textOverflow: 'ellipsis',
 		whiteSpace: 'nowrap',
 	},
-	secondaryAction: {
-		pointerEvents: 'none',
+	listSubheader: {
+		userSelect: 'none',
 	},
 	subheader: {
 		backgroundColor: theme.palette.background.paper,

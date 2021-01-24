@@ -161,9 +161,11 @@ const NotesExport = () => {
 										/>
 									</ListItemIcon>
 									<ListItemText
-										className={classes.listItemText}
 										id={labelId}
 										primary={currentNote.title}
+										primaryTypographyProps={{
+											className: classes.listItemTypography,
+										}}
 									/>
 								</ListItem>
 							);

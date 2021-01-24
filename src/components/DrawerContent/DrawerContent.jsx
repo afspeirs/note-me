@@ -45,10 +45,7 @@ const DrawerContent = () => {
 					<ListItemIcon>
 						<NotesIcon />
 					</ListItemIcon>
-					<ListItemText
-						className={classes.listItemText}
-						primary="All Notes"
-					/>
+					<ListItemText primary="All Notes" />
 				</ListItem>
 
 				<LabelsList />

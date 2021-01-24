@@ -6,8 +6,8 @@ const initialState = {
 	},
 	settings: {
 		appTheme: localStorage.getItem('settings-appTheme') || 'default',
-		sortNotes: localStorage.getItem('settings-sortNotes') || 'date-asc',
 		sortNotesFavourite: JSON.parse(localStorage.getItem('settings-sortNotesFavourite')) || false,
+		sortNotesOrder: localStorage.getItem('settings-sortNotesOrder') || 'date-modified-asc',
 	},
 	updateAvailable: false,
 };

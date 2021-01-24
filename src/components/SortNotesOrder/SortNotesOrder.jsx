@@ -8,25 +8,27 @@ import {
 	Typography,
 } from '@material-ui/core';
 
-import useStyles from './SortNotes.styled';
+import useStyles from './SortNotesOrder.styled';
 import { useAuth } from '../../hooks/Auth';
 import { useGlobalState } from '../../hooks/GlobalState';
 
 const options = [
-	{ text: 'Modified Date (Newest First)', value: 'date-asc' },
-	{ text: 'Modified Date (Oldest First)', value: 'date-dsc' },
+	{ text: 'Date Created (Newest First)', value: 'date-created-asc' },
+	{ text: 'Date Created (Oldest First)', value: 'date-created-dsc' },
+	{ text: 'Date Modified (Newest First)', value: 'date-modified-asc' },
+	{ text: 'Date Modified (Oldest First)', value: 'date-modified-dsc' },
 	{ text: 'Title (A-Z)', value: 'title-asc' },
 	{ text: 'Title (Z-A)', value: 'title-dsc' },
 ];
 
-const SortNotes = () => {
+const SortNotesOrder = () => {
 	const { isSignedIn } = useAuth();
-	const [{ settings: { sortNotes } }, dispatch] = useGlobalState();
+	const [{ settings: { sortNotesOrder } }, dispatch] = useGlobalState();
 	const [anchorEl, setAnchorEl] = useState(null);
 	const anchorRef = useRef(null);
 	const classes = useStyles();
 	// eslint-disable-next-line max-len
-	const [selectedIndex, setSelectedIndex] = useState(options.findIndex((item) => item.value === sortNotes));
+	const [selectedIndex, setSelectedIndex] = useState(options.findIndex((item) => item.value === sortNotesOrder));
 
 	const handleClose = () => setAnchorEl(null);
 
@@ -37,7 +39,7 @@ const SortNotes = () => {
 		setAnchorEl(null);
 
 		dispatch({
-			type: 'settings-sortNotes',
+			type: 'settings-sortNotesOrder',
 			value: options[index].value,
 		});
 	};
@@ -81,4 +83,4 @@ const SortNotes = () => {
 	);
 };
 
-export default SortNotes;
+export default SortNotesOrder;

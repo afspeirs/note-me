@@ -29,7 +29,6 @@ const NotesSearch = () => {
 		});
 	};
 
-	// TODO: Remove the duplicated function
 	const updateSearchText = (text) => {
 		dispatch({
 			type: 'app-search',

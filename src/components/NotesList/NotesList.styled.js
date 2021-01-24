@@ -10,19 +10,18 @@ const useStyles = makeStyles((theme) => ({
 		overflowX: 'hidden',
 		paddingBottom: 56 + theme.spacing(4),
 	},
-	listItem: {
-		'&:hover,&.active': {
-			backgroundColor: 'rgba(0, 0, 0, 0.15)',
-		},
-	},
 	listItemSecondary: {
 		display: 'flex',
 		pointerEvents: 'none',
 	},
-	listItemText: {
+	listItemTypography: {
 		overflow: 'hidden',
 		textOverflow: 'ellipsis',
 		whiteSpace: 'nowrap',
+	},
+	listItemTextDate: {
+		userSelect: 'none',
+		margin: 0,
 	},
 	nested: {
 		paddingLeft: theme.spacing(4),
