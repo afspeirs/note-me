@@ -6,10 +6,10 @@ import {
 import AppVersion from '../../components/AppVersion';
 import ChangeTheme from '../../components/ChangeTheme';
 import CheckForUpdate from '../../components/CheckForUpdate';
-import NotesExport from '../../components/NotesExport';
 import Modal from '../../components/Modal';
-import SortNotes from '../../components/SortNotes';
+import NotesExport from '../../components/NotesExport';
 import SortNotesFavourite from '../../components/SortNotesFavourite';
+import SortNotesOrder from '../../components/SortNotesOrder';
 import UserInformation from '../../components/UserInformation';
 
 const SettingsPage = () => (
@@ -26,7 +26,7 @@ const SettingsPage = () => (
 			<Divider />
 
 			<SortNotesFavourite />
-			<SortNotes />
+			<SortNotesOrder />
 
 			<Divider />
 

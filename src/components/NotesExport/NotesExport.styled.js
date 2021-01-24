@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
 		right: theme.spacing(1),
 		top: theme.spacing(1),
 	},
-	listItemText: {
+	listItemTypography: {
 		overflow: 'hidden',
 		textOverflow: 'ellipsis',
 		whiteSpace: 'nowrap',

@@ -11,13 +11,13 @@ const useStyles = makeStyles((theme) => ({
 			backgroundColor: theme.palette.action.focus,
 		},
 	},
-	listItemText: {
+	listItemTypography: {
 		overflow: 'hidden',
 		textOverflow: 'ellipsis',
 		whiteSpace: 'nowrap',
 	},
-	secondaryAction: {
-		pointerEvents: 'none',
+	listSubheader: {
+		userSelect: 'none',
 	},
 	subheader: {
 		backgroundColor: theme.palette.background.paper,

@@ -18,7 +18,9 @@ const LabelsList = () => {
 
 	return (
 		<>
-			<ListSubheader>Labels</ListSubheader>
+			<ListSubheader className={classes.listSubheader}>
+				Labels
+			</ListSubheader>
 			{labels.length === 0 && loading === false && (
 				<ListItem>
 					<ListItemText primary="No labels found" />
@@ -36,8 +38,10 @@ const LabelsList = () => {
 						<LabelIcon />
 					</ListItemIcon>
 					<ListItemText
-						className={classes.listItemText}
 						primary={label}
+						primaryTypographyProps={{
+							className: classes.listItemTypography,
+						}}
 					/>
 				</ListItem>
 			))}

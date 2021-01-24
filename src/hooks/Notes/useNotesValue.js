@@ -16,10 +16,13 @@ const useNotesValue = () => {
 	const [currentNote, setCurrentNote] = useState(null);
 
 	const returnNoteObject = ({
-		created,
-		date,
+		created, // TODO: remove this deprecated key
+		date, // TODO: remove this deprecated key
+		dateCreated,
+		dateModified,
 		favourite,
 		id,
+		labels: newNoteLabels,
 		text,
 		title,
 	}) => {
@@ -30,10 +33,11 @@ const useNotesValue = () => {
 		}
 
 		const newNote = {
-			created: created || +new Date(),
-			date: date || +new Date(),
+			dateCreated: dateCreated || created || +new Date(),
+			dateModified: dateModified || date || +new Date(),
 			favourite: favourite || false,
 			id,
+			labels: newNoteLabels || [],
 			text: text || '',
 			title: title || getTitle(text),
 		};
@@ -144,10 +148,20 @@ const useNotesValue = () => {
 	 */
 	const updateNote = (text, note = currentNote) => {
 		firestore.collection(user.uid).doc(note.id).update({
-			date: +new Date(),
+			dateModified: +new Date(),
 			text,
 			title: getTitle(text),
 		});
+	};
+
+	/**
+ * Adds a function to the window object to show the notes
+ * @param {bool} prettify - Log out a prettified version of notes to the console
+ * @returns {array} notes
+ */
+	window.returnNotes = (prettify = false) => {
+		if (prettify) console.log(JSON.stringify(notes, null, 2)); // eslint-disable-line no-console
+		return notes;
 	};
 
 	useEffect(() => {
