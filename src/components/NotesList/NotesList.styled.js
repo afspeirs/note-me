@@ -10,11 +10,6 @@ const useStyles = makeStyles((theme) => ({
 		overflowX: 'hidden',
 		paddingBottom: 56 + theme.spacing(4),
 	},
-	listItem: {
-		'&:hover,&.active': {
-			backgroundColor: 'rgba(0, 0, 0, 0.15)',
-		},
-	},
 	listItemSecondary: {
 		display: 'flex',
 		pointerEvents: 'none',

@@ -39,16 +39,12 @@ const DrawerContent = () => {
 					button
 					exact
 					to="/"
-					className={classes.listItem}
 					component={RouterNavLink}
 				>
 					<ListItemIcon>
 						<NotesIcon />
 					</ListItemIcon>
-					<ListItemText
-						className={classes.listItemText}
-						primary="All Notes"
-					/>
+					<ListItemText primary="All Notes" />
 				</ListItem>
 
 				<LabelsList />

@@ -6,11 +6,6 @@ const useStyles = makeStyles((theme) => ({
 		overflowY: 'auto',
 		overflowX: 'hidden',
 	},
-	listItem: {
-		'&:hover,&.active': {
-			backgroundColor: 'rgba(0, 0, 0, 0.15)',
-		},
-	},
 	listItemText: {
 		overflow: 'hidden',
 		textOverflow: 'ellipsis',

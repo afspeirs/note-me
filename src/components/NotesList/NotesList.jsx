@@ -1,6 +1,5 @@
 import { Fragment, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import clsx from 'clsx';
 import {
 	Chip,
 	List,
@@ -146,7 +145,7 @@ const NotesList = ({ notes }) => {
 								pathname: `/note/${note.id}`,
 								state: { modal: true },
 							}}
-							className={clsx(classes.listItem, 'context-menu-select')}
+							className="context-menu-select"
 							component={RouterNavLink}
 							data-id={note.id}
 						>
