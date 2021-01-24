@@ -14,10 +14,14 @@ const useStyles = makeStyles((theme) => ({
 		display: 'flex',
 		pointerEvents: 'none',
 	},
-	listItemText: {
+	listItemTypography: {
 		overflow: 'hidden',
 		textOverflow: 'ellipsis',
 		whiteSpace: 'nowrap',
+	},
+	listItemTextDate: {
+		userSelect: 'none',
+		margin: 0,
 	},
 	nested: {
 		paddingLeft: theme.spacing(4),

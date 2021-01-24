@@ -21,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
 		overflow: 'hidden',
 		textOverflow: 'ellipsis',
 		whiteSpace: 'nowrap',
+		userSelect: 'none',
 	},
 }), {
 	name: 'Modal',

@@ -12,9 +12,6 @@ const useStyles = makeStyles((theme) => ({
 			backgroundColor: theme.palette.action.focus,
 		},
 	},
-	secondaryAction: {
-		pointerEvents: 'none',
-	},
 }));
 
 export default useStyles;
