@@ -6,6 +6,11 @@ const useStyles = makeStyles((theme) => ({
 		overflowY: 'auto',
 		overflowX: 'hidden',
 	},
+	listItem: {
+		'&.active': {
+			backgroundColor: theme.palette.action.focus,
+		},
+	},
 	listItemText: {
 		overflow: 'hidden',
 		textOverflow: 'ellipsis',

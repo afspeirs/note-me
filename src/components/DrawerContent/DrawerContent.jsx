@@ -39,6 +39,7 @@ const DrawerContent = () => {
 					button
 					exact
 					to="/"
+					className={classes.listItem}
 					component={RouterNavLink}
 				>
 					<ListItemIcon>

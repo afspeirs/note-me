@@ -29,6 +29,7 @@ const LabelsList = () => {
 					key={`note-${label}`}
 					button
 					to={`/label/${label}`}
+					className={classes.listItem}
 					component={RouterNavLink}
 				>
 					<ListItemIcon>
