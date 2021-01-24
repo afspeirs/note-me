@@ -6,9 +6,9 @@ dayjs.extend(calendar);
 dayjs.extend(relativeTime);
 
 export const getDateCalendar = (date) => dayjs(date).calendar(null, {
-	sameDay: '[today at] h:mm A',
-	lastDay: '[yesterday at] h:mm A',
-	lastWeek: '[last] dddd [at] h:mm A',
+	sameDay: '[Today at] h:mm A',
+	lastDay: '[Yesterday at] h:mm A',
+	lastWeek: '[Last] dddd [at] h:mm A',
 	sameElse: 'DD/MM/YYYY [at] h:mm A',
 });
 export const getDateRelative = (date) => dayjs(date).fromNow();

@@ -184,7 +184,7 @@ const NotesList = ({ notes }) => {
 										primaryTypographyProps={{
 											className: classes.listItemTypography,
 										}}
-										secondary={`Created ${getDateCalendar(note.dateCreated)}`}
+										secondary={`Created: ${getDateCalendar(note.dateCreated)}`}
 										secondaryTypographyProps={{
 											className: classes.listItemTypography,
 											variant: 'caption',
