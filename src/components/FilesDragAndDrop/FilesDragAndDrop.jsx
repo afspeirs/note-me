@@ -117,6 +117,7 @@ const FilesDragAndDrop = () => {
 
 	return (
 		<div
+			aria-hidden="true"
 			ref={drop}
 			className={clsx(classes.dropZone, {
 				[classes.dragging]: dragging,
