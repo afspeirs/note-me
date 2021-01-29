@@ -19,6 +19,6 @@ export const reducer = (state, action) => {
 
 	return {
 		...state,
-		[name]: action.value !== undefined ? action.value : !state[name],
+		[name]: action.value || !state[name],
 	};
 };
