@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
 		display: 'flex',
 		flexDirection: 'column',
 		height: '100%',
-		overflowY: 'auto',
+		overflow: 'hidden',
 	},
 	menuButton: {
 		marginRight: theme.spacing(2),
