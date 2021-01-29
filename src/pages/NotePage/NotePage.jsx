@@ -2,10 +2,12 @@ import { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import Markdown from 'react-markdown';
 import { useParams } from 'react-router-dom';
+import Editor from '@monaco-editor/react';
 import {
 	Fab,
 	Tooltip,
 } from '@material-ui/core';
+import { useTheme } from '@material-ui/core/styles';
 import {
 	Delete as DeleteIcon,
 	Edit as EditIcon,
@@ -26,6 +28,7 @@ import { useNotes } from '../../hooks/Notes';
 const NotePage = () => {
 	const { id } = useParams();
 	const confirm = useConfirm();
+	const { palette: { type } } = useTheme();
 	const {
 		notes,
 		setCurrentNote,
@@ -61,6 +64,8 @@ const NotePage = () => {
 			text: 'Delete Note',
 		},
 	];
+
+	const handleEditorChange = (value) => setLocalNote(value);
 
 	useHotkeys({
 		keys: ['e', 's'],
@@ -98,11 +103,26 @@ const NotePage = () => {
 				title={currentNote?.title}
 			>
 				{edit ? (
-					<textarea
-						className={clsx(classes.page, classes.textarea)}
-						type="text"
-						value={localNote}
-						onChange={(event) => setLocalNote(event.target.value)}
+					<Editor
+						language="markdown"
+						defaultValue={localNote}
+						onChange={handleEditorChange}
+						theme={type === 'dark' ? 'vs-dark' : 'light'}
+						options={{
+							lineDecorationsWidth: 0,
+							lineNumbers: 'off',
+							// lineNumbersMinChars: 4,
+							minimap: {
+								enabled: false,
+							},
+							padding: {
+								top: 16,
+							},
+							// renderWhitespace: 'boundary',
+							renderWhitespace: 'selection',
+							tabSize: 2,
+							wordWrap: 'on',
+						}}
 					/>
 				) : (
 					<Markdown

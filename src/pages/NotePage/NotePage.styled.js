@@ -31,16 +31,6 @@ const useStyles = makeStyles((theme) => ({
 			marginBottom: theme.spacing(2),
 		},
 	},
-	textarea: {
-		resize: 'none',
-		border: 'none',
-		fontSize: '1.2em',
-		backgroundColor: theme.palette.background.paper,
-		color: theme.palette.text.primary,
-		'&:focus': {
-			outline: 'none',
-		},
-	},
 }));
 
 export default useStyles;
