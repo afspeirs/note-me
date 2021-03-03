@@ -1,36 +1,35 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import {
+	Dialog,
+	DialogTitle,
+	List,
 	ListItem,
-	ListItemSecondaryAction,
+	ListItemIcon,
 	ListItemText,
-	Menu,
-	MenuItem,
 } from '@material-ui/core';
+import {
+	Brush as BrushIcon,
+} from '@material-ui/icons';
 
-import useStyles from './ChangeTheme.styled';
 import { useGlobalState } from '../../hooks/GlobalState';
 
 const options = [
-	{ text: 'Dark', value: 'dark' },
 	{ text: 'Light', value: 'light' },
+	{ text: 'Dark', value: 'dark' },
 	{ text: 'System Default', value: 'default' },
 ];
 
 const ChangeTheme = () => {
 	const [{ settings: { appTheme } }, dispatch] = useGlobalState();
-	const [anchorEl, setAnchorEl] = useState(null);
-	const anchorRef = useRef(null);
-	const classes = useStyles();
+	const [open, setOpen] = useState(false);
 	// eslint-disable-next-line max-len
 	const [selectedIndex, setSelectedIndex] = useState(options.findIndex((item) => item.value === appTheme));
 
-	const handleClose = () => setAnchorEl(null);
+	const handleClose = () => setOpen(false);
 
-	const handleClickListItem = () => setAnchorEl(anchorRef.current);
-
-	const handleClickMenuItem = (event, index) => {
+	const handleClickMenuItem = (index) => {
 		setSelectedIndex(index);
-		setAnchorEl(null);
+		setOpen(false);
 
 		dispatch({
 			type: 'settings-appTheme',
@@ -40,36 +39,38 @@ const ChangeTheme = () => {
 
 	return (
 		<>
-			<ListItem
-				button
-				aria-haspopup="true"
-				aria-controls="change-theme"
-				aria-label="Theme"
-				onClick={handleClickListItem}
-			>
-				<ListItemText primary="Theme" />
-				<ListItemSecondaryAction className={classes.secondaryText} ref={anchorRef}>
-					{options[selectedIndex].text}
-				</ListItemSecondaryAction>
+			<ListItem button onClick={() => setOpen(true)}>
+				<ListItemIcon>
+					<BrushIcon />
+				</ListItemIcon>
+				<ListItemText
+					primary="Theme"
+					secondary={options[selectedIndex].text}
+				/>
 			</ListItem>
-			<Menu
-				id="change-theme"
-				anchorEl={anchorEl}
-				keepMounted
-				open={Boolean(anchorEl)}
+
+			<Dialog
+				aria-labelledby="change-theme-dialog"
+				fullWidth
+				maxWidth="xs"
 				onClose={handleClose}
+				open={open}
 			>
-				{options.map((option, index) => (
-					<MenuItem
-						key={option.text}
-						selected={index === selectedIndex}
-						value={option.value}
-						onClick={(event) => handleClickMenuItem(event, index)}
-					>
-						{option.text}
-					</MenuItem>
-				))}
-			</Menu>
+				<DialogTitle id="change-theme-dialog">Change Theme</DialogTitle>
+				<List>
+					{options.map((option, index) => (
+						<ListItem
+							key={option.text}
+							button
+							onClick={() => handleClickMenuItem(index)}
+							selected={index === selectedIndex}
+							autoFocus={index === selectedIndex}
+						>
+							<ListItemText primary={option.text} />
+						</ListItem>
+					))}
+				</List>
+			</Dialog>
 		</>
 	);
 };

@@ -11,23 +11,21 @@ import {
 	List,
 	ListItem,
 	ListItemIcon,
-	ListItemSecondaryAction,
 	ListItemText,
 	Typography,
 } from '@material-ui/core';
 import {
 	Close as CloseIcon,
+	CloudDownload as CloudDownloadIcon,
 } from '@material-ui/icons';
 import { useConfirm } from 'material-ui-confirm';
 
 import useStyles from './NotesExport.styled';
-import { useAuth } from '../../hooks/Auth';
 import { useNotes } from '../../hooks/Notes';
 import { useSnackbar } from '../../hooks/Snackbar';
 
 const NotesExport = () => {
 	const classes = useStyles();
-	const { isSignedIn } = useAuth();
 	const confirm = useConfirm();
 	const { notes } = useNotes();
 	const snackbar = useSnackbar();
@@ -92,18 +90,11 @@ const NotesExport = () => {
 
 	return (
 		<>
-			<ListItem>
-				<ListItemText primary="Export Notes:" />
-				<ListItemSecondaryAction>
-					<Button
-						color="primary"
-						disabled={!isSignedIn}
-						variant="contained"
-						onClick={handleOpen}
-					>
-						Export
-					</Button>
-				</ListItemSecondaryAction>
+			<ListItem button onClick={handleOpen}>
+				<ListItemIcon>
+					<CloudDownloadIcon />
+				</ListItemIcon>
+				<ListItemText primary="Export Notes" />
 			</ListItem>
 
 			<Dialog
