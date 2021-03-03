@@ -32,7 +32,7 @@ const App = () => {
 			<ConfirmProvider>
 				<SnackbarProvider>
 					<NotesProvider>
-						<CssBaseline/>
+						<CssBaseline />
 						<Container>
 							<Routes />
 						</Container>

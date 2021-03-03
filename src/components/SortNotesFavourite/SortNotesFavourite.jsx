@@ -1,31 +1,42 @@
 import {
 	ListItem,
+	ListItemIcon,
 	ListItemSecondaryAction,
 	ListItemText,
 	Switch,
 } from '@material-ui/core';
+import {
+	Star as StarIcon,
+} from '@material-ui/icons';
 
+import useStyles from './SortNotesFavourite.styled';
 import { useAuth } from '../../hooks/Auth';
 import { useGlobalState } from '../../hooks/GlobalState';
 
 const SortNotesFavourite = () => {
 	const { isSignedIn } = useAuth();
 	const [{ settings: { sortNotesFavourite } }, dispatch] = useGlobalState();
+	const classes = useStyles();
 
 	const handleToggle = () => dispatch({ type: 'settings-sortNotesFavourite' });
 
 	return (
-		<ListItem disabled={!isSignedIn}>
+		<ListItem
+			button
+			disabled={!isSignedIn}
+			onClick={handleToggle}
+		>
+			<ListItemIcon>
+				<StarIcon />
+			</ListItemIcon>
 			<ListItemText
 				id="change-sort-favourite"
-				primary="Show Favourites at the top of the list"
+				primary="Show Favourites first"
 			/>
-			<ListItemSecondaryAction>
+			<ListItemSecondaryAction className={classes.listItemSecondaryAction}>
 				<Switch
 					color="primary"
-					disabled={!isSignedIn}
 					edge="end"
-					onChange={handleToggle}
 					checked={sortNotesFavourite}
 					inputProps={{ 'aria-labelledby': 'change-sort-favourite' }}
 				/>

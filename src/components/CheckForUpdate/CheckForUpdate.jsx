@@ -1,24 +1,26 @@
 import { useEffect, useRef, useState } from 'react';
 import {
-	Button,
+	Chip,
 	CircularProgress,
-	IconButton,
 	ListItem,
+	ListItemIcon,
 	ListItemSecondaryAction,
 	ListItemText,
 } from '@material-ui/core';
 import {
-	Refresh as RefreshIcon,
+	SystemUpdate as SystemUpdateIcon,
 } from '@material-ui/icons';
 
+import useStyles from './CheckForUpdate.styled';
 import { useGlobalState } from '../../hooks/GlobalState';
 
 const CheckForUpdate = () => {
 	const [{ updateAvailable }] = useGlobalState();
 	const [loading, setLoading] = useState(false);
 	const timer = useRef();
+	const classes = useStyles();
 
-	// This abominable one-liner will clear the timer if CheckForUpdate unmounts
+	// This abominable one-liner will clear the timer if CheckForUpdate component un-mounts
 	useEffect(() => () => clearTimeout(timer.current), []);
 
 	const updateServiceWorker = () => {
@@ -40,34 +42,23 @@ const CheckForUpdate = () => {
 	};
 
 	return (
-		<ListItem>
+		<ListItem button onClick={handleButtonClick}>
+			<ListItemIcon>
+				<SystemUpdateIcon />
+			</ListItemIcon>
 			<ListItemText primary="Check for update" />
-			{updateAvailable ? (
-				<ListItemSecondaryAction>
-					<Button
-						variant="contained"
+			<ListItemSecondaryAction className={classes.listItemSecondaryAction}>
+				{updateAvailable ? (
+					<Chip
 						color="primary"
-						onClick={handleButtonClick}
-					>
-						Update
-					</Button>
-				</ListItemSecondaryAction>
-			) : (
-				<ListItemSecondaryAction>
-					{loading ? (
-						<CircularProgress size={24} color="inherit" />
-					) : (
-						<IconButton
-							color="inherit"
-							disabled={loading}
-							onClick={handleButtonClick}
-							edge="end"
-						>
-							<RefreshIcon />
-						</IconButton>
-					)}
-				</ListItemSecondaryAction>
-			)}
+						label="UPDATE"
+					/>
+				) : (
+					<>
+						{loading && <CircularProgress size={24} color="inherit" />}
+					</>
+				)}
+			</ListItemSecondaryAction>
 		</ListItem>
 	);
 };

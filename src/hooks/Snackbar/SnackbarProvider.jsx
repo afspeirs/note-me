@@ -42,7 +42,7 @@ const SnackbarProvider = ({ children }) => {
 
 			<Snackbar
 				anchorOrigin={{
-					horizontal: 'left',
+					horizontal: 'right',
 					vertical: 'bottom',
 				}}
 				open={Boolean(content?.message)}

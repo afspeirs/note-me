@@ -1,15 +1,16 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import {
+	Dialog,
+	DialogTitle,
+	List,
 	ListItem,
-	ListItemSecondaryAction,
+	ListItemIcon,
 	ListItemText,
-	Menu,
-	MenuItem,
-	Typography,
 } from '@material-ui/core';
+import {
+	Sort as SortIcon,
+} from '@material-ui/icons';
 
-import useStyles from './SortNotesOrder.styled';
-import { useAuth } from '../../hooks/Auth';
 import { useGlobalState } from '../../hooks/GlobalState';
 
 const options = [
@@ -21,22 +22,17 @@ const options = [
 	{ text: 'Title (Z-A)', value: 'title-dsc' },
 ];
 
-const SortNotesOrder = () => {
-	const { isSignedIn } = useAuth();
+const SortNotes = () => {
 	const [{ settings: { sortNotesOrder } }, dispatch] = useGlobalState();
-	const [anchorEl, setAnchorEl] = useState(null);
-	const anchorRef = useRef(null);
-	const classes = useStyles();
+	const [open, setOpen] = useState(false);
 	// eslint-disable-next-line max-len
 	const [selectedIndex, setSelectedIndex] = useState(options.findIndex((item) => item.value === sortNotesOrder));
 
-	const handleClose = () => setAnchorEl(null);
+	const handleClose = () => setOpen(false);
 
-	const handleClickListItem = () => setAnchorEl(anchorRef.current);
-
-	const handleClickMenuItem = (event, index) => {
+	const handleClickMenuItem = (index) => {
 		setSelectedIndex(index);
-		setAnchorEl(null);
+		setOpen(false);
 
 		dispatch({
 			type: 'settings-sortNotesOrder',
@@ -46,41 +42,40 @@ const SortNotesOrder = () => {
 
 	return (
 		<>
-			<ListItem
-				button
-				aria-haspopup="true"
-				aria-controls="sort-menu"
-				aria-label="sort notes"
-				disabled={!isSignedIn}
-				onClick={handleClickListItem}
-			>
-				<ListItemText primary="Sort Notes" />
-				<ListItemSecondaryAction className={classes.secondaryText} ref={anchorRef}>
-					<Typography variant="body2" color={isSignedIn ? 'initial' : 'textSecondary'}>
-						{options[selectedIndex].text}
-					</Typography>
-				</ListItemSecondaryAction>
+			<ListItem button onClick={() => setOpen(true)}>
+				<ListItemIcon>
+					<SortIcon />
+				</ListItemIcon>
+				<ListItemText
+					primary="Sort Notes"
+					secondary={options[selectedIndex].text}
+				/>
 			</ListItem>
-			<Menu
-				id="sort-menu"
-				anchorEl={anchorEl}
-				keepMounted
-				open={Boolean(anchorEl)}
+
+			<Dialog
+				aria-labelledby="sort-notes-dialog"
+				fullWidth
+				maxWidth="xs"
 				onClose={handleClose}
+				open={open}
 			>
-				{options.map((option, index) => (
-					<MenuItem
-						key={option.text}
-						selected={index === selectedIndex}
-						value={option.value}
-						onClick={(event) => handleClickMenuItem(event, index)}
-					>
-						{option.text}
-					</MenuItem>
-				))}
-			</Menu>
+				<DialogTitle id="sort-notes-dialog">Sort Notes</DialogTitle>
+				<List>
+					{options.map((option, index) => (
+						<ListItem
+							key={option.text}
+							button
+							onClick={() => handleClickMenuItem(index)}
+							selected={index === selectedIndex}
+							autoFocus={index === selectedIndex}
+						>
+							<ListItemText primary={option.text} />
+						</ListItem>
+					))}
+				</List>
+			</Dialog>
 		</>
 	);
 };
 
-export default SortNotesOrder;
+export default SortNotes;
