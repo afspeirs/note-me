@@ -12,8 +12,8 @@ import {
 
 import useStyles from './DrawerContent.styled';
 import LabelsList from '../LabelsList';
-import RouterNavLink from '../RouterNavLink';
 import RouterLink from '../RouterLink';
+import RouterNavLink from '../RouterNavLink';
 
 const DrawerContent = () => {
 	const classes = useStyles();

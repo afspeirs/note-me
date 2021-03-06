@@ -11,6 +11,7 @@ import {
 	Sort as SortIcon,
 } from '@material-ui/icons';
 
+import { useAuth } from '../../hooks/Auth';
 import { useGlobalState } from '../../hooks/GlobalState';
 
 const options = [
@@ -23,6 +24,7 @@ const options = [
 ];
 
 const SortNotes = () => {
+	const { isSignedIn } = useAuth();
 	const [{ settings: { sortNotesOrder } }, dispatch] = useGlobalState();
 	const [open, setOpen] = useState(false);
 	// eslint-disable-next-line max-len
@@ -42,7 +44,11 @@ const SortNotes = () => {
 
 	return (
 		<>
-			<ListItem button onClick={() => setOpen(true)}>
+			<ListItem
+				button
+				disabled={!isSignedIn}
+				onClick={() => setOpen(true)}
+			>
 				<ListItemIcon>
 					<SortIcon />
 				</ListItemIcon>
