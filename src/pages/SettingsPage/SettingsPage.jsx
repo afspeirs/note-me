@@ -5,6 +5,7 @@ import {
 
 import AppVersion from '../../components/AppVersion';
 import ChangeTheme from '../../components/ChangeTheme';
+import CheckForInstallPrompt from '../../components/CheckForInstallPrompt';
 import CheckForUpdate from '../../components/CheckForUpdate';
 import Modal from '../../components/Modal';
 import NotesExport from '../../components/NotesExport';
@@ -15,6 +16,8 @@ import UserInformation from '../../components/UserInformation';
 const SettingsPage = () => (
 	<Modal title="Settings">
 		<List>
+			<CheckForInstallPrompt />
+
 			<UserInformation />
 			<AppVersion />
 			<CheckForUpdate />

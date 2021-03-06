@@ -1,4 +1,5 @@
 const initialState = {
+	beforeInstallPrompt: null,
 	containerTitle: null,
 	search: {
 		show: false,
