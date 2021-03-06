@@ -21,10 +21,12 @@ import {
 import { useConfirm } from 'material-ui-confirm';
 
 import useStyles from './NotesExport.styled';
+import { useAuth } from '../../hooks/Auth';
 import { useNotes } from '../../hooks/Notes';
 import { useSnackbar } from '../../hooks/Snackbar';
 
 const NotesExport = () => {
+	const { isSignedIn } = useAuth();
 	const classes = useStyles();
 	const confirm = useConfirm();
 	const { notes } = useNotes();
@@ -90,7 +92,11 @@ const NotesExport = () => {
 
 	return (
 		<>
-			<ListItem button onClick={handleOpen}>
+			<ListItem
+				button
+				disabled={!isSignedIn}
+				onClick={handleOpen}
+			>
 				<ListItemIcon>
 					<CloudDownloadIcon />
 				</ListItemIcon>
