@@ -18,8 +18,8 @@ import { useConfirm } from 'material-ui-confirm';
 
 import useStyles from './NotePage.styled';
 import LabelsAddDialog from '../../components/LabelsAddDialog';
-import RendererLink from '../../components/RendererLink';
-import Modal from '../../components/Modal';
+import RendererLink from '../../components/shared/RendererLink';
+import Modal from '../../components/shared/Modal';
 import { useHotkeys } from '../../hooks/Hotkeys';
 import { useNotes } from '../../hooks/Notes';
 

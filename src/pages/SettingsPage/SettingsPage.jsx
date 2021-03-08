@@ -3,15 +3,15 @@ import {
 	List,
 } from '@material-ui/core';
 
-import AppVersion from '../../components/AppVersion';
-import ChangeTheme from '../../components/ChangeTheme';
-import CheckForInstallPrompt from '../../components/CheckForInstallPrompt';
-import CheckForUpdate from '../../components/CheckForUpdate';
-import Modal from '../../components/Modal';
+import AppVersion from '../../components/shared/AppVersion';
+import ChangeTheme from '../../components/shared/ChangeTheme';
+import CheckForInstallPrompt from '../../components/shared/CheckForInstallPrompt';
+import CheckForUpdate from '../../components/shared/CheckForUpdate';
+import Modal from '../../components/shared/Modal';
 import NotesExport from '../../components/NotesExport';
 import SortNotesFavourite from '../../components/SortNotesFavourite';
 import SortNotesOrder from '../../components/SortNotesOrder';
-import UserInformation from '../../components/UserInformation';
+import UserInformation from '../../components/shared/UserInformation';
 
 const SettingsPage = () => (
 	<Modal title="Settings">

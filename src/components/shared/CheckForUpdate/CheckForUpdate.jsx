@@ -12,7 +12,7 @@ import {
 } from '@material-ui/icons';
 
 import useStyles from './CheckForUpdate.styled';
-import { useGlobalState } from '../../hooks/GlobalState';
+import { useGlobalState } from '../../../hooks/GlobalState';
 
 const CheckForUpdate = () => {
 	const [{ updateAvailable }] = useGlobalState();

@@ -8,7 +8,6 @@ import {
 	SwipeableDrawer,
 	Toolbar,
 	Typography,
-	useMediaQuery,
 } from '@material-ui/core';
 import {
 	Menu as MenuIcon,
@@ -17,7 +16,7 @@ import {
 
 import useStyles from './Container.styled';
 import DrawerContent from '../DrawerContent';
-import HeaderContent from '../HeaderContent';
+import HeaderContent from '../shared/HeaderContent';
 import NotesSearch from '../NotesSearch';
 import { useAuth } from '../../hooks/Auth';
 import { useGlobalState } from '../../hooks/GlobalState';
@@ -34,7 +33,6 @@ const Container = ({ children }) => {
 	const { isSignedIn } = useAuth();
 	const [{ containerTitle, search }, dispatch] = useGlobalState();
 	const history = useHistory();
-	const mobile = useMediaQuery('(max-width:960px)');
 	const [drawerOpen, setDrawerOpen] = useState(false);
 	const classes = useStyles();
 
@@ -81,7 +79,7 @@ const Container = ({ children }) => {
 	useEffect(() => {
 		const unlisten = history.listen(handleDrawerClose);
 		return unlisten;
-	}, [history, mobile]); // eslint-disable-line
+	}, [history]); // eslint-disable-line
 
 	return (
 		<div className={classes.container}>
