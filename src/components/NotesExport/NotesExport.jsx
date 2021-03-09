@@ -131,7 +131,7 @@ const NotesExport = () => {
 						Select which notes you would like to export. They will be saved as a JSON file
 					</Typography>
 					<Typography>
-						{selectedNotes.length} note(s) selected
+						{`${selectedNotes.length} note(s) selected`}
 					</Typography>
 
 					<List className={classes.list} dense>
@@ -182,7 +182,7 @@ const NotesExport = () => {
 						color="primary"
 						onClick={handleExportClick}
 					>
-						Export {isEveryNoteUnSelected ? 'All' : 'Selected'}
+						{`Export ${isEveryNoteUnSelected ? 'All' : 'Selected'}`}
 					</Button>
 				</DialogActions>
 			</Dialog>

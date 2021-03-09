@@ -1,4 +1,9 @@
-import { Fragment, useEffect, useRef, useState } from 'react';
+import {
+	Fragment,
+	useEffect,
+	useRef,
+	useState,
+} from 'react';
 import PropTypes from 'prop-types';
 import {
 	Chip,

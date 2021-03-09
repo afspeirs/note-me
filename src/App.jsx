@@ -19,6 +19,7 @@ const App = () => {
 		() => createMuiTheme({
 			palette: {
 				...theme.palette,
+				// eslint-disable-next-line no-nested-ternary
 				type: appTheme === 'default' ? (prefersDarkMode ? 'dark' : 'light') : appTheme,
 			},
 		}),

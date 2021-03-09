@@ -96,7 +96,7 @@ const FilesDragAndDrop = () => {
 				setFileContent(null);
 			}
 		}
-	}, [fileContent]); // eslint-disable-line react-hooks/exhaustive-deps
+	}, [fileContent]);
 
 	useEffect(() => {
 		const { current } = drop;
@@ -113,7 +113,7 @@ const FilesDragAndDrop = () => {
 			current.removeEventListener('dragenter', handleDragEnter);
 			current.removeEventListener('dragleave', handleDragLeave);
 		};
-	}, []); // eslint-disable-line react-hooks/exhaustive-deps
+	}, []);
 
 	return (
 		<div
