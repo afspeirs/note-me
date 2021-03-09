@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
-import { useSnackbar } from '../../hooks/Snackbar';
-import { useGlobalState } from '../../hooks/GlobalState';
+import { useSnackbar } from '../../../hooks/Snackbar';
+import { useGlobalState } from '../../../hooks/GlobalState';
 
 const ServiceWorkerContent = () => {
 	const dispatch = [...useGlobalState()].pop(); // I don't need to access any of the reducer state

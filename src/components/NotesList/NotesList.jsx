@@ -1,4 +1,9 @@
-import { Fragment, useEffect, useRef, useState } from 'react';
+import {
+	Fragment,
+	useEffect,
+	useRef,
+	useState,
+} from 'react';
 import PropTypes from 'prop-types';
 import {
 	Chip,
@@ -21,7 +26,7 @@ import { useConfirm } from 'material-ui-confirm';
 
 import useStyles from './NotesList.styled';
 import LabelsAddDialog from '../LabelsAddDialog';
-import RouterNavLink from '../RouterNavLink';
+import RouterNavLink from '../shared/RouterNavLink';
 import { useGlobalState } from '../../hooks/GlobalState';
 import { useNotes } from '../../hooks/Notes';
 import { getDateCalendar, getDateRelative } from '../../utils';

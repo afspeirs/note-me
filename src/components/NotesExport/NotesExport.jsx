@@ -62,7 +62,7 @@ const NotesExport = () => {
 		const stringOfNotes = JSON.stringify(exportedNotes);
 
 		element.setAttribute('href', `data:text/plain;charset=utf-8,${encodeURIComponent(stringOfNotes)}`);
-		element.setAttribute('download', `NoteMe-${currentDate}.json`);
+		element.setAttribute('download', `${process.env.REACT_APP_TITLE}-${currentDate}.json`);
 		element.style.display = 'none';
 		document.body.appendChild(element);
 		element.click();
@@ -131,7 +131,7 @@ const NotesExport = () => {
 						Select which notes you would like to export. They will be saved as a JSON file
 					</Typography>
 					<Typography>
-						{selectedNotes.length} note(s) selected
+						{`${selectedNotes.length} note(s) selected`}
 					</Typography>
 
 					<List className={classes.list} dense>
@@ -182,7 +182,7 @@ const NotesExport = () => {
 						color="primary"
 						onClick={handleExportClick}
 					>
-						Export {isEveryNoteUnSelected ? 'All' : 'Selected'}
+						{`Export ${isEveryNoteUnSelected ? 'All' : 'Selected'}`}
 					</Button>
 				</DialogActions>
 			</Dialog>

@@ -6,7 +6,7 @@ import './index.css';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import UserConfirmation from './components/UserConfirmation';
+import UserConfirmation from './components/shared/UserConfirmation';
 import { AuthProvider } from './hooks/Auth';
 import { GlobalStateProvider } from './hooks/GlobalState';
 import { initialState, reducer } from './reducer';

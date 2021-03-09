@@ -9,7 +9,7 @@ import {
 } from '@material-ui/icons';
 
 import useStyles from './LabelsList.styled';
-import RouterNavLink from '../RouterNavLink';
+import RouterNavLink from '../shared/RouterNavLink';
 import { useNotes } from '../../hooks/Notes';
 
 const LabelsList = () => {

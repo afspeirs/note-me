@@ -7,7 +7,7 @@ import theme from './theme';
 import Container from './components/Container';
 import FilesDragAndDrop from './components/FilesDragAndDrop';
 import Routes from './components/Routes';
-import ServiceWorkerContent from './components/ServiceWorkerContent';
+import ServiceWorkerContent from './components/shared/ServiceWorkerContent';
 import { useGlobalState } from './hooks/GlobalState';
 import { NotesProvider } from './hooks/Notes';
 import { SnackbarProvider } from './hooks/Snackbar';
@@ -19,6 +19,7 @@ const App = () => {
 		() => createMuiTheme({
 			palette: {
 				...theme.palette,
+				// eslint-disable-next-line no-nested-ternary
 				type: appTheme === 'default' ? (prefersDarkMode ? 'dark' : 'light') : appTheme,
 			},
 		}),

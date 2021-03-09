@@ -11,7 +11,7 @@ import {
 	Brush as BrushIcon,
 } from '@material-ui/icons';
 
-import { useGlobalState } from '../../hooks/GlobalState';
+import { useGlobalState } from '../../../hooks/GlobalState';
 
 const options = [
 	{ text: 'Light', value: 'light' },

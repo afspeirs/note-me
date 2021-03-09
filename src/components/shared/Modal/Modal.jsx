@@ -83,7 +83,7 @@ const Modal = ({
 	return (
 		<>
 			<Helmet>
-				<title>{`${title} | NoteMe`}</title>
+				<title>{`${title} | ${process.env.REACT_APP_TITLE}`}</title>
 			</Helmet>
 
 			<Dialog

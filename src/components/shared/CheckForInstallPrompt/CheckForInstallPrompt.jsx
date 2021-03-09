@@ -13,7 +13,7 @@ import {
 	Cancel as CancelIcon,
 } from '@material-ui/icons';
 
-import { useGlobalState } from '../../hooks/GlobalState';
+import { useGlobalState } from '../../../hooks/GlobalState';
 
 const CheckForInstallPrompt = () => {
 	const [{ beforeInstallPrompt }, dispatch] = useGlobalState();
@@ -41,7 +41,7 @@ const CheckForInstallPrompt = () => {
 				<ListItemIcon>
 					<AddToHomeScreenIcon />
 				</ListItemIcon>
-				<ListItemText primary="Install NoteMe" />
+				<ListItemText primary={`Install ${process.env.REACT_APP_TITLE}`} />
 				<ListItemSecondaryAction>
 					<Tooltip title="Dismiss" placement="left">
 						<IconButton
@@ -50,7 +50,7 @@ const CheckForInstallPrompt = () => {
 							edge="end"
 							onClick={handleDismissClick}
 						>
-							<CancelIcon color="disabled" />
+							<CancelIcon color="action" />
 						</IconButton>
 					</Tooltip>
 				</ListItemSecondaryAction>

@@ -12,8 +12,8 @@ import {
 } from '@material-ui/icons';
 
 import useStyles from './UserInformation.styled';
-import { useAuth } from '../../hooks/Auth';
-import blankUserPhoto from '../../img/blank-user-photo.png';
+import { useAuth } from '../../../hooks/Auth';
+import blankUserPhoto from '../../../img/blank-user-photo.png';
 
 const UserInformation = () => {
 	const { signIn, signOut, user } = useAuth();

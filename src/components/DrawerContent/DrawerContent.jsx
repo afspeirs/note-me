@@ -12,8 +12,8 @@ import {
 
 import useStyles from './DrawerContent.styled';
 import LabelsList from '../LabelsList';
-import RouterLink from '../RouterLink';
-import RouterNavLink from '../RouterNavLink';
+import RouterLink from '../shared/RouterLink';
+import RouterNavLink from '../shared/RouterNavLink';
 
 const DrawerContent = () => {
 	const classes = useStyles();
@@ -23,7 +23,7 @@ const DrawerContent = () => {
 			<List className={classes.list} disablePadding>
 				<ListItem>
 					<ListItemText
-						primary="NoteMe"
+						primary={process.env.REACT_APP_TITLE}
 						primaryTypographyProps={{
 							color: 'textSecondary',
 							component: 'h1',
