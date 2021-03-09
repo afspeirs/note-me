@@ -41,7 +41,7 @@ const CheckForInstallPrompt = () => {
 				<ListItemIcon>
 					<AddToHomeScreenIcon />
 				</ListItemIcon>
-				<ListItemText primary="Install NoteMe" />
+				<ListItemText primary={`Install ${process.env.REACT_APP_TITLE}`} />
 				<ListItemSecondaryAction>
 					<Tooltip title="Dismiss" placement="left">
 						<IconButton

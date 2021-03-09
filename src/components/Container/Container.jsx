@@ -84,7 +84,7 @@ const Container = ({ children }) => {
 	return (
 		<div className={classes.container}>
 			<Helmet>
-				<title>{containerTitle ? `${containerTitle} | NoteMe` : 'NoteMe'}</title>
+				<title>{containerTitle ? `${containerTitle} | ${process.env.REACT_APP_TITLE}` : process.env.REACT_APP_TITLE}</title>
 			</Helmet>
 
 			<AppBar>

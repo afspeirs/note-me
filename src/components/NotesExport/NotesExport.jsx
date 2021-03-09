@@ -62,7 +62,7 @@ const NotesExport = () => {
 		const stringOfNotes = JSON.stringify(exportedNotes);
 
 		element.setAttribute('href', `data:text/plain;charset=utf-8,${encodeURIComponent(stringOfNotes)}`);
-		element.setAttribute('download', `NoteMe-${currentDate}.json`);
+		element.setAttribute('download', `${process.env.REACT_APP_TITLE}-${currentDate}.json`);
 		element.style.display = 'none';
 		document.body.appendChild(element);
 		element.click();

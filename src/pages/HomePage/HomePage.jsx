@@ -42,7 +42,7 @@ const HomePage = () => {
 			{!user && !loading ? (
 				<List>
 					<ListItem>
-						<ListItemText primary="Hello and welcome to NoteMe" />
+						<ListItemText primary={`Hello and welcome to ${process.env.REACT_APP_TITLE}`} />
 					</ListItem>
 					<ListItem>
 						<ListItemText primary="Please sign in below to be able to store and edit your markdown notes from any device" />

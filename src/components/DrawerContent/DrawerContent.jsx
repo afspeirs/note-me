@@ -23,7 +23,7 @@ const DrawerContent = () => {
 			<List className={classes.list} disablePadding>
 				<ListItem>
 					<ListItemText
-						primary="NoteMe"
+						primary={process.env.REACT_APP_TITLE}
 						primaryTypographyProps={{
 							color: 'textSecondary',
 							component: 'h1',
