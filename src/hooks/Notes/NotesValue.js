@@ -6,7 +6,7 @@ import { useSnackbar } from '../Snackbar';
 import { firestore } from '../../firebase';
 import { getTitle } from '../../utils';
 
-const useNotesValue = () => {
+const NotesValue = () => {
 	const { user } = useAuth();
 	const history = useHistory();
 	const snackbar = useSnackbar();
@@ -196,4 +196,4 @@ const useNotesValue = () => {
 	};
 };
 
-export default useNotesValue;
+export default NotesValue;

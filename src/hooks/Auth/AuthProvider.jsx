@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 
 import AuthContext from './AuthContext';
-import useAuthValue from './useAuthValue';
+import AuthValue from './AuthValue';
 
 const propTypes = {
 	children: PropTypes.oneOfType([
@@ -11,8 +11,12 @@ const propTypes = {
 };
 
 const AuthProvider = ({ children }) => {
-	const value = useAuthValue();
-	return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+	const value = AuthValue();
+	return (
+		<AuthContext.Provider value={value}>
+			{children}
+		</AuthContext.Provider>
+	);
 };
 
 AuthProvider.propTypes = propTypes;

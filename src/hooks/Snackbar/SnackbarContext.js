@@ -1,5 +1,5 @@
 import { createContext } from 'react';
 
-const SnackbarContext = createContext(null);
+const SnackbarContext = createContext();
 
 export default SnackbarContext;

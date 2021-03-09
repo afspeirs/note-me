@@ -15,13 +15,15 @@ const propTypes = {
 const SnackbarProvider = ({ children }) => {
 	const [content, setContent] = useState(null);
 
-	const showMessage = ({ message, actionText, actionFunction }) => {
-		setContent({
-			actionFunction,
-			actionText,
-			message,
-		});
-	};
+	const showMessage = ({
+		actionFunction,
+		actionText,
+		message,
+	}) => setContent({
+		actionFunction,
+		actionText,
+		message,
+	});
 
 	const handleClose = () => setContent(null);
 
@@ -42,7 +44,7 @@ const SnackbarProvider = ({ children }) => {
 
 			<Snackbar
 				anchorOrigin={{
-					horizontal: 'right',
+					horizontal: 'left',
 					vertical: 'bottom',
 				}}
 				open={Boolean(content?.message)}
