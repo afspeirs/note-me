@@ -1,5 +1,15 @@
+import {
+	List,
+	ListItem,
+	ListItemText,
+} from '@material-ui/core';
+
 const NoPage = () => (
-	<h4>404: Page not found</h4>
+	<List>
+		<ListItem>
+			<ListItemText primary="404: Page not found" />
+		</ListItem>
+	</List>
 );
 
 export default NoPage;
