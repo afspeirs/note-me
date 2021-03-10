@@ -30,6 +30,7 @@ const defaultProps = {
 	maxWidth: 'sm',
 	showPrompt: false,
 	title: '',
+	titleDocument: null,
 };
 
 const propTypes = {
@@ -56,6 +57,7 @@ const propTypes = {
 	]),
 	showPrompt: PropTypes.bool,
 	title: PropTypes.string,
+	titleDocument: PropTypes.string,
 };
 
 const Modal = ({
@@ -66,6 +68,7 @@ const Modal = ({
 	maxWidth,
 	showPrompt,
 	title,
+	titleDocument,
 }) => {
 	const classes = useStyles({ maxHeight });
 	const history = useHistory();
@@ -83,7 +86,7 @@ const Modal = ({
 	return (
 		<>
 			<Helmet>
-				<title>{`${title} | ${process.env.REACT_APP_TITLE}`}</title>
+				<title>{titleDocument || `${title} | ${process.env.REACT_APP_TITLE}`}</title>
 			</Helmet>
 
 			<Dialog
