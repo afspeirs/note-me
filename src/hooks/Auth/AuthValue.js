@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { auth, provider } from '../../firebase';
 
-const useAuthValue = () => {
+const AuthValue = () => {
 	const [user, setUser] = useState(null);
 
 	const signIn = () => auth
@@ -34,4 +34,4 @@ const useAuthValue = () => {
 	};
 };
 
-export default useAuthValue;
+export default AuthValue;

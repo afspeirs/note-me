@@ -9,12 +9,11 @@ import reportWebVitals from './reportWebVitals';
 import UserConfirmation from './components/shared/UserConfirmation';
 import { AuthProvider } from './hooks/Auth';
 import { GlobalStateProvider } from './hooks/GlobalState';
-import { initialState, reducer } from './reducer';
 
 ReactDOM.render(
 	<React.StrictMode>
 		<BrowserRouter getUserConfirmation={(message, callback) => UserConfirmation(message, callback)}>
-			<GlobalStateProvider initialState={initialState} reducer={reducer}>
+			<GlobalStateProvider>
 				<AuthProvider>
 					<App />
 				</AuthProvider>

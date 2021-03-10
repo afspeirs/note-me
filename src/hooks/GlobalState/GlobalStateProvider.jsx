@@ -2,17 +2,13 @@ import { useReducer } from 'react';
 import PropTypes from 'prop-types';
 
 import GlobalStateContext from './GlobalStateContext';
+import { initialState, reducer } from '../../reducer';
 
 const propTypes = {
-	children: PropTypes.oneOfType([
-		PropTypes.arrayOf(PropTypes.node),
-		PropTypes.node,
-	]).isRequired,
-	initialState: PropTypes.instanceOf(Object).isRequired,
-	reducer: PropTypes.func.isRequired,
+	children: PropTypes.node.isRequired,
 };
 
-const GlobalStateProvider = ({ reducer, initialState, children }) => (
+const GlobalStateProvider = ({ children }) => (
 	<GlobalStateContext.Provider value={useReducer(reducer, initialState)}>
 		{children}
 	</GlobalStateContext.Provider>

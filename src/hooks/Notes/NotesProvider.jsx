@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 
 import NotesContext from './NotesContext';
-import useNotesValue from './useNotesValue';
+import NotesValue from './NotesValue';
 
 const propTypes = {
 	children: PropTypes.oneOfType([
@@ -11,8 +11,12 @@ const propTypes = {
 };
 
 const NotesProvider = ({ children }) => {
-	const value = useNotesValue();
-	return <NotesContext.Provider value={value}>{children}</NotesContext.Provider>;
+	const value = NotesValue();
+	return (
+		<NotesContext.Provider value={value}>
+			{children}
+		</NotesContext.Provider>
+	);
 };
 
 NotesProvider.propTypes = propTypes;
