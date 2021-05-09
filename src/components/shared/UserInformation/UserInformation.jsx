@@ -10,6 +10,7 @@ import {
 import {
 	ExitToApp as ExitToAppIcon,
 } from '@material-ui/icons';
+import { useConfirm } from 'material-ui-confirm';
 
 import useStyles from './UserInformation.styled';
 import { useAuth } from '../../../hooks/Auth';
@@ -17,7 +18,15 @@ import blankUserPhoto from '../../../img/blank-user-photo.png';
 
 const UserInformation = () => {
 	const { signIn, signOut, user } = useAuth();
+	const confirm = useConfirm();
 	const classes = useStyles();
+
+	const handleSignOutClick = () => confirm({
+		title: 'Are you sure you want to sign out?',
+		cancellationText: 'Cancel',
+		confirmationText: 'Sign Out',
+	})
+		.then(signOut);
 
 	return (
 		<>
@@ -36,7 +45,7 @@ const UserInformation = () => {
 								aria-label="sign out"
 								color="inherit"
 								edge="end"
-								onClick={signOut}
+								onClick={handleSignOutClick}
 							>
 								<ExitToAppIcon />
 							</IconButton>
