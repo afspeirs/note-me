@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import Markdown from 'react-markdown';
+import gfm from 'remark-gfm';
 import { useParams } from 'react-router-dom';
 import {
 	Fab,
@@ -107,10 +108,13 @@ const NotePage = () => {
 				) : (
 					<Markdown
 						className={clsx(classes.page, classes.markdown)}
-						escapeHtml
-						renderers={{ link: RendererLink }}
-						source={localNote}
-					/>
+						components={{
+							a: RendererLink,
+						}}
+						remarkPlugins={[gfm]}
+					>
+						{localNote}
+					</Markdown>
 				)}
 
 				<Tooltip title={edit ? 'Save' : 'Edit'}>
