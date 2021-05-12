@@ -12,6 +12,8 @@ import {
 
 import useStyles from './DrawerContent.styled';
 import LabelsList from '../LabelsList';
+import SortNotesFavourite from '../SortNotesFavourite';
+import SortNotesOrder from '../SortNotesOrder';
 import RouterLink from '../shared/RouterLink';
 import RouterNavLink from '../shared/RouterNavLink';
 
@@ -54,6 +56,11 @@ const DrawerContent = () => {
 			<Divider />
 
 			<List disablePadding>
+				<SortNotesFavourite />
+				<SortNotesOrder />
+
+				<Divider />
+
 				<ListItem
 					button
 					component={RouterLink}

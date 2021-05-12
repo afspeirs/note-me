@@ -9,8 +9,6 @@ import CheckForInstallPrompt from '../../components/shared/CheckForInstallPrompt
 import CheckForUpdate from '../../components/shared/CheckForUpdate';
 import Modal from '../../components/shared/Modal';
 import NotesExport from '../../components/NotesExport';
-import SortNotesFavourite from '../../components/SortNotesFavourite';
-import SortNotesOrder from '../../components/SortNotesOrder';
 import UserInformation from '../../components/shared/UserInformation';
 
 const SettingsPage = () => (
@@ -25,11 +23,6 @@ const SettingsPage = () => (
 			<Divider />
 
 			<ChangeTheme />
-
-			<Divider />
-
-			<SortNotesFavourite />
-			<SortNotesOrder />
 
 			<Divider />
 
