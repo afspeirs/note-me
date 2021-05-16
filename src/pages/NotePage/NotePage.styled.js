@@ -29,6 +29,8 @@ const useStyles = makeStyles((theme) => ({
 		'& pre': {
 			backgroundColor: theme.palette.background.default,
 			overflowX: 'scroll',
+			padding: theme.spacing(2),
+			borderRadius: '0.5rem',
 		},
 		'& h1, h2, h3, h4, h5, h6, p, ol, ul': {
 			margin: 0,
