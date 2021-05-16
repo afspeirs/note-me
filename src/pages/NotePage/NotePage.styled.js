@@ -26,6 +26,12 @@ const useStyles = makeStyles((theme) => ({
 		'& ol, ul': {
 			paddingLeft: theme.spacing(4),
 		},
+		'& blockquote': {
+			margin: 0,
+			padding: '0 1rem',
+			borderLeft: `0.25em solid ${theme.palette.text.secondary}`,
+			color: theme.palette.text.secondary,
+		},
 		'& pre': {
 			backgroundColor: theme.palette.background.default,
 			overflowX: 'scroll',
