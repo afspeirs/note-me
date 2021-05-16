@@ -155,12 +155,12 @@ const NotesValue = () => {
 	};
 
 	/**
- * Adds a function to the window object to show the notes
- * @param {bool} prettify - Log out a prettified version of notes to the console
- * @returns {array} notes
- */
-	window.returnNotes = (prettify = false) => {
-		if (prettify) console.log(JSON.stringify(notes, null, 2)); // eslint-disable-line no-console
+	 * Adds a function to the window object to show the notes
+	 * @param {bool} prettyPrint - Log out a prettified version of notes to the console
+	 * @returns {array} notes
+	 */
+	window.returnNotes = (prettyPrint = false) => {
+		if (prettyPrint) console.log(JSON.stringify(notes, null, 2)); // eslint-disable-line no-console
 		return notes;
 	};
 
