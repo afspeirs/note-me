@@ -17,14 +17,26 @@ const useStyles = makeStyles((theme) => ({
 		marginRight: theme.spacing(1),
 	},
 	markdown: {
-		'& p + p': {
-			marginTop: theme.spacing(2),
-		},
 		'& h1': {
 			fontSize: '1.75em',
 		},
+		'& p + p': {
+			marginTop: theme.spacing(2),
+		},
 		'& ol, ul': {
 			paddingLeft: theme.spacing(4),
+		},
+		'& blockquote': {
+			margin: 0,
+			padding: '0 1rem',
+			borderLeft: `0.25em solid ${theme.palette.text.secondary}`,
+			color: theme.palette.text.secondary,
+		},
+		'& pre': {
+			backgroundColor: theme.palette.background.default,
+			overflowX: 'scroll',
+			padding: theme.spacing(2),
+			borderRadius: '0.5rem',
 		},
 		'& h1, h2, h3, h4, h5, h6, p, ol, ul': {
 			margin: 0,
