@@ -4,10 +4,6 @@ import Markdown from 'react-markdown';
 import gfm from 'remark-gfm';
 import { useParams } from 'react-router-dom';
 import {
-	Fab,
-	Tooltip,
-} from '@material-ui/core';
-import {
 	Delete as DeleteIcon,
 	Edit as EditIcon,
 	Label as LabelIcon,
@@ -40,6 +36,11 @@ const NotePage = () => {
 	const classes = useStyles();
 	const currentNote = notes.find((note) => note.id === id);
 	const headerItems = [
+		{
+			icon: edit ? <SaveIcon /> : <EditIcon />,
+			onClick: () => setEdit((prevState) => !prevState),
+			text: edit ? 'Save' : 'Edit',
+		},
 		{
 			icon: currentNote?.favourite ? <StarIcon color="inherit" /> : <StarBorderIcon />,
 			onClick: () => favouriteNote(currentNote),
@@ -116,17 +117,6 @@ const NotePage = () => {
 						{localNote}
 					</Markdown>
 				)}
-
-				<Tooltip title={edit ? 'Save' : 'Edit'}>
-					<Fab
-						color="primary"
-						aria-label={edit ? 'Save' : 'Edit'}
-						className={classes.fab}
-						onClick={() => setEdit((prevState) => !prevState)}
-					>
-						{edit ? <SaveIcon /> : <EditIcon />}
-					</Fab>
-				</Tooltip>
 			</Modal>
 
 			<LabelsAddDialog note={openAddLabel} setOpen={setOpenAddLabel} />
