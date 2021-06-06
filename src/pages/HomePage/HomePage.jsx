@@ -40,7 +40,7 @@ const HomePage = () => {
 	}, [label, notes]); // eslint-disable-line
 
 	return (
-		<div className={classes.page}>
+		<main className={classes.page}>
 			{!user && !loading ? (
 				<>
 					<List>
@@ -94,7 +94,7 @@ const HomePage = () => {
 					</Tooltip>
 				</>
 			)}
-		</div>
+		</main>
 	);
 };
 
