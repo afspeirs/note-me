@@ -13,8 +13,9 @@ import {
 } from '@material-ui/icons';
 
 const defaultProps = {
-	forceLastIconEdge: false,
+	forceLastIconEdge: undefined,
 	headerItems: [],
+	disableOverflowMenu: false,
 };
 
 const propTypes = {
@@ -27,18 +28,23 @@ const propTypes = {
 			text: PropTypes.string,
 		}),
 	),
+	disableOverflowMenu: PropTypes.bool,
 };
 
-const HeaderContent = ({ forceLastIconEdge, headerItems }) => {
+const HeaderContent = ({
+	forceLastIconEdge,
+	headerItems,
+	disableOverflowMenu,
+}) => {
 	const mobile = useMediaQuery('(max-width:600px)');
-	const [anchorEl, setAnchorEl] = useState(null);
+	const [anchorEl, setAnchorEl] = useState();
 	const handleClick = (event) => setAnchorEl(event.currentTarget);
-	const handleClose = () => setAnchorEl(null);
+	const handleClose = () => setAnchorEl(undefined);
 	const [first, ...rest] = headerItems;
 
 	return (
 		<>
-			{mobile && first ? (
+			{(mobile && !disableOverflowMenu) && first ? (
 				<>
 					<Tooltip key={first.text} title={first.text}>
 						{/* Wrapper element in case the Button is disabled */}
@@ -48,7 +54,7 @@ const HeaderContent = ({ forceLastIconEdge, headerItems }) => {
 								color="inherit"
 								component={first.component}
 								disabled={first.disabled}
-								edge={((forceLastIconEdge || mobile) && rest.length === 0) ? 'end' : 'false'}
+								edge={((forceLastIconEdge || mobile) && rest.length === 0) ? 'end' : undefined}
 								onClick={first.onClick}
 								to={first.to}
 							>
@@ -86,7 +92,7 @@ const HeaderContent = ({ forceLastIconEdge, headerItems }) => {
 										color="inherit"
 										component={item.component}
 										disabled={item.disabled}
-										edge={((forceLastIconEdge || mobile) && index === headerItems.length - 1) ? 'end' : 'false'}
+										edge={((forceLastIconEdge || mobile) && index === headerItems.length - 1) ? 'end' : undefined}
 										onClick={() => {
 											handleClose();
 											item.onClick();
@@ -118,7 +124,7 @@ const HeaderContent = ({ forceLastIconEdge, headerItems }) => {
 									color="inherit"
 									component={item.component}
 									disabled={item.disabled}
-									edge={((forceLastIconEdge || mobile) && index === headerItems.length - 1) ? 'end' : 'false'}
+									edge={((forceLastIconEdge || mobile) && index === headerItems.length - 1) ? 'end' : undefined}
 									onClick={item.onClick}
 									to={item.to}
 								>

@@ -12,9 +12,9 @@ import {
 } from '@material-ui/icons';
 import { useConfirm } from 'material-ui-confirm';
 
+import { useAuth } from '@/hooks/Auth';
+import blankUserPhoto from './blank-user-photo.png';
 import useStyles from './UserInformation.styled';
-import { useAuth } from '../../../hooks/Auth';
-import blankUserPhoto from '../../../img/blank-user-photo.png';
 
 const UserInformation = () => {
 	const { signIn, signOut, user } = useAuth();

@@ -20,25 +20,25 @@ import {
 } from '@material-ui/icons';
 import { useConfirm } from 'material-ui-confirm';
 
+import { useAuth } from '@/hooks/Auth';
+import { useNotes } from '@/hooks/Notes';
+import { useSnackbar } from '@/hooks/Snackbar';
 import useStyles from './NotesExport.styled';
-import { useAuth } from '../../hooks/Auth';
-import { useNotes } from '../../hooks/Notes';
-import { useSnackbar } from '../../hooks/Snackbar';
 
 const NotesExport = () => {
 	const { isSignedIn } = useAuth();
 	const classes = useStyles();
 	const confirm = useConfirm();
-	const { notes } = useNotes();
+	const { loading, notes } = useNotes();
 	const snackbar = useSnackbar();
 	const [checkedNotes, setCheckedNotes] = useState([]);
 	const [open, setOpen] = useState(false);
 	const isEveryNoteSelected = checkedNotes.every((note) => note === true);
 	const isEveryNoteUnSelected = checkedNotes.every((note) => note === false);
-	const selectedNotes = notes.filter((note, index) => checkedNotes[index]);
+	const selectedNotes = notes?.filter((note, index) => checkedNotes[index]) || [];
 
-	const resetSelectedNotes = () => setCheckedNotes([...Array(notes.length)].map(() => false));
-	const toggleSelectedNotes = () => setCheckedNotes([...Array(notes.length)]
+	const resetSelectedNotes = () => setCheckedNotes([...Array(notes?.length)].map(() => false));
+	const toggleSelectedNotes = () => setCheckedNotes([...Array(notes?.length)]
 		.map(() => !isEveryNoteSelected));
 
 	const handleClose = () => {
@@ -62,7 +62,7 @@ const NotesExport = () => {
 		const stringOfNotes = JSON.stringify(exportedNotes);
 
 		element.setAttribute('href', `data:text/plain;charset=utf-8,${encodeURIComponent(stringOfNotes)}`);
-		element.setAttribute('download', `${process.env.REACT_APP_TITLE}-${currentDate}.json`);
+		element.setAttribute('download', `${import.meta.env.VITE_APP_TITLE}-${currentDate}.json`);
 		element.style.display = 'none';
 		document.body.appendChild(element);
 		element.click();
@@ -103,89 +103,91 @@ const NotesExport = () => {
 				<ListItemText primary="Export Notes" />
 			</ListItem>
 
-			<Dialog
-				aria-labelledby="export-dialog-title"
-				className={classes.dialog}
-				onClose={handleClose}
-				open={open}
-			>
-				<DialogTitle
-					className={classes.root}
-					disableTypography
-					id="export-dialog-title"
+			{!loading && (
+				<Dialog
+					aria-labelledby="export-dialog-title"
+					className={classes.dialog}
+					onClose={handleClose}
+					open={open}
 				>
-					<Typography variant="h6">Export Notes</Typography>
-					{handleClose ? (
-						<IconButton
-							aria-label="close"
-							className={classes.closeButton}
-							onClick={handleClose}
-						>
-							<CloseIcon />
-						</IconButton>
-					) : null}
-				</DialogTitle>
+					<DialogTitle
+						className={classes.root}
+						disableTypography
+						id="export-dialog-title"
+					>
+						<Typography variant="h6">Export Notes</Typography>
+						{handleClose ? (
+							<IconButton
+								aria-label="close"
+								className={classes.closeButton}
+								onClick={handleClose}
+							>
+								<CloseIcon />
+							</IconButton>
+						) : null}
+					</DialogTitle>
 
-				<DialogContent dividers>
-					<Typography gutterBottom>
-						Select which notes you would like to export. They will be saved as a JSON file
-					</Typography>
-					<Typography>
-						{`${selectedNotes.length} note(s) selected`}
-					</Typography>
+					<DialogContent dividers>
+						<Typography gutterBottom>
+							Select which notes you would like to export. They will be saved as a JSON file
+						</Typography>
+						<Typography>
+							{`${selectedNotes.length} note(s) selected`}
+						</Typography>
 
-					<List className={classes.list} dense>
-						{checkedNotes.map((note, index) => {
-							const currentNote = notes[index];
-							const labelId = `checkbox-list-label-${currentNote.id}`;
+						<List className={classes.list} dense>
+							{checkedNotes.map((note, index) => {
+								const currentNote = notes[index];
+								const labelId = `checkbox-list-label-${currentNote.id}`;
 
-							return (
-								<ListItem
-									key={currentNote.id}
-									role={undefined}
-									dense
-									button
-									onClick={() => handleSelectedNotesToggle(index)}
-								>
-									<ListItemIcon>
-										<Checkbox
-											edge="start"
-											color="primary"
-											checked={checkedNotes[index]}
-											tabIndex={-1}
-											disableRipple
-											inputProps={{ 'aria-labelledby': labelId }}
+								return (
+									<ListItem
+										key={currentNote.id}
+										role={undefined}
+										dense
+										button
+										onClick={() => handleSelectedNotesToggle(index)}
+									>
+										<ListItemIcon>
+											<Checkbox
+												edge="start"
+												color="primary"
+												checked={checkedNotes[index]}
+												tabIndex={-1}
+												disableRipple
+												inputProps={{ 'aria-labelledby': labelId }}
+											/>
+										</ListItemIcon>
+										<ListItemText
+											id={labelId}
+											primary={currentNote.title}
+											primaryTypographyProps={{
+												noWrap: true,
+											}}
 										/>
-									</ListItemIcon>
-									<ListItemText
-										id={labelId}
-										primary={currentNote.title}
-										primaryTypographyProps={{
-											className: classes.listItemTypography,
-										}}
-									/>
-								</ListItem>
-							);
-						})}
-					</List>
-				</DialogContent>
+									</ListItem>
+								);
+							})}
+						</List>
+					</DialogContent>
 
-				<DialogActions>
-					<Button
-						color="inherit"
-						onClick={toggleSelectedNotes}
-					>
-						Select All
-					</Button>
-					<Button
-						autoFocus
-						color="primary"
-						onClick={handleExportClick}
-					>
-						{`Export ${isEveryNoteUnSelected ? 'All' : 'Selected'}`}
-					</Button>
-				</DialogActions>
-			</Dialog>
+					<DialogActions>
+						<Button
+							color="inherit"
+							onClick={toggleSelectedNotes}
+						>
+							Select All
+						</Button>
+						<Button
+							autoFocus
+							color="primary"
+							onClick={handleExportClick}
+						>
+							{`Export ${isEveryNoteUnSelected ? 'All' : 'Selected'}`}
+						</Button>
+					</DialogActions>
+				</Dialog>
+			)}
 		</>
 	);
 };

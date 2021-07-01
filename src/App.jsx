@@ -3,10 +3,10 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { CssBaseline, useMediaQuery } from '@material-ui/core';
 import { ConfirmProvider } from 'material-ui-confirm';
 
+import Routes from './routes';
 import theme from './theme';
 import Container from './components/Container';
 import FilesDragAndDrop from './components/FilesDragAndDrop';
-import Routes from './components/Routes';
 import ServiceWorkerContent from './components/shared/ServiceWorkerContent';
 import { useGlobalState } from './hooks/GlobalState';
 import { NotesProvider } from './hooks/Notes';
@@ -25,8 +25,6 @@ const App = () => {
 		}),
 		[prefersDarkMode, appTheme],
 	);
-
-	// console.log(muiTheme);
 
 	return (
 		<ThemeProvider theme={muiTheme}>

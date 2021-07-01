@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 
-import { auth, provider } from '../../firebase';
+import { auth, provider } from '@/firebase';
 
 const AuthValue = () => {
-	const [user, setUser] = useState(null);
+	const [user, setUser] = useState();
 
 	const signIn = () => auth
 		.signInWithPopup(provider)
