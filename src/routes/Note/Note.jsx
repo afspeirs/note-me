@@ -79,6 +79,7 @@ const Note = () => {
 		}
 	}, [edit]); // eslint-disable-line
 
+	if (!currentNote?.id) return null;
 	return (
 		<>
 			<Modal
@@ -88,26 +89,22 @@ const Note = () => {
 				showPrompt={localNote !== currentNote?.text}
 				title={currentNote?.title}
 			>
-				{currentNote?.id && (
-					<>
-						{edit ? (
-							<textarea
-								className={clsx(classes.page, classes.textarea)}
-								type="text"
-								value={localNote}
-								onChange={(event) => setLocalNote(event.target.value)}
-							/>
-						) : (
-							<Markdown
-								className={clsx(classes.page, classes.markdown)}
-								overrides={{
-									a: RendererLink,
-								}}
-							>
-								{localNote}
-							</Markdown>
-						)}
-					</>
+				{edit ? (
+					<textarea
+						className={clsx(classes.page, classes.textarea)}
+						type="text"
+						value={localNote}
+						onChange={(event) => setLocalNote(event.target.value)}
+					/>
+				) : (
+					<Markdown
+						className={clsx(classes.page, classes.markdown)}
+						overrides={{
+							a: RendererLink,
+						}}
+					>
+						{localNote}
+					</Markdown>
 				)}
 			</Modal>
 
