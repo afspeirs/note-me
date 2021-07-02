@@ -2,14 +2,14 @@ import { useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
 import { useConfirm } from 'material-ui-confirm';
 
+import { useNotes } from '@/hooks/Notes';
+import { useSnackbar } from '@/hooks/Snackbar';
 import useStyles from './FilesDragAndDrop.styled';
-import { useNotes } from '../../hooks/Notes';
-import { useSnackbar } from '../../hooks/Snackbar';
 
 const FilesDragAndDrop = () => {
 	const classes = useStyles();
 	const confirm = useConfirm();
-	const { createNote, importNotes } = useNotes();
+	const { addNote, importNotes } = useNotes();
 	const drop = useRef(null);
 	const snackbar = useSnackbar();
 	const [dragging, setDragging] = useState(false);
@@ -72,7 +72,7 @@ const FilesDragAndDrop = () => {
 	useEffect(() => {
 		if (fileContent) {
 			if (fileContent.startsWith('[{')) {
-				const listOfNotes = JSON.parse(fileContent) || null;
+				const listOfNotes = JSON.parse(fileContent) || [];
 
 				confirm({
 					title: 'Do you want to import the following notes?',
@@ -89,10 +89,13 @@ const FilesDragAndDrop = () => {
 					description: fileContent,
 					cancellationText: 'No',
 					confirmationText: 'Yes',
-				}).then(() => {
-					createNote(fileContent);
-					setFileContent(null);
-				}).catch(() => setFileContent(null));
+				})
+					.then(() => {
+						addNote(fileContent);
+						setFileContent(null);
+					})
+					.catch(() => setFileContent(null));
+
 				setFileContent(null);
 			}
 		}

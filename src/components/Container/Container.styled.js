@@ -8,6 +8,7 @@ const useStyles = makeStyles((theme) => ({
 		width: '100%',
 		height: '100%',
 		display: 'flex',
+		flexDirection: 'column',
 		backgroundColor: theme.palette.background.paper,
 		color: theme.palette.text.primary,
 	},
@@ -37,6 +38,8 @@ const useStyles = makeStyles((theme) => ({
 		flexGrow: 1,
 		userSelect: 'none',
 	},
-}));
+}), {
+	name: 'Container',
+});
 
 export default useStyles;

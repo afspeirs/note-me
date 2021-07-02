@@ -11,11 +11,6 @@ const useStyles = makeStyles((theme) => ({
 			backgroundColor: theme.palette.action.focus,
 		},
 	},
-	listItemTypography: {
-		overflow: 'hidden',
-		textOverflow: 'ellipsis',
-		whiteSpace: 'nowrap',
-	},
 	listSubheader: {
 		userSelect: 'none',
 	},

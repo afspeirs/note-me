@@ -4,19 +4,19 @@ import { useHistory } from 'react-router-dom';
 import { useAuth } from '../../hooks/Auth';
 import { useNotes } from '../../hooks/Notes';
 
-const CreateNotePage = () => {
+const CreateNote = () => {
 	const { isSignedIn } = useAuth();
 	const history = useHistory();
-	const { createNote } = useNotes();
+	const { addNote } = useNotes();
 
 	useEffect(() => {
 		if (isSignedIn) {
 			history.replace('/');
-			createNote('');
+			addNote('');
 		}
 	}, [isSignedIn]); // eslint-disable-line
 
 	return null;
 };
 
-export default CreateNotePage;
+export default CreateNote;

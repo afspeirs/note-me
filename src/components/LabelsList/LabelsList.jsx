@@ -8,9 +8,9 @@ import {
 	Label as LabelIcon,
 } from '@material-ui/icons';
 
+import RouterNavLink from '@/components/shared/RouterNavLink';
+import { useNotes } from '@/hooks/Notes';
 import useStyles from './LabelsList.styled';
-import RouterNavLink from '../shared/RouterNavLink';
-import { useNotes } from '../../hooks/Notes';
 
 const LabelsList = () => {
 	const { labels, loading } = useNotes();
@@ -21,7 +21,7 @@ const LabelsList = () => {
 			<ListSubheader className={classes.listSubheader}>
 				Labels
 			</ListSubheader>
-			{labels.length === 0 && loading === false && (
+			{labels.length === 0 && !loading && (
 				<ListItem>
 					<ListItemText primary="No labels found" />
 				</ListItem>
@@ -30,7 +30,7 @@ const LabelsList = () => {
 				<ListItem
 					key={`note-${label}`}
 					button
-					to={`/label/${label}`}
+					to={`/${label}`}
 					className={classes.listItem}
 					component={RouterNavLink}
 				>
@@ -40,7 +40,7 @@ const LabelsList = () => {
 					<ListItemText
 						primary={label}
 						primaryTypographyProps={{
-							className: classes.listItemTypography,
+							noWrap: true,
 						}}
 					/>
 				</ListItem>

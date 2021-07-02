@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import clsx from 'clsx';
-import Markdown from 'react-markdown';
-import gfm from 'remark-gfm';
+import Markdown from 'markdown-to-jsx';
 import { useParams } from 'react-router-dom';
 import {
 	Delete as DeleteIcon,
@@ -11,30 +10,28 @@ import {
 	Star as StarIcon,
 	StarBorder as StarBorderIcon,
 } from '@material-ui/icons';
-import { useConfirm } from 'material-ui-confirm';
 
-import useStyles from './NotePage.styled';
-import LabelsAddDialog from '../../components/LabelsAddDialog';
-import RendererLink from '../../components/shared/RendererLink';
-import Modal from '../../components/shared/Modal';
-import { useHotkeys } from '../../hooks/Hotkeys';
-import { useNotes } from '../../hooks/Notes';
+import LabelsAddDialog from '@/components/LabelsAddDialog';
+import Modal from '@/components/shared/Modal';
+import RendererLink from '@/components/shared/RendererLink';
+import { useHotkeys } from '@/hooks/Hotkeys';
+import { useNotes } from '@/hooks/Notes';
+import useStyles from './Note.styled';
 
-const NotePage = () => {
-	const { id } = useParams();
-	const confirm = useConfirm();
-	const {
-		notes,
-		setCurrentNote,
-		updateNote,
-		favouriteNote,
-		deleteNote,
-	} = useNotes();
-	const [localNote, setLocalNote] = useState();
-	const [openAddLabel, setOpenAddLabel] = useState(null);
-	const [edit, setEdit] = useState(false);
+const Note = () => {
 	const classes = useStyles();
-	const currentNote = notes.find((note) => note.id === id);
+	const { id } = useParams();
+	const {
+		deleteNote,
+		favouriteNote,
+		notes,
+		updateNote,
+	} = useNotes();
+	const [edit, setEdit] = useState(false);
+	const [localNote, setLocalNote] = useState();
+	const [openAddLabel, setOpenAddLabel] = useState(false);
+	const currentNote = notes?.find((note) => note.id === id);
+
 	const headerItems = [
 		{
 			icon: edit ? <SaveIcon /> : <EditIcon />,
@@ -48,18 +45,12 @@ const NotePage = () => {
 		},
 		{
 			icon: <LabelIcon />,
-			onClick: () => setOpenAddLabel(currentNote),
+			onClick: () => setOpenAddLabel(true),
 			text: `${currentNote?.labels?.length !== 0 ? 'Change' : 'Add'} Labels`,
 		},
 		{
 			icon: <DeleteIcon />,
-			onClick: () => {
-				confirm({
-					title: `Are you sure you want to delete "${currentNote.title}"?`,
-					confirmationText: 'Delete',
-				})
-					.then(deleteNote);
-			},
+			onClick: () => deleteNote(currentNote),
 			text: 'Delete Note',
 		},
 	];
@@ -75,21 +66,20 @@ const NotePage = () => {
 
 	useEffect(() => {
 		if (currentNote) {
-			setCurrentNote(currentNote);
 			setLocalNote(currentNote.text);
 			setEdit(currentNote.text === '');
 		}
-		return () => setCurrentNote(null);
 	}, [currentNote]); // eslint-disable-line
 
 	useEffect(() => {
-		const compare = localNote !== undefined && !edit;
+		const compare = !edit && id && localNote !== undefined && localNote !== currentNote.text;
 
-		if (compare && id && localNote !== currentNote.text) {
-			updateNote(localNote);
+		if (compare) {
+			updateNote(id, localNote);
 		}
 	}, [edit]); // eslint-disable-line
 
+	if (!currentNote?.id) return null;
 	return (
 		<>
 			<Modal
@@ -109,19 +99,18 @@ const NotePage = () => {
 				) : (
 					<Markdown
 						className={clsx(classes.page, classes.markdown)}
-						components={{
+						overrides={{
 							a: RendererLink,
 						}}
-						remarkPlugins={[gfm]}
 					>
 						{localNote}
 					</Markdown>
 				)}
 			</Modal>
 
-			<LabelsAddDialog note={openAddLabel} setOpen={setOpenAddLabel} />
+			<LabelsAddDialog note={openAddLabel ? currentNote : undefined} setOpen={setOpenAddLabel} />
 		</>
 	);
 };
 
-export default NotePage;
+export default Note;
