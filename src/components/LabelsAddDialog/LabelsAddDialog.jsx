@@ -22,8 +22,8 @@ import {
 	Close as CloseIcon,
 } from '@material-ui/icons';
 
+import { useNotes } from '@/hooks/Notes';
 import useStyles from './LabelsAddDialog.styled';
-import { useNotes } from '../../hooks/Notes';
 
 const defaultProps = {
 	note: null,
@@ -63,7 +63,8 @@ const LabelsAddDialog = ({ note, setOpen }) => {
 			const newFilterNames = Object.keys(controlledLabels)
 				.filter((label) => controlledLabels[label] !== false)
 				.sort();
-			updateLabels(newFilterNames, note);
+
+			updateLabels(note.id, newFilterNames);
 		}
 		setOpen(null);
 	};

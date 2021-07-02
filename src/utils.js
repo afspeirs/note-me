@@ -12,8 +12,3 @@ export const getDateCalendar = (date) => dayjs(date).calendar(null, {
 	sameElse: 'DD/MM/YYYY [at] h:mm A',
 });
 export const getDateRelative = (date) => dayjs(date).fromNow();
-export const getTitle = (text) => {
-	const title = text.split('\n')[0].replace(/#+ /g, '');
-
-	return title.length > 0 ? title : 'Untitled';
-};

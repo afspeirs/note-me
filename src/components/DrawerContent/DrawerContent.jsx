@@ -10,12 +10,12 @@ import {
 	Settings as SettingsIcon,
 } from '@material-ui/icons';
 
+import LabelsList from '@/components/LabelsList';
+import SortNotesFavourite from '@/components/SortNotesFavourite';
+import SortNotesOrder from '@/components/SortNotesOrder';
+import RouterLink from '@/components/shared/RouterLink';
+import RouterNavLink from '@/components/shared/RouterNavLink';
 import useStyles from './DrawerContent.styled';
-import LabelsList from '../LabelsList';
-import SortNotesFavourite from '../SortNotesFavourite';
-import SortNotesOrder from '../SortNotesOrder';
-import RouterLink from '../shared/RouterLink';
-import RouterNavLink from '../shared/RouterNavLink';
 
 const DrawerContent = () => {
 	const classes = useStyles();
@@ -25,13 +25,13 @@ const DrawerContent = () => {
 			<List className={classes.list} disablePadding>
 				<ListItem>
 					<ListItemText
-						primary={process.env.REACT_APP_TITLE}
+						primary={import.meta.env.VITE_APP_TITLE}
 						primaryTypographyProps={{
 							color: 'textSecondary',
 							component: 'h1',
 							variant: 'h5',
 						}}
-						secondary={process.env.REACT_APP_VERSION}
+						secondary={import.meta.env.PACKAGE_VERSION}
 						secondaryTypographyProps={{
 							component: 'span',
 						}}
@@ -64,10 +64,7 @@ const DrawerContent = () => {
 				<ListItem
 					button
 					component={RouterLink}
-					to={{
-						pathname: '/settings/',
-						state: { modal: true },
-					}}
+					to="/settings/"
 				>
 					<ListItemIcon>
 						<SettingsIcon />

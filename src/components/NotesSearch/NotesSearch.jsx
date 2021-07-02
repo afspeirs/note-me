@@ -1,3 +1,4 @@
+import { useLocation } from 'react-router-dom';
 import {
 	AppBar,
 	Fade,
@@ -11,13 +12,15 @@ import {
 	Clear as ClearIcon,
 } from '@material-ui/icons';
 
+import { useGlobalState } from '@/hooks/GlobalState';
+import { useHotkeys } from '@/hooks/Hotkeys';
+import { isModal } from '@/routes';
 import useStyles from './NotesSearch.styled';
-import { useGlobalState } from '../../hooks/GlobalState';
-import { useHotkeys } from '../../hooks/Hotkeys';
 
 const NotesSearch = () => {
 	const classes = useStyles();
 	const [{ search }, dispatch] = useGlobalState();
+	const { pathname } = useLocation();
 
 	const hideSearch = () => {
 		dispatch({
@@ -50,15 +53,15 @@ const NotesSearch = () => {
 			callback: (event) => {
 				event.preventDefault();
 
-				if (window?.currentLocation?.pathname === '/') {
-					dispatch({
-						type: 'app-search',
-						value: {
-							...search,
-							show: true,
-						},
-					});
-				}
+				if (isModal(pathname)) return;
+
+				dispatch({
+					type: 'app-search',
+					value: {
+						...search,
+						show: true,
+					},
+				});
 			},
 			metaModifier: true,
 		},
@@ -66,15 +69,15 @@ const NotesSearch = () => {
 		{
 			keys: ['Escape'],
 			callback: () => {
-				if (window?.currentLocation?.pathname === '/') {
-					dispatch({
-						type: 'app-search',
-						value: {
-							show: false,
-							text: '',
-						},
-					});
-				}
+				if (isModal(pathname)) return;
+
+				dispatch({
+					type: 'app-search',
+					value: {
+						show: false,
+						text: '',
+					},
+				});
 			},
 		},
 	]);

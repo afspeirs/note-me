@@ -22,28 +22,31 @@ import {
 	Star as StarIcon,
 	StarBorder as StarBorderIcon,
 } from '@material-ui/icons';
-import { useConfirm } from 'material-ui-confirm';
 
+import LabelsAddDialog from '@/components/LabelsAddDialog';
+import RouterNavLink from '@/components/shared/RouterNavLink';
+import { useGlobalState } from '@/hooks/GlobalState';
+import { useNotes } from '@/hooks/Notes';
+import { getDateCalendar, getDateRelative } from '@/utils';
 import useStyles from './NotesList.styled';
-import LabelsAddDialog from '../LabelsAddDialog';
-import RouterNavLink from '../shared/RouterNavLink';
-import { useGlobalState } from '../../hooks/GlobalState';
-import { useNotes } from '../../hooks/Notes';
-import { getDateCalendar, getDateRelative } from '../../utils';
+
+const defaultProps = {
+	notes: undefined,
+};
 
 const propTypes = {
-	notes: PropTypes.arrayOf(PropTypes.object).isRequired,
+	notes: PropTypes.arrayOf(PropTypes.object),
 };
 
 const NotesList = ({ notes }) => {
-	const confirm = useConfirm();
-	const { deleteNote, favouriteNote, loading } = useNotes();
 	const classes = useStyles();
 	const [{ search, settings: { sortNotesFavourite, sortNotesOrder } }, dispatch] = useGlobalState();
-	const [contextAnchor, setContextAnchor] = useState(null);
-	const [openAddLabel, setOpenAddLabel] = useState(null);
+	const { deleteNote, favouriteNote, loading } = useNotes();
 	const listEl = useRef(null);
+	const [contextAnchor, setContextAnchor] = useState();
 	const [filteredNotes, setFilteredNotes] = useState([]);
+	const [openAddLabel, setOpenAddLabel] = useState(null);
+
 	const sortNoteFunction = {
 		'date-created-asc': (a, b) => b.dateCreated - a.dateCreated,
 		'date-created-dsc': (a, b) => a.dateCreated - b.dateCreated,
@@ -103,11 +106,7 @@ const NotesList = ({ notes }) => {
 
 	const handleDeleteNote = (note) => {
 		handleContextMenuClose();
-		confirm({
-			title: `Are you sure you want to delete "${note.title}"?`,
-			confirmationText: 'Delete',
-		})
-			.then(() => deleteNote(note));
+		deleteNote(note);
 	};
 
 	const handleLabelClick = (label) => {
@@ -122,35 +121,37 @@ const NotesList = ({ notes }) => {
 		return () => current.removeEventListener('contextmenu', handleContextMenuOpen);
 	}, [listEl]);
 
+	/* eslint-disable max-len */
 	useEffect(() => {
-		setFilteredNotes(
-			notes.filter((note) => note.text.toLowerCase().search(search.text.toLowerCase()) !== -1
-		|| note?.labels?.find((label) => label.toLowerCase().search(search.text.toLowerCase()) !== -1)),
-		);
+		if (notes) {
+			const filtered = notes.filter((note) => note?.text.toLowerCase().search(search?.text.toLowerCase()) !== -1
+			|| note.labels?.find((label) => label?.toLowerCase().search(search?.text.toLowerCase()) !== -1));
+
+			if ((filteredNotes !== filtered) && notes?.length) {
+				setFilteredNotes(filtered);
+			}
+		}
 	}, [search.text, notes]);
+	/* eslint-enable max-len */
 
 	return (
 		<>
 			<List className={classes.list} ref={listEl}>
-				{filteredNotes.length === 0 && loading === false && (
-					<ListItem>
-						<ListItemText primary="No notes found" />
-					</ListItem>
-				)}
 				{loading && (
 					<ListItem>
 						<ListItemText primary="Loading, please wait while we gather your notes" />
 					</ListItem>
 				)}
-
+				{filteredNotes.length === 0 && !loading && (
+					<ListItem>
+						<ListItemText primary="No notes found" />
+					</ListItem>
+				)}
 				{sortArray(filteredNotes).map((note) => (
 					<Fragment key={`note-${note.id}`}>
 						<ListItem
 							button
-							to={{
-								pathname: `/note/${note.id}`,
-								state: { modal: true },
-							}}
+							to={`/note/${note.id}`}
 							className="context-menu-select"
 							component={RouterNavLink}
 							data-id={note.id}
@@ -158,7 +159,7 @@ const NotesList = ({ notes }) => {
 							<ListItemText
 								primary={note.title}
 								primaryTypographyProps={{
-									className: classes.listItemTypography,
+									noWrap: true,
 								}}
 							/>
 							<ListItemSecondaryAction className={classes.listItemSecondary}>
@@ -187,11 +188,11 @@ const NotesList = ({ notes }) => {
 										className={classes.listItemTextDate}
 										primary={`Last modified ${getDateRelative(note.dateModified)}`}
 										primaryTypographyProps={{
-											className: classes.listItemTypography,
+											noWrap: true,
 										}}
 										secondary={`Created: ${getDateCalendar(note.dateCreated)}`}
 										secondaryTypographyProps={{
-											className: classes.listItemTypography,
+											noWrap: true,
 											variant: 'caption',
 										}}
 									/>
@@ -203,7 +204,7 @@ const NotesList = ({ notes }) => {
 									<ListItemText
 										primary={`${note.favourite ? 'Unfavourite' : 'Favourite'} "${note.title}"`}
 										primaryTypographyProps={{
-											className: classes.listItemTypography,
+											noWrap: true,
 										}}
 									/>
 								</ListItem>
@@ -214,7 +215,7 @@ const NotesList = ({ notes }) => {
 									<ListItemText
 										primary={`${note?.labels?.length !== 0 ? 'Change' : 'Add'} Labels`}
 										primaryTypographyProps={{
-											className: classes.listItemTypography,
+											noWrap: true,
 										}}
 									/>
 								</ListItem>
@@ -225,7 +226,7 @@ const NotesList = ({ notes }) => {
 									<ListItemText
 										primary={`Delete "${note.title}"`}
 										primaryTypographyProps={{
-											className: classes.listItemTypography,
+											noWrap: true,
 										}}
 									/>
 								</ListItem>
@@ -253,6 +254,7 @@ const NotesList = ({ notes }) => {
 	);
 };
 
+NotesList.defaultProps = defaultProps;
 NotesList.propTypes = propTypes;
 
 export default NotesList;

@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 import {
 	AppBar,
 	IconButton,
-	SwipeableDrawer,
+	Drawer,
 	Toolbar,
 	Typography,
 } from '@material-ui/core';
@@ -14,13 +14,13 @@ import {
 	Search as SearchIcon,
 } from '@material-ui/icons';
 
+import DrawerContent from '@/components/DrawerContent';
+import NotesSearch from '@/components/NotesSearch';
+import HeaderContent from '@/components/shared/HeaderContent';
+import { useAuth } from '@/hooks/Auth';
+import { useGlobalState } from '@/hooks/GlobalState';
+import { useHotkeys } from '@/hooks/Hotkeys';
 import useStyles from './Container.styled';
-import DrawerContent from '../DrawerContent';
-import HeaderContent from '../shared/HeaderContent';
-import NotesSearch from '../NotesSearch';
-import { useAuth } from '../../hooks/Auth';
-import { useGlobalState } from '../../hooks/GlobalState';
-import { useHotkeys } from '../../hooks/Hotkeys';
 
 const propTypes = {
 	children: PropTypes.oneOfType([
@@ -33,8 +33,8 @@ const Container = ({ children }) => {
 	const { isSignedIn } = useAuth();
 	const [{ containerTitle, search }, dispatch] = useGlobalState();
 	const history = useHistory();
-	const [drawerOpen, setDrawerOpen] = useState(false);
 	const classes = useStyles();
+	const [drawerOpen, setDrawerOpen] = useState(false);
 
 	const headerItems = useMemo(() => [
 		{
@@ -84,7 +84,7 @@ const Container = ({ children }) => {
 	return (
 		<div className={classes.container}>
 			<Helmet>
-				<title>{containerTitle ? `${containerTitle} | ${process.env.REACT_APP_TITLE}` : process.env.REACT_APP_TITLE}</title>
+				<title>{containerTitle ? `${containerTitle} | ${import.meta.env.VITE_APP_TITLE}` : import.meta.env.VITE_APP_TITLE}</title>
 			</Helmet>
 
 			<AppBar>
@@ -101,11 +101,16 @@ const Container = ({ children }) => {
 					<Typography className={classes.title} component="h1" variant="h6" noWrap>
 						{containerTitle}
 					</Typography>
-					<HeaderContent headerItems={headerItems} forceLastIconEdge />
+					<HeaderContent
+						forceLastIconEdge
+						headerItems={headerItems}
+						disableOverflowMenu
+					/>
 					<NotesSearch />
 				</Toolbar>
 			</AppBar>
-			<SwipeableDrawer
+
+			<Drawer
 				variant="temporary"
 				anchor="left"
 				open={drawerOpen}
@@ -113,12 +118,12 @@ const Container = ({ children }) => {
 				classes={{
 					paper: classes.drawerPaper,
 				}}
-				onOpen={handleDrawerToggle}
-				onClose={handleDrawerToggle}
+				onClose={handleDrawerClose}
 				ModalProps={{ keepMounted: true }}
 			>
 				<DrawerContent />
-			</SwipeableDrawer>
+			</Drawer>
+
 			<div className={classes.content}>
 				<div className={classes.drawerHeader} />
 				{children}

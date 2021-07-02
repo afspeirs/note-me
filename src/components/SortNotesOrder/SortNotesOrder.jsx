@@ -11,8 +11,8 @@ import {
 	Sort as SortIcon,
 } from '@material-ui/icons';
 
-import { useAuth } from '../../hooks/Auth';
-import { useGlobalState } from '../../hooks/GlobalState';
+import { useAuth } from '@/hooks/Auth';
+import { useGlobalState } from '@/hooks/GlobalState';
 
 const options = [
 	{ text: 'Date Created (Newest First)', value: 'date-created-asc' },

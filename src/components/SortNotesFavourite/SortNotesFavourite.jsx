@@ -9,9 +9,9 @@ import {
 	Star as StarIcon,
 } from '@material-ui/icons';
 
+import { useAuth } from '@/hooks/Auth';
+import { useGlobalState } from '@/hooks/GlobalState';
 import useStyles from './SortNotesFavourite.styled';
-import { useAuth } from '../../hooks/Auth';
-import { useGlobalState } from '../../hooks/GlobalState';
 
 const SortNotesFavourite = () => {
 	const { isSignedIn } = useAuth();

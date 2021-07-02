@@ -1,6 +1,6 @@
 const initialState = {
-	beforeInstallPrompt: null,
-	containerTitle: null,
+	beforeInstallPrompt: undefined,
+	containerTitle: undefined,
 	search: {
 		show: false,
 		text: '',
