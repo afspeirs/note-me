@@ -29,7 +29,7 @@ const NotesExport = () => {
 	const { isSignedIn } = useAuth();
 	const classes = useStyles();
 	const confirm = useConfirm();
-	const { loading, notes } = useNotes();
+	const { isLoading, notes } = useNotes();
 	const snackbar = useSnackbar();
 	const [checkedNotes, setCheckedNotes] = useState([]);
 	const [open, setOpen] = useState(false);
@@ -103,7 +103,7 @@ const NotesExport = () => {
 				<ListItemText primary="Export Notes" />
 			</ListItem>
 
-			{!loading && (
+			{!isLoading && (
 				<Dialog
 					aria-labelledby="export-dialog-title"
 					className={classes.dialog}

@@ -1,20 +1,17 @@
 import { useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
 
 import { useAuth } from '../../hooks/Auth';
 import { useNotes } from '../../hooks/Notes';
 
 const CreateNote = () => {
 	const { isSignedIn } = useAuth();
-	const history = useHistory();
-	const { addNote } = useNotes();
+	const { createNote, loading } = useNotes();
 
 	useEffect(() => {
-		if (isSignedIn) {
-			history.replace('/');
-			addNote('');
+		if (!loading && isSignedIn) {
+			createNote('', true);
 		}
-	}, [isSignedIn]);
+	}, [isSignedIn, loading]);
 
 	return null;
 };
