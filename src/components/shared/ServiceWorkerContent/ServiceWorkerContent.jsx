@@ -43,7 +43,7 @@ const ServiceWorkerContent = () => {
 			window.removeEventListener('swNewContentAvailable', swNewContentAvailable);
 			window.removeEventListener('swContentCached', swContentCached);
 		};
-	}, []); // eslint-disable-line
+	}, []);
 
 	return null;
 };

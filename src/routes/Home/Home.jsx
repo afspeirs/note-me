@@ -41,7 +41,7 @@ const Home = () => {
 		}
 
 		setFilteredNotes(label ? notes?.filter((note) => note?.labels?.includes(label)) : notes);
-	}, [label, notes]); // eslint-disable-line
+	}, [label, notes]);
 
 	return (
 		<main className={classes.page}>

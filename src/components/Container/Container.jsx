@@ -49,7 +49,7 @@ const Container = ({ children }) => {
 			text: 'Search Notes',
 			visible: isSignedIn,
 		},
-	].filter((item) => item.visible !== false), [isSignedIn]); // eslint-disable-line
+	].filter((item) => item.visible !== false), [isSignedIn]);
 
 	// Close drawer only in mobile
 	const handleDrawerClose = () => setDrawerOpen(false);
@@ -79,7 +79,7 @@ const Container = ({ children }) => {
 	useEffect(() => {
 		const unlisten = history.listen(handleDrawerClose);
 		return unlisten;
-	}, [history]); // eslint-disable-line
+	}, [history]);
 
 	return (
 		<div className={classes.container}>

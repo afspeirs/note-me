@@ -14,7 +14,7 @@ const CreateNote = () => {
 			history.replace('/');
 			addNote('');
 		}
-	}, [isSignedIn]); // eslint-disable-line
+	}, [isSignedIn]);
 
 	return null;
 };

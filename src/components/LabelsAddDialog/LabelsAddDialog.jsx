@@ -80,7 +80,7 @@ const LabelsAddDialog = ({ note, setOpen }) => {
 				[label]: Boolean(note?.labels?.includes(label)),
 			}))),
 		);
-	}, [labels, note]); // eslint-disable-line
+	}, [labels, note]);
 
 	return (
 		<Dialog

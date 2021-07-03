@@ -181,7 +181,7 @@ const NotesValue = () => {
 			setNotes([]);
 			setLabels([]);
 		}
-	}, [user]); // eslint-disable-line
+	}, [user]);
 
 	return {
 		addNote,
