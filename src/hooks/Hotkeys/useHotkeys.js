@@ -29,7 +29,7 @@ const useHotkeys = (inputHotkeys, options) => {
 	useEffect(() => {
 		window.addEventListener('keydown', handleKeyDown);
 		return () => window.removeEventListener('keydown', handleKeyDown);
-	}, []); // eslint-disable-line
+	}, []);
 };
 
 export default useHotkeys;

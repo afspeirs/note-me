@@ -52,11 +52,17 @@ const NotesValue = () => {
 	 * If an Untitled note already exists, navigate to that note
 	 * @param {string} [text] - Initial text to use for the note
 	 */
-	const addNote = async (text = '') => {
+	const createNote = async (text = '', replace = false) => {
 		const untitledNote = notes.find((note) => note.text === '');
 
 		if (untitledNote) {
-			history.push(`/note/${untitledNote.id}`);
+			const path = `/note/${untitledNote.id}`;
+
+			if (replace) {
+				history.replace(path);
+			} else {
+				history.push(path);
+			}
 		} else {
 			const newNote = await firestore.collection(user.uid).doc();
 			const value = returnNoteObject({
@@ -66,7 +72,15 @@ const NotesValue = () => {
 
 			await newNote
 				.set(value)
-				.then(() => history.push(`/note/${value.id}`));
+				.then(() => {
+					const path = `/note/${value.id}`;
+
+					if (replace) {
+						history.replace(path);
+					} else {
+						history.push(path);
+					}
+				});
 		}
 	};
 
@@ -181,10 +195,10 @@ const NotesValue = () => {
 			setNotes([]);
 			setLabels([]);
 		}
-	}, [user]); // eslint-disable-line
+	}, [user]);
 
 	return {
-		addNote,
+		createNote,
 		deleteNote,
 		favouriteNote,
 		importNotes,

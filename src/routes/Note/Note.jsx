@@ -69,7 +69,7 @@ const Note = () => {
 			setLocalNote(currentNote.text);
 			setEdit(currentNote.text === '');
 		}
-	}, [currentNote]); // eslint-disable-line
+	}, [currentNote]);
 
 	useEffect(() => {
 		const compare = !edit && id && localNote !== undefined && localNote !== currentNote.text;
@@ -77,7 +77,7 @@ const Note = () => {
 		if (compare) {
 			updateNote(id, localNote);
 		}
-	}, [edit]); // eslint-disable-line
+	}, [edit]);
 
 	if (!currentNote?.id) return null;
 	return (

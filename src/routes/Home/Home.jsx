@@ -24,7 +24,7 @@ import useStyles from './Home.styled';
 const Home = () => {
 	const { signIn, user } = useAuth();
 	const dispatch = [...useGlobalState()].pop(); // I don't need to access any of the reducer state
-	const { addNote, loading, notes } = useNotes();
+	const { createNote, loading, notes } = useNotes();
 	const { pathname } = useLocation();
 	const { label } = useParams();
 	const classes = useStyles();
@@ -41,7 +41,7 @@ const Home = () => {
 		}
 
 		setFilteredNotes(label ? notes?.filter((note) => note?.labels?.includes(label)) : notes);
-	}, [label, notes]); // eslint-disable-line
+	}, [label, notes]);
 
 	return (
 		<main className={classes.page}>
@@ -89,7 +89,7 @@ const Home = () => {
 							color="primary"
 							aria-label="Create Note"
 							className={classes.fab}
-							onClick={() => addNote()}
+							onClick={() => createNote()}
 						>
 							<AddIcon />
 						</Fab>
