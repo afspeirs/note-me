@@ -25,6 +25,7 @@ import {
 
 import LabelsAddDialog from '@/components/LabelsAddDialog';
 import RouterNavLink from '@/components/shared/RouterNavLink';
+import useContextMenu from '@/hooks/ContextMenu/useContextMenu';
 import { useGlobalState } from '@/hooks/GlobalState';
 import { useNotes } from '@/hooks/Notes';
 import { getDateCalendar, getDateRelative } from '@/utils';
@@ -42,10 +43,10 @@ const NotesList = ({ notes }) => {
 	const classes = useStyles();
 	const [{ search, settings: { sortNotesFavourite, sortNotesOrder } }, dispatch] = useGlobalState();
 	const { deleteNote, favouriteNote, loading } = useNotes();
-	const listEl = useRef(null);
-	const [contextAnchor, setContextAnchor] = useState();
+	const parentEl = useRef(null);
 	const [filteredNotes, setFilteredNotes] = useState([]);
 	const [openAddLabel, setOpenAddLabel] = useState(null);
+	const { contextMenu, contextMenuClose } = useContextMenu(parentEl);
 
 	const sortNoteFunction = {
 		'date-created-asc': (a, b) => b.dateCreated - a.dateCreated,
@@ -78,48 +79,25 @@ const NotesList = ({ notes }) => {
 		.sort(sortNoteFunction)
 		.sort(sortNotesFavouriteFunction);
 
-	const handleContextMenuClose = () => setContextAnchor(null);
-
-	const handleContextMenuOpen = (event) => {
-		const closestContextMenuOption = event.target.closest('.context-menu-select');
-
-		// Only render if the right click occurs within the locationSelector
-		if (closestContextMenuOption) {
-			event.preventDefault();
-			setContextAnchor({
-				left: event.pageX,
-				top: event.pageY,
-				id: closestContextMenuOption.dataset.id,
-			});
-		}
-	};
-
 	const handleFavouriteNote = (note) => {
-		handleContextMenuClose();
+		contextMenuClose();
 		favouriteNote(note);
 	};
 
 	const handleAddLabelsClick = (note) => {
-		handleContextMenuClose();
+		contextMenuClose();
 		setOpenAddLabel(note);
 	};
 
 	const handleDeleteNote = (note) => {
-		handleContextMenuClose();
+		contextMenuClose();
 		deleteNote(note);
 	};
 
 	const handleLabelClick = (label) => {
-		handleContextMenuClose();
+		contextMenuClose();
 		updateSearchText(label);
 	};
-
-	useEffect(() => {
-		const { current } = listEl;
-		current.addEventListener('contextmenu', handleContextMenuOpen);
-
-		return () => current.removeEventListener('contextmenu', handleContextMenuOpen);
-	}, [listEl]);
 
 	/* eslint-disable max-len */
 	useEffect(() => {
@@ -136,7 +114,7 @@ const NotesList = ({ notes }) => {
 
 	return (
 		<>
-			<List className={classes.list} ref={listEl}>
+			<List className={classes.list} ref={parentEl}>
 				{loading && (
 					<ListItem>
 						<ListItemText primary="Loading, please wait while we gather your notes" />
@@ -171,13 +149,10 @@ const NotesList = ({ notes }) => {
 						</ListItem>
 
 						<Popover
-							open={contextAnchor?.id === note.id}
-							onClose={handleContextMenuClose}
+							open={contextMenu?.id === note.id}
+							onClose={contextMenuClose}
 							anchorReference="anchorPosition"
-							anchorPosition={{
-								top: contextAnchor?.top || 0,
-								left: contextAnchor?.left || 0,
-							}}
+							anchorPosition={contextMenu.position}
 						>
 							<List dense>
 								<ListItem>

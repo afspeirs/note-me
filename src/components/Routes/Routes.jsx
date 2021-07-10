@@ -5,10 +5,10 @@ import {
 } from 'react-router-dom';
 
 import { useAuth } from '@/hooks/Auth';
-import CreateNote from './CreateNote';
-import Home from './Home';
-import Note from './Note';
-import Settings from './Settings';
+import CreateNote from '@/routes/CreateNote';
+import Home from '@/routes/Home';
+import Note from '@/routes/Note';
+import Settings from '@/routes/Settings';
 
 const Routes = () => {
 	const { user } = useAuth();

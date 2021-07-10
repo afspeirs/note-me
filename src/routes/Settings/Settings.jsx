@@ -1,6 +1,6 @@
 import {
-	List,
 	Divider,
+	List,
 } from '@material-ui/core';
 
 import NotesExport from '@/components/NotesExport';
