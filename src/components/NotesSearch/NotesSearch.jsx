@@ -12,9 +12,9 @@ import {
 	Clear as ClearIcon,
 } from '@material-ui/icons';
 
+import { isModal } from '@/components/Routes';
 import { useGlobalState } from '@/hooks/GlobalState';
 import { useHotkeys } from '@/hooks/Hotkeys';
-import { isModal } from '@/routes';
 import useStyles from './NotesSearch.styled';
 
 const NotesSearch = () => {

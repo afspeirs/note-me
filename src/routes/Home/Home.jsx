@@ -15,10 +15,10 @@ import {
 } from '@material-ui/icons';
 
 import NotesList from '@/components/NotesList';
+import { isModal } from '@/components/Routes';
 import { useAuth } from '@/hooks/Auth';
 import { useGlobalState } from '@/hooks/GlobalState';
 import { useNotes } from '@/hooks/Notes';
-import { isModal } from '@/routes';
 import useStyles from './Home.styled';
 
 const Home = () => {

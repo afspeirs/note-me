@@ -3,9 +3,9 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { CssBaseline, useMediaQuery } from '@material-ui/core';
 import { ConfirmProvider } from 'material-ui-confirm';
 
-import Routes from './routes';
 import theme from './theme';
 import Container from './components/Container';
+import Routes from './components/Routes';
 import FilesDragAndDrop from './components/FilesDragAndDrop';
 import ServiceWorkerContent from './components/shared/ServiceWorkerContent';
 import { useGlobalState } from './hooks/GlobalState';
