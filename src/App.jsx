@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 import { CssBaseline, useMediaQuery } from '@material-ui/core';
 import { ConfirmProvider } from 'material-ui-confirm';
 
@@ -16,7 +16,7 @@ const App = () => {
 	const [{ settings: { appTheme } }] = useGlobalState();
 	const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
 	const muiTheme = useMemo(
-		() => createMuiTheme({
+		() => createTheme({
 			palette: {
 				...theme.palette,
 				// eslint-disable-next-line no-nested-ternary
