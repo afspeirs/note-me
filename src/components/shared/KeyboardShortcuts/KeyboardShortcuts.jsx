@@ -18,7 +18,7 @@ import {
 
 import data from './data';
 
-const KeyboardShortcutsCheatSheet = () => {
+const KeyboardShortcuts = () => {
 	const [open, setOpen] = useState(false);
 
 	const handleOpen = () => setOpen(true);
@@ -70,4 +70,4 @@ const KeyboardShortcutsCheatSheet = () => {
 	);
 };
 
-export default KeyboardShortcutsCheatSheet;
+export default KeyboardShortcuts;
