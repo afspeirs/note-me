@@ -47,7 +47,7 @@ const NotesSearch = () => {
 	const handleTextInput = (event) => updateSearchText(event.target.value);
 
 	useHotkeys([
-		// F = Show Search bar
+		// CTRL + F = Show Search bar
 		{
 			keys: ['f'],
 			callback: (event) => {

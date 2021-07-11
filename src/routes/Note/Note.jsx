@@ -55,6 +55,7 @@ const Note = () => {
 		},
 	];
 
+	// CTRL + E || CTRL + S = Save / Edit Note
 	useHotkeys({
 		keys: ['e', 's'],
 		callback: (event) => {
