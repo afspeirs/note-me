@@ -1,0 +1,37 @@
+export default [
+	{
+		name: 'Home Page',
+		shortcuts: [
+			{
+				name: 'Show Search bar',
+				key: 'CTRL + F',
+			},
+			{
+				name: 'Hide Search bar',
+				key: 'Escape',
+			},
+		],
+	},
+	{
+		name: 'Note Page',
+		shortcuts: [
+			{
+				name: 'Edit Note (will also Save Note)',
+				key: 'CTRL + E',
+			},
+			{
+				name: 'Save Note (will also Edit Note)',
+				key: 'CTRL + S',
+			},
+		],
+	},
+	{
+		name: 'Navigation',
+		shortcuts: [
+			{
+				name: 'Toggle Navigation Drawer',
+				key: 'CTRL + B',
+			},
+		],
+	},
+];
