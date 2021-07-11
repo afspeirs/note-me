@@ -90,6 +90,7 @@ const NotesExport = () => {
 	// Update / Reset checkedNotes if notes update
 	useEffect(resetSelectedNotes, [notes]);
 
+	if (!notes) return null;
 	return (
 		<>
 			<ListItem
