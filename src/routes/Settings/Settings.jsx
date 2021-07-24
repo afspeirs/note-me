@@ -8,7 +8,7 @@ import AppVersion from '@/components/shared/AppVersion';
 import ChangeTheme from '@/components/shared/ChangeTheme';
 import CheckForInstallPrompt from '@/components/shared/CheckForInstallPrompt';
 import CheckForUpdate from '@/components/shared/CheckForUpdate';
-import KeyboardShortcutsCheatSheet from '@/components/shared/KeyboardShortcutsCheatSheet';
+import KeyboardShortcuts from '@/components/shared/KeyboardShortcuts';
 import Modal from '@/components/shared/Modal';
 import UserInformation from '@/components/shared/UserInformation';
 
@@ -20,7 +20,7 @@ const Settings = () => (
 			<UserInformation />
 			<AppVersion />
 			<CheckForUpdate />
-			<KeyboardShortcutsCheatSheet />
+			<KeyboardShortcuts />
 
 			<Divider />
 

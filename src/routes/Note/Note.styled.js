@@ -26,6 +26,13 @@ const useStyles = makeStyles((theme) => ({
 		'& ol, ul': {
 			paddingLeft: theme.spacing(4),
 		},
+		'& li': {
+			position: 'relative',
+		},
+		'& li > input[type="checkbox"]': {
+			position: 'absolute',
+			left: -theme.spacing(3),
+		},
 		'& blockquote': {
 			margin: 0,
 			padding: '0 1rem',
@@ -38,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
 			padding: theme.spacing(2),
 			borderRadius: '0.5rem',
 		},
-		'& h1, h2, h3, h4, h5, h6, p, ol, ul': {
+		'& h1, h2, h3, h4, h5, h6, p': {
 			margin: 0,
 			marginBottom: theme.spacing(2),
 		},
