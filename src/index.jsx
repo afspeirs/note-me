@@ -7,12 +7,13 @@ import App from './App';
 import UserConfirmation from './components/shared/UserConfirmation';
 import { AuthProvider } from './hooks/Auth';
 import { GlobalStateProvider } from './hooks/GlobalState';
+import initialGlobalState from './initialGlobalState';
 import registerServiceWorker from './registerServiceWorker';
 
 ReactDOM.render(
 	<React.StrictMode>
 		<BrowserRouter getUserConfirmation={(message, callback) => UserConfirmation(message, callback)}>
-			<GlobalStateProvider>
+			<GlobalStateProvider initialState={initialGlobalState}>
 				<AuthProvider>
 					<App />
 				</AuthProvider>

@@ -1,6 +1,4 @@
-export { default as initialState } from './initial-state';
-
-export const reducer = (state, action) => {
+const reducer = (state, action) => {
 	const [location, name] = action.type.split('-');
 
 	if (location === 'settings') {
@@ -22,3 +20,5 @@ export const reducer = (state, action) => {
 		[name]: action.value || !state[name],
 	};
 };
+
+export default reducer;
