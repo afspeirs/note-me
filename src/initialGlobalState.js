@@ -1,4 +1,4 @@
-const initialState = {
+export default {
 	beforeInstallPrompt: undefined,
 	containerTitle: undefined,
 	search: {
@@ -12,5 +12,3 @@ const initialState = {
 	},
 	updateAvailable: false,
 };
-
-export default initialState;
