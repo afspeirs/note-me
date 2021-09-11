@@ -18,7 +18,9 @@ const useStyles = makeStyles((theme) => ({
 	childrenPadding: {
 		paddingLeft: 'env(safe-area-inset-left)',
 		paddingRight: 'env(safe-area-inset-right)',
-		paddingBottom: 'env(safe-area-inset-bottom)',
+		'& > *:last-child': {
+			marginBottom: 'env(safe-area-inset-bottom)',
+		},
 	},
 	menuButton: {
 		marginRight: theme.spacing(2),

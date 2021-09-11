@@ -25,9 +25,11 @@ const useStyles = makeStyles((theme) => ({
 		width: '100%',
 		overflowX: 'hidden',
 		paddingTop: 'env(safe-area-inset-top)',
-		paddingBottom: 'env(safe-area-inset-bottom)',
 		paddingLeft: 'env(safe-area-inset-left)',
 		paddingRight: 'env(safe-area-inset-right)',
+		// '& > *:last-child': {
+		// 	marginBottom: 'env(safe-area-inset-bottom)',
+		// },
 	},
 	drawer: {
 		flexShrink: 0,
