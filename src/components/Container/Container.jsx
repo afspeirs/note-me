@@ -87,7 +87,7 @@ const Container = ({ children }) => {
 				<title>{containerTitle ? `${containerTitle} | ${import.meta.env.VITE_APP_TITLE}` : import.meta.env.VITE_APP_TITLE}</title>
 			</Helmet>
 
-			<AppBar>
+			<AppBar className={classes.appBar}>
 				<Toolbar>
 					<IconButton
 						className={classes.menuButton}

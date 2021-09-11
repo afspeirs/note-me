@@ -10,8 +10,8 @@ const useStyles = makeStyles((theme) => ({
 	},
 	fab: {
 		position: 'absolute',
-		bottom: theme.spacing(2),
-		right: theme.spacing(2),
+		bottom: `calc(env(safe-area-inset-bottom) + ${theme.spacing(2)}px)`,
+		right: `calc(env(safe-area-inset-right) + ${theme.spacing(2)}px)`,
 	},
 	extendedIcon: {
 		marginRight: theme.spacing(1),
