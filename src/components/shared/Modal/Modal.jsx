@@ -1,4 +1,5 @@
 import { forwardRef, useState } from 'react';
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import { Prompt, useHistory } from 'react-router-dom';
@@ -107,7 +108,12 @@ const Modal = ({
 					direction: mobile ? 'left' : 'up',
 				}}
 			>
-				<AppBar className={classes.appBar}>
+				<AppBar
+					className={clsx({
+						[classes.appBarPadding]: fullScreenModal,
+					})}
+					position="relative"
+				>
 					<Toolbar>
 						{fullScreenModal && (
 							<IconButton
@@ -145,7 +151,11 @@ const Modal = ({
 						)}
 					</Toolbar>
 				</AppBar>
-				<div className={classes.children}>
+				<div
+					className={clsx(classes.children, {
+						[classes.childrenPadding]: fullScreenModal,
+					})}
+				>
 					{children}
 				</div>
 			</Dialog>
