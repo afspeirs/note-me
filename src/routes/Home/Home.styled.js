@@ -3,8 +3,8 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
 	fab: {
 		position: 'fixed',
-		bottom: theme.spacing(2),
-		right: theme.spacing(2),
+		bottom: `calc(env(safe-area-inset-bottom) + ${theme.spacing(2)}px)`,
+		right: `calc(env(safe-area-inset-right) + ${theme.spacing(2)}px)`,
 	},
 	page: {
 		display: 'flex',

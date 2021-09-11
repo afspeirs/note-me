@@ -13,7 +13,6 @@
 		"import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
 		"import/no-unresolved": "off",
 		"indent": [2, "tab", { "SwitchCase": 1, "VariableDeclarator": 1 }],
-		"jsx-a11y/anchor-is-valid": "off",
 		"linebreak-style": "off",
 		"no-tabs": "off",
 		"react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
