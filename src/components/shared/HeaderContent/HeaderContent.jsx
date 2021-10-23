@@ -7,19 +7,20 @@ import {
 	MenuItem,
 	Tooltip,
 	useMediaQuery,
-} from '@material-ui/core';
+} from '@mui/material';
 import {
 	MoreVert as MoreIcon,
-} from '@material-ui/icons';
+} from '@mui/icons-material';
 
 const defaultProps = {
-	forceLastIconEdge: undefined,
-	headerItems: [],
 	disableOverflowMenu: false,
+	disableHeaderItems: false,
+	headerItems: [],
 };
 
 const propTypes = {
-	forceLastIconEdge: PropTypes.bool,
+	disableOverflowMenu: PropTypes.bool,
+	disableHeaderItems: PropTypes.bool,
 	headerItems: PropTypes.arrayOf(
 		PropTypes.shape({
 			disabled: PropTypes.bool,
@@ -28,13 +29,12 @@ const propTypes = {
 			text: PropTypes.string,
 		}),
 	),
-	disableOverflowMenu: PropTypes.bool,
 };
 
 const HeaderContent = ({
-	forceLastIconEdge,
-	headerItems,
 	disableOverflowMenu,
+	disableHeaderItems,
+	headerItems,
 }) => {
 	const mobile = useMediaQuery('(max-width:600px)');
 	const [anchorEl, setAnchorEl] = useState();
@@ -53,9 +53,10 @@ const HeaderContent = ({
 								aria-label={first.text}
 								color="inherit"
 								component={first.component}
-								disabled={first.disabled}
-								edge={((forceLastIconEdge || mobile) && rest.length === 0) ? 'end' : undefined}
+								disabled={disableHeaderItems || first.disabled}
+								edge={rest.length === 0 ? 'end' : null}
 								onClick={first.onClick}
+								size="large"
 								to={first.to}
 							>
 								{first.icon}
@@ -71,8 +72,10 @@ const HeaderContent = ({
 									aria-haspopup="true"
 									aria-label="Show more"
 									color="inherit"
+									disabled={disableHeaderItems}
 									edge="end"
 									onClick={handleClick}
+									size="large"
 								>
 									<MoreIcon />
 								</IconButton>
@@ -91,8 +94,8 @@ const HeaderContent = ({
 										aria-label={item.text}
 										color="inherit"
 										component={item.component}
-										disabled={item.disabled}
-										edge={((forceLastIconEdge || mobile) && index === headerItems.length - 1) ? 'end' : undefined}
+										disabled={disableHeaderItems || item.disabled}
+										edge={index === headerItems.length - 1 ? 'end' : null}
 										onClick={() => {
 											handleClose();
 											item.onClick();
@@ -123,9 +126,10 @@ const HeaderContent = ({
 									aria-label={item.text}
 									color="inherit"
 									component={item.component}
-									disabled={item.disabled}
-									edge={((forceLastIconEdge || mobile) && index === headerItems.length - 1) ? 'end' : undefined}
+									disabled={disableHeaderItems || item.disabled}
+									edge={index === headerItems.length - 1 ? 'end' : null}
 									onClick={item.onClick}
+									size="large"
 									to={item.to}
 								>
 									{item.icon}

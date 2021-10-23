@@ -1,6 +1,6 @@
 export default {
-	beforeInstallPrompt: undefined,
-	containerTitle: undefined,
+	beforeInstallPrompt: null,
+	drawerOpen: false,
 	search: {
 		show: false,
 		text: '',

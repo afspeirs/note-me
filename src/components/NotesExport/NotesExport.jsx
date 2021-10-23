@@ -13,21 +13,20 @@ import {
 	ListItemIcon,
 	ListItemText,
 	Typography,
-} from '@material-ui/core';
+} from '@mui/material';
 import {
 	Close as CloseIcon,
 	CloudDownload as CloudDownloadIcon,
-} from '@material-ui/icons';
+} from '@mui/icons-material';
 import { useConfirm } from 'material-ui-confirm';
 
 import { useAuth } from '@/hooks/Auth';
 import { useNotes } from '@/hooks/Notes';
 import { useSnackbar } from '@/hooks/Snackbar';
-import useStyles from './NotesExport.styled';
+import styles from './NotesExport.styled';
 
 const NotesExport = () => {
 	const { isSignedIn } = useAuth();
-	const classes = useStyles();
 	const confirm = useConfirm();
 	const { isLoading, notes } = useNotes();
 	const snackbar = useSnackbar();
@@ -90,7 +89,7 @@ const NotesExport = () => {
 	// Update / Reset checkedNotes if notes update
 	useEffect(resetSelectedNotes, [notes]);
 
-	if (!notes) return null;
+	if (!notes?.length) return null;
 	return (
 		<>
 			<ListItem
@@ -107,12 +106,12 @@ const NotesExport = () => {
 			{!isLoading && (
 				<Dialog
 					aria-labelledby="export-dialog-title"
-					className={classes.dialog}
+					sx={styles.dialog}
 					onClose={handleClose}
 					open={open}
 				>
 					<DialogTitle
-						className={classes.root}
+						sx={styles.root}
 						disableTypography
 						id="export-dialog-title"
 					>
@@ -120,7 +119,7 @@ const NotesExport = () => {
 						{handleClose ? (
 							<IconButton
 								aria-label="close"
-								className={classes.closeButton}
+								sx={styles.closeButton}
 								onClick={handleClose}
 							>
 								<CloseIcon />
@@ -136,14 +135,14 @@ const NotesExport = () => {
 							{`${selectedNotes.length} note(s) selected`}
 						</Typography>
 
-						<List className={classes.list} dense>
+						<List sx={styles.list} dense>
 							{checkedNotes.map((note, index) => {
 								const currentNote = notes[index];
-								const labelId = `checkbox-list-label-${currentNote.id}`;
+								const labelId = `checkbox-list-label-${currentNote?.id}`;
 
 								return (
 									<ListItem
-										key={currentNote.id}
+										key={currentNote?.id}
 										role={undefined}
 										dense
 										button
@@ -161,7 +160,7 @@ const NotesExport = () => {
 										</ListItemIcon>
 										<ListItemText
 											id={labelId}
-											primary={currentNote.title}
+											primary={currentNote?.title}
 											primaryTypographyProps={{
 												noWrap: true,
 											}}

@@ -1,9 +1,7 @@
-import { makeStyles } from '@material-ui/core/styles';
-
-const useStyles = makeStyles({
-	listItemSecondaryAction: {
+const styles = {
+	listItemSecondary: {
 		pointerEvents: 'none',
 	},
-});
+};
 
-export default useStyles;
+export default styles;

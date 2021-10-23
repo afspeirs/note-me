@@ -4,66 +4,38 @@ import {
 	ListItem,
 	ListItemIcon,
 	ListItemText,
-} from '@material-ui/core';
+} from '@mui/material';
 import {
-	Create as NotesIcon,
+	Add as AddIcon,
 	Settings as SettingsIcon,
-} from '@material-ui/icons';
+} from '@mui/icons-material';
 
-import LabelsList from '@/components/LabelsList';
-import SortNotesFavourite from '@/components/SortNotesFavourite';
-import SortNotesOrder from '@/components/SortNotesOrder';
-import RouterLink from '@/components/shared/RouterLink';
+import NotesList from '@/components/NotesList';
 import RouterNavLink from '@/components/shared/RouterNavLink';
-import useStyles from './DrawerContent.styled';
+import { useNotes } from '@/hooks/Notes';
 
 const DrawerContent = () => {
-	const classes = useStyles();
+	const { createNote } = useNotes();
 
 	return (
 		<>
-			<List className={classes.list} disablePadding>
-				<ListItem>
-					<ListItemText
-						primary={import.meta.env.VITE_APP_TITLE}
-						primaryTypographyProps={{
-							color: 'textSecondary',
-							component: 'h1',
-							variant: 'h5',
-						}}
-						secondary={import.meta.env.PACKAGE_VERSION}
-						secondaryTypographyProps={{
-							component: 'span',
-						}}
-					/>
-				</ListItem>
-				<ListItem
-					button
-					exact
-					to="/"
-					className={classes.listItem}
-					component={RouterNavLink}
-				>
-					<ListItemIcon>
-						<NotesIcon />
-					</ListItemIcon>
-					<ListItemText primary="All Notes" />
-				</ListItem>
-
-				<LabelsList />
-			</List>
+			<NotesList />
 
 			<Divider />
 
 			<List disablePadding>
-				<SortNotesFavourite />
-				<SortNotesOrder />
-
-				<Divider />
-
 				<ListItem
 					button
-					component={RouterLink}
+					onClick={() => createNote()}
+				>
+					<ListItemIcon>
+						<AddIcon />
+					</ListItemIcon>
+					<ListItemText primary="Create Note" />
+				</ListItem>
+				<ListItem
+					button
+					component={RouterNavLink}
 					to="/settings/"
 				>
 					<ListItemIcon>

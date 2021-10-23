@@ -1,18 +1,5 @@
 export default [
 	{
-		name: 'Home Page',
-		shortcuts: [
-			{
-				name: 'Show Search bar',
-				key: 'CTRL + F',
-			},
-			{
-				name: 'Hide Search bar',
-				key: 'Escape',
-			},
-		],
-	},
-	{
 		name: 'Note Page',
 		shortcuts: [
 			{

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-import Snackbar from '@material-ui/core/Snackbar';
-import Button from '@material-ui/core/Button';
+import Snackbar from '@mui/material/Snackbar';
+import Button from '@mui/material/Button';
 
 import SnackbarContext from './SnackbarContext';
 

@@ -1,50 +1,22 @@
-import { useEffect, useState } from 'react';
-import { useParams, useLocation } from 'react-router-dom';
 import {
 	Button,
-	Fab,
 	Link,
 	List,
 	ListItem,
 	ListItemText,
-	Tooltip,
 	Typography,
-} from '@material-ui/core';
-import {
-	Add as AddIcon,
-} from '@material-ui/icons';
+} from '@mui/material';
 
-import NotesList from '@/components/NotesList';
-import { isModal } from '@/components/Routes';
+import Page from '@/components/shared/Page';
 import { useAuth } from '@/hooks/Auth';
-import { useGlobalState } from '@/hooks/GlobalState';
 import { useNotes } from '@/hooks/Notes';
-import useStyles from './Home.styled';
 
 const Home = () => {
 	const { signIn, user } = useAuth();
-	const dispatch = [...useGlobalState()].pop(); // I don't need to access any of the reducer state
-	const { createNote, loading, notes } = useNotes();
-	const { pathname } = useLocation();
-	const { label } = useParams();
-	const classes = useStyles();
-	const [filteredNotes, setFilteredNotes] = useState([]);
-
-	useEffect(() => {
-		if (isModal(pathname)) return; // Disable functionally when on a modal page.
-
-		if (user) {
-			dispatch({
-				type: 'app-containerTitle',
-				value: label || 'All Notes',
-			});
-		}
-
-		setFilteredNotes(label ? notes?.filter((note) => note?.labels?.includes(label)) : notes);
-	}, [label, notes]);
+	const { loading } = useNotes();
 
 	return (
-		<main className={classes.page}>
+		<Page title="NoteMe">
 			{!user && !loading ? (
 				<List>
 					{/* eslint-disable max-len */}
@@ -81,22 +53,13 @@ const Home = () => {
 					</ListItem>
 				</List>
 			) : (
-				<>
-					<NotesList notes={filteredNotes || []} />
-
-					<Tooltip title="Create Note">
-						<Fab
-							color="primary"
-							aria-label="Create Note"
-							className={classes.fab}
-							onClick={() => createNote()}
-						>
-							<AddIcon />
-						</Fab>
-					</Tooltip>
-				</>
+				<List>
+					<ListItem>
+						<ListItemText primary="Select a note from the left side" />
+					</ListItem>
+				</List>
 			)}
-		</main>
+		</Page>
 	);
 };
 
