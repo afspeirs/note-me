@@ -60,7 +60,11 @@ const Page = ({
 				<title>{titleDocument || `${title} | ${import.meta.env.VITE_APP_TITLE}`}</title>
 			</Helmet>
 
-			<AppBar position="fixed" sx={styles.appBar}>
+			<AppBar
+				enableColorOnDark
+				position="fixed"
+				sx={styles.appBar}
+			>
 				<Toolbar>
 					<IconButton
 						size="large"
