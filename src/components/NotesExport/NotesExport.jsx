@@ -6,7 +6,8 @@ import {
 	Dialog,
 	DialogActions,
 	DialogContent,
-	DialogTitle,
+	AppBar,
+	Toolbar,
 	IconButton,
 	List,
 	ListItem,
@@ -89,7 +90,16 @@ const NotesExport = () => {
 	// Update / Reset checkedNotes if notes update
 	useEffect(resetSelectedNotes, [notes]);
 
-	if (!notes?.length) return null;
+	if (!notes?.length) {
+		return (
+			<ListItem button disabled>
+				<ListItemIcon>
+					<CloudDownloadIcon />
+				</ListItemIcon>
+				<ListItemText primary="Export Notes" />
+			</ListItem>
+		);
+	}
 	return (
 		<>
 			<ListItem
@@ -106,26 +116,27 @@ const NotesExport = () => {
 			{!isLoading && (
 				<Dialog
 					aria-labelledby="export-dialog-title"
-					sx={styles.dialog}
 					onClose={handleClose}
 					open={open}
 				>
-					<DialogTitle
-						sx={styles.root}
-						disableTypography
-						id="export-dialog-title"
-					>
-						<Typography variant="h6">Export Notes</Typography>
-						{handleClose ? (
-							<IconButton
-								aria-label="close"
-								sx={styles.closeButton}
-								onClick={handleClose}
-							>
-								<CloseIcon />
-							</IconButton>
-						) : null}
-					</DialogTitle>
+					<AppBar position="relative">
+						<Toolbar>
+							<Typography sx={styles.title} variant="h6" component="div">
+								Export Notes
+							</Typography>
+							{handleClose ? (
+								<IconButton
+									aria-label="close"
+									color="inherit"
+									edge="end"
+									onClick={handleClose}
+									size="large"
+								>
+									<CloseIcon />
+								</IconButton>
+							) : null}
+						</Toolbar>
+					</AppBar>
 
 					<DialogContent dividers>
 						<Typography gutterBottom>
@@ -135,7 +146,7 @@ const NotesExport = () => {
 							{`${selectedNotes.length} note(s) selected`}
 						</Typography>
 
-						<List sx={styles.list} dense>
+						<List dense>
 							{checkedNotes.map((note, index) => {
 								const currentNote = notes[index];
 								const labelId = `checkbox-list-label-${currentNote?.id}`;
