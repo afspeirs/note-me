@@ -26,6 +26,7 @@ const NotesValue = () => {
 	const history = useHistory();
 	const snackbar = useSnackbar();
 	const [notes, setNotes] = useState();
+	const [loading, setLoading] = useState(true);
 
 	const returnNoteObject = ({
 		dateCreated,
@@ -183,9 +184,11 @@ const NotesValue = () => {
 			onSnapshot(collection(db, user.uid), (snapshot) => {
 				const authNotes = snapshot.docs.map((docs) => docs.data());
 				setNotes(authNotes);
+				setLoading(false);
 			});
 		} else if (user !== null) {
 			setNotes([]);
+			setLoading(false);
 		}
 	}, [user]);
 
@@ -194,7 +197,7 @@ const NotesValue = () => {
 		deleteNote,
 		favouriteNote,
 		importNotes,
-		loading: notes === null,
+		loading,
 		notes,
 		updateNote,
 	};

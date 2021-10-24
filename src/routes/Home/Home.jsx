@@ -17,48 +17,47 @@ const Home = () => {
 
 	return (
 		<Page title="NoteMe">
-			{!user && !loading ? (
-				<List>
-					{/* eslint-disable max-len */}
-					<ListItem>
-						<ListItemText primary={`Hello and welcome to ${import.meta.env.VITE_APP_TITLE}`} />
-					</ListItem>
-					<ListItem>
-						<Typography component="span">
-							Store and edit your notes as Markdown formatted text (using
-							{' '}
-							<Link
-								href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet"
-								target="_blank"
-								rel="noopener noreferrer"
-							>
-								Github flavoured markdown
-							</Link>
-							{' '}
-							to support more features)
-						</Typography>
-					</ListItem>
-					<ListItem>
-						<ListItemText primary="Once signed in you can access your notes from any device, and changes will be reflected across other devices seamlessly." />
-					</ListItem>
-					<ListItem>
-						<ListItemText primary="Please sign in below to be able to store and edit your markdown notes from any device" />
-					</ListItem>
-					{/* eslint-enable max-len */}
 
+			<List>
+				{/* eslint-disable max-len */}
+				<ListItem>
+					<ListItemText primary={`Hello and welcome to ${import.meta.env.VITE_APP_TITLE}`} />
+				</ListItem>
+				<ListItem>
+					<Typography component="span">
+						Store and edit your notes as Markdown formatted text (using
+						{' '}
+						<Link
+							href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet"
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							Github flavoured markdown
+						</Link>
+						{' '}
+						to support more features)
+					</Typography>
+				</ListItem>
+
+				{!user && !loading ? (
+					<>
+						<ListItem>
+							<ListItemText primary="Once signed in you can access your notes from any device, and changes will be reflected across other devices seamlessly." />
+						</ListItem>
+						{/* eslint-enable max-len */}
+
+						<ListItem>
+							<Button variant="contained" color="primary" onClick={signIn}>
+								Sign in with Google
+							</Button>
+						</ListItem>
+					</>
+				) : (
 					<ListItem>
-						<Button variant="contained" color="primary" onClick={signIn}>
-							Sign in with Google
-						</Button>
+						<ListItemText primary="Select a note from the left side to get started" />
 					</ListItem>
-				</List>
-			) : (
-				<List>
-					<ListItem>
-						<ListItemText primary="Select a note from the left side" />
-					</ListItem>
-				</List>
-			)}
+				)}
+			</List>
 		</Page>
 	);
 };
