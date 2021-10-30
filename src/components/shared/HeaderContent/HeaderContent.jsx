@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
 	IconButton,
@@ -24,6 +24,7 @@ const propTypes = {
 	headerItems: PropTypes.arrayOf(
 		PropTypes.shape({
 			disabled: PropTypes.bool,
+			extra: PropTypes.node,
 			icon: PropTypes.node,
 			onClick: PropTypes.func,
 			text: PropTypes.string,
@@ -63,6 +64,7 @@ const HeaderContent = ({
 							</IconButton>
 						</span>
 					</Tooltip>
+					{first.extra}
 
 					{rest.length !== 0 && (
 						<>
@@ -89,28 +91,30 @@ const HeaderContent = ({
 								onClose={handleClose}
 							>
 								{rest.map((item, index) => (
-									<MenuItem
-										key={item.text}
-										aria-label={item.text}
-										color="inherit"
-										component={item.component}
-										disabled={disableHeaderItems || item.disabled}
-										edge={index === headerItems.length - 1 ? 'end' : null}
-										onClick={() => {
-											handleClose();
-											item.onClick();
-										}}
-										to={item.to}
-									>
-										<ListItemIcon
+									<Fragment key={item.text}>
+										<MenuItem
+											aria-label={item.text}
 											color="inherit"
-											aria-label="Create Note"
-											edge="start"
+											component={item.component}
+											disabled={disableHeaderItems || item.disabled}
+											edge={index === headerItems.length - 1 ? 'end' : null}
+											onClick={() => {
+												handleClose();
+												item.onClick();
+											}}
+											to={item.to}
 										>
-											{item.icon}
-										</ListItemIcon>
-										<span>{item.text}</span>
-									</MenuItem>
+											<ListItemIcon
+												color="inherit"
+												aria-label="Create Note"
+												edge="start"
+											>
+												{item.icon}
+											</ListItemIcon>
+											<span>{item.text}</span>
+										</MenuItem>
+										{item.extra}
+									</Fragment>
 								))}
 							</Menu>
 						</>
@@ -119,23 +123,26 @@ const HeaderContent = ({
 			) : (
 				<>
 					{headerItems.map((item, index) => (
-						<Tooltip key={item.text} title={item.text}>
-							{/* Wrapper element in case the Button is disabled */}
-							<span>
-								<IconButton
-									aria-label={item.text}
-									color="inherit"
-									component={item.component}
-									disabled={disableHeaderItems || item.disabled}
-									edge={index === headerItems.length - 1 ? 'end' : null}
-									onClick={item.onClick}
-									size="large"
-									to={item.to}
-								>
-									{item.icon}
-								</IconButton>
-							</span>
-						</Tooltip>
+						<Fragment key={item.text}>
+							<Tooltip title={item.text}>
+								{/* Wrapper element in case the Button is disabled */}
+								<span>
+									<IconButton
+										aria-label={item.text}
+										color="inherit"
+										component={item.component}
+										disabled={disableHeaderItems || item.disabled}
+										edge={index === headerItems.length - 1 ? 'end' : null}
+										onClick={item.onClick}
+										size="large"
+										to={item.to}
+									>
+										{item.icon}
+									</IconButton>
+								</span>
+							</Tooltip>
+							{item.extra}
+						</Fragment>
 					))}
 				</>
 			)}

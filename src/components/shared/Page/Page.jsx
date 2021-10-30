@@ -1,24 +1,24 @@
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
-import { Prompt } from 'react-router-dom';
+import { Prompt, useHistory } from 'react-router-dom';
 import {
 	AppBar,
 	Box,
 	IconButton,
 	Toolbar,
 	Typography,
-	useMediaQuery,
 } from '@mui/material';
 import {
-	Menu as MenuIcon,
+	ArrowBack as ArrowBackIcon,
 } from '@mui/icons-material';
 
 import HeaderContent from '@/components/shared/HeaderContent';
-import { useGlobalState } from '@/hooks/GlobalState';
-import styles, { Content, Main } from './Page.styled';
+import styles from './Page.styled';
 
 const defaultProps = {
 	headerItems: [],
+	disableHeaderItemsOverflowMenu: false,
+	showBackButton: true,
 	showPrompt: false,
 	title: '',
 	titleDocument: null,
@@ -29,6 +29,7 @@ const propTypes = {
 		PropTypes.arrayOf(PropTypes.node),
 		PropTypes.node,
 	]).isRequired,
+	disableHeaderItemsOverflowMenu: PropTypes.bool,
 	headerItems: PropTypes.arrayOf(
 		PropTypes.shape({
 			disabled: PropTypes.bool,
@@ -37,6 +38,7 @@ const propTypes = {
 			text: PropTypes.string,
 		}),
 	),
+	showBackButton: PropTypes.bool,
 	showPrompt: PropTypes.bool,
 	title: PropTypes.string,
 	titleDocument: PropTypes.string,
@@ -44,15 +46,20 @@ const propTypes = {
 
 const Page = ({
 	children,
+	disableHeaderItemsOverflowMenu,
 	headerItems,
+	showBackButton,
 	showPrompt,
 	title,
 	titleDocument,
 }) => {
-	const [{ drawerOpen }, dispatch] = useGlobalState();
-	const mobile = useMediaQuery('(max-width:600px)');
+	const history = useHistory();
 
-	const handleDrawerToggle = () => dispatch({ type: 'app-drawerOpen' });
+	const handleBackClick = (event) => {
+		event.stopPropagation();
+		history.push('/');
+		// history.goBack();
+	};
 
 	return (
 		<Box sx={styles.root}>
@@ -62,36 +69,36 @@ const Page = ({
 
 			<AppBar
 				enableColorOnDark
-				position="fixed"
-				sx={styles.appBar}
+				position="relative"
 			>
 				<Toolbar>
-					<IconButton
-						size="large"
-						edge="start"
-						color="inherit"
-						aria-label="menu"
-						sx={styles.menuIcon}
-						onClick={handleDrawerToggle}
-					>
-						<MenuIcon />
-					</IconButton>
+					{showBackButton && (
+						<IconButton
+							size="large"
+							edge="start"
+							color="inherit"
+							aria-label="menu"
+							sx={styles.menuIcon}
+							onClick={handleBackClick}
+						>
+							<ArrowBackIcon />
+						</IconButton>
+					)}
 					<Typography variant="h6" component="h1" noWrap sx={styles.title}>
 						{title}
 					</Typography>
 					<HeaderContent
 						headerItems={headerItems}
-						disableHeaderItems={mobile && drawerOpen}
+						disableOverflowMenu={disableHeaderItemsOverflowMenu}
 					/>
 				</Toolbar>
 			</AppBar>
 
-			<Content open={drawerOpen}>
-				<Toolbar />
-				<Main>
+			<Box sx={styles.content}>
+				<Box component="main" sx={styles.main}>
 					{children}
-				</Main>
-			</Content>
+				</Box>
+			</Box>
 
 			<Prompt when={showPrompt} message="Are you sure you want to leave without saving?" />
 		</Box>

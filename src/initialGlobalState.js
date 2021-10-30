@@ -1,6 +1,5 @@
 export default {
 	beforeInstallPrompt: null,
-	drawerOpen: false,
 	search: {
 		show: false,
 		text: '',
