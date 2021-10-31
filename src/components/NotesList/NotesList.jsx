@@ -4,48 +4,39 @@ import {
 	useRef,
 	useState,
 } from 'react';
-import PropTypes from 'prop-types';
 import {
-	Chip,
 	List,
 	ListItem,
 	ListItemIcon,
 	ListItemSecondaryAction,
 	ListItemText,
 	Popover,
-} from '@material-ui/core';
+} from '@mui/material';
 import {
-	Alarm as AlarmIcon,
-	KeyboardArrowRight as ArrowIcon,
 	Delete as DeleteIcon,
-	Label as LabelIcon,
+	InfoOutlined as InfoIcon,
+	KeyboardArrowRight as ArrowIcon,
 	Star as StarIcon,
 	StarBorder as StarBorderIcon,
-} from '@material-ui/icons';
+} from '@mui/icons-material';
 
-import LabelsAddDialog from '@/components/LabelsAddDialog';
 import RouterNavLink from '@/components/shared/RouterNavLink';
 import useContextMenu from '@/hooks/ContextMenu/useContextMenu';
 import { useGlobalState } from '@/hooks/GlobalState';
 import { useNotes } from '@/hooks/Notes';
 import { getDateCalendar, getDateRelative } from '@/utils';
-import useStyles from './NotesList.styled';
+import styles from './NotesList.styled';
 
-const defaultProps = {
-	notes: undefined,
-};
-
-const propTypes = {
-	notes: PropTypes.arrayOf(PropTypes.object),
-};
-
-const NotesList = ({ notes }) => {
-	const classes = useStyles();
-	const [{ search, settings: { sortNotesFavourite, sortNotesOrder } }, dispatch] = useGlobalState();
-	const { deleteNote, favouriteNote, loading } = useNotes();
+const NotesList = () => {
+	const [{ search, settings: { sortNotesFavourite, sortNotesOrder } }] = useGlobalState();
+	const {
+		deleteNote,
+		favouriteNote,
+		loading,
+		notes,
+	} = useNotes();
 	const parentEl = useRef(null);
 	const [filteredNotes, setFilteredNotes] = useState([]);
-	const [openAddLabel, setOpenAddLabel] = useState(null);
 	const { contextMenu, contextMenuClose } = useContextMenu(parentEl);
 
 	const sortNoteFunction = {
@@ -65,16 +56,6 @@ const NotesList = ({ notes }) => {
 		return 0;
 	};
 
-	const updateSearchText = (text) => {
-		dispatch({
-			type: 'app-search',
-			value: {
-				show: true,
-				text,
-			},
-		});
-	};
-
 	const sortArray = (array) => array
 		.sort(sortNoteFunction)
 		.sort(sortNotesFavouriteFunction);
@@ -84,26 +65,15 @@ const NotesList = ({ notes }) => {
 		favouriteNote(note);
 	};
 
-	const handleAddLabelsClick = (note) => {
-		contextMenuClose();
-		setOpenAddLabel(note);
-	};
-
 	const handleDeleteNote = (note) => {
 		contextMenuClose();
 		deleteNote(note);
 	};
 
-	const handleLabelClick = (label) => {
-		contextMenuClose();
-		updateSearchText(label);
-	};
-
 	/* eslint-disable max-len */
 	useEffect(() => {
 		if (notes) {
-			const filtered = notes.filter((note) => note?.text.toLowerCase().search(search?.text.toLowerCase()) !== -1
-			|| note.labels?.find((label) => label?.toLowerCase().search(search?.text.toLowerCase()) !== -1));
+			const filtered = notes.filter((note) => note?.text.toLowerCase().search(search?.text.toLowerCase()) !== -1);
 
 			if ((filteredNotes !== filtered) && notes?.length) {
 				setFilteredNotes(filtered);
@@ -114,7 +84,7 @@ const NotesList = ({ notes }) => {
 
 	return (
 		<>
-			<List className={classes.list} ref={parentEl}>
+			<List sx={styles.list} ref={parentEl}>
 				{loading && (
 					<ListItem>
 						<ListItemText primary="Loading, please wait while we gather your notes" />
@@ -140,9 +110,9 @@ const NotesList = ({ notes }) => {
 									noWrap: true,
 								}}
 							/>
-							<ListItemSecondaryAction className={classes.listItemSecondary}>
+							<ListItemSecondaryAction sx={styles.listItemSecondary}>
 								{note.favourite && (
-									<StarIcon color="primary" edge="end" />
+									<StarIcon color="primary" />
 								)}
 								<ArrowIcon color="disabled" />
 							</ListItemSecondaryAction>
@@ -157,10 +127,10 @@ const NotesList = ({ notes }) => {
 							<List dense>
 								<ListItem>
 									<ListItemIcon>
-										<AlarmIcon color="primary" />
+										<InfoIcon />
 									</ListItemIcon>
 									<ListItemText
-										className={classes.listItemTextDate}
+										sx={styles.listItemTextDate}
 										primary={`Last modified ${getDateRelative(note.dateModified)}`}
 										primaryTypographyProps={{
 											noWrap: true,
@@ -183,17 +153,6 @@ const NotesList = ({ notes }) => {
 										}}
 									/>
 								</ListItem>
-								<ListItem button onClick={() => handleAddLabelsClick(note)}>
-									<ListItemIcon>
-										<LabelIcon color="primary" />
-									</ListItemIcon>
-									<ListItemText
-										primary={`${note?.labels?.length !== 0 ? 'Change' : 'Add'} Labels`}
-										primaryTypographyProps={{
-											noWrap: true,
-										}}
-									/>
-								</ListItem>
 								<ListItem button onClick={() => handleDeleteNote(note)}>
 									<ListItemIcon>
 										<DeleteIcon color="error" />
@@ -205,31 +164,13 @@ const NotesList = ({ notes }) => {
 										}}
 									/>
 								</ListItem>
-								{note.labels?.length ? (
-									<ListItem>
-										{note.labels.map((label) => (
-											<Chip
-												key={label}
-												clickable
-												className={classes.chip}
-												label={label}
-												onClick={() => handleLabelClick(label)}
-											/>
-										))}
-									</ListItem>
-								) : null}
 							</List>
 						</Popover>
 					</Fragment>
 				))}
 			</List>
-
-			<LabelsAddDialog note={openAddLabel} setOpen={setOpenAddLabel} />
 		</>
 	);
 };
-
-NotesList.defaultProps = defaultProps;
-NotesList.propTypes = propTypes;
 
 export default NotesList;

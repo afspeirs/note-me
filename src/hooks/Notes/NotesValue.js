@@ -1,10 +1,19 @@
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import {
+	collection,
+	deleteDoc,
+	doc,
+	setDoc,
+	updateDoc,
+	onSnapshot,
+	writeBatch,
+} from 'firebase/firestore';
 import { useConfirm } from 'material-ui-confirm';
 
 import { useAuth } from '@/hooks/Auth';
-import { useSnackbar } from '@/hooks//Snackbar';
-import { firestore } from '@/firebase';
+import { useSnackbar } from '@/hooks/Snackbar';
+import { db } from '@/firebase';
 
 const getTitle = (text) => {
 	const title = text.split('\n')[0].replace(/#+ /g, '');
@@ -16,15 +25,14 @@ const NotesValue = () => {
 	const confirm = useConfirm();
 	const history = useHistory();
 	const snackbar = useSnackbar();
-	const [labels, setLabels] = useState([]);
 	const [notes, setNotes] = useState();
+	const [loading, setLoading] = useState(true);
 
 	const returnNoteObject = ({
 		dateCreated,
 		dateModified,
 		favourite,
 		id,
-		labels: newNoteLabels,
 		text,
 		title,
 	}) => {
@@ -39,7 +47,6 @@ const NotesValue = () => {
 			dateModified: dateModified || +new Date(),
 			favourite: favourite || false,
 			id,
-			labels: newNoteLabels || [],
 			text: text || '',
 			title: title || getTitle(text || ''),
 		};
@@ -64,14 +71,13 @@ const NotesValue = () => {
 				history.push(path);
 			}
 		} else {
-			const newNote = await firestore.collection(user.uid).doc();
+			const noteRef = await doc(collection(db, user.uid));
 			const value = returnNoteObject({
-				id: newNote.id,
+				id: noteRef.id,
 				text,
 			});
 
-			await newNote
-				.set(value)
+			await setDoc(noteRef, value)
 				.then(() => {
 					const path = `/note/${value.id}`;
 
@@ -94,10 +100,11 @@ const NotesValue = () => {
 			confirmationText: 'Delete',
 		})
 			.then(async () => {
-				await firestore.collection(user.uid).doc(note.id)
-					.delete()
+				const noteRef = doc(db, user.uid, note.id);
+
+				await deleteDoc(noteRef)
 					.then(() => snackbar.showMessage({
-						actionFunction: () => firestore.collection(user.uid).doc(note.id).set(note),
+						actionFunction: () => setDoc(noteRef, note),
 						actionText: 'Undo',
 						message: `"${note.title}" has been deleted`,
 					}));
@@ -112,12 +119,13 @@ const NotesValue = () => {
 	 * @param {object} [note]
 	 */
 	const favouriteNote = async (note) => {
-		await firestore.collection(user.uid).doc(note.id)
-			.update({
-				favourite: !note.favourite,
-			})
+		const noteRef = doc(db, user.uid, note.id);
+
+		await updateDoc(noteRef, {
+			favourite: !note.favourite,
+		})
 			.then(() => snackbar.showMessage({
-				actionFunction: () => firestore.collection(user.uid).doc(note.id).set(note),
+				actionFunction: () => setDoc(noteRef, note),
 				actionText: 'Undo',
 				message: `"${note.title}" has been ${note.favourite ? 'removed' : 'added'} as a favourite`,
 			}));
@@ -127,35 +135,23 @@ const NotesValue = () => {
 	 * Creates notes from an array
 	 * @param {array} [listOfNotes]
 	 */
-	const importNotes = (listOfNotes) => {
-		const batch = firestore.batch();
+	const importNotes = async (listOfNotes) => {
+		const batch = writeBatch(db);
 
 		listOfNotes.forEach((note) => {
 			// TODO: Check if the note already exists before making a new document
-			const newNote = firestore.collection(user.uid).doc();
+			const noteRef = doc(collection(db, user.uid));
 			const value = returnNoteObject({
 				...note,
-				id: newNote.id,
+				id: noteRef.id,
 			});
 
-			batch.set(newNote, value);
+			batch.set(noteRef, value);
 		});
 
-		batch.commit().then(() => snackbar.showMessage({
+		await batch.commit().then(() => snackbar.showMessage({
 			message: `${listOfNotes.length} note${listOfNotes.length === 1 ? ' has' : 's have'} been imported`,
 		}));
-	};
-
-	/**
-	 * Update the labels on a note
-	 * @param {string} id
-	 * @param {array} newLabels
-	 */
-	const updateLabels = async (id, newLabels) => {
-		await firestore.collection(user.uid).doc(id)
-			.update({
-				labels: newLabels,
-			});
 	};
 
 	/**
@@ -164,12 +160,13 @@ const NotesValue = () => {
 	 * @param {string} text
 	 */
 	const updateNote = async (id, text) => {
-		await firestore.collection(user.uid).doc(id)
-			.update({
-				dateModified: +new Date(),
-				text,
-				title: getTitle(text),
-			});
+		const noteRef = doc(db, user.uid, id);
+
+		await updateDoc(noteRef, {
+			dateModified: +new Date(),
+			text,
+			title: getTitle(text),
+		});
 	};
 
 	/**
@@ -184,16 +181,14 @@ const NotesValue = () => {
 
 	useEffect(() => {
 		if (user) {
-			firestore.collection(user.uid)
-				.onSnapshot((snapshot) => {
-					const authNotes = snapshot.docs.map((doc) => doc.data());
-					const authLabels = authNotes.map((note) => note.labels).filter(Boolean).flat();
-					setNotes(authNotes);
-					setLabels([...new Set(authLabels)].sort());
-				});
-		} else if (user !== undefined) {
+			onSnapshot(collection(db, user.uid), (snapshot) => {
+				const authNotes = snapshot.docs.map((docs) => docs.data());
+				setNotes(authNotes);
+				setLoading(false);
+			});
+		} else if (user !== null) {
 			setNotes([]);
-			setLabels([]);
+			setLoading(false);
 		}
 	}, [user]);
 
@@ -202,10 +197,8 @@ const NotesValue = () => {
 		deleteNote,
 		favouriteNote,
 		importNotes,
-		labels,
-		loading: notes === undefined,
+		loading,
 		notes,
-		updateLabels,
 		updateNote,
 	};
 };

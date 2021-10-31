@@ -1,17 +1,17 @@
 import { useEffect, useState } from 'react';
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 
-import { auth, provider } from '@/firebase';
+import { auth } from '@/firebase';
 
 const AuthValue = () => {
-	const [user, setUser] = useState();
+	const [user, setUser] = useState(null);
 
-	const signIn = () => auth
-		.signInWithPopup(provider)
-		.then(({ user: authUser }) => setUser(authUser));
+	const provider = new GoogleAuthProvider();
 
-	const signOut = () => auth
-		.signOut()
-		.then(() => setUser(false));
+	const signIn = () => signInWithPopup(auth, provider)
+		.catch((error) => console.error(error)); // eslint-disable-line no-console
+
+	const signOut = () => auth.signOut();
 
 	useEffect(() => {
 		const unsubscribe = auth

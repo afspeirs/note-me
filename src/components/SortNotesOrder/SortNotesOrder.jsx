@@ -6,10 +6,10 @@ import {
 	ListItem,
 	ListItemIcon,
 	ListItemText,
-} from '@material-ui/core';
+} from '@mui/material';
 import {
 	Sort as SortIcon,
-} from '@material-ui/icons';
+} from '@mui/icons-material';
 
 import { useAuth } from '@/hooks/Auth';
 import { useGlobalState } from '@/hooks/GlobalState';

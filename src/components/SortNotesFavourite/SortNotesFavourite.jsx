@@ -4,19 +4,18 @@ import {
 	ListItemSecondaryAction,
 	ListItemText,
 	Switch,
-} from '@material-ui/core';
+} from '@mui/material';
 import {
 	Star as StarIcon,
-} from '@material-ui/icons';
+} from '@mui/icons-material';
 
 import { useAuth } from '@/hooks/Auth';
 import { useGlobalState } from '@/hooks/GlobalState';
-import useStyles from './SortNotesFavourite.styled';
+import styles from './SortNotesFavourite.styled';
 
 const SortNotesFavourite = () => {
 	const { isSignedIn } = useAuth();
 	const [{ settings: { sortNotesFavourite } }, dispatch] = useGlobalState();
-	const classes = useStyles();
 
 	const handleToggle = () => dispatch({ type: 'settings-sortNotesFavourite' });
 
@@ -33,12 +32,13 @@ const SortNotesFavourite = () => {
 				id="change-sort-favourite"
 				primary="Show Favourites first"
 			/>
-			<ListItemSecondaryAction className={classes.listItemSecondaryAction}>
+			<ListItemSecondaryAction sx={styles.listItemSecondary}>
 				<Switch
 					color="primary"
 					edge="end"
 					checked={sortNotesFavourite}
 					inputProps={{ 'aria-labelledby': 'change-sort-favourite' }}
+					tabIndex={-1}
 				/>
 			</ListItemSecondaryAction>
 		</ListItem>

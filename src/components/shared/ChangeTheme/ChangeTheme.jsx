@@ -6,10 +6,10 @@ import {
 	ListItem,
 	ListItemIcon,
 	ListItemText,
-} from '@material-ui/core';
+} from '@mui/material';
 import {
 	Brush as BrushIcon,
-} from '@material-ui/icons';
+} from '@mui/icons-material';
 
 import { useGlobalState } from '@/hooks/GlobalState';
 import options from './data';

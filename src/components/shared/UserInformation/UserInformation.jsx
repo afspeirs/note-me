@@ -6,20 +6,18 @@ import {
 	ListItemSecondaryAction,
 	ListItemText,
 	Tooltip,
-} from '@material-ui/core';
+} from '@mui/material';
 import {
 	ExitToApp as ExitToAppIcon,
-} from '@material-ui/icons';
+} from '@mui/icons-material';
 import { useConfirm } from 'material-ui-confirm';
 
 import { useAuth } from '@/hooks/Auth';
 import blankUserPhoto from './blank-user-photo.png';
-import useStyles from './UserInformation.styled';
 
 const UserInformation = () => {
 	const { signIn, signOut, user } = useAuth();
 	const confirm = useConfirm();
-	const classes = useStyles();
 
 	const handleSignOutClick = () => confirm({
 		title: 'Are you sure you want to sign out?',
@@ -55,9 +53,7 @@ const UserInformation = () => {
 			) : (
 				<ListItem button onClick={signIn}>
 					<ListItemAvatar>
-						<Avatar>
-							<img className={classes.accountIcon} src={blankUserPhoto} alt="not signed in" />
-						</Avatar>
+						<Avatar src={blankUserPhoto} alt="" />
 					</ListItemAvatar>
 					<ListItemText primary="Sign In" secondary="Using your Google Account" />
 				</ListItem>

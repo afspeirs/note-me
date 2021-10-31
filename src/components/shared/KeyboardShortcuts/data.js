@@ -1,18 +1,5 @@
 export default [
 	{
-		name: 'Home Page',
-		shortcuts: [
-			{
-				name: 'Show Search bar',
-				key: 'CTRL + F',
-			},
-			{
-				name: 'Hide Search bar',
-				key: 'Escape',
-			},
-		],
-	},
-	{
 		name: 'Note Page',
 		shortcuts: [
 			{
@@ -22,15 +9,6 @@ export default [
 			{
 				name: 'Save Note (will also Edit Note)',
 				key: 'CTRL + S',
-			},
-		],
-	},
-	{
-		name: 'Navigation',
-		shortcuts: [
-			{
-				name: 'Toggle Navigation Drawer',
-				key: 'CTRL + B',
 			},
 		],
 	},

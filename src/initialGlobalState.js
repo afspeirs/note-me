@@ -1,6 +1,5 @@
 export default {
-	beforeInstallPrompt: undefined,
-	containerTitle: undefined,
+	beforeInstallPrompt: null,
 	search: {
 		show: false,
 		text: '',

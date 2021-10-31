@@ -11,10 +11,10 @@ import {
 	TableContainer,
 	TableHead,
 	TableRow,
-} from '@material-ui/core';
+} from '@mui/material';
 import {
 	Keyboard as KeyboardIcon,
-} from '@material-ui/icons';
+} from '@mui/icons-material';
 
 import data from './data';
 

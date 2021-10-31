@@ -1,1 +1,1 @@
-export { default, isModal } from './Routes';
+export { default } from './Routes';

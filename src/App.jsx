@@ -1,10 +1,9 @@
 import { useMemo } from 'react';
-import { createTheme, ThemeProvider } from '@material-ui/core/styles';
-import { CssBaseline, useMediaQuery } from '@material-ui/core';
+import { CssBaseline, useMediaQuery } from '@mui/material';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { ConfirmProvider } from 'material-ui-confirm';
 
 import theme from './theme';
-import Container from './components/Container';
 import Routes from './components/Routes';
 import FilesDragAndDrop from './components/FilesDragAndDrop';
 import ServiceWorkerContent from './components/shared/ServiceWorkerContent';
@@ -20,7 +19,7 @@ const App = () => {
 			palette: {
 				...theme.palette,
 				// eslint-disable-next-line no-nested-ternary
-				type: appTheme === 'default' ? (prefersDarkMode ? 'dark' : 'light') : appTheme,
+				mode: appTheme === 'default' ? (prefersDarkMode ? 'dark' : 'light') : appTheme,
 			},
 		}),
 		[prefersDarkMode, appTheme],
@@ -32,9 +31,7 @@ const App = () => {
 				<SnackbarProvider>
 					<NotesProvider>
 						<CssBaseline />
-						<Container>
-							<Routes />
-						</Container>
+						<Routes />
 
 						<FilesDragAndDrop />
 						<ServiceWorkerContent />
