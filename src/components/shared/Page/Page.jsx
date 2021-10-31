@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import { Prompt, useHistory } from 'react-router-dom';
+import { useTheme } from '@mui/material/styles';
 import {
 	AppBar,
 	Box,
@@ -54,6 +55,7 @@ const Page = ({
 	titleDocument,
 }) => {
 	const history = useHistory();
+	const theme = useTheme();
 
 	const handleBackClick = (event) => {
 		event.stopPropagation();
@@ -65,12 +67,12 @@ const Page = ({
 		<Box sx={styles.root}>
 			<Helmet>
 				<title>{titleDocument || `${title} | ${import.meta.env.VITE_APP_TITLE}`}</title>
+				{theme.palette.mode === 'dark' && (
+					<meta name="theme-color" content={theme.palette.primary.dark} />
+				)}
 			</Helmet>
 
-			<AppBar
-				enableColorOnDark
-				position="relative"
-			>
+			<AppBar position="relative">
 				<Toolbar>
 					{showBackButton && (
 						<IconButton
