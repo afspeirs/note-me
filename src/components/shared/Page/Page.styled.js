@@ -32,6 +32,7 @@ const styles = {
 	},
 	title: {
 		flexGrow: 1,
+		userSelect: 'none',
 	},
 };
 
