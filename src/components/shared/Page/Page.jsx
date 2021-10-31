@@ -56,6 +56,7 @@ const Page = ({
 }) => {
 	const history = useHistory();
 	const theme = useTheme();
+	const { mode } = theme.palette;
 
 	const handleBackClick = (event) => {
 		event.stopPropagation();
@@ -67,9 +68,7 @@ const Page = ({
 		<Box sx={styles.root}>
 			<Helmet>
 				<title>{titleDocument || `${title} | ${import.meta.env.VITE_APP_TITLE}`}</title>
-				{theme.palette.mode === 'dark' && (
-					<meta name="theme-color" content="#121212" />
-				)}
+				<meta name="theme-color" content={mode === 'dark' ? '#121212' : '#ee6e00'} />
 			</Helmet>
 
 			<AppBar position="relative">
