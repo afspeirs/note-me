@@ -68,7 +68,7 @@ const Page = ({
 			<Helmet>
 				<title>{titleDocument || `${title} | ${import.meta.env.VITE_APP_TITLE}`}</title>
 				{theme.palette.mode === 'dark' && (
-					<meta name="theme-color" content={theme.palette.primary.dark} />
+					<meta name="theme-color" content="#121212" />
 				)}
 			</Helmet>
 
