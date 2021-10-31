@@ -1,14 +1,9 @@
-import { makeStyles } from '@material-ui/core/styles';
-
-const useStyles = makeStyles((theme) => ({
-	chip: {
-		marginLeft: theme.spacing(1),
-	},
+const styles = {
 	list: {
 		flexGrow: 1,
 		overflowY: 'auto',
 		overflowX: 'hidden',
-		paddingBottom: 56 + theme.spacing(4),
+		paddingBottom: 12,
 	},
 	listItemSecondary: {
 		display: 'flex',
@@ -18,6 +13,6 @@ const useStyles = makeStyles((theme) => ({
 		userSelect: 'none',
 		margin: 0,
 	},
-}));
+};
 
-export default useStyles;
+export default styles;

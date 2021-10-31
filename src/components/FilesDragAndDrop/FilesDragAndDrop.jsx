@@ -1,13 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
-import clsx from 'clsx';
 import { useConfirm } from 'material-ui-confirm';
 
 import { useNotes } from '@/hooks/Notes';
 import { useSnackbar } from '@/hooks/Snackbar';
-import useStyles from './FilesDragAndDrop.styled';
+import { DropZoneStyled } from './FilesDragAndDrop.styled';
 
 const FilesDragAndDrop = () => {
-	const classes = useStyles();
 	const confirm = useConfirm();
 	const { createNote, importNotes } = useNotes();
 	const drop = useRef(null);
@@ -119,12 +117,10 @@ const FilesDragAndDrop = () => {
 	}, []);
 
 	return (
-		<div
+		<DropZoneStyled
 			aria-hidden="true"
 			ref={drop}
-			className={clsx(classes.dropZone, {
-				[classes.dragging]: dragging,
-			})}
+			dragging={dragging}
 		/>
 	);
 };

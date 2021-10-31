@@ -1,4 +1,3 @@
-import { useLocation } from 'react-router-dom';
 import {
 	AppBar,
 	Fade,
@@ -6,21 +5,18 @@ import {
 	InputBase,
 	Slide,
 	Toolbar,
-} from '@material-ui/core';
+} from '@mui/material';
 import {
 	ArrowBack as ArrowBackIcon,
 	Clear as ClearIcon,
-} from '@material-ui/icons';
+} from '@mui/icons-material';
 
-import { isModal } from '@/components/Routes';
 import { useGlobalState } from '@/hooks/GlobalState';
 import { useHotkeys } from '@/hooks/Hotkeys';
-import useStyles from './NotesSearch.styled';
+import styles from './NotesSearch.styled';
 
 const NotesSearch = () => {
-	const classes = useStyles();
 	const [{ search }, dispatch] = useGlobalState();
-	const { pathname } = useLocation();
 
 	const hideSearch = () => {
 		dispatch({
@@ -53,8 +49,6 @@ const NotesSearch = () => {
 			callback: (event) => {
 				event.preventDefault();
 
-				if (isModal(pathname)) return;
-
 				dispatch({
 					type: 'app-search',
 					value: {
@@ -69,8 +63,6 @@ const NotesSearch = () => {
 		{
 			keys: ['Escape'],
 			callback: () => {
-				if (isModal(pathname)) return;
-
 				dispatch({
 					type: 'app-search',
 					value: {
@@ -87,24 +79,21 @@ const NotesSearch = () => {
 			{/* This div makes the Transitions work */}
 			<div>
 				<Slide in={search.show} direction="left" timeout={256} mountOnEnter unmountOnExit>
-					<AppBar position="absolute" elevation={0}>
+					<AppBar position="fixed" elevation={0}>
 						<Toolbar>
 							<IconButton
-								className={classes.menuButton}
-								color="inherit"
 								aria-label="Hide Search"
+								color="inherit"
 								edge="start"
 								onClick={hideSearch}
+								size="large"
+								sx={styles.menuButton}
 							>
 								<ArrowBackIcon />
 							</IconButton>
 							<InputBase
 								autoFocus
-								className={classes.search}
-								classes={{
-									root: classes.inputRoot,
-									input: classes.inputInput,
-								}}
+								sx={styles.search}
 								inputProps={{ 'aria-label': 'search' }}
 								onChange={handleTextInput}
 								placeholder="Search Notes"
@@ -112,9 +101,10 @@ const NotesSearch = () => {
 								endAdornment={search.text.length !== 0 && (
 									<IconButton
 										aria-label="Clear Search"
-										edge="end"
 										color="inherit"
+										edge="end"
 										onClick={handleTextClear}
+										size="large"
 									>
 										<ClearIcon />
 									</IconButton>

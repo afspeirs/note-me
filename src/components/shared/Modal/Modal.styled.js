@@ -1,9 +1,4 @@
-import { makeStyles } from '@material-ui/core/styles';
-
-const useStyles = makeStyles((theme) => ({
-	paper: (props) => ({
-		height: props.maxHeight ? '100%' : '',
-	}),
+const styles = {
 	appBarPadding: {
 		paddingTop: 'env(safe-area-inset-top)',
 		paddingLeft: 'env(safe-area-inset-left)',
@@ -23,14 +18,12 @@ const useStyles = makeStyles((theme) => ({
 		},
 	},
 	menuButton: {
-		marginRight: theme.spacing(2),
+		marginRight: 2,
 	},
 	title: {
 		flex: 1,
 		userSelect: 'none',
 	},
-}), {
-	name: 'Modal',
-});
+};
 
-export default useStyles;
+export default styles;

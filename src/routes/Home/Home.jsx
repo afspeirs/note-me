@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react';
-import { useParams, useLocation } from 'react-router-dom';
+import { useMemo } from 'react';
 import {
 	Button,
 	Fab,
@@ -9,43 +8,57 @@ import {
 	ListItemText,
 	Tooltip,
 	Typography,
-} from '@material-ui/core';
+} from '@mui/material';
 import {
 	Add as AddIcon,
-} from '@material-ui/icons';
+	Search as SearchIcon,
+	Settings as SettingsIcon,
+} from '@mui/icons-material';
 
 import NotesList from '@/components/NotesList';
-import { isModal } from '@/components/Routes';
+import NotesSearch from '@/components/NotesSearch';
+import Page from '@/components/shared/Page';
+import RouterLink from '@/components/shared/RouterLink';
 import { useAuth } from '@/hooks/Auth';
 import { useGlobalState } from '@/hooks/GlobalState';
 import { useNotes } from '@/hooks/Notes';
-import useStyles from './Home.styled';
+import styles from './Home.styled';
 
 const Home = () => {
-	const { signIn, user } = useAuth();
-	const dispatch = [...useGlobalState()].pop(); // I don't need to access any of the reducer state
-	const { createNote, loading, notes } = useNotes();
-	const { pathname } = useLocation();
-	const { label } = useParams();
-	const classes = useStyles();
-	const [filteredNotes, setFilteredNotes] = useState([]);
+	const { signIn, isSignedIn } = useAuth();
+	const [{ search }, dispatch] = useGlobalState();
+	const { createNote, loading } = useNotes();
 
-	useEffect(() => {
-		if (isModal(pathname)) return; // Disable functionally when on a modal page.
-
-		if (user) {
-			dispatch({
-				type: 'app-containerTitle',
-				value: label || 'All Notes',
-			});
-		}
-
-		setFilteredNotes(label ? notes?.filter((note) => note?.labels?.includes(label)) : notes);
-	}, [label, notes]);
+	const headerItems = useMemo(() => [
+		{
+			icon: <SearchIcon />,
+			onClick: () => dispatch({
+				type: 'app-search',
+				value: {
+					...search,
+					show: true,
+				},
+			}),
+			text: 'Search Notes',
+			visible: isSignedIn,
+			extra: <NotesSearch />,
+		},
+		{
+			icon: <SettingsIcon />,
+			component: RouterLink,
+			to: '/settings/',
+			text: 'Settings',
+		},
+	].filter((item) => item.visible !== false), [isSignedIn]);
 
 	return (
-		<main className={classes.page}>
-			{!user && !loading ? (
+		<Page
+			disableHeaderItemsOverflowMenu
+			headerItems={headerItems}
+			showBackButton={false}
+			title="NoteMe"
+		>
+			{!isSignedIn && !loading ? (
 				<List>
 					{/* eslint-disable max-len */}
 					<ListItem>
@@ -66,37 +79,43 @@ const Home = () => {
 							to support more features)
 						</Typography>
 					</ListItem>
-					<ListItem>
-						<ListItemText primary="Once signed in you can access your notes from any device, and changes will be reflected across other devices seamlessly." />
-					</ListItem>
-					<ListItem>
-						<ListItemText primary="Please sign in below to be able to store and edit your markdown notes from any device" />
-					</ListItem>
-					{/* eslint-enable max-len */}
 
-					<ListItem>
-						<Button variant="contained" color="primary" onClick={signIn}>
-							Sign in with Google
-						</Button>
-					</ListItem>
+					{!isSignedIn && !loading ? (
+						<>
+							<ListItem>
+								<ListItemText primary="Once signed in you can access your notes from any device, and changes will be reflected across other devices seamlessly." />
+							</ListItem>
+							{/* eslint-enable max-len */}
+
+							<ListItem>
+								<Button variant="contained" color="primary" onClick={signIn}>
+									Sign in with Google
+								</Button>
+							</ListItem>
+						</>
+					) : (
+						<ListItem>
+							<ListItemText primary="Select a note from the left side to get started" />
+						</ListItem>
+					)}
 				</List>
 			) : (
 				<>
-					<NotesList notes={filteredNotes || []} />
+					<NotesList />
 
 					<Tooltip title="Create Note">
 						<Fab
 							color="primary"
 							aria-label="Create Note"
-							className={classes.fab}
 							onClick={() => createNote()}
+							sx={styles.fab}
 						>
 							<AddIcon />
 						</Fab>
 					</Tooltip>
 				</>
 			)}
-		</main>
+		</Page>
 	);
 };
 
