@@ -91,56 +91,63 @@ const HeaderContent = ({
 								onClose={handleClose}
 							>
 								{rest.map((item, index) => (
-									<Fragment key={item.text}>
-										<MenuItem
-											aria-label={item.text}
+									<MenuItem
+										key={item.text}
+										aria-label={item.text}
+										color="inherit"
+										component={item.component}
+										disabled={disableHeaderItems || item.disabled}
+										edge={index === headerItems.length - 1 ? 'end' : null}
+										onClick={() => {
+											handleClose();
+											item.onClick();
+										}}
+										to={item.to}
+									>
+										<ListItemIcon
 											color="inherit"
-											component={item.component}
-											disabled={disableHeaderItems || item.disabled}
-											edge={index === headerItems.length - 1 ? 'end' : null}
-											onClick={() => {
-												handleClose();
-												item.onClick();
-											}}
-											to={item.to}
+											aria-label="Create Note"
+											edge="start"
 										>
-											<ListItemIcon
-												color="inherit"
-												aria-label="Create Note"
-												edge="start"
-											>
-												{item.icon}
-											</ListItemIcon>
-											<span>{item.text}</span>
-										</MenuItem>
-										{item.extra}
-									</Fragment>
+											{item.icon}
+										</ListItemIcon>
+										<span>{item.text}</span>
+									</MenuItem>
 								))}
 							</Menu>
+
+							{rest.map((item) => (
+								<Fragment key={item.name}>
+									{item.extra}
+								</Fragment>
+							))}
 						</>
 					)}
 				</>
 			) : (
 				<>
 					{headerItems.map((item, index) => (
-						<Fragment key={item.text}>
-							<Tooltip title={item.text}>
-								{/* Wrapper element in case the Button is disabled */}
-								<span>
-									<IconButton
-										aria-label={item.text}
-										color="inherit"
-										component={item.component}
-										disabled={disableHeaderItems || item.disabled}
-										edge={index === headerItems.length - 1 ? 'end' : null}
-										onClick={item.onClick}
-										size="large"
-										to={item.to}
-									>
-										{item.icon}
-									</IconButton>
-								</span>
-							</Tooltip>
+						<Tooltip key={item.text} title={item.text}>
+							{/* Wrapper element in case the Button is disabled */}
+							<span>
+								<IconButton
+									aria-label={item.text}
+									color="inherit"
+									component={item.component}
+									disabled={disableHeaderItems || item.disabled}
+									edge={index === headerItems.length - 1 ? 'end' : null}
+									onClick={item.onClick}
+									size="large"
+									to={item.to}
+								>
+									{item.icon}
+								</IconButton>
+							</span>
+						</Tooltip>
+					))}
+
+					{headerItems.map((item) => (
+						<Fragment key={item.name}>
 							{item.extra}
 						</Fragment>
 					))}
