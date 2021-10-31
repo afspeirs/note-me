@@ -16,11 +16,10 @@ const Routes = () => {
 	return (
 		<>
 			<Switch>
-				<Route exact path="/" component={Home} />
 				<Route path="/create-note/" component={CreateNote} />
 				<Route path="/note/:id" component={Note} />
 				<Route path="/settings/" component={Settings} />
-				<Redirect to="/" />
+				<Route path="/" component={Home} />
 			</Switch>
 
 			{user === false && <Redirect to="/" />}
