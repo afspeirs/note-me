@@ -56,7 +56,6 @@ const Home = () => {
 			disableHeaderItemsOverflowMenu
 			headerItems={headerItems}
 			showBackButton={false}
-			title="NoteMe"
 		>
 			{!isSignedIn && !loading ? (
 				<List>

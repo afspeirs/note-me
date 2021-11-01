@@ -22,7 +22,7 @@ const defaultProps = {
 	showBackButton: true,
 	showPrompt: false,
 	title: '',
-	titleDocument: null,
+	titleDocument: '',
 };
 
 const propTypes = {
@@ -72,7 +72,7 @@ const Page = ({
 	return (
 		<Box sx={styles.root}>
 			<Helmet>
-				<title>{titleDocument || `${title} | ${import.meta.env.VITE_APP_TITLE}`}</title>
+				<title>{titleDocument || title ? `${titleDocument || title} | ${import.meta.env.VITE_APP_TITLE}` : import.meta.env.VITE_APP_TITLE}</title>
 				<meta name="theme-color" content={mode === 'dark' ? '#121212' : '#ee6e00'} />
 			</Helmet>
 
@@ -91,7 +91,7 @@ const Page = ({
 						</IconButton>
 					)}
 					<Typography variant="h6" component="h1" noWrap sx={styles.title}>
-						{title}
+						{title || import.meta.env.VITE_APP_TITLE}
 					</Typography>
 					<HeaderContent
 						headerItems={headerItems}
