@@ -109,7 +109,6 @@ const NotesValue = () => {
 						message: `"${note.title}" has been deleted`,
 					}));
 
-				// TODO: Check if pathname is the /note/:id, and only if it is change the location
 				history.replace('/');
 			});
 	};

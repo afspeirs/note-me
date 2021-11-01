@@ -60,8 +60,13 @@ const Page = ({
 
 	const handleBackClick = (event) => {
 		event.stopPropagation();
-		history.push('/');
-		// history.goBack();
+
+		// Check if there is a previous page in the history
+		if (history.action === 'PUSH') {
+			history.goBack();
+		} else {
+			history.push('/');
+		}
 	};
 
 	return (
