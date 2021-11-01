@@ -117,7 +117,7 @@ const HeaderContent = ({
 							</Menu>
 
 							{rest.map((item) => (
-								<Fragment key={item.name}>
+								<Fragment key={item.text}>
 									{item.extra}
 								</Fragment>
 							))}
@@ -147,7 +147,7 @@ const HeaderContent = ({
 					))}
 
 					{headerItems.map((item) => (
-						<Fragment key={item.name}>
+						<Fragment key={item.text}>
 							{item.extra}
 						</Fragment>
 					))}
