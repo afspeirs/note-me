@@ -9,6 +9,7 @@ import {
 	StarBorder as StarBorderIcon,
 } from '@mui/icons-material';
 
+import NotesMoreInformation from '@/components/NotesMoreInformation';
 import Page from '@/components/shared/Page';
 import RendererLink from '@/components/shared/RendererLink';
 import { useHotkeys } from '@/hooks/Hotkeys';
@@ -24,8 +25,12 @@ const Note = () => {
 		updateNote,
 	} = useNotes();
 	const [edit, setEdit] = useState(false);
+	const [openInformationDialog, setOpenInformationDialog] = useState(false);
 	const [localNote, setLocalNote] = useState(null);
 	const currentNote = notes?.find((note) => note.id === id);
+
+	const handleInformationDialogOpen = () => setOpenInformationDialog(true);
+	const handleInformationDialogClose = () => setOpenInformationDialog(false);
 
 	const headerItems = [
 		{
@@ -39,10 +44,15 @@ const Note = () => {
 			text: currentNote?.favourite ? 'Unfavourite' : 'Favourite',
 		},
 		{
-			// TODO: Add info button that opens a popup of the info in the context menu from NotesList
-			disabled: true,
+			extra: (
+				<NotesMoreInformation
+					open={openInformationDialog}
+					onClose={handleInformationDialogClose}
+					note={currentNote}
+				/>
+			),
 			icon: <InfoIcon />,
-			// onClick: () => {},
+			onClick: handleInformationDialogOpen,
 			text: 'More Information',
 		},
 		{

@@ -131,14 +131,13 @@ const NotesList = () => {
 									</ListItemIcon>
 									<ListItemText
 										sx={styles.listItemTextDate}
-										primary={`Last modified ${getDateRelative(note.dateModified)}`}
+										primary={`Last modified: ${getDateRelative(note.dateModified)}`}
 										primaryTypographyProps={{
 											noWrap: true,
 										}}
 										secondary={`Created: ${getDateCalendar(note.dateCreated)}`}
 										secondaryTypographyProps={{
 											noWrap: true,
-											variant: 'caption',
 										}}
 									/>
 								</ListItem>
