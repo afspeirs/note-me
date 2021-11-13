@@ -1,32 +1,18 @@
 import {
-	AppBar,
-	Fade,
 	IconButton,
-	InputBase,
-	Slide,
-	Toolbar,
+	OutlinedInput,
+	InputLabel,
+	FormControl,
 } from '@mui/material';
 import {
-	ArrowBack as ArrowBackIcon,
 	Clear as ClearIcon,
 } from '@mui/icons-material';
 
 import { useGlobalState } from '@/hooks/GlobalState';
 import { useHotkeys } from '@/hooks/Hotkeys';
-import styles from './NotesSearch.styled';
 
 const NotesSearch = () => {
 	const [{ search }, dispatch] = useGlobalState();
-
-	const hideSearch = () => {
-		dispatch({
-			type: 'app-search',
-			value: {
-				show: false,
-				text: '',
-			},
-		});
-	};
 
 	const updateSearchText = (text) => {
 		dispatch({
@@ -75,46 +61,27 @@ const NotesSearch = () => {
 	]);
 
 	return (
-		<Fade in={search.show} timeout={512}>
-			{/* This div makes the Transitions work */}
-			<div>
-				<Slide in={search.show} direction="left" timeout={256} mountOnEnter unmountOnExit>
-					<AppBar position="fixed" elevation={0}>
-						<Toolbar>
-							<IconButton
-								aria-label="Hide Search"
-								color="inherit"
-								edge="start"
-								onClick={hideSearch}
-								size="large"
-								sx={styles.menuButton}
-							>
-								<ArrowBackIcon />
-							</IconButton>
-							<InputBase
-								autoFocus
-								sx={styles.search}
-								inputProps={{ 'aria-label': 'search' }}
-								onChange={handleTextInput}
-								placeholder="Search Notes"
-								value={search.text}
-								endAdornment={search.text.length !== 0 && (
-									<IconButton
-										aria-label="Clear Search"
-										color="inherit"
-										edge="end"
-										onClick={handleTextClear}
-										size="large"
-									>
-										<ClearIcon />
-									</IconButton>
-								)}
-							/>
-						</Toolbar>
-					</AppBar>
-				</Slide>
-			</div>
-		</Fade>
+		<FormControl fullWidth>
+			<InputLabel htmlFor="component-outlined">Search for a Note</InputLabel>
+			<OutlinedInput
+				id="component-outlined"
+				value={search.text}
+				onChange={handleTextInput}
+				label="Search for a Note"
+				placeholder="Type something to search for"
+				endAdornment={search.text.length !== 0 && (
+					<IconButton
+						aria-label="Clear Search"
+						color="inherit"
+						edge="end"
+						onClick={handleTextClear}
+						size="large"
+					>
+						<ClearIcon />
+					</IconButton>
+				)}
+			/>
+		</FormControl>
 	);
 };
 

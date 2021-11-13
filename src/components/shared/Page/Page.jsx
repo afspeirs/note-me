@@ -1,25 +1,23 @@
-import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
-import { Prompt, useHistory } from 'react-router-dom';
-import { useTheme } from '@mui/material/styles';
+import { Prompt } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import {
 	AppBar,
-	Box,
 	IconButton,
 	Toolbar,
 	Typography,
 } from '@mui/material';
 import {
-	ArrowBack as ArrowBackIcon,
+	Menu as MenuIcon,
 } from '@mui/icons-material';
 
 import HeaderContent from '@/components/shared/HeaderContent';
-import styles from './Page.styled';
+import { useGlobalState } from '@/hooks/GlobalState';
+import styles, { Content } from './Page.styled';
 
 const defaultProps = {
 	headerItems: [],
 	disableHeaderItemsOverflowMenu: false,
-	showBackButton: true,
 	showPrompt: false,
 	title: '',
 	titleDocument: '',
@@ -39,7 +37,6 @@ const propTypes = {
 			text: PropTypes.string,
 		}),
 	),
-	showBackButton: PropTypes.bool,
 	showPrompt: PropTypes.bool,
 	title: PropTypes.string,
 	titleDocument: PropTypes.string,
@@ -49,47 +46,35 @@ const Page = ({
 	children,
 	disableHeaderItemsOverflowMenu,
 	headerItems,
-	showBackButton,
 	showPrompt,
 	title,
 	titleDocument,
 }) => {
-	const history = useHistory();
-	const theme = useTheme();
-	const { mode } = theme.palette;
+	const dispatch = useGlobalState()[1];
 
-	const handleBackClick = (event) => {
-		event.stopPropagation();
-
-		// Check if there is a previous page in the history
-		if (history.action === 'PUSH') {
-			history.goBack();
-		} else {
-			history.push('/');
-		}
-	};
+	const handleDrawerToggle = () => dispatch({ type: 'app-drawerOpen' });
 
 	return (
-		<Box sx={styles.root}>
+		<>
 			<Helmet>
 				<title>{titleDocument || title ? `${titleDocument || title} | ${import.meta.env.VITE_APP_TITLE}` : import.meta.env.VITE_APP_TITLE}</title>
-				<meta name="theme-color" content={mode === 'dark' ? '#121212' : '#ee6e00'} />
 			</Helmet>
 
-			<AppBar position="relative">
+			<AppBar
+				position="fixed"
+				sx={styles.appBar}
+			>
 				<Toolbar>
-					{showBackButton && (
-						<IconButton
-							size="large"
-							edge="start"
-							color="inherit"
-							aria-label="menu"
-							sx={styles.menuIcon}
-							onClick={handleBackClick}
-						>
-							<ArrowBackIcon />
-						</IconButton>
-					)}
+					<IconButton
+						size="large"
+						edge="start"
+						color="inherit"
+						aria-label="menu"
+						sx={styles.menuIcon}
+						onClick={handleDrawerToggle}
+					>
+						<MenuIcon />
+					</IconButton>
 					<Typography variant="h6" component="h1" noWrap sx={styles.title}>
 						{title || import.meta.env.VITE_APP_TITLE}
 					</Typography>
@@ -100,14 +85,12 @@ const Page = ({
 				</Toolbar>
 			</AppBar>
 
-			<Box sx={styles.content}>
-				<Box component="main" sx={styles.main}>
-					{children}
-				</Box>
-			</Box>
+			<Content>
+				{children}
+			</Content>
 
 			<Prompt when={showPrompt} message="Are you sure you want to leave without saving?" />
-		</Box>
+		</>
 	);
 };
 
