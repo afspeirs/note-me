@@ -1,17 +1,15 @@
 import {
 	Divider,
 	List,
-	ListItem,
-	ListItemIcon,
-	ListItemText,
 } from '@mui/material';
 import {
 	Add as AddIcon,
+	Home as HomeIcon,
 	Settings as SettingsIcon,
 } from '@mui/icons-material';
 
 import NotesList from '@/components/NotesList';
-import RouterNavLink from '@/components/shared/RouterNavLink';
+import ListButton from '@/components/shared/ListButton';
 import { useNotes } from '@/hooks/Notes';
 
 const DrawerContent = () => {
@@ -24,25 +22,23 @@ const DrawerContent = () => {
 			<Divider />
 
 			<List disablePadding>
-				<ListItem
-					button
+				<ListButton
+					Icon={AddIcon}
 					onClick={() => createNote()}
-				>
-					<ListItemIcon>
-						<AddIcon />
-					</ListItemIcon>
-					<ListItemText primary="Create Note" />
-				</ListItem>
-				<ListItem
-					button
-					component={RouterNavLink}
+					primary="Create Note"
+				/>
+
+				<ListButton
+					Icon={HomeIcon}
+					primary="Home"
+					to="/"
+				/>
+
+				<ListButton
+					Icon={SettingsIcon}
+					primary="Settings"
 					to="/settings/"
-				>
-					<ListItemIcon>
-						<SettingsIcon />
-					</ListItemIcon>
-					<ListItemText primary="Settings" />
-				</ListItem>
+				/>
 			</List>
 		</>
 	);
