@@ -185,7 +185,7 @@ const NotesValue = () => {
 				setNotes(authNotes);
 				setLoading(false);
 			});
-		} else if (user !== null) {
+		} else {
 			setNotes([]);
 			setLoading(false);
 		}
