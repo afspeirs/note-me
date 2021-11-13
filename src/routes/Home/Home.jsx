@@ -1,4 +1,3 @@
-import { useMemo } from 'react';
 import {
 	Button,
 	Fab,
@@ -11,52 +10,20 @@ import {
 } from '@mui/material';
 import {
 	Add as AddIcon,
-	Search as SearchIcon,
-	Settings as SettingsIcon,
 } from '@mui/icons-material';
 
 import NotesList from '@/components/NotesList';
-import NotesSearch from '@/components/NotesSearch';
 import Page from '@/components/shared/Page';
-import RouterLink from '@/components/shared/RouterLink';
 import { useAuth } from '@/hooks/Auth';
-import { useGlobalState } from '@/hooks/GlobalState';
 import { useNotes } from '@/hooks/Notes';
 import styles from './Home.styled';
 
 const Home = () => {
 	const { signIn, isSignedIn } = useAuth();
-	const [{ search }, dispatch] = useGlobalState();
 	const { createNote, loading } = useNotes();
 
-	const headerItems = useMemo(() => [
-		{
-			icon: <SearchIcon />,
-			onClick: () => dispatch({
-				type: 'app-search',
-				value: {
-					...search,
-					show: true,
-				},
-			}),
-			text: 'Search Notes',
-			visible: isSignedIn,
-			extra: <NotesSearch />,
-		},
-		{
-			icon: <SettingsIcon />,
-			component: RouterLink,
-			to: '/settings/',
-			text: 'Settings',
-		},
-	].filter((item) => item.visible !== false), [isSignedIn]);
-
 	return (
-		<Page
-			disableHeaderItemsOverflowMenu
-			headerItems={headerItems}
-			showBackButton={false}
-		>
+		<Page hideMenuButton>
 			{!isSignedIn && !loading ? (
 				<List>
 					{/* eslint-disable max-len */}

@@ -6,6 +6,7 @@ import {
 	IconButton,
 	Toolbar,
 	Typography,
+	useMediaQuery,
 } from '@mui/material';
 import {
 	Menu as MenuIcon,
@@ -16,8 +17,9 @@ import { useGlobalState } from '@/hooks/GlobalState';
 import styles, { Content } from './Page.styled';
 
 const defaultProps = {
-	headerItems: [],
 	disableHeaderItemsOverflowMenu: false,
+	headerItems: [],
+	hideMenuButton: false,
 	showPrompt: false,
 	title: '',
 	titleDocument: '',
@@ -37,6 +39,7 @@ const propTypes = {
 			text: PropTypes.string,
 		}),
 	),
+	hideMenuButton: PropTypes.bool,
 	showPrompt: PropTypes.bool,
 	title: PropTypes.string,
 	titleDocument: PropTypes.string,
@@ -46,11 +49,13 @@ const Page = ({
 	children,
 	disableHeaderItemsOverflowMenu,
 	headerItems,
+	hideMenuButton,
 	showPrompt,
 	title,
 	titleDocument,
 }) => {
-	const dispatch = useGlobalState()[1];
+	const [{ drawerOpen }, dispatch] = useGlobalState();
+	const mobile = useMediaQuery('(max-width:600px)');
 
 	const handleDrawerToggle = () => dispatch({ type: 'app-drawerOpen' });
 
@@ -65,21 +70,24 @@ const Page = ({
 				sx={styles.appBar}
 			>
 				<Toolbar>
-					<IconButton
-						size="large"
-						edge="start"
-						color="inherit"
-						aria-label="menu"
-						sx={styles.menuIcon}
-						onClick={handleDrawerToggle}
-					>
-						<MenuIcon />
-					</IconButton>
+					{!hideMenuButton ? (
+						<IconButton
+							size="large"
+							edge="start"
+							color="inherit"
+							aria-label="menu"
+							sx={styles.menuIcon}
+							onClick={handleDrawerToggle}
+						>
+							<MenuIcon />
+						</IconButton>
+					) : null}
 					<Typography variant="h6" component="h1" noWrap sx={styles.title}>
 						{title || import.meta.env.VITE_APP_TITLE}
 					</Typography>
 					<HeaderContent
 						headerItems={headerItems}
+						disableHeaderItems={mobile && drawerOpen}
 						disableOverflowMenu={disableHeaderItemsOverflowMenu}
 					/>
 				</Toolbar>
