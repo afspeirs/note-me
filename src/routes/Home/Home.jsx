@@ -12,7 +12,7 @@ import { useAuth } from '@/hooks/Auth';
 import { useNotes } from '@/hooks/Notes';
 
 const Home = () => {
-	const { signIn, isSignedIn } = useAuth();
+	const { signIn, user } = useAuth();
 	const { loading } = useNotes();
 
 	return (
@@ -38,7 +38,7 @@ const Home = () => {
 					</Typography>
 				</ListItem>
 
-				{!isSignedIn && !loading ? (
+				{!user === null && !loading ? (
 					<>
 						<ListItem>
 							<ListItemText primary="Once signed in you can access your notes from any device, and changes will be reflected across other devices seamlessly." />
