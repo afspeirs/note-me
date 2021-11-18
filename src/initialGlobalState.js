@@ -2,7 +2,6 @@ export default {
 	beforeInstallPrompt: null,
 	drawerOpen: true,
 	search: {
-		show: false,
 		text: '',
 	},
 	settings: {

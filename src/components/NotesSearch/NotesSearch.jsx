@@ -1,15 +1,14 @@
 import {
-	IconButton,
-	OutlinedInput,
-	InputLabel,
 	FormControl,
+	IconButton,
+	InputLabel,
+	OutlinedInput,
 } from '@mui/material';
 import {
 	Clear as ClearIcon,
 } from '@mui/icons-material';
 
 import { useGlobalState } from '@/hooks/GlobalState';
-import { useHotkeys } from '@/hooks/Hotkeys';
 
 const NotesSearch = () => {
 	const [{ search }, dispatch] = useGlobalState();
@@ -18,7 +17,6 @@ const NotesSearch = () => {
 		dispatch({
 			type: 'app-search',
 			value: {
-				...search,
 				text,
 			},
 		});
@@ -28,54 +26,21 @@ const NotesSearch = () => {
 
 	const handleTextInput = (event) => updateSearchText(event.target.value);
 
-	useHotkeys([
-		// CTRL + F = Show Search bar
-		{
-			keys: ['f'],
-			callback: (event) => {
-				event.preventDefault();
-
-				dispatch({
-					type: 'app-search',
-					value: {
-						...search,
-						show: true,
-					},
-				});
-			},
-			metaModifier: true,
-		},
-		// Escape = Hide search bar
-		{
-			keys: ['Escape'],
-			callback: () => {
-				dispatch({
-					type: 'app-search',
-					value: {
-						show: false,
-						text: '',
-					},
-				});
-			},
-		},
-	]);
-
 	return (
 		<FormControl fullWidth>
-			<InputLabel htmlFor="component-outlined">Search for a Note</InputLabel>
+			<InputLabel htmlFor="notes-search-input">Search for a Note</InputLabel>
 			<OutlinedInput
-				id="component-outlined"
-				value={search.text}
-				onChange={handleTextInput}
+				id="notes-search-input"
 				label="Search for a Note"
-				placeholder="Type something to search for"
+				onChange={handleTextInput}
+				placeholder="What do you want to find?"
+				value={search.text}
 				endAdornment={search.text.length !== 0 && (
 					<IconButton
 						aria-label="Clear Search"
 						color="inherit"
 						edge="end"
 						onClick={handleTextClear}
-						size="large"
 					>
 						<ClearIcon />
 					</IconButton>
