@@ -1,25 +1,25 @@
-import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
-import { Prompt, useHistory } from 'react-router-dom';
-import { useTheme } from '@mui/material/styles';
+import { Prompt } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import {
 	AppBar,
-	Box,
 	IconButton,
 	Toolbar,
 	Typography,
+	useMediaQuery,
 } from '@mui/material';
 import {
-	ArrowBack as ArrowBackIcon,
+	Menu as MenuIcon,
 } from '@mui/icons-material';
 
 import HeaderContent from '@/components/shared/HeaderContent';
-import styles from './Page.styled';
+import { useGlobalState } from '@/hooks/GlobalState';
+import styles, { Content } from './Page.styled';
 
 const defaultProps = {
-	headerItems: [],
 	disableHeaderItemsOverflowMenu: false,
-	showBackButton: true,
+	headerItems: [],
+	hideMenuButton: false,
 	showPrompt: false,
 	title: '',
 	titleDocument: '',
@@ -39,7 +39,7 @@ const propTypes = {
 			text: PropTypes.string,
 		}),
 	),
-	showBackButton: PropTypes.bool,
+	hideMenuButton: PropTypes.bool,
 	showPrompt: PropTypes.bool,
 	title: PropTypes.string,
 	titleDocument: PropTypes.string,
@@ -49,65 +49,56 @@ const Page = ({
 	children,
 	disableHeaderItemsOverflowMenu,
 	headerItems,
-	showBackButton,
+	hideMenuButton,
 	showPrompt,
 	title,
 	titleDocument,
 }) => {
-	const history = useHistory();
-	const theme = useTheme();
-	const { mode } = theme.palette;
+	const [{ drawerOpen }, dispatch] = useGlobalState();
+	const mobile = useMediaQuery('(max-width:600px)');
 
-	const handleBackClick = (event) => {
-		event.stopPropagation();
-
-		// Check if there is a previous page in the history
-		if (history.action === 'PUSH') {
-			history.goBack();
-		} else {
-			history.push('/');
-		}
-	};
+	const handleDrawerToggle = () => dispatch({ type: 'app-drawerOpen' });
 
 	return (
-		<Box sx={styles.root}>
+		<>
 			<Helmet>
 				<title>{titleDocument || title ? `${titleDocument || title} | ${import.meta.env.VITE_APP_TITLE}` : import.meta.env.VITE_APP_TITLE}</title>
-				<meta name="theme-color" content={mode === 'dark' ? '#121212' : '#ee6e00'} />
 			</Helmet>
 
-			<AppBar position="relative">
+			<AppBar
+				position="fixed"
+				sx={styles.appBar}
+			>
 				<Toolbar>
-					{showBackButton && (
+					{!hideMenuButton ? (
 						<IconButton
 							size="large"
 							edge="start"
 							color="inherit"
 							aria-label="menu"
 							sx={styles.menuIcon}
-							onClick={handleBackClick}
+							onClick={handleDrawerToggle}
 						>
-							<ArrowBackIcon />
+							<MenuIcon />
 						</IconButton>
-					)}
+					) : null}
 					<Typography variant="h6" component="h1" noWrap sx={styles.title}>
 						{title || import.meta.env.VITE_APP_TITLE}
 					</Typography>
 					<HeaderContent
 						headerItems={headerItems}
+						disableHeaderItems={mobile && drawerOpen}
 						disableOverflowMenu={disableHeaderItemsOverflowMenu}
 					/>
 				</Toolbar>
 			</AppBar>
 
-			<Box sx={styles.content}>
-				<Box component="main" sx={styles.main}>
-					{children}
-				</Box>
-			</Box>
+			<Content>
+				{children}
+			</Content>
 
 			<Prompt when={showPrompt} message="Are you sure you want to leave without saving?" />
-		</Box>
+		</>
 	);
 };
 

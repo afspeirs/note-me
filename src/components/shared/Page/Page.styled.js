@@ -1,31 +1,19 @@
+import { styled } from '@mui/material/styles';
+
+export const Content = styled('main')(({ theme }) => ({
+	height: '100%',
+	display: 'flex',
+	overflowY: 'auto',
+	flexDirection: 'column',
+	flex: 1,
+	[theme.breakpoints.down('sm')]: {
+		minWidth: '100vw',
+	},
+}));
+
 const styles = {
-	root: {
-		position: 'absolute',
-		top: 0,
-		left: 0,
-		width: '100%',
-		height: '100%',
-		display: 'flex',
-		flexDirection: 'column',
-		backgroundColor: 'background.paper',
-		color: 'text.primary',
-	},
-	content: {
-		width: '100%',
-		display: 'flex',
-		position: 'relative',
-		flexGrow: 1,
-		overflowX: 'hidden',
-		paddingTop: 'env(safe-area-inset-top)',
-		paddingLeft: 'env(safe-area-inset-left)',
-		paddingRight: 'env(safe-area-inset-right)',
-		flexDirection: 'column',
-	},
-	main: {
-		height: '100%',
-		display: 'flex',
-		overflowY: 'auto',
-		flexDirection: 'column',
+	appBar: {
+		zIndex: (theme) => theme.zIndex.drawer + 1,
 	},
 	menuIcon: {
 		mr: 2,

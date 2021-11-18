@@ -3,7 +3,6 @@ const styles = {
 		flexGrow: 1,
 		overflowY: 'auto',
 		overflowX: 'hidden',
-		paddingBottom: 12,
 	},
 	listItemSecondary: {
 		display: 'flex',

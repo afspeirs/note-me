@@ -4,6 +4,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { ConfirmProvider } from 'material-ui-confirm';
 
 import theme from './theme';
+import Container from './components/Container';
 import Routes from './components/Routes';
 import FilesDragAndDrop from './components/FilesDragAndDrop';
 import ServiceWorkerContent from './components/shared/ServiceWorkerContent';
@@ -31,7 +32,9 @@ const App = () => {
 				<SnackbarProvider>
 					<NotesProvider>
 						<CssBaseline />
-						<Routes />
+						<Container>
+							<Routes />
+						</Container>
 
 						<FilesDragAndDrop />
 						<ServiceWorkerContent />

@@ -12,4 +12,13 @@ export default [
 			},
 		],
 	},
+	{
+		name: 'Navigation',
+		shortcuts: [
+			{
+				name: 'Toggle Navigation Drawer',
+				key: 'CTRL + B',
+			},
+		],
+	},
 ];
