@@ -9,6 +9,7 @@ import {
 } from '@mui/icons-material';
 
 import NotesList from '@/components/NotesList';
+import CheckForInstallPrompt from '@/components/shared/CheckForInstallPrompt';
 import ListButton from '@/components/shared/ListButton';
 import { useNotes } from '@/hooks/Notes';
 
@@ -22,6 +23,8 @@ const DrawerContent = () => {
 			<Divider />
 
 			<List disablePadding>
+				<CheckForInstallPrompt />
+
 				<ListButton
 					Icon={AddIcon}
 					onClick={() => createNote()}
