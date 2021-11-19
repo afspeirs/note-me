@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import {
 	collection,
 	deleteDoc,
@@ -24,6 +24,7 @@ const NotesValue = () => {
 	const { user } = useAuth();
 	const confirm = useConfirm();
 	const history = useHistory();
+	const location = useLocation();
 	const snackbar = useSnackbar();
 	const [notes, setNotes] = useState();
 	const [loading, setLoading] = useState(true);
@@ -109,7 +110,10 @@ const NotesValue = () => {
 						message: `"${note.title}" has been deleted`,
 					}));
 
-				history.replace('/');
+				// Change the location only if you are the current note that is being deleted
+				if (location.pathname.includes(note.id)) {
+					history.replace('/');
+				}
 			});
 	};
 
