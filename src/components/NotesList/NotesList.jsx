@@ -20,6 +20,7 @@ import {
 	StarBorder as StarBorderIcon,
 } from '@mui/icons-material';
 
+import NotesSearch from '@/components/NotesSearch';
 import RouterNavLink from '@/components/shared/RouterNavLink';
 import useContextMenu from '@/hooks/ContextMenu/useContextMenu';
 import { useGlobalState } from '@/hooks/GlobalState';
@@ -85,6 +86,9 @@ const NotesList = () => {
 	return (
 		<>
 			<List sx={styles.list} ref={parentEl}>
+				<ListItem>
+					<NotesSearch />
+				</ListItem>
 				{loading && (
 					<ListItem>
 						<ListItemText primary="Loading, please wait while we gather your notes" />

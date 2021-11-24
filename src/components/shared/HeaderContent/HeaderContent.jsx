@@ -69,18 +69,21 @@ const HeaderContent = ({
 					{rest.length !== 0 && (
 						<>
 							<Tooltip title="Show More">
-								<IconButton
-									aria-controls="more-menu"
-									aria-haspopup="true"
-									aria-label="Show more"
-									color="inherit"
-									disabled={disableHeaderItems}
-									edge="end"
-									onClick={handleClick}
-									size="large"
-								>
-									<MoreIcon />
-								</IconButton>
+								{/* Wrapper element in case the Button is disabled */}
+								<span>
+									<IconButton
+										aria-controls="more-menu"
+										aria-haspopup="true"
+										aria-label="Show more"
+										color="inherit"
+										disabled={disableHeaderItems}
+										edge="end"
+										onClick={handleClick}
+										size="large"
+									>
+										<MoreIcon />
+									</IconButton>
+								</span>
 							</Tooltip>
 
 							<Menu
