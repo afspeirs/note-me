@@ -2,7 +2,7 @@ const reducer = (state, action) => {
 	const [location, name] = action.type.split('-');
 
 	if (location === 'settings') {
-		const value = action.value || !state[location][name];
+		const value = action.value || action.value === false ? action.value : !state[location][name];
 
 		localStorage.setItem(action.type, JSON.stringify(value));
 
@@ -17,7 +17,7 @@ const reducer = (state, action) => {
 
 	return {
 		...state,
-		[name]: action.value || !state[name],
+		[name]: action.value || action.value === false ? action.value : !state[name],
 	};
 };
 
