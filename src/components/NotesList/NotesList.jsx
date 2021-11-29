@@ -76,7 +76,7 @@ const NotesList = () => {
 		if (notes) {
 			const filtered = notes.filter((note) => note?.text?.toLowerCase().search(search?.text.toLowerCase()) !== -1);
 
-			if ((filteredNotes !== filtered) && notes?.length) {
+			if ((filteredNotes !== filtered)) {
 				setFilteredNotes(filtered);
 			}
 		}
