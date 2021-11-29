@@ -84,95 +84,93 @@ const NotesList = () => {
 	/* eslint-enable max-len */
 
 	return (
-		<>
-			<List sx={styles.list} ref={parentEl}>
+		<List sx={styles.list} ref={parentEl}>
+			<ListItem>
+				<NotesSearch />
+			</ListItem>
+			{loading && (
 				<ListItem>
-					<NotesSearch />
+					<ListItemText primary="Loading, please wait while we gather your notes" />
 				</ListItem>
-				{loading && (
-					<ListItem>
-						<ListItemText primary="Loading, please wait while we gather your notes" />
+			)}
+			{filteredNotes.length === 0 && !loading && (
+				<ListItem>
+					<ListItemText primary="No notes found" />
+				</ListItem>
+			)}
+			{sortArray(filteredNotes).map((note) => (
+				<Fragment key={`note-${note.id}`}>
+					<ListItem
+						button
+						to={`/note/${note.id}`}
+						className="context-menu-select"
+						component={RouterNavLink}
+						data-id={note.id}
+					>
+						<ListItemText
+							primary={note.title}
+							primaryTypographyProps={{
+								noWrap: true,
+							}}
+						/>
+						<ListItemSecondaryAction sx={styles.listItemSecondary}>
+							{note.favourite && (
+								<StarIcon color="primary" />
+							)}
+							<ArrowIcon color="disabled" />
+						</ListItemSecondaryAction>
 					</ListItem>
-				)}
-				{filteredNotes.length === 0 && !loading && (
-					<ListItem>
-						<ListItemText primary="No notes found" />
-					</ListItem>
-				)}
-				{sortArray(filteredNotes).map((note) => (
-					<Fragment key={`note-${note.id}`}>
-						<ListItem
-							button
-							to={`/note/${note.id}`}
-							className="context-menu-select"
-							component={RouterNavLink}
-							data-id={note.id}
-						>
-							<ListItemText
-								primary={note.title}
-								primaryTypographyProps={{
-									noWrap: true,
-								}}
-							/>
-							<ListItemSecondaryAction sx={styles.listItemSecondary}>
-								{note.favourite && (
-									<StarIcon color="primary" />
-								)}
-								<ArrowIcon color="disabled" />
-							</ListItemSecondaryAction>
-						</ListItem>
 
-						<Popover
-							open={contextMenu?.id === note.id}
-							onClose={contextMenuClose}
-							anchorReference="anchorPosition"
-							anchorPosition={contextMenu.position}
-						>
-							<List dense>
-								<ListItem>
-									<ListItemIcon>
-										<InfoIcon />
-									</ListItemIcon>
-									<ListItemText
-										sx={styles.listItemTextDate}
-										primary={`Last modified: ${getDateRelative(note.dateModified)}`}
-										primaryTypographyProps={{
-											noWrap: true,
-										}}
-										secondary={`Created: ${getDateCalendar(note.dateCreated)}`}
-										secondaryTypographyProps={{
-											noWrap: true,
-										}}
-									/>
-								</ListItem>
-								<ListItem button onClick={() => handleFavouriteNote(note)}>
-									<ListItemIcon>
-										{note.favourite ? <StarIcon color="primary" /> : <StarBorderIcon />}
-									</ListItemIcon>
-									<ListItemText
-										primary={`${note.favourite ? 'Unfavourite' : 'Favourite'} "${note.title}"`}
-										primaryTypographyProps={{
-											noWrap: true,
-										}}
-									/>
-								</ListItem>
-								<ListItem button onClick={() => handleDeleteNote(note)}>
-									<ListItemIcon>
-										<DeleteIcon color="error" />
-									</ListItemIcon>
-									<ListItemText
-										primary={`Delete "${note.title}"`}
-										primaryTypographyProps={{
-											noWrap: true,
-										}}
-									/>
-								</ListItem>
-							</List>
-						</Popover>
-					</Fragment>
-				))}
-			</List>
-		</>
+					<Popover
+						open={contextMenu?.id === note.id}
+						onClose={contextMenuClose}
+						anchorReference="anchorPosition"
+						anchorPosition={contextMenu.position}
+					>
+						<List dense>
+							<ListItem>
+								<ListItemIcon>
+									<InfoIcon />
+								</ListItemIcon>
+								<ListItemText
+									sx={styles.listItemTextDate}
+									primary={`Last modified: ${getDateRelative(note.dateModified)}`}
+									primaryTypographyProps={{
+										noWrap: true,
+									}}
+									secondary={`Created: ${getDateCalendar(note.dateCreated)}`}
+									secondaryTypographyProps={{
+										noWrap: true,
+									}}
+								/>
+							</ListItem>
+							<ListItem button onClick={() => handleFavouriteNote(note)}>
+								<ListItemIcon>
+									{note.favourite ? <StarIcon color="primary" /> : <StarBorderIcon />}
+								</ListItemIcon>
+								<ListItemText
+									primary={`${note.favourite ? 'Unfavourite' : 'Favourite'} "${note.title}"`}
+									primaryTypographyProps={{
+										noWrap: true,
+									}}
+								/>
+							</ListItem>
+							<ListItem button onClick={() => handleDeleteNote(note)}>
+								<ListItemIcon>
+									<DeleteIcon color="error" />
+								</ListItemIcon>
+								<ListItemText
+									primary={`Delete "${note.title}"`}
+									primaryTypographyProps={{
+										noWrap: true,
+									}}
+								/>
+							</ListItem>
+						</List>
+					</Popover>
+				</Fragment>
+			))}
+		</List>
 	);
 };
 

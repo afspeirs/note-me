@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import Snackbar from '@mui/material/Snackbar';
 import Button from '@mui/material/Button';
@@ -32,9 +32,9 @@ const SnackbarProvider = ({ children }) => {
 		content.actionFunction();
 	};
 
-	const contextValue = {
+	const contextValue = useMemo(() => ({
 		showMessage,
-	};
+	}), [content]);
 
 	return (
 		<>
