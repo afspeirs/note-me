@@ -10,11 +10,11 @@ import AppVersion from '@/components/shared/AppVersion';
 import ChangeTheme from '@/components/shared/ChangeTheme';
 import CheckForUpdate from '@/components/shared/CheckForUpdate';
 import KeyboardShortcuts from '@/components/shared/KeyboardShortcuts';
-import Page from '@/components/shared/Page';
+import Modal from '@/components/shared/Modal';
 import UserInformation from '@/components/shared/UserInformation';
 
 const Settings = () => (
-	<Page title="Settings">
+	<Modal title="Settings">
 		<List>
 			<UserInformation />
 			<AppVersion />
@@ -34,7 +34,7 @@ const Settings = () => (
 
 			<NotesExport />
 		</List>
-	</Page>
+	</Modal>
 );
 
 export default Settings;

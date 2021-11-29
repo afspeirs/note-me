@@ -74,7 +74,7 @@ const NotesList = () => {
 	/* eslint-disable max-len */
 	useEffect(() => {
 		if (notes) {
-			const filtered = notes.filter((note) => note?.text.toLowerCase().search(search?.text.toLowerCase()) !== -1);
+			const filtered = notes.filter((note) => note?.text?.toLowerCase().search(search?.text.toLowerCase()) !== -1);
 
 			if ((filteredNotes !== filtered) && notes?.length) {
 				setFilteredNotes(filtered);
