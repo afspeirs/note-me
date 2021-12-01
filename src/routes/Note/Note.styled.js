@@ -18,9 +18,7 @@ export const TextareaStyled = styled('textarea')(({ theme }) => ({
 
 export const MarkdownStyled = styled(Markdown)(({ theme }) => ({
 	height: '100%',
-	display: 'flex',
 	overflowY: 'auto',
-	flexDirection: 'column',
 	width: 'inherit',
 	flexGrow: 1,
 	padding: theme.spacing(2),
