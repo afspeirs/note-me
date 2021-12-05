@@ -101,8 +101,10 @@ const Note = () => {
 				/>
 			) : (
 				<MarkdownStyled
-					overrides={{
-						a: RendererLink,
+					options={{
+						overrides: {
+							a: RendererLink,
+						},
 					}}
 				>
 					{localNote || ''}
