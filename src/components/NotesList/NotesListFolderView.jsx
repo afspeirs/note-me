@@ -63,7 +63,7 @@ const NotesListFolderView = ({
 					</Toolbar>
 				</AppBar>
 
-				<List ref={parentEl}>
+				<List sx={styles.list} ref={parentEl}>
 					{notes.length === 0 && (
 						<ListItem>
 							<ListItemText primary="No notes found" />

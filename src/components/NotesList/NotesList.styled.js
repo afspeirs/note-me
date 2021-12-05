@@ -7,7 +7,6 @@ const styles = {
 	list: {
 		overflowY: 'auto',
 		overflowX: 'hidden',
-		height: '100%',
 	},
 	listItemSecondary: {
 		display: 'flex',
@@ -25,6 +24,8 @@ const styles = {
 		height: '100%',
 		backgroundColor: 'background.paper',
 		zIndex: 10,
+		display: 'flex',
+		flexDirection: 'column',
 	},
 	menuIcon: {
 		mr: 2,
