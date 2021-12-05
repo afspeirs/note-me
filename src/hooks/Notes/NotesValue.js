@@ -1,12 +1,15 @@
 import { useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import {
+	arrayRemove,
+	arrayUnion,
 	collection,
 	deleteDoc,
+	deleteField,
 	doc,
+	onSnapshot,
 	setDoc,
 	updateDoc,
-	onSnapshot,
 	writeBatch,
 } from 'firebase/firestore';
 import { useConfirm } from 'material-ui-confirm';
@@ -29,11 +32,35 @@ const NotesValue = () => {
 	const [notes, setNotes] = useState();
 	const [loading, setLoading] = useState(true);
 
+	const returnFolderObject = ({
+		favourite,
+		id,
+		notes: folderNotes,
+		title,
+	}) => {
+		if (!id) {
+			// eslint-disable-next-line no-console
+			console.error(`An id needs to be provided. "${id}" is not valid`);
+			return null;
+		}
+
+		const newNote = {
+			favourite: favourite || false,
+			id,
+			isFolder: true,
+			notes: folderNotes,
+			title,
+		};
+
+		return newNote;
+	};
+
 	const returnNoteObject = ({
 		dateCreated,
 		dateModified,
 		favourite,
 		id,
+		inFolder,
 		text,
 		title,
 	}) => {
@@ -48,6 +75,7 @@ const NotesValue = () => {
 			dateModified: dateModified || +new Date(),
 			favourite: favourite || false,
 			id,
+			...(inFolder) && { inFolder },
 			text: text || '',
 			title: title || getTitle(text || ''),
 		};
@@ -143,17 +171,83 @@ const NotesValue = () => {
 
 		listOfNotes.forEach((note) => {
 			// TODO: Check if the note already exists before making a new document
-			const noteRef = doc(collection(db, user.uid));
-			const value = returnNoteObject({
-				...note,
-				id: noteRef.id,
-			});
+			const noteRef = doc(db, user.uid, note.id);
 
-			batch.set(noteRef, value);
+			if (note.isFolder) {
+				const value = returnFolderObject({
+					...note,
+					id: noteRef.id,
+				});
+
+				batch.set(noteRef, value);
+			} else {
+				const value = returnNoteObject({
+					...note,
+					id: noteRef.id,
+				});
+
+				batch.set(noteRef, value);
+			}
 		});
 
 		await batch.commit().then(() => snackbar.showMessage({
 			message: `${listOfNotes.length} note${listOfNotes.length === 1 ? ' has' : 's have'} been imported`,
+		}));
+	};
+
+	/**
+	 * Moves Note to a folder if one is provided, otherwise it removes the folder
+	 * @param {object} note
+	 * @param {object} [folder]
+	 */
+	const moveNote = async (note, folder) => {
+		const batch = writeBatch(db);
+		let folderRef;
+
+		// If we pass a title for a folder but no id, make a new folder
+		if (folder?.title && !folder?.id) {
+			// A folder with just a title has been included as a parameter
+			folderRef = await doc(collection(db, user.uid));
+
+			const folderValue = {
+				...folder,
+				id: folderRef.id,
+				isFolder: true,
+				notes: [
+					note.id,
+				],
+			};
+
+			batch.set(folderRef, folderValue);
+		} else if (folder) {
+			// A folder has been included as a parameter
+			folderRef = doc(db, user.uid, folder.id);
+			const folderValue = {
+				notes: arrayUnion(note.id),
+			};
+
+			batch.update(folderRef, folderValue);
+		}
+
+		if (note) {
+			const noteRef = doc(db, user.uid, note.id);
+			const previousFolderRef = note.inFolder && doc(db, user.uid, note.inFolder);
+
+			const noteValue = {
+				inFolder: folderRef?.id || deleteField(),
+			};
+			const previousFolderValue = {
+				notes: arrayRemove(note.id),
+			};
+
+			batch.update(noteRef, noteValue);
+			if (previousFolderRef) {
+				batch.update(previousFolderRef, previousFolderValue);
+			}
+		}
+
+		await batch.commit().then(() => snackbar.showMessage({
+			message: `"${note.title}" has been moved to "${folder?.title}"`,
 		}));
 	};
 
@@ -183,8 +277,9 @@ const NotesValue = () => {
 	};
 
 	useEffect(() => {
+		let unSubscribe;
 		if (user) {
-			onSnapshot(collection(db, user.uid), (snapshot) => {
+			unSubscribe = onSnapshot(collection(db, user.uid), (snapshot) => {
 				const authNotes = snapshot.docs.map((docs) => docs.data());
 				setNotes(authNotes);
 				setLoading(false);
@@ -193,6 +288,7 @@ const NotesValue = () => {
 			setNotes([]);
 			setLoading(false);
 		}
+		return unSubscribe;
 	}, [user]);
 
 	return {
@@ -201,6 +297,7 @@ const NotesValue = () => {
 		favouriteNote,
 		importNotes,
 		loading,
+		moveNote,
 		notes,
 		updateNote,
 	};
