@@ -7,6 +7,7 @@ const styles = {
 	list: {
 		overflowY: 'auto',
 		overflowX: 'hidden',
+		height: '100%',
 	},
 	listItemSecondary: {
 		display: 'flex',
