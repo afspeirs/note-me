@@ -1,12 +1,15 @@
 import { useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import {
+	arrayRemove,
+	arrayUnion,
 	collection,
 	deleteDoc,
+	deleteField,
 	doc,
+	onSnapshot,
 	setDoc,
 	updateDoc,
-	onSnapshot,
 	writeBatch,
 } from 'firebase/firestore';
 import { useConfirm } from 'material-ui-confirm';
@@ -158,6 +161,43 @@ const NotesValue = () => {
 	};
 
 	/**
+	 * Moves Note to a folder if one is provided, otherwise it removes the folder
+	 * @param {object} note
+	 * @param {object} [folder]
+	 */
+	const moveNote = async (note, folder) => {
+		const batch = writeBatch(db);
+
+		if (note) {
+			const noteRef = doc(db, user.uid, note.id);
+			const previousFolderRef = note.inFolder && doc(db, user.uid, note.inFolder);
+
+			const noteValue = {
+				inFolder: folder?.id || deleteField(),
+			};
+			const previousFolderValue = {
+				notes: arrayRemove(note.id),
+			};
+
+			batch.update(noteRef, noteValue);
+			batch.update(previousFolderRef, previousFolderValue);
+		}
+
+		if (folder) {
+			const folderRef = doc(db, user.uid, folder.id);
+			const folderValue = {
+				notes: arrayUnion(note.id),
+			};
+
+			batch.update(folderRef, folderValue);
+		}
+
+		await batch.commit().then(() => snackbar.showMessage({
+			message: `"${note.title}" has been moved to "${folder?.title}"`,
+		}));
+	};
+
+	/**
 	 * Update the text on a note
 	 * @param {string} id
 	 * @param {string} text
@@ -201,6 +241,7 @@ const NotesValue = () => {
 		favouriteNote,
 		importNotes,
 		loading,
+		moveNote,
 		notes,
 		updateNote,
 	};

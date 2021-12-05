@@ -5,6 +5,8 @@ import {
 	Box,
 	IconButton,
 	List,
+	ListItem,
+	ListItemText,
 	Slide,
 	Toolbar,
 	Typography,
@@ -62,6 +64,11 @@ const NotesListFolderView = ({
 				</AppBar>
 
 				<List ref={parentEl}>
+					{notes.length === 0 && (
+						<ListItem>
+							<ListItemText primary="No notes found" />
+						</ListItem>
+					)}
 					{sortArray(notes)?.map((note) => (
 						<NotesListItem
 							key={`note-${note.id}`}

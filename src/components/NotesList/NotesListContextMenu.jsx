@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
 	List,
@@ -8,11 +9,13 @@ import {
 } from '@mui/material';
 import {
 	Delete as DeleteIcon,
+	Folder as FolderIcon,
 	InfoOutlined as InfoIcon,
 	Star as StarIcon,
 	StarBorder as StarBorderIcon,
 } from '@mui/icons-material';
 
+import NotesMoveNoteToFolder from '@/components/NotesMoveNoteToFolder';
 import { useContextMenu } from '@/hooks/ContextMenu';
 import { useNotes } from '@/hooks/Notes';
 import { getDateCalendar, getDateRelative } from '@/utils';
@@ -40,6 +43,7 @@ const NotesListContextMenu = ({
 		deleteNote,
 		favouriteNote,
 	} = useNotes();
+	const [openMoveNote, setOpenMoveNote] = useState(false);
 
 	const handleFavouriteNote = () => {
 		contextMenuClose();
@@ -51,54 +55,78 @@ const NotesListContextMenu = ({
 		deleteNote(note);
 	};
 
+	const handleMoveNote = () => {
+		contextMenuClose();
+		setOpenMoveNote(true);
+	};
+
 	return (
-		<Popover
-			open={contextMenu?.id === note.id}
-			onClose={contextMenuClose}
-			anchorReference="anchorPosition"
-			anchorPosition={contextMenu?.position}
-		>
-			<List dense>
-				<ListItem>
-					<ListItemIcon>
-						<InfoIcon />
-					</ListItemIcon>
-					<ListItemText
-						sx={styles.listItemTextDate}
-						primary={`Last modified: ${getDateRelative(note.dateModified)}`}
-						primaryTypographyProps={{
-							noWrap: true,
-						}}
-						secondary={`Created: ${getDateCalendar(note.dateCreated)}`}
-						secondaryTypographyProps={{
-							noWrap: true,
-						}}
-					/>
-				</ListItem>
-				<ListItem button onClick={handleFavouriteNote}>
-					<ListItemIcon>
-						{note.favourite ? <StarIcon color="primary" /> : <StarBorderIcon />}
-					</ListItemIcon>
-					<ListItemText
-						primary={`${note.favourite ? 'Unfavourite' : 'Favourite'} "${note.title}"`}
-						primaryTypographyProps={{
-							noWrap: true,
-						}}
-					/>
-				</ListItem>
-				<ListItem button onClick={handleDeleteNote} disabled={note.isFolder}>
-					<ListItemIcon>
-						<DeleteIcon color="error" />
-					</ListItemIcon>
-					<ListItemText
-						primary={`Delete "${note.title}"`}
-						primaryTypographyProps={{
-							noWrap: true,
-						}}
-					/>
-				</ListItem>
-			</List>
-		</Popover>
+		<>
+			<Popover
+				open={contextMenu?.id === note.id}
+				onClose={contextMenuClose}
+				anchorReference="anchorPosition"
+				anchorPosition={contextMenu?.position}
+			>
+				<List dense>
+					<ListItem>
+						<ListItemIcon>
+							<InfoIcon />
+						</ListItemIcon>
+						<ListItemText
+							sx={styles.listItemTextDate}
+							primary={`Last modified: ${getDateRelative(note.dateModified)}`}
+							primaryTypographyProps={{
+								noWrap: true,
+							}}
+							secondary={`Created: ${getDateCalendar(note.dateCreated)}`}
+							secondaryTypographyProps={{
+								noWrap: true,
+							}}
+						/>
+					</ListItem>
+					<ListItem button onClick={handleMoveNote} disabled={note.isFolder}>
+						<ListItemIcon>
+							<FolderIcon />
+						</ListItemIcon>
+						<ListItemText
+							primary={`Move "${note.title}" to a Folder`}
+							primaryTypographyProps={{
+								noWrap: true,
+							}}
+						/>
+					</ListItem>
+					<ListItem button onClick={handleFavouriteNote}>
+						<ListItemIcon>
+							{note.favourite ? <StarIcon color="primary" /> : <StarBorderIcon />}
+						</ListItemIcon>
+						<ListItemText
+							primary={`${note.favourite ? 'Unfavourite' : 'Favourite'} "${note.title}"`}
+							primaryTypographyProps={{
+								noWrap: true,
+							}}
+						/>
+					</ListItem>
+					<ListItem button onClick={handleDeleteNote} disabled={note.isFolder}>
+						<ListItemIcon>
+							<DeleteIcon color="error" />
+						</ListItemIcon>
+						<ListItemText
+							primary={`Delete "${note.title}"`}
+							primaryTypographyProps={{
+								noWrap: true,
+							}}
+						/>
+					</ListItem>
+				</List>
+			</Popover>
+
+			<NotesMoveNoteToFolder
+				handleClose={() => setOpenMoveNote(false)}
+				note={note}
+				open={openMoveNote}
+			/>
+		</>
 	);
 };
 
