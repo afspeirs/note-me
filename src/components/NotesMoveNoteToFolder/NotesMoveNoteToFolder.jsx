@@ -86,7 +86,11 @@ const NotesMoveNoteToFolder = ({
 
 	useEffect(() => {
 		if (notes) {
-			setFolders(notes.filter((folder) => folder.isFolder));
+			setFolders(
+				notes
+					.filter((folder) => folder.isFolder)
+					.sort((a, b) => a.title.localeCompare(b.title)),
+			);
 		}
 	}, [notes]);
 

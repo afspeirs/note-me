@@ -47,6 +47,7 @@ const NotesList = () => {
 		return 0;
 	};
 	const sortNotesFolderFunction = (a, b) => {
+		if (a.isFolder && b.isFolder) return a.title.localeCompare(b.title);
 		if (a.isFolder) return -1;
 		if (b.isFolder) return 1;
 		return 0;
