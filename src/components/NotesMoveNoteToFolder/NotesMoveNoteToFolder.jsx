@@ -1,15 +1,21 @@
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
 	Button,
 	Dialog,
 	DialogActions,
 	DialogTitle,
+	IconButton,
+	Input,
+	InputAdornment,
 	List,
 	ListItem,
 	ListItemIcon,
 	ListItemText,
 } from '@mui/material';
 import {
+	Add as AddIcon,
+	Clear as ClearIcon,
 	Folder as FolderIcon,
 } from '@mui/icons-material';
 import { useConfirm } from 'material-ui-confirm';
@@ -37,6 +43,8 @@ const NotesMoveNoteToFolder = ({
 }) => {
 	const { notes, moveNote } = useNotes();
 	const confirm = useConfirm();
+	const [folders, setFolders] = useState([]);
+	const [newFolderNameText, setNewFolderNameText] = useState('');
 
 	const handleMoveNoteToFolder = (folder) => {
 		confirm({
@@ -60,6 +68,28 @@ const NotesMoveNoteToFolder = ({
 		});
 	};
 
+	const handleNewFolder = (event) => {
+		event.preventDefault();
+
+		if (newFolderNameText.length !== 0) {
+			setFolders((prevState) => [
+				...prevState,
+				{
+					title: newFolderNameText,
+				},
+			]);
+			setNewFolderNameText('');
+		}
+	};
+
+	const handleNewFolderNameTextChange = (event) => setNewFolderNameText(event.target.value);
+
+	useEffect(() => {
+		if (notes) {
+			setFolders(notes.filter((folder) => folder.isFolder));
+		}
+	}, [notes]);
+
 	return (
 		<Dialog
 			aria-labelledby="change-theme-dialog"
@@ -72,12 +102,12 @@ const NotesMoveNoteToFolder = ({
 				{`Move "${note.title}" to a folder`}
 			</DialogTitle>
 			<List>
-				{notes.filter((folder) => folder.isFolder).map((folder) => (
+				{folders?.map((folder) => (
 					<ListItem
-						key={folder.id}
+						key={folder.id || folder.title}
 						button
 						onClick={() => handleMoveNoteToFolder(folder)}
-						disabled={folder.notes.includes(note.id)}
+						disabled={folder?.notes?.includes(note?.id)}
 					>
 						<ListItemIcon>
 							<FolderIcon />
@@ -90,7 +120,49 @@ const NotesMoveNoteToFolder = ({
 						/>
 					</ListItem>
 				))}
+
+				<ListItem>
+					<ListItemIcon>
+						<Button
+							aria-label="add folder label"
+							size="small"
+							variant="contained"
+							sx={{ minWidth: 0 }}
+							disabled={newFolderNameText.length === 0}
+							onClick={handleNewFolder}
+						>
+							<AddIcon />
+						</Button>
+					</ListItemIcon>
+					<form
+						autoComplete="off"
+						noValidate
+						onSubmit={handleNewFolder}
+						style={{ width: '100%' }}
+					>
+						<Input
+							fullWidth
+							onChange={handleNewFolderNameTextChange}
+							value={newFolderNameText}
+							placeholder="New Folder Name"
+							endAdornment={newFolderNameText.length !== 0 && (
+								<InputAdornment position="end">
+									<IconButton
+										aria-label="Clear Search"
+										edge="end"
+										color="inherit"
+										size="small"
+										onClick={() => setNewFolderNameText('')}
+									>
+										<ClearIcon />
+									</IconButton>
+								</InputAdornment>
+							)}
+						/>
+					</form>
+				</ListItem>
 			</List>
+
 			<DialogActions>
 				<Button
 					color="error"

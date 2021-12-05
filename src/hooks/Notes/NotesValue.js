@@ -167,29 +167,48 @@ const NotesValue = () => {
 	 */
 	const moveNote = async (note, folder) => {
 		const batch = writeBatch(db);
+		let folderRef;
+
+		// If we pass a title for a folder but no id, make a new folder
+		if (folder?.title && !folder?.id) {
+			// A folder with just a title has been included as a parameter
+			folderRef = await doc(collection(db, user.uid));
+
+			const folderValue = {
+				...folder,
+				id: folderRef.id,
+				isFolder: true,
+				notes: [
+					note.id,
+				],
+			};
+
+			batch.set(folderRef, folderValue);
+		} else if (folder) {
+			// A folder has been included as a parameter
+			folderRef = doc(db, user.uid, folder.id);
+			const folderValue = {
+				notes: arrayUnion(note.id),
+			};
+
+			batch.update(folderRef, folderValue);
+		}
 
 		if (note) {
 			const noteRef = doc(db, user.uid, note.id);
 			const previousFolderRef = note.inFolder && doc(db, user.uid, note.inFolder);
 
 			const noteValue = {
-				inFolder: folder?.id || deleteField(),
+				inFolder: folderRef?.id || deleteField(),
 			};
 			const previousFolderValue = {
 				notes: arrayRemove(note.id),
 			};
 
 			batch.update(noteRef, noteValue);
-			batch.update(previousFolderRef, previousFolderValue);
-		}
-
-		if (folder) {
-			const folderRef = doc(db, user.uid, folder.id);
-			const folderValue = {
-				notes: arrayUnion(note.id),
-			};
-
-			batch.update(folderRef, folderValue);
+			if (previousFolderRef) {
+				batch.update(previousFolderRef, previousFolderValue);
+			}
 		}
 
 		await batch.commit().then(() => snackbar.showMessage({
