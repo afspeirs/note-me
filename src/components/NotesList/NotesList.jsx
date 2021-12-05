@@ -35,8 +35,8 @@ const NotesList = () => {
 		'date-created-dsc': (a, b) => a.dateCreated - b.dateCreated,
 		'date-modified-asc': (a, b) => b.dateModified - a.dateModified,
 		'date-modified-dsc': (a, b) => a.dateModified - b.dateModified,
-		'title-asc': (a, b) => a.text.localeCompare(b.text),
-		'title-dsc': (a, b) => b.text.localeCompare(a.text),
+		'title-asc': (a, b) => a.title.localeCompare(b.title),
+		'title-dsc': (a, b) => b.title.localeCompare(a.title),
 	}[sortNotesOrder];
 	const sortNotesFavouriteFunction = (a, b) => {
 		if (sortNotesFavourite) {
@@ -46,8 +46,9 @@ const NotesList = () => {
 		}
 		return 0;
 	};
-	const sortNotesFolderFunction = (a) => {
+	const sortNotesFolderFunction = (a, b) => {
 		if (a.isFolder) return -1;
+		if (b.isFolder) return 1;
 		return 0;
 	};
 
