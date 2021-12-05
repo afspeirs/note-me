@@ -101,6 +101,7 @@ const NotesList = () => {
 				notes={notes?.filter((note) => note.inFolder === selectedFolder?.id)}
 				selectedFolder={selectedFolder}
 				setSelectedFolder={setSelectedFolder}
+				sortArray={sortArray}
 			/>
 		</Box>
 	);

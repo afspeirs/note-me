@@ -30,12 +30,14 @@ const propTypes = {
 		title: PropTypes.string,
 	}),
 	setSelectedFolder: PropTypes.func.isRequired,
+	sortArray: PropTypes.func.isRequired,
 };
 
 const NotesListFolderView = ({
 	notes,
 	selectedFolder,
 	setSelectedFolder,
+	sortArray,
 }) => {
 	const parentEl = useRef(null);
 
@@ -60,7 +62,7 @@ const NotesListFolderView = ({
 				</AppBar>
 
 				<List ref={parentEl}>
-					{notes?.map((note) => (
+					{sortArray(notes)?.map((note) => (
 						<NotesListItem
 							key={`note-${note.id}`}
 							parentEl={parentEl}
