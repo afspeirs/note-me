@@ -32,11 +32,35 @@ const NotesValue = () => {
 	const [notes, setNotes] = useState();
 	const [loading, setLoading] = useState(true);
 
+	const returnFolderObject = ({
+		favourite,
+		id,
+		notes: folderNotes,
+		title,
+	}) => {
+		if (!id) {
+			// eslint-disable-next-line no-console
+			console.error(`An id needs to be provided. "${id}" is not valid`);
+			return null;
+		}
+
+		const newNote = {
+			favourite: favourite || false,
+			id,
+			isFolder: true,
+			notes: folderNotes,
+			title,
+		};
+
+		return newNote;
+	};
+
 	const returnNoteObject = ({
 		dateCreated,
 		dateModified,
 		favourite,
 		id,
+		inFolder,
 		text,
 		title,
 	}) => {
@@ -51,6 +75,7 @@ const NotesValue = () => {
 			dateModified: dateModified || +new Date(),
 			favourite: favourite || false,
 			id,
+			...(inFolder) && { inFolder },
 			text: text || '',
 			title: title || getTitle(text || ''),
 		};
@@ -146,13 +171,23 @@ const NotesValue = () => {
 
 		listOfNotes.forEach((note) => {
 			// TODO: Check if the note already exists before making a new document
-			const noteRef = doc(collection(db, user.uid));
-			const value = returnNoteObject({
-				...note,
-				id: noteRef.id,
-			});
+			const noteRef = doc(db, user.uid, note.id);
 
-			batch.set(noteRef, value);
+			if (note.isFolder) {
+				const value = returnFolderObject({
+					...note,
+					id: noteRef.id,
+				});
+
+				batch.set(noteRef, value);
+			} else {
+				const value = returnNoteObject({
+					...note,
+					id: noteRef.id,
+				});
+
+				batch.set(noteRef, value);
+			}
 		});
 
 		await batch.commit().then(() => snackbar.showMessage({
@@ -242,8 +277,9 @@ const NotesValue = () => {
 	};
 
 	useEffect(() => {
+		let unSubscribe;
 		if (user) {
-			onSnapshot(collection(db, user.uid), (snapshot) => {
+			unSubscribe = onSnapshot(collection(db, user.uid), (snapshot) => {
 				const authNotes = snapshot.docs.map((docs) => docs.data());
 				setNotes(authNotes);
 				setLoading(false);
@@ -252,6 +288,7 @@ const NotesValue = () => {
 			setNotes([]);
 			setLoading(false);
 		}
+		return unSubscribe;
 	}, [user]);
 
 	return {
