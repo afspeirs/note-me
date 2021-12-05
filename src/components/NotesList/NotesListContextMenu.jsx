@@ -69,33 +69,37 @@ const NotesListContextMenu = ({
 				anchorPosition={contextMenu?.position}
 			>
 				<List dense>
-					<ListItem>
-						<ListItemIcon>
-							<InfoIcon />
-						</ListItemIcon>
-						<ListItemText
-							sx={styles.listItemTextDate}
-							primary={`Last modified: ${getDateRelative(note.dateModified)}`}
-							primaryTypographyProps={{
-								noWrap: true,
-							}}
-							secondary={`Created: ${getDateCalendar(note.dateCreated)}`}
-							secondaryTypographyProps={{
-								noWrap: true,
-							}}
-						/>
-					</ListItem>
-					<ListItem button onClick={handleMoveNote} disabled={note.isFolder}>
-						<ListItemIcon>
-							<FolderIcon />
-						</ListItemIcon>
-						<ListItemText
-							primary={`Move "${note.title}" to a Folder`}
-							primaryTypographyProps={{
-								noWrap: true,
-							}}
-						/>
-					</ListItem>
+					{note.dateCreated && note.dateModified && (
+						<ListItem>
+							<ListItemIcon>
+								<InfoIcon />
+							</ListItemIcon>
+							<ListItemText
+								sx={styles.listItemTextDate}
+								primary={`Last modified: ${getDateRelative(note.dateModified)}`}
+								primaryTypographyProps={{
+									noWrap: true,
+								}}
+								secondary={`Created: ${getDateCalendar(note.dateCreated)}`}
+								secondaryTypographyProps={{
+									noWrap: true,
+								}}
+							/>
+						</ListItem>
+					)}
+					{!note.isFolder && (
+						<ListItem button onClick={handleMoveNote}>
+							<ListItemIcon>
+								<FolderIcon />
+							</ListItemIcon>
+							<ListItemText
+								primary={`Move "${note.title}" to a Folder`}
+								primaryTypographyProps={{
+									noWrap: true,
+								}}
+							/>
+						</ListItem>
+					)}
 					<ListItem button onClick={handleFavouriteNote}>
 						<ListItemIcon>
 							{note.favourite ? <StarIcon color="primary" /> : <StarBorderIcon />}
