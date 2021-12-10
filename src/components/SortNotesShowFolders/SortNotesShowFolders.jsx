@@ -30,7 +30,7 @@ const SortNotesShowFolders = () => {
 			</ListItemIcon>
 			<ListItemText
 				id="change-sort-show-folders"
-				primary="Show Folders"
+				primary="Show Folders (WIP)"
 			/>
 			<ListItemSecondaryAction sx={styles.listItemSecondary}>
 				<Switch
