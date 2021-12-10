@@ -6,6 +6,7 @@ import {
 import NotesExport from '@/components/NotesExport';
 import SortNotesFavourite from '@/components/SortNotesFavourite';
 import SortNotesOrder from '@/components/SortNotesOrder';
+import SortNotesShowFolders from '@/components/SortNotesShowFolders';
 import AppVersion from '@/components/shared/AppVersion';
 import ChangeTheme from '@/components/shared/ChangeTheme';
 import CheckForUpdate from '@/components/shared/CheckForUpdate';
@@ -27,6 +28,7 @@ const Settings = () => (
 
 			<Divider />
 
+			<SortNotesShowFolders />
 			<SortNotesFavourite />
 			<SortNotesOrder />
 

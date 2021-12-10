@@ -6,18 +6,18 @@ import {
 	Switch,
 } from '@mui/material';
 import {
-	Star as StarIcon,
+	Folder as FolderIcon,
 } from '@mui/icons-material';
 
 import { useAuth } from '@/hooks/Auth';
 import { useGlobalState } from '@/hooks/GlobalState';
-import styles from './SortNotesFavourite.styled';
+import styles from './SortNotesShowFolders.styled';
 
-const SortNotesFavourite = () => {
+const SortNotesShowFolders = () => {
 	const { isSignedIn } = useAuth();
-	const [{ settings: { sortNotesFavourite } }, dispatch] = useGlobalState();
+	const [{ settings: { sortNotesShowFolders } }, dispatch] = useGlobalState();
 
-	const handleToggle = () => dispatch({ type: 'settings-sortNotesFavourite' });
+	const handleToggle = () => dispatch({ type: 'settings-sortNotesShowFolders' });
 
 	return (
 		<ListItem
@@ -26,19 +26,19 @@ const SortNotesFavourite = () => {
 			onClick={handleToggle}
 		>
 			<ListItemIcon>
-				<StarIcon />
+				<FolderIcon />
 			</ListItemIcon>
 			<ListItemText
-				id="change-sort-favourite"
-				primary="Show Favourites first"
+				id="change-sort-show-folders"
+				primary="Show Folders (WIP)"
 			/>
 			<ListItemSecondaryAction sx={styles.listItemSecondary}>
 				<Switch
 					color="primary"
 					disabled={!isSignedIn}
 					edge="end"
-					checked={sortNotesFavourite}
-					inputProps={{ 'aria-labelledby': 'change-sort-favourite' }}
+					checked={sortNotesShowFolders}
+					inputProps={{ 'aria-labelledby': 'change-sort-show-folders' }}
 					tabIndex={-1}
 				/>
 			</ListItemSecondaryAction>
@@ -46,4 +46,4 @@ const SortNotesFavourite = () => {
 	);
 };
 
-export default SortNotesFavourite;
+export default SortNotesShowFolders;
