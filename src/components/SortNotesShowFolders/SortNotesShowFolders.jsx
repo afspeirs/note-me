@@ -35,6 +35,7 @@ const SortNotesShowFolders = () => {
 			<ListItemSecondaryAction sx={styles.listItemSecondary}>
 				<Switch
 					color="primary"
+					disabled={!isSignedIn}
 					edge="end"
 					checked={sortNotesShowFolders}
 					inputProps={{ 'aria-labelledby': 'change-sort-show-folders' }}

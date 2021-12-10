@@ -35,6 +35,7 @@ const SortNotesFavourite = () => {
 			<ListItemSecondaryAction sx={styles.listItemSecondary}>
 				<Switch
 					color="primary"
+					disabled={!isSignedIn}
 					edge="end"
 					checked={sortNotesFavourite}
 					inputProps={{ 'aria-labelledby': 'change-sort-favourite' }}
