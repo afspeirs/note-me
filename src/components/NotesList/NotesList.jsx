@@ -23,6 +23,7 @@ const NotesList = () => {
 		settings: {
 			sortNotesFavourite,
 			sortNotesOrder,
+			sortNotesShowFolders,
 		},
 	}] = useGlobalState();
 	const { loading, notes } = useNotes();
@@ -47,9 +48,11 @@ const NotesList = () => {
 		return 0;
 	};
 	const sortNotesFolderFunction = (a, b) => {
-		if (a.isFolder && b.isFolder) return a.title.localeCompare(b.title);
-		if (a.isFolder) return -1;
-		if (b.isFolder) return 1;
+		if (sortNotesShowFolders) {
+			if (a.isFolder && b.isFolder) return a.title.localeCompare(b.title);
+			if (a.isFolder) return -1;
+			if (b.isFolder) return 1;
+		}
 		return 0;
 	};
 
@@ -64,13 +67,16 @@ const NotesList = () => {
 			const filtered = notes
 				.filter((note) => note?.text?.toLowerCase().search(search?.text.toLowerCase()) !== -1)
 				// Show notes within folders on when searching, and hide folders when searching
-				.filter((note) => ((search?.text.length === 0) ? !note.inFolder : !note.isFolder));
+				.filter((note) => {
+					if (!sortNotesShowFolders) return !note.isFolder;
+					return (search?.text.length === 0) ? !note.inFolder : !note.isFolder;
+				});
 
 			if ((filteredNotes !== filtered)) {
 				setFilteredNotes(filtered);
 			}
 		}
-	}, [search.text, notes]);
+	}, [notes, search.text, sortNotesShowFolders]);
 	/* eslint-enable max-len */
 
 	return (
