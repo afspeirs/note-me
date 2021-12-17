@@ -17,6 +17,7 @@ import {
 
 import NotesMoveNoteToFolder from '@/components/NotesMoveNoteToFolder';
 import { useContextMenu } from '@/hooks/ContextMenu';
+import { useGlobalState } from '@/hooks/GlobalState';
 import { useNotes } from '@/hooks/Notes';
 import { getDateCalendar, getDateRelative } from '@/utils';
 import styles from './NotesList.styled';
@@ -39,6 +40,7 @@ const NotesListContextMenu = ({
 	parentEl,
 }) => {
 	const { contextMenu, contextMenuClose } = useContextMenu(parentEl);
+	const [{ settings: { sortNotesShowFolders } }] = useGlobalState();
 	const {
 		deleteNote,
 		favouriteNote,
@@ -87,7 +89,7 @@ const NotesListContextMenu = ({
 							/>
 						</ListItem>
 					)}
-					{!note.isFolder && (
+					{!note.isFolder && sortNotesShowFolders && (
 						<ListItem button onClick={handleMoveNote}>
 							<ListItemIcon>
 								<FolderIcon />
