@@ -27,21 +27,23 @@ const App = () => {
 	);
 
 	return (
-		<ThemeProvider theme={muiTheme}>
-			<ConfirmProvider>
-				<SnackbarProvider>
-					<NotesProvider>
-						<CssBaseline />
-						<Container>
-							<Routes />
-						</Container>
+		<>
+			<CssBaseline />
+			<ThemeProvider theme={muiTheme}>
+				<ConfirmProvider>
+					<SnackbarProvider>
+						<NotesProvider>
+							<Container>
+								<Routes />
+							</Container>
 
-						<FilesDragAndDrop />
-						<ServiceWorkerContent />
-					</NotesProvider>
-				</SnackbarProvider>
-			</ConfirmProvider>
-		</ThemeProvider>
+							<FilesDragAndDrop />
+							<ServiceWorkerContent />
+						</NotesProvider>
+					</SnackbarProvider>
+				</ConfirmProvider>
+			</ThemeProvider>
+		</>
 	);
 };
 
