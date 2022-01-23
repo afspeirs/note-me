@@ -8,6 +8,7 @@ import {
 import RouterNavLink from '@/components/shared/RouterNavLink';
 
 const defaultProps = {
+	Icon: null,
 	exact: null,
 	secondary: '',
 	to: null,
@@ -15,7 +16,7 @@ const defaultProps = {
 };
 
 const propTypes = {
-	Icon: PropTypes.objectOf(PropTypes.any).isRequired,
+	Icon: PropTypes.objectOf(PropTypes.any),
 	primary: PropTypes.string.isRequired,
 	exact: PropTypes.bool,
 	secondary: PropTypes.string,
@@ -23,7 +24,7 @@ const propTypes = {
 	onClick: PropTypes.func,
 };
 
-const PageButton = ({
+const ListButton = ({
 	Icon,
 	primary,
 	exact,
@@ -38,9 +39,11 @@ const PageButton = ({
 		to={to}
 		onClick={onClick}
 	>
-		<ListItemIcon>
-			<Icon />
-		</ListItemIcon>
+		{Icon && (
+			<ListItemIcon>
+				<Icon />
+			</ListItemIcon>
+		)}
 		<ListItemText
 			primary={primary}
 			secondary={secondary}
@@ -48,7 +51,7 @@ const PageButton = ({
 	</ListItem>
 );
 
-PageButton.defaultProps = defaultProps;
-PageButton.propTypes = propTypes;
+ListButton.defaultProps = defaultProps;
+ListButton.propTypes = propTypes;
 
-export default PageButton;
+export default ListButton;

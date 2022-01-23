@@ -50,7 +50,9 @@ const Routes = () => {
 
 			{user === false && <Redirect to="/" />}
 
-			<Route path="/settings/" component={Settings} />
+			<Switch>
+				<Route path="/settings/" component={Settings} />
+			</Switch>
 		</>
 	);
 };

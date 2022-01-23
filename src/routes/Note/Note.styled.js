@@ -46,7 +46,7 @@ export const MarkdownStyled = styled(Markdown)(({ theme }) => ({
 	},
 	'& pre': {
 		backgroundColor: theme.palette.action.disabledBackground,
-		overflowX: 'scroll',
+		overflowX: 'auto',
 		padding: theme.spacing(2),
 		borderRadius: '0.25rem',
 	},
