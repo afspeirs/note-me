@@ -34,54 +34,30 @@ const NotesValue = () => {
 
 	const returnFolderObject = ({
 		favourite,
-		id,
 		notes: folderNotes,
 		title,
-	}) => {
-		if (!id) {
-			// eslint-disable-next-line no-console
-			console.error(`An id needs to be provided. "${id}" is not valid`);
-			return null;
-		}
-
-		const newNote = {
-			favourite: favourite || false,
-			id,
-			isFolder: true,
-			notes: folderNotes,
-			title,
-		};
-
-		return newNote;
-	};
+	}) => ({
+		favourite: favourite || false,
+		isFolder: true,
+		notes: folderNotes,
+		title,
+	});
 
 	const returnNoteObject = ({
 		dateCreated,
 		dateModified,
 		favourite,
-		id,
 		inFolder,
 		text,
 		title,
-	}) => {
-		if (!id) {
-			// eslint-disable-next-line no-console
-			console.error(`An id needs to be provided. "${id}" is not valid`);
-			return null;
-		}
-
-		const newNote = {
-			dateCreated: dateCreated || +new Date(),
-			dateModified: dateModified || +new Date(),
-			favourite: favourite || false,
-			id,
-			...(inFolder) && { inFolder },
-			text: text || '',
-			title: title || getTitle(text || ''),
-		};
-
-		return newNote;
-	};
+	}) => ({
+		dateCreated: dateCreated || +new Date(),
+		dateModified: dateModified || +new Date(),
+		favourite: favourite || false,
+		...(inFolder) && { inFolder },
+		text: text || '',
+		title: title || getTitle(text || ''),
+	});
 
 	/**
 	 * Create a note based on the text provided, and navigate to the new note.
@@ -102,13 +78,12 @@ const NotesValue = () => {
 		} else {
 			const noteRef = await doc(collection(db, user.uid));
 			const value = returnNoteObject({
-				id: noteRef.id,
 				text,
 			});
 
 			await setDoc(noteRef, value)
 				.then(() => {
-					const path = `/note/${value.id}`;
+					const path = `/note/${noteRef.id}`;
 
 					if (replace) {
 						history.replace(path);
@@ -174,17 +149,11 @@ const NotesValue = () => {
 			const noteRef = doc(db, user.uid, note.id);
 
 			if (note.isFolder) {
-				const value = returnFolderObject({
-					...note,
-					id: noteRef.id,
-				});
+				const value = returnFolderObject(note);
 
 				batch.set(noteRef, value);
 			} else {
-				const value = returnNoteObject({
-					...note,
-					id: noteRef.id,
-				});
+				const value = returnNoteObject(note);
 
 				batch.set(noteRef, value);
 			}
@@ -211,7 +180,6 @@ const NotesValue = () => {
 
 			const folderValue = {
 				...folder,
-				id: folderRef.id,
 				isFolder: true,
 				notes: [
 					note.id,
@@ -280,7 +248,11 @@ const NotesValue = () => {
 		let unSubscribe;
 		if (user) {
 			unSubscribe = onSnapshot(collection(db, user.uid), (snapshot) => {
-				const authNotes = snapshot.docs.map((docs) => docs.data());
+				const authNotes = snapshot.docs.map((document) => ({
+					...document.data(),
+					id: document.id,
+				}));
+
 				setNotes(authNotes);
 				setLoading(false);
 			});
