@@ -13,6 +13,7 @@ import {
 	StarBorder as StarBorderIcon,
 } from '@mui/icons-material';
 
+import NotesDisplayLabels from '@/components/NotesDisplayLabels';
 import { getDateCalendar, getDateRelative } from '@/utils';
 
 const defaultProps = {
@@ -25,6 +26,7 @@ const propTypes = {
 		dateCreated: PropTypes.number,
 		dateModified: PropTypes.number,
 		favourite: PropTypes.bool,
+		labels: PropTypes.arrayOf(PropTypes.string),
 	}),
 	onClose: PropTypes.func.isRequired,
 	open: PropTypes.bool,
@@ -55,6 +57,10 @@ const NotesMoreInformation = ({
 					primary={`Favourite: ${note?.favourite ? 'Yes' : 'No'}`}
 				/>
 			</ListItem>
+			<NotesDisplayLabels
+				labels={note.labels}
+				onClick={onClose}
+			/>
 		</List>
 	</Dialog>
 );

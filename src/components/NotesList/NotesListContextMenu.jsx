@@ -9,15 +9,15 @@ import {
 } from '@mui/material';
 import {
 	Delete as DeleteIcon,
-	Folder as FolderIcon,
 	InfoOutlined as InfoIcon,
+	Label as LabelIcon,
 	Star as StarIcon,
 	StarBorder as StarBorderIcon,
 } from '@mui/icons-material';
 
-import NotesMoveNoteToFolder from '@/components/NotesMoveNoteToFolder';
+import NotesChangeLabels from '@/components/NotesChangeLabels';
+import NotesDisplayLabels from '@/components/NotesDisplayLabels';
 import { useContextMenu } from '@/hooks/ContextMenu';
-import { useGlobalState } from '@/hooks/GlobalState';
 import { useNotes } from '@/hooks/Notes';
 import { getDateCalendar, getDateRelative } from '@/utils';
 import styles from './NotesList.styled';
@@ -29,8 +29,7 @@ const propTypes = {
 		dateModified: PropTypes.number,
 		favourite: PropTypes.bool,
 		id: PropTypes.string,
-		inFolder: PropTypes.string,
-		isFolder: PropTypes.bool,
+		labels: PropTypes.arrayOf(PropTypes.string),
 		title: PropTypes.string,
 	}).isRequired,
 };
@@ -40,12 +39,11 @@ const NotesListContextMenu = ({
 	parentEl,
 }) => {
 	const { contextMenu, contextMenuClose } = useContextMenu(parentEl);
-	const [{ settings: { sortNotesShowFolders } }] = useGlobalState();
 	const {
 		deleteNote,
 		favouriteNote,
 	} = useNotes();
-	const [openMoveNote, setOpenMoveNote] = useState(false);
+	const [openChangeLabels, setOpenChangeLabels] = useState(false);
 
 	const handleFavouriteNote = () => {
 		contextMenuClose();
@@ -57,9 +55,9 @@ const NotesListContextMenu = ({
 		deleteNote(note);
 	};
 
-	const handleMoveNote = () => {
+	const handleChangeLabels = () => {
 		contextMenuClose();
-		setOpenMoveNote(true);
+		setOpenChangeLabels(true);
 	};
 
 	return (
@@ -89,19 +87,6 @@ const NotesListContextMenu = ({
 							/>
 						</ListItem>
 					)}
-					{!note.isFolder && sortNotesShowFolders && (
-						<ListItem button onClick={handleMoveNote}>
-							<ListItemIcon>
-								<FolderIcon />
-							</ListItemIcon>
-							<ListItemText
-								primary={`Move "${note.title}" to a Folder`}
-								primaryTypographyProps={{
-									noWrap: true,
-								}}
-							/>
-						</ListItem>
-					)}
 					<ListItem button onClick={handleFavouriteNote}>
 						<ListItemIcon>
 							{note.favourite ? <StarIcon color="primary" /> : <StarBorderIcon />}
@@ -113,7 +98,7 @@ const NotesListContextMenu = ({
 							}}
 						/>
 					</ListItem>
-					<ListItem button onClick={handleDeleteNote} disabled={note.isFolder}>
+					<ListItem button onClick={handleDeleteNote}>
 						<ListItemIcon>
 							<DeleteIcon color="error" />
 						</ListItemIcon>
@@ -124,13 +109,28 @@ const NotesListContextMenu = ({
 							}}
 						/>
 					</ListItem>
+					<ListItem button onClick={handleChangeLabels}>
+						<ListItemIcon>
+							<LabelIcon />
+						</ListItemIcon>
+						<ListItemText
+							primary={`Add/Remove Labels from "${note.title}"`}
+							primaryTypographyProps={{
+								noWrap: true,
+							}}
+						/>
+					</ListItem>
+					<NotesDisplayLabels
+						labels={note.labels}
+						onClick={contextMenuClose}
+					/>
 				</List>
 			</Popover>
 
-			<NotesMoveNoteToFolder
-				handleClose={() => setOpenMoveNote(false)}
+			<NotesChangeLabels
 				note={note}
-				open={openMoveNote}
+				onClose={() => setOpenChangeLabels(false)}
+				open={openChangeLabels}
 			/>
 		</>
 	);

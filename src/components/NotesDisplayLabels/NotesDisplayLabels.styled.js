@@ -1,6 +1,7 @@
 const styles = {
-	listItemSecondary: {
-		pointerEvents: 'none',
+	chipWrapper: {
+		display: 'flex',
+		gap: 1,
 	},
 };
 

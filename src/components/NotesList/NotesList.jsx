@@ -15,7 +15,7 @@ import { useGlobalState } from '@/hooks/GlobalState';
 import { useNotes } from '@/hooks/Notes';
 import styles from './NotesList.styled';
 import NotesListItem from './NotesListItem';
-import NotesListFolderView from './NotesListFolderView';
+// import NotesListFolderView from './NotesListFolderView';
 
 const NotesList = () => {
 	const [{
@@ -23,13 +23,12 @@ const NotesList = () => {
 		settings: {
 			sortNotesFavourite,
 			sortNotesOrder,
-			sortNotesShowFolders,
 		},
 	}] = useGlobalState();
 	const { loading, notes } = useNotes();
 	const parentEl = useRef(null);
 	const [filteredNotes, setFilteredNotes] = useState([]);
-	const [selectedFolder, setSelectedFolder] = useState(null);
+	// const [selectedFolder, setSelectedFolder] = useState(null);
 
 	const sortNoteFunction = {
 		'date-created-asc': (a, b) => b.dateCreated - a.dateCreated,
@@ -47,37 +46,22 @@ const NotesList = () => {
 		}
 		return 0;
 	};
-	const sortNotesFolderFunction = (a, b) => {
-		if (sortNotesShowFolders) {
-			if (a.isFolder && b.isFolder) return a.title.localeCompare(b.title);
-			if (a.isFolder) return -1;
-			if (b.isFolder) return 1;
-		}
-		return 0;
-	};
 
 	const sortArray = (array) => array
 		.sort(sortNoteFunction)
-		.sort(sortNotesFavouriteFunction)
-		.sort(sortNotesFolderFunction);
+		.sort(sortNotesFavouriteFunction);
 
-	/* eslint-disable max-len */
 	useEffect(() => {
 		if (notes) {
 			const filtered = notes
-				.filter((note) => note?.text?.toLowerCase().search(search?.text.toLowerCase()) !== -1)
-				// Show notes within folders on when searching, and hide folders when searching
-				.filter((note) => {
-					if (!sortNotesShowFolders) return !note.isFolder;
-					return (search?.text.length === 0) ? !note.inFolder : !note.isFolder;
-				});
+				.filter((note) => note?.text.toLowerCase().search(search?.text.toLowerCase()) !== -1
+				|| note.labels?.find((label) => label?.toLowerCase().search(search?.text.toLowerCase()) !== -1)); // eslint-disable-line max-len
 
 			if ((filteredNotes !== filtered)) {
 				setFilteredNotes(filtered);
 			}
 		}
-	}, [notes, search.text, sortNotesShowFolders]);
-	/* eslint-enable max-len */
+	}, [notes, search.text]);
 
 	return (
 		<Box sx={styles.root}>
@@ -100,17 +84,17 @@ const NotesList = () => {
 						key={`note-${note.id}`}
 						note={note}
 						parentEl={parentEl}
-						setSelectedFolder={setSelectedFolder}
 					/>
 				))}
 			</List>
 
-			<NotesListFolderView
+			{/* TODO: Show labels in this view when selecting one from the context menu */}
+			{/* <NotesListFolderView
 				notes={notes?.filter((note) => note.inFolder === selectedFolder?.id)}
 				selectedFolder={selectedFolder}
 				setSelectedFolder={setSelectedFolder}
 				sortArray={sortArray}
-			/>
+			/> */}
 		</Box>
 	);
 };

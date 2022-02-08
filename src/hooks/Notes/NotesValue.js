@@ -1,11 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import {
-	arrayRemove,
-	arrayUnion,
 	collection,
 	deleteDoc,
-	deleteField,
 	doc,
 	onSnapshot,
 	setDoc,
@@ -30,58 +27,22 @@ const NotesValue = () => {
 	const location = useLocation();
 	const snackbar = useSnackbar();
 	const [notes, setNotes] = useState();
+	const [labels, setLabels] = useState();
 	const [loading, setLoading] = useState(true);
-
-	const returnFolderObject = ({
-		favourite,
-		id,
-		notes: folderNotes,
-		title,
-	}) => {
-		if (!id) {
-			// eslint-disable-next-line no-console
-			console.error(`An id needs to be provided. "${id}" is not valid`);
-			return null;
-		}
-
-		const newNote = {
-			favourite: favourite || false,
-			id,
-			isFolder: true,
-			notes: folderNotes,
-			title,
-		};
-
-		return newNote;
-	};
 
 	const returnNoteObject = ({
 		dateCreated,
 		dateModified,
 		favourite,
-		id,
-		inFolder,
 		text,
 		title,
-	}) => {
-		if (!id) {
-			// eslint-disable-next-line no-console
-			console.error(`An id needs to be provided. "${id}" is not valid`);
-			return null;
-		}
-
-		const newNote = {
-			dateCreated: dateCreated || +new Date(),
-			dateModified: dateModified || +new Date(),
-			favourite: favourite || false,
-			id,
-			...(inFolder) && { inFolder },
-			text: text || '',
-			title: title || getTitle(text || ''),
-		};
-
-		return newNote;
-	};
+	}) => ({
+		dateCreated: dateCreated || +new Date(),
+		dateModified: dateModified || +new Date(),
+		favourite: favourite || false,
+		text: text || '',
+		title: title || getTitle(text || ''),
+	});
 
 	/**
 	 * Create a note based on the text provided, and navigate to the new note.
@@ -102,13 +63,12 @@ const NotesValue = () => {
 		} else {
 			const noteRef = await doc(collection(db, user.uid));
 			const value = returnNoteObject({
-				id: noteRef.id,
 				text,
 			});
 
 			await setDoc(noteRef, value)
 				.then(() => {
-					const path = `/note/${value.id}`;
+					const path = `/note/${noteRef.id}`;
 
 					if (replace) {
 						history.replace(path);
@@ -172,22 +132,9 @@ const NotesValue = () => {
 		listOfNotes.forEach((note) => {
 			// TODO: Check if the note already exists before making a new document
 			const noteRef = doc(db, user.uid, note.id);
+			const value = returnNoteObject(note);
 
-			if (note.isFolder) {
-				const value = returnFolderObject({
-					...note,
-					id: noteRef.id,
-				});
-
-				batch.set(noteRef, value);
-			} else {
-				const value = returnNoteObject({
-					...note,
-					id: noteRef.id,
-				});
-
-				batch.set(noteRef, value);
-			}
+			batch.set(noteRef, value);
 		});
 
 		await batch.commit().then(() => snackbar.showMessage({
@@ -196,59 +143,21 @@ const NotesValue = () => {
 	};
 
 	/**
-	 * Moves Note to a folder if one is provided, otherwise it removes the folder
-	 * @param {object} note
-	 * @param {object} [folder]
+	 * Update the labels on a note
+	 * @param {array} newLabels
+	 * @param {object} [note]
 	 */
-	const moveNote = async (note, folder) => {
-		const batch = writeBatch(db);
-		let folderRef;
+	const updateLabels = async (newLabels, note) => {
+		const noteRef = doc(db, user.uid, note.id);
 
-		// If we pass a title for a folder but no id, make a new folder
-		if (folder?.title && !folder?.id) {
-			// A folder with just a title has been included as a parameter
-			folderRef = await doc(collection(db, user.uid));
-
-			const folderValue = {
-				...folder,
-				id: folderRef.id,
-				isFolder: true,
-				notes: [
-					note.id,
-				],
-			};
-
-			batch.set(folderRef, folderValue);
-		} else if (folder) {
-			// A folder has been included as a parameter
-			folderRef = doc(db, user.uid, folder.id);
-			const folderValue = {
-				notes: arrayUnion(note.id),
-			};
-
-			batch.update(folderRef, folderValue);
-		}
-
-		if (note) {
-			const noteRef = doc(db, user.uid, note.id);
-			const previousFolderRef = note.inFolder && doc(db, user.uid, note.inFolder);
-
-			const noteValue = {
-				inFolder: folderRef?.id || deleteField(),
-			};
-			const previousFolderValue = {
-				notes: arrayRemove(note.id),
-			};
-
-			batch.update(noteRef, noteValue);
-			if (previousFolderRef) {
-				batch.update(previousFolderRef, previousFolderValue);
-			}
-		}
-
-		await batch.commit().then(() => snackbar.showMessage({
-			message: `"${note.title}" has been moved to "${folder?.title}"`,
-		}));
+		await updateDoc(noteRef, {
+			labels: newLabels,
+		})
+			.then(() => snackbar.showMessage({
+				actionFunction: () => setDoc(noteRef, note),
+				actionText: 'Undo',
+				message: `Labels for "${note.title}" have been updated`,
+			}));
 	};
 
 	/**
@@ -280,7 +189,11 @@ const NotesValue = () => {
 		let unSubscribe;
 		if (user) {
 			unSubscribe = onSnapshot(collection(db, user.uid), (snapshot) => {
-				const authNotes = snapshot.docs.map((docs) => docs.data());
+				const authNotes = snapshot.docs.map((document) => ({
+					...document.data(),
+					id: document.id,
+				}));
+
 				setNotes(authNotes);
 				setLoading(false);
 			});
@@ -291,14 +204,29 @@ const NotesValue = () => {
 		return unSubscribe;
 	}, [user]);
 
+	useEffect(() => {
+		if (notes) {
+			const newLabels = notes
+				.map((note) => note.labels)
+				.filter(Boolean)
+				.flat()
+				.sort((a, b) => a.localeCompare(b));
+
+			if (labels !== newLabels) {
+				setLabels([...new Set(newLabels)].sort());
+			}
+		}
+	}, [notes]);
+
 	return {
 		createNote,
 		deleteNote,
 		favouriteNote,
 		importNotes,
+		labels,
 		loading,
-		moveNote,
 		notes,
+		updateLabels,
 		updateNote,
 	};
 };
