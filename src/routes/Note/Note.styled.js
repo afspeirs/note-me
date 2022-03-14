@@ -37,6 +37,7 @@ export const MarkdownStyled = styled(Markdown)(({ theme }) => ({
 	'& li > input[type="checkbox"]': {
 		position: 'absolute',
 		left: `-${theme.spacing(3)}`,
+		accentColor: theme.palette.primary.main,
 	},
 	'& blockquote': {
 		margin: 0,
