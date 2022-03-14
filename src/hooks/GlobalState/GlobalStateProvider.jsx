@@ -6,6 +6,7 @@ import GlobalStateContext from './GlobalStateContext';
 
 const propTypes = {
 	children: PropTypes.node.isRequired,
+	// eslint-disable-next-line react/forbid-prop-types
 	initialState: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 

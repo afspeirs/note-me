@@ -24,7 +24,16 @@ const defaultProps = {
 };
 
 const propTypes = {
-	notes: PropTypes.arrayOf(PropTypes.any),
+	notes: PropTypes.arrayOf(
+		PropTypes.shape({
+			dateCreated: PropTypes.number,
+			dateModified: PropTypes.number,
+			favourite: PropTypes.bool,
+			id: PropTypes.string,
+			title: PropTypes.string,
+			labels: PropTypes.arrayOf(PropTypes.string),
+		}),
+	),
 	selectedFolder: PropTypes.shape({
 		dateCreated: PropTypes.number,
 		dateModified: PropTypes.number,
