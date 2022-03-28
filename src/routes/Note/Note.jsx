@@ -102,6 +102,7 @@ const Note = () => {
 			) : (
 				<MarkdownStyled
 					options={{
+						forceWrapper: true,
 						overrides: {
 							a: RendererLink,
 						},

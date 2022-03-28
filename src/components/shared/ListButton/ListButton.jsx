@@ -16,6 +16,7 @@ const defaultProps = {
 };
 
 const propTypes = {
+	// eslint-disable-next-line react/forbid-prop-types
 	Icon: PropTypes.objectOf(PropTypes.any),
 	primary: PropTypes.string.isRequired,
 	exact: PropTypes.bool,
