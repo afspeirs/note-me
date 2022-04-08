@@ -5,7 +5,6 @@ import {
 	ListItemText,
 } from '@mui/material';
 import {
-	KeyboardArrowRight as ArrowIcon,
 	Star as StarIcon,
 } from '@mui/icons-material';
 
@@ -42,12 +41,11 @@ const NotesListItem = ({
 					noWrap: true,
 				}}
 			/>
-			<ListItemSecondaryAction sx={styles.listItemSecondary}>
-				{note.favourite && (
+			{note.favourite && (
+				<ListItemSecondaryAction sx={styles.listItemSecondary}>
 					<StarIcon color="primary" />
-				)}
-				<ArrowIcon color="disabled" />
-			</ListItemSecondaryAction>
+				</ListItemSecondaryAction>
+			)}
 		</ListItem>
 
 		<NotesListContextMenu
