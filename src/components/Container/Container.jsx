@@ -4,11 +4,9 @@ import { Helmet } from 'react-helmet';
 import { useHistory } from 'react-router-dom';
 import { useTheme } from '@mui/material/styles';
 import {
-	AppBar,
 	Backdrop,
 	Box,
 	Drawer as MuiDrawer,
-	Toolbar,
 	useMediaQuery,
 } from '@mui/material';
 
@@ -71,8 +69,9 @@ const Container = ({ children }) => {
 				sx={styles.drawer}
 				variant="persistent"
 			>
-				<Toolbar />
-				<DrawerContent />
+				<DrawerContent
+					handleDrawerToggle={handleDrawerToggle}
+				/>
 			</MuiDrawer>
 
 			<Backdrop
@@ -81,14 +80,6 @@ const Container = ({ children }) => {
 				open={mobile && drawerOpen}
 				sx={styles.backdrop}
 			/>
-
-			<AppBar
-				position="relative"
-				sx={styles.appBar}
-				elevation={0}
-			>
-				<Toolbar />
-			</AppBar>
 
 			<Box sx={styles.content}>
 				<DrawerDiv open={drawerOpen} />

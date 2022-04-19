@@ -6,7 +6,6 @@ import {
 	IconButton,
 	Toolbar,
 	Typography,
-	useMediaQuery,
 } from '@mui/material';
 import {
 	Menu as MenuIcon,
@@ -21,7 +20,7 @@ const defaultProps = {
 	headerItems: [],
 	hideMenuButton: false,
 	showPrompt: false,
-	title: '',
+	title: import.meta.env.VITE_APP_TITLE,
 	titleDocument: '',
 };
 
@@ -55,7 +54,6 @@ const Page = ({
 	titleDocument,
 }) => {
 	const [{ drawerOpen }, dispatch] = useGlobalState();
-	const mobile = useMediaQuery('(max-width:600px)');
 
 	const handleDrawerToggle = () => dispatch({ type: 'app-drawerOpen' });
 
@@ -65,35 +63,33 @@ const Page = ({
 				<title>{titleDocument || title ? `${titleDocument || title} | ${import.meta.env.VITE_APP_TITLE}` : import.meta.env.VITE_APP_TITLE}</title>
 			</Helmet>
 
-			<AppBar
-				position="fixed"
-				sx={styles.appBar}
-			>
-				<Toolbar>
-					{!hideMenuButton ? (
-						<IconButton
-							size="large"
-							edge="start"
-							color="inherit"
-							aria-label="menu"
-							sx={styles.menuIcon}
-							onClick={handleDrawerToggle}
-						>
-							<MenuIcon />
-						</IconButton>
-					) : null}
-					<Typography variant="h6" component="h1" noWrap sx={styles.title}>
-						{title || import.meta.env.VITE_APP_TITLE}
-					</Typography>
-					<HeaderContent
-						headerItems={headerItems}
-						disableHeaderItems={mobile && drawerOpen}
-						disableOverflowMenu={disableHeaderItemsOverflowMenu}
-					/>
-				</Toolbar>
-			</AppBar>
-
 			<Content>
+				<AppBar
+					position="relative"
+				>
+					<Toolbar>
+						{!(hideMenuButton || drawerOpen) ? (
+							<IconButton
+								size="large"
+								edge="start"
+								color="inherit"
+								aria-label="menu"
+								sx={styles.menuIcon}
+								onClick={handleDrawerToggle}
+							>
+								<MenuIcon />
+							</IconButton>
+						) : null}
+						<Typography variant="h6" component="h1" noWrap sx={styles.title}>
+							{title}
+						</Typography>
+						<HeaderContent
+							headerItems={headerItems}
+							disableOverflowMenu={disableHeaderItemsOverflowMenu}
+						/>
+					</Toolbar>
+				</AppBar>
+
 				{children}
 			</Content>
 
