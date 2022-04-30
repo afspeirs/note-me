@@ -5,8 +5,8 @@ const styles = {
 		overflow: 'hidden',
 	},
 	list: {
-		overflowY: 'auto',
-		overflowX: 'hidden',
+		overflow: 'auto',
+		overflowY: 'overlay',
 		height: '100%',
 	},
 	listItemSecondary: {
