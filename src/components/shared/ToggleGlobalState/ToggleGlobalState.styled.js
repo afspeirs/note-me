@@ -1,5 +1,5 @@
 const styles = {
-	listItemSecondary: {
+	listItemSecondaryAction: {
 		pointerEvents: 'none',
 	},
 };
