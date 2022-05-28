@@ -65,11 +65,8 @@ const Page = ({
 				<title>{titleDocument || title ? `${titleDocument || title} | ${import.meta.env.VITE_APP_TITLE}` : import.meta.env.VITE_APP_TITLE}</title>
 			</Helmet>
 
-			<AppBar
-				position="fixed"
-				sx={styles.appBar}
-			>
-				<Toolbar>
+			<AppBar position="fixed" sx={styles.appBar}>
+				<Toolbar sx={styles.toolbar}>
 					{!hideMenuButton ? (
 						<IconButton
 							size="large"

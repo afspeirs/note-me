@@ -6,6 +6,7 @@
 	"lang": "en",
 	"start_url": ".",
 	"display": "standalone",
+	"display_override": ["window-controls-overlay"],
 	"theme_color": "#ee6e00",
 	"background_color": "#ee6e00",
 	"icons": [
