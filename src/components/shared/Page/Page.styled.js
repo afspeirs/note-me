@@ -15,6 +15,11 @@ const styles = {
 	appBar: {
 		zIndex: (theme) => theme.zIndex.drawer + 1,
 	},
+	toolbar: {
+		left: 'env(titlebar-area-x, 0)',
+		top: 'env(titlebar-area-y, 0)',
+		width: 'env(titlebar-area-width, 100%)',
+	},
 	menuIcon: {
 		mr: 2,
 	},

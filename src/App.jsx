@@ -17,13 +17,39 @@ const App = () => {
 	const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
 	const muiTheme = useMemo(
 		() => createTheme({
+			components: {
+				MuiBackdrop: {
+					styleOverrides: {
+						root: {
+							WebkitAppRegion: 'no-drag',
+							appRegion: 'no-drag',
+						},
+					},
+				},
+				MuiAppBar: {
+					styleOverrides: {
+						root: {
+							WebkitAppRegion: 'drag',
+							appRegion: 'drag',
+						},
+					},
+				},
+				MuiButtonBase: {
+					styleOverrides: {
+						root: {
+							WebkitAppRegion: 'no-drag',
+							appRegion: 'no-drag',
+						},
+					},
+				},
+			},
 			palette: {
 				...theme.palette,
 				// eslint-disable-next-line no-nested-ternary
 				mode: appTheme === 'default' ? (prefersDarkMode ? 'dark' : 'light') : appTheme,
 			},
 		}),
-		[prefersDarkMode, appTheme],
+		[appTheme, prefersDarkMode],
 	);
 
 	return (
