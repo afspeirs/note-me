@@ -5,13 +5,13 @@ import packageVersion from 'vite-plugin-package-version';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-	plugins: [
-		packageVersion(),
-		react(),
-	],
-	resolve: {
-		alias: {
-			'@': resolve(__dirname, './src'),
-		},
-	},
+  plugins: [
+    packageVersion(),
+    react(),
+  ],
+  resolve: {
+    alias: {
+      '@': resolve(__dirname, './src'),
+    },
+  },
 });

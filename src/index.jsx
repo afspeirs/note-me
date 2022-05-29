@@ -11,16 +11,16 @@ import initialGlobalState from './initialGlobalState';
 import registerServiceWorker from './registerServiceWorker';
 
 ReactDOM.render(
-	<React.StrictMode>
-		<BrowserRouter getUserConfirmation={(message, callback) => UserConfirmation(message, callback)}>
-			<GlobalStateProvider initialState={initialGlobalState}>
-				<AuthProvider>
-					<App />
-				</AuthProvider>
-			</GlobalStateProvider>
-		</BrowserRouter>
-	</React.StrictMode>,
-	document.getElementById('root'),
+  <React.StrictMode>
+    <BrowserRouter getUserConfirmation={(message, callback) => UserConfirmation(message, callback)}>
+      <GlobalStateProvider initialState={initialGlobalState}>
+        <AuthProvider>
+          <App />
+        </AuthProvider>
+      </GlobalStateProvider>
+    </BrowserRouter>
+  </React.StrictMode>,
+  document.getElementById('root'),
 );
 
 registerServiceWorker();

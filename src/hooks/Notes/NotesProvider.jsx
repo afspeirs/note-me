@@ -4,20 +4,20 @@ import NotesContext from './NotesContext';
 import NotesValue from './NotesValue';
 
 const propTypes = {
-	children: PropTypes.oneOfType([
-		PropTypes.arrayOf(PropTypes.node),
-		PropTypes.node,
-	]).isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]).isRequired,
 };
 
-const NotesProvider = ({ children }) => {
-	const value = NotesValue();
-	return (
-		<NotesContext.Provider value={value}>
-			{children}
-		</NotesContext.Provider>
-	);
-};
+function NotesProvider({ children }) {
+  const value = NotesValue();
+  return (
+    <NotesContext.Provider value={value}>
+      {children}
+    </NotesContext.Provider>
+  );
+}
 
 NotesProvider.propTypes = propTypes;
 
