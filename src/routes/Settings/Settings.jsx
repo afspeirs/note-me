@@ -1,6 +1,6 @@
 import {
-	Divider,
-	List,
+  Divider,
+  List,
 } from '@mui/material';
 
 import NotesExport from '@/components/NotesExport';
@@ -13,28 +13,30 @@ import KeyboardShortcuts from '@/components/shared/KeyboardShortcuts';
 import Modal from '@/components/shared/Modal';
 import UserInformation from '@/components/shared/UserInformation';
 
-const Settings = () => (
-	<Modal title="Settings">
-		<List>
-			<UserInformation />
-			<AppVersion />
-			<CheckForUpdate />
-			<KeyboardShortcuts />
+function Settings() {
+  return (
+    <Modal title="Settings">
+      <List>
+        <UserInformation />
+        <AppVersion />
+        <CheckForUpdate />
+        <KeyboardShortcuts />
 
-			<Divider />
+        <Divider />
 
-			<ChangeTheme />
+        <ChangeTheme />
 
-			<Divider />
+        <Divider />
 
-			<SortNotesFavourite />
-			<SortNotesOrder />
+        <SortNotesFavourite />
+        <SortNotesOrder />
 
-			<Divider />
+        <Divider />
 
-			<NotesExport />
-		</List>
-	</Modal>
-);
+        <NotesExport />
+      </List>
+    </Modal>
+  );
+}
 
 export default Settings;

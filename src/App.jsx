@@ -12,39 +12,65 @@ import { useGlobalState } from './hooks/GlobalState';
 import { NotesProvider } from './hooks/Notes';
 import { SnackbarProvider } from './hooks/Snackbar';
 
-const App = () => {
-	const [{ settings: { appTheme } }] = useGlobalState();
-	const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
-	const muiTheme = useMemo(
-		() => createTheme({
-			palette: {
-				...theme.palette,
-				// eslint-disable-next-line no-nested-ternary
-				mode: appTheme === 'default' ? (prefersDarkMode ? 'dark' : 'light') : appTheme,
-			},
-		}),
-		[prefersDarkMode, appTheme],
-	);
+function App() {
+  const [{ settings: { appTheme } }] = useGlobalState();
+  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+  const muiTheme = useMemo(
+    () => createTheme({
+      components: {
+        MuiBackdrop: {
+          styleOverrides: {
+            root: {
+              WebkitAppRegion: 'no-drag',
+              appRegion: 'no-drag',
+            },
+          },
+        },
+        MuiAppBar: {
+          styleOverrides: {
+            root: {
+              WebkitAppRegion: 'drag',
+              appRegion: 'drag',
+            },
+          },
+        },
+        MuiButtonBase: {
+          styleOverrides: {
+            root: {
+              WebkitAppRegion: 'no-drag',
+              appRegion: 'no-drag',
+            },
+          },
+        },
+      },
+      palette: {
+        ...theme.palette,
+        // eslint-disable-next-line no-nested-ternary
+        mode: appTheme === 'default' ? (prefersDarkMode ? 'dark' : 'light') : appTheme,
+      },
+    }),
+    [appTheme, prefersDarkMode],
+  );
 
-	return (
-		<>
-			<CssBaseline />
-			<ThemeProvider theme={muiTheme}>
-				<ConfirmProvider>
-					<SnackbarProvider>
-						<NotesProvider>
-							<Container>
-								<Routes />
-							</Container>
+  return (
+    <>
+      <CssBaseline />
+      <ThemeProvider theme={muiTheme}>
+        <ConfirmProvider>
+          <SnackbarProvider>
+            <NotesProvider>
+              <Container>
+                <Routes />
+              </Container>
 
-							<FilesDragAndDrop />
-							<ServiceWorkerContent />
-						</NotesProvider>
-					</SnackbarProvider>
-				</ConfirmProvider>
-			</ThemeProvider>
-		</>
-	);
-};
+              <FilesDragAndDrop />
+              <ServiceWorkerContent />
+            </NotesProvider>
+          </SnackbarProvider>
+        </ConfirmProvider>
+      </ThemeProvider>
+    </>
+  );
+}
 
 export default App;

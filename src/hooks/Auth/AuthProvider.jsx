@@ -4,20 +4,20 @@ import AuthContext from './AuthContext';
 import AuthValue from './AuthValue';
 
 const propTypes = {
-	children: PropTypes.oneOfType([
-		PropTypes.arrayOf(PropTypes.node),
-		PropTypes.node,
-	]).isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]).isRequired,
 };
 
-const AuthProvider = ({ children }) => {
-	const value = AuthValue();
-	return (
-		<AuthContext.Provider value={value}>
-			{children}
-		</AuthContext.Provider>
-	);
-};
+function AuthProvider({ children }) {
+  const value = AuthValue();
+  return (
+    <AuthContext.Provider value={value}>
+      {children}
+    </AuthContext.Provider>
+  );
+}
 
 AuthProvider.propTypes = propTypes;
 
