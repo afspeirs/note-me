@@ -24,6 +24,11 @@ const styles = {
     flex: 1,
     userSelect: 'none',
   },
+  toolbar: {
+    left: 'env(titlebar-area-x, 0)',
+    top: 'env(titlebar-area-y, 0)',
+    width: 'env(titlebar-area-width, 100%)',
+  },
 };
 
 export default styles;

@@ -108,17 +108,17 @@ function Modal({
           position="relative"
           sx={fullScreenModal ? styles.appBarPadding : null}
         >
-          <Toolbar>
+          <Toolbar sx={fullScreenModal ? styles.toolbar : null}>
             {fullScreenModal && (
-            <IconButton
-              aria-label="close"
-              color="inherit"
-              edge="start"
-              onClick={handleClose}
-              sx={styles.menuButton}
-            >
-              <ArrowBackIcon />
-            </IconButton>
+              <IconButton
+                aria-label="close"
+                color="inherit"
+                edge="start"
+                onClick={handleClose}
+                sx={styles.menuButton}
+              >
+                <ArrowBackIcon />
+              </IconButton>
             )}
             <Typography
               component="h2"
@@ -134,14 +134,14 @@ function Modal({
               headerItems={headerItems}
             />
             {!fullScreenModal && (
-            <IconButton
-              aria-label="close"
-              color="inherit"
-              edge="end"
-              onClick={handleClose}
-            >
-              <CloseIcon />
-            </IconButton>
+              <IconButton
+                aria-label="close"
+                color="inherit"
+                edge="end"
+                onClick={handleClose}
+              >
+                <CloseIcon />
+              </IconButton>
             )}
           </Toolbar>
         </AppBar>
