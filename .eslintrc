@@ -8,13 +8,15 @@
     "es6": true,
     "node": true
   },
-  "extends": "airbnb",
+  "extends": [
+    "airbnb",
+    "plugin:react/jsx-runtime"
+  ],
   "rules": {
     "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
     "import/prefer-default-export": "off",
     "no-restricted-exports": "off",
-    "react/jsx-no-useless-fragment": ["error", { "allowExpressions": true }],
-    "react/react-in-jsx-scope": "off"
+    "react/jsx-no-useless-fragment": ["error", { "allowExpressions": true }]
   },
   "settings": {
     "import/resolver": {
