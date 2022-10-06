@@ -102,6 +102,9 @@ const NotesValue = () => {
         if (location.pathname.includes(note.id)) {
           history.replace('/');
         }
+      })
+      .catch((error) => {
+        if (error) console.error(error); // eslint-disable-line no-console
       });
   };
 

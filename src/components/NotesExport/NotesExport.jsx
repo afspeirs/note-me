@@ -77,14 +77,18 @@ function NotesExport() {
       title: `Are you sure you want to export ${notesToExport.length === 1 ? 'this note' : `${notesToExport.length} notes`}?`,
       cancellationText: 'No',
       confirmationText: 'Yes',
-    }).then(() => {
-      handleClose();
-      exportMarkdownFile(notesToExport);
+    })
+      .then(() => {
+        handleClose();
+        exportMarkdownFile(notesToExport);
 
-      snackbar.showMessage({
-        message: `${notesToExport.length} note${notesToExport.length === 1 ? ' has' : 's have'} been exported`,
+        snackbar.showMessage({
+          message: `${notesToExport.length} note${notesToExport.length === 1 ? ' has' : 's have'} been exported`,
+        });
+      })
+      .catch((error) => {
+        if (error) console.error(error); // eslint-disable-line no-console
       });
-    });
   };
 
   // Update / Reset checkedNotes if notes update
