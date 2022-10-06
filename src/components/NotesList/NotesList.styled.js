@@ -4,6 +4,9 @@ const styles = {
     flexGrow: 1,
     overflow: 'hidden',
   },
+  contextMenuList: {
+    maxWidth: 360,
+  },
   list: {
     overflow: 'auto',
     overflowY: 'overlay',
