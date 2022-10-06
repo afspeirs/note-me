@@ -11,6 +11,7 @@ import {
 import {
   Menu as MenuIcon,
 } from '@mui/icons-material';
+import { useSwipeable } from 'react-swipeable';
 
 import HeaderContent from '@/components/shared/HeaderContent';
 import { useGlobalState } from '@/hooks/GlobalState';
@@ -58,6 +59,13 @@ function Page({
   const mobile = useMediaQuery('(max-width:600px)');
 
   const handleDrawerToggle = () => dispatch({ type: 'app-drawerOpen' });
+  const handleDrawerOpen = () => dispatch({ type: 'app-drawerOpen', value: true });
+
+  const handlers = useSwipeable({
+    onSwipedRight: () => handleDrawerOpen(),
+    // trackMouse: true,
+    trackTouch: true,
+  });
 
   return (
     <>
@@ -90,7 +98,8 @@ function Page({
         </Toolbar>
       </AppBar>
 
-      <Content>
+      {/* eslint-disable-next-line react/jsx-props-no-spreading */}
+      <Content {...handlers}>
         {children}
       </Content>
 
