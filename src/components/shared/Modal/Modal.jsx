@@ -115,6 +115,7 @@ function Modal({
                 color="inherit"
                 edge="start"
                 onClick={handleClose}
+                size="large"
                 sx={styles.menuButton}
               >
                 <ArrowBackIcon />

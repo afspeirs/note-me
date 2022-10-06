@@ -24,7 +24,10 @@ function UserInformation() {
     cancellationText: 'Cancel',
     confirmationText: 'Sign Out',
   })
-    .then(signOut);
+    .then(signOut)
+    .catch((error) => {
+      if (error) console.error(error); // eslint-disable-line no-console
+    });
 
   return (
     <>

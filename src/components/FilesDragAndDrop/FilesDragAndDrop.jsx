@@ -77,10 +77,15 @@ function FilesDragAndDrop() {
           description: listOfNotes.map((note) => `"${note.title}"`).join(', '),
           cancellationText: 'No',
           confirmationText: 'Yes',
-        }).then(() => {
-          importNotes(listOfNotes);
-          setFileContent(null);
-        }).catch(() => setFileContent(null));
+        })
+          .then(() => {
+            importNotes(listOfNotes);
+            setFileContent(null);
+          })
+          .catch((error) => {
+            if (error) console.error(error); // eslint-disable-line no-console
+            setFileContent(null);
+          });
       } else {
         confirm({
           title: 'Do you want to import the file with the following contents?',
@@ -92,7 +97,10 @@ function FilesDragAndDrop() {
             createNote(fileContent);
             setFileContent(null);
           })
-          .catch(() => setFileContent(null));
+          .catch((error) => {
+            if (error) console.error(error); // eslint-disable-line no-console
+            setFileContent(null);
+          });
 
         setFileContent(null);
       }

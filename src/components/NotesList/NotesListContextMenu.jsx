@@ -68,7 +68,7 @@ function NotesListContextMenu({
         anchorReference="anchorPosition"
         anchorPosition={contextMenu?.position}
       >
-        <List dense>
+        <List dense sx={styles.contextMenuList}>
           {note.dateCreated && note.dateModified && (
           <ListItem>
             <ListItemIcon>
