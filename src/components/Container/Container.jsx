@@ -61,7 +61,7 @@ function Container({ children }) {
   return (
     <Box sx={styles.root}>
       <Helmet>
-        <meta name="theme-color" content={mode === 'dark' ? '#121212' : '#ee6e00'} />
+        <meta name="theme-color" content={mode === 'dark' ? '#272727' : '#ee6e00'} />
       </Helmet>
 
       <MuiDrawer
