@@ -12,8 +12,10 @@ import NotesList from '@/components/NotesList';
 import CheckForInstallPrompt from '@/components/shared/CheckForInstallPrompt';
 import ListButton from '@/components/shared/ListButton';
 import { useNotes } from '@/hooks/Notes';
+import { useAuth } from '@/hooks/Auth';
 
 function DrawerContent() {
+  const { isSignedIn } = useAuth();
   const { createNote } = useNotes();
 
   return (
@@ -26,19 +28,20 @@ function DrawerContent() {
         <CheckForInstallPrompt />
 
         <ListButton
-          Icon={AddIcon}
+          disabled={!isSignedIn}
+          icon={AddIcon}
           onClick={() => createNote()}
           primary="Create Note"
         />
 
         <ListButton
-          Icon={HomeIcon}
+          icon={HomeIcon}
           primary="Home"
           to="/"
         />
 
         <ListButton
-          Icon={SettingsIcon}
+          icon={SettingsIcon}
           primary="Settings"
           to="/settings/"
         />

@@ -8,43 +8,46 @@ import {
 import RouterNavLink from '@/components/shared/RouterNavLink';
 
 const defaultProps = {
-  Icon: null,
+  disabled: false,
   exact: null,
+  icon: null,
+  onClick: null,
   secondary: '',
   to: null,
-  onClick: null,
 };
 
 const propTypes = {
-  // eslint-disable-next-line react/forbid-prop-types
-  Icon: PropTypes.objectOf(PropTypes.any),
-  primary: PropTypes.string.isRequired,
+  disabled: PropTypes.bool,
   exact: PropTypes.bool,
+  icon: PropTypes.element,
+  onClick: PropTypes.func,
+  primary: PropTypes.string.isRequired,
   secondary: PropTypes.string,
   to: PropTypes.string,
-  onClick: PropTypes.func,
 };
 
 function ListButton({
-  Icon,
-  primary,
+  disabled,
   exact,
+  icon: Icon,
+  onClick,
+  primary,
   secondary,
   to,
-  onClick,
 }) {
   return (
     <ListItem
       button
       component={to ? RouterNavLink : null}
+      disabled={disabled}
       exact={exact}
-      to={to}
       onClick={onClick}
+      to={to}
     >
       {Icon && (
-      <ListItemIcon>
-        <Icon />
-      </ListItemIcon>
+        <ListItemIcon>
+          <Icon />
+        </ListItemIcon>
       )}
       <ListItemText
         primary={primary}
