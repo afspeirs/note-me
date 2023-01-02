@@ -90,6 +90,7 @@ function Note() {
   if (!currentNote?.id) return null;
   return (
     <Page
+      disableSwipes={edit}
       headerItems={headerItems}
       showPrompt={localNote !== currentNote?.text}
       title={currentNote?.title}
