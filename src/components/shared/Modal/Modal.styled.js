@@ -8,7 +8,8 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     height: '100%',
-    overflowY: 'auto',
+    overflow: 'auto',
+    overflowY: 'overlay',
   },
   childrenPadding: {
     paddingLeft: 'env(safe-area-inset-left)',
