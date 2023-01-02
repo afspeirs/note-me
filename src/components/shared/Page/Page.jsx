@@ -19,6 +19,7 @@ import styles, { Content } from './Page.styled';
 
 const defaultProps = {
   disableHeaderItemsOverflowMenu: false,
+  disableSwipes: false,
   headerItems: [],
   hideMenuButton: false,
   showPrompt: false,
@@ -32,6 +33,7 @@ const propTypes = {
     PropTypes.node,
   ]).isRequired,
   disableHeaderItemsOverflowMenu: PropTypes.bool,
+  disableSwipes: PropTypes.bool,
   headerItems: PropTypes.arrayOf(
     PropTypes.shape({
       disabled: PropTypes.bool,
@@ -49,6 +51,7 @@ const propTypes = {
 function Page({
   children,
   disableHeaderItemsOverflowMenu,
+  disableSwipes,
   headerItems,
   hideMenuButton,
   showPrompt,
@@ -62,7 +65,7 @@ function Page({
   const handleDrawerOpen = () => dispatch({ type: 'app-drawerOpen', value: true });
 
   const handlers = useSwipeable({
-    onSwipedRight: () => handleDrawerOpen(),
+    onSwipedRight: () => !disableSwipes && handleDrawerOpen(),
     // trackMouse: true,
     trackTouch: true,
   });
