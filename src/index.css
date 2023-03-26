@@ -3,12 +3,6 @@
 @tailwind utilities;
 
 @layer base {
-  *,
-  *:before,
-  *:after {
-    box-sizing: border-box;
-  }
-
   body {
     @apply bg-primary;
   }
