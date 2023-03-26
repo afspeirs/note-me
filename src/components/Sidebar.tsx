@@ -1,12 +1,33 @@
+import { NavLink } from 'react-router-dom';
+
+import { classNames } from '../utils/classNames';
+
 export function Sidebar() {
   return (
     <>
-      <div className="bg-white dark:bg-black dark:text-white rounded-xl p-4">
+      <div className="bg-white dark:bg-black dark:text-white p-4 rounded-xl shadow">
         ICONS
       </div>
-      <h3 className="flex-1 bg-white dark:bg-black dark:text-white rounded-xl">
-        Sidebar
-      </h3>
+      <div className="flex-1 bg-white dark:bg-black dark:text-white rounded-xl shadow">
+        <NavLink
+          className={({ isActive }) => classNames(
+            'block px-4 py-2',
+            isActive ? 'active' : '',
+          )}
+          to="/"
+        >
+          Home
+        </NavLink>
+        <NavLink
+          className={({ isActive }) => classNames(
+            'block px-4 py-2',
+            isActive ? 'active' : '',
+          )}
+          to="/note/"
+        >
+          Note
+        </NavLink>
+      </div>
     </>
   );
 }
