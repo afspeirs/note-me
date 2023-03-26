@@ -26,10 +26,18 @@ export function Layout() {
       </Transition>
       <div
         className={classNames(
-          'flex-1 px-2 pt-2 min-w-full sm:min-w-[initial] transition-[margin-left] duration-200',
+          'relative flex-1 px-2 pt-2 min-w-full sm:min-w-[initial] transition-[margin-left] duration-200',
           open ? 'ml-[19.5rem]' : '',
         )}
       >
+        <button
+          type="button"
+          className="absolute inset-0 mx-2 mt-2 disabled:hidden sm:hidden rounded-t-xl z-10"
+          disabled={!open}
+          onClick={() => setOpen((prevState) => !prevState)}
+        >
+          <span className="sr-only">Hide Sidebar</span>
+        </button>
         <main className="h-full bg-white dark:bg-black dark:text-white rounded-t-xl overflow-y-auto shadow">
           <nav className="p-4">
             <button type="button" onClick={() => setOpen((prevState) => !prevState)}>{open ? 'CLOSE' : 'OPEN'}</button>
