@@ -9,24 +9,19 @@ export function Layout() {
 
   return (
     <div className="absolute inset-0 flex overflow-hidden">
-      <aside
-        className={classNames(
-          'flex flex-col mx-2 mb-2 mt-2 gap-2 w-80 -z-10',
-          'absolute',
-        )}
-      >
+      <aside className="absolute flex flex-col mx-2 mb-2 mt-2 gap-2 w-80 -z-10">
         <Sidebar />
       </aside>
       <div
         className={classNames(
-          'pointer-events-none',
-          open ? 'min-w-80 mx-2' : 'mx-0',
+          'pointer-events-none transition-[margin-left,margin-right,min-width]',
+          open ? 'min-w-80 mx-2' : 'min-w-0 mx-1',
         )}
       />
       <main
         className={classNames(
           'flex-1 mt-2 min-w-full sm:min-w-[initial] bg-white dark:bg-black dark:text-white rounded-t-xl',
-          open ? 'mr-0 sm:mr-2' : 'mx-0 sm:mx-2',
+          open ? 'mr-0 sm:mr-2' : 'mx-0 sm:mr-2',
         )}
       >
         <nav className="p-4">
