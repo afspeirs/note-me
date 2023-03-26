@@ -1,14 +1,37 @@
+import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 
 import { Sidebar } from '../components/Sidebar';
+import { classNames } from '../utils/classNames';
 
 export function Layout() {
+  const [open, setOpen] = useState(false);
+
   return (
-    <div className="absolute inset-0 flex box-border">
-      <aside className="flex flex-col ml-2 mb-2 mt-2 gap-2 w-80">
+    <div className="absolute inset-0 flex overflow-hidden">
+      <aside
+        className={classNames(
+          'flex flex-col mx-2 mb-2 mt-2 gap-2 w-80 -z-10',
+          'absolute',
+        )}
+      >
         <Sidebar />
       </aside>
-      <main className="flex-1 mx-2 mt-2 bg-white dark:bg-black dark:text-white rounded-t-xl">
+      <div
+        className={classNames(
+          'pointer-events-none',
+          open ? 'min-w-80 mx-2' : 'mx-0',
+        )}
+      />
+      <main
+        className={classNames(
+          'flex-1 mt-2 min-w-full sm:min-w-[initial] bg-white dark:bg-black dark:text-white rounded-t-xl',
+          open ? 'mr-0 sm:mr-2' : 'mx-0 sm:mx-2',
+        )}
+      >
+        <nav className="p-4">
+          <button type="button" onClick={() => setOpen((prevState) => !prevState)}>{open ? 'CLOSE' : 'OPEN'}</button>
+        </nav>
         <Outlet />
       </main>
     </div>

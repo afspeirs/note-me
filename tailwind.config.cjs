@@ -14,7 +14,11 @@ module.exports = {
       black,
       white,
     },
-    extend: {},
+    extend: {
+      minWidth: {
+        80: '20rem',
+      },
+    },
   },
   plugins: [],
 };
