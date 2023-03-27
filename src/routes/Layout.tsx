@@ -4,6 +4,7 @@ import { Transition } from '@headlessui/react';
 
 import { Sidebar } from '../components/Sidebar';
 import { classNames } from '../utils/classNames';
+import { PageHeader } from '../components/PageHeader';
 
 export function Layout() {
   const [open, setOpen] = useState(false);
@@ -39,9 +40,7 @@ export function Layout() {
           <span className="sr-only">Hide Sidebar</span>
         </button>
         <main className="h-full bg-white dark:bg-black dark:text-white rounded-t-xl overflow-y-auto shadow">
-          <nav className="p-4">
-            <button type="button" onClick={() => setOpen((prevState) => !prevState)}>{open ? 'CLOSE' : 'OPEN'}</button>
-          </nav>
+          <PageHeader open={open} toggleOpen={() => setOpen((prevState) => !prevState)} />
           <Outlet />
         </main>
       </div>
