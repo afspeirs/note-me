@@ -3,7 +3,6 @@ import { Outlet } from 'react-router-dom';
 import { Transition } from '@headlessui/react';
 
 import { Sidebar } from '../components/Sidebar';
-import { classNames } from '../utils/classNames';
 import { PageHeader } from '../components/PageHeader';
 
 export function Layout() {
@@ -11,26 +10,31 @@ export function Layout() {
 
   return (
     <div className="absolute inset-0 flex overflow-hidden">
-      <Transition
-        as="aside"
-        show={open}
-        unmount={false}
-        enter="transition-opacity duration-200"
-        enterFrom="opacity-0"
-        enterTo="opacity-100"
-        leave="transition-opacity duration-200"
-        leaveFrom="opacity-100"
-        leaveTo="opacity-0"
-        className="absolute w-80 p-2 h-full flex flex-col gap-2"
-      >
-        <Sidebar />
+      <Transition show={open}>
+        <Transition.Child
+          as="aside"
+          unmount={false}
+          enter="transition-transform duration-400"
+          enterFrom="-translate-x-[19.5rem]"
+          enterTo="translate-x-0"
+          leave="transition-transform duration-400"
+          leaveFrom="translate-x-0"
+          leaveTo="-translate-x-[19.5rem]"
+          className="absolute w-80 p-2 h-full flex flex-col gap-2"
+        >
+          <Sidebar />
+        </Transition.Child>
+        <Transition.Child
+          role="presentation"
+          enter="transition-[margin-left] duration-400"
+          enterFrom="ml-0"
+          enterTo="ml-[19.5rem]"
+          leave="transition-[margin-left] duration-400"
+          leaveFrom="ml-[19.5rem]"
+          leaveTo="scale-x-100"
+        />
       </Transition>
-      <div
-        className={classNames(
-          'relative flex-1 px-2 pt-2 min-w-full sm:min-w-[initial] transition-[margin-left] duration-200',
-          open ? 'ml-[19.5rem]' : '',
-        )}
-      >
+      <div className="relative flex-1 px-2 pt-2 min-w-full sm:min-w-[initial]">
         <button
           type="button"
           className="absolute inset-0 mx-2 mt-2 disabled:hidden sm:hidden rounded-t-xl z-10"
