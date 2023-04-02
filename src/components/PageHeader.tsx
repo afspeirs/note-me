@@ -10,6 +10,8 @@ import {
 //   TrashIcon,
 // } from '@heroicons/react/24/outline';
 
+import { ButtonIcon } from './ButtonIcon';
+
 interface PageHeaderProps {
   open: boolean,
   toggleOpen: () => void,
@@ -21,18 +23,12 @@ export function PageHeader({
 }: PageHeaderProps) {
   return (
     <nav className="flex p-2">
-      <button
-        type="button"
+      <ButtonIcon
+        className="mr-auto"
+        Icon={open ? ChevronLeftIcon : Bars2Icon}
+        label={`${open ? 'Close' : 'Open'} Sidebar`}
         onClick={toggleOpen}
-        aria-label={`${open ? 'Close' : 'Open'} Sidebar`}
-        className="mr-auto p-2 rounded-full"
-      >
-        {open ? (
-          <ChevronLeftIcon className="h-6 w-6 text-primary" />
-        ) : (
-          <Bars2Icon className="h-6 w-6 text-primary" />
-        )}
-      </button>
+      />
 
       {/* <button type="button" aria-label="Edit Note" className="p-2 rounded-full">
         <PencilIcon className="h-6 w-6 text-primary" />
