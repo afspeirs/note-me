@@ -9,7 +9,7 @@ export function Home() {
         <p>
           Store and edit your notes as Markdown formatted text (using
           {' '}
-          <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet" target="_blank" rel="noopener noreferrer">Github flavoured markdown</a>
+          <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet" target="_blank" rel="noopener noreferrer" className="text-link">Github flavoured markdown</a>
           {' '}
           to support more features)
         </p>

@@ -2,12 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
-a {
-  @apply underline text-primary hover:text-current;
-}
-
 @layer base {
   body {
     @apply bg-primary;
+  }
+}
+
+@layer utilities {
+  .text-link {
+    @apply underline text-primary hover:text-current;
   }
 }
