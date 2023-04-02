@@ -1,12 +1,13 @@
 import { NavLink } from 'react-router-dom';
 
 import { classNames } from '../utils/classNames';
+import { SidebarHeader } from './SidebarHeader';
 
 export function Sidebar() {
   return (
     <>
-      <div className="bg-white dark:bg-black dark:text-white p-4 rounded-xl shadow">
-        ICONS
+      <div className="bg-white dark:bg-black dark:text-white rounded-xl shadow">
+        <SidebarHeader />
       </div>
       <div className="flex-1 bg-white dark:bg-black dark:text-white rounded-xl overflow-hidden shadow">
         <NavLink
