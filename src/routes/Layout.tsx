@@ -45,9 +45,7 @@ export function Layout() {
         </button>
         <div className="flex flex-col h-full bg-white dark:bg-black dark:text-white rounded-t-xl overflow-y-auto shadow">
           <PageHeader open={open} toggleOpen={() => setOpen((prevState) => !prevState)} />
-          <main className="flex-1 p-4">
-            <Outlet />
-          </main>
+          <Outlet />
         </div>
       </div>
     </div>

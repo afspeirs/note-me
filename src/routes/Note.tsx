@@ -1,5 +1,9 @@
+import { Page } from '../components/Page';
+
 export function Note() {
   return (
-    <div>Note</div>
+    <Page>
+      Note
+    </Page>
   );
 }
