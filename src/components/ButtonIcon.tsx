@@ -1,8 +1,8 @@
-import { ComponentType, SVGProps } from 'react';
+import { HomeIcon } from '@heroicons/react/24/outline';
 
 export interface ButtonIconProps {
   className?: string;
-  Icon: ComponentType<SVGProps<SVGSVGElement>>,
+  Icon: typeof HomeIcon,
   label: string;
   onClick: () => void;
 }
