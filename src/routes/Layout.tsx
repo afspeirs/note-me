@@ -1,12 +1,12 @@
-import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import { Transition } from '@headlessui/react';
+import { useAtom } from 'jotai';
 
 import { Sidebar } from '../components/Sidebar';
-import { PageHeader } from '../components/PageHeader';
+import { drawerOpen } from '../context/navigation';
 
 export function Layout() {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useAtom(drawerOpen);
 
   return (
     <div className="absolute inset-0 flex overflow-hidden">
@@ -44,7 +44,6 @@ export function Layout() {
           <span className="sr-only">Hide Sidebar</span>
         </button>
         <div className="flex flex-col h-full bg-white dark:bg-black dark:text-white rounded-t-xl overflow-y-auto shadow">
-          <PageHeader open={open} toggleOpen={() => setOpen((prevState) => !prevState)} />
           <Outlet />
         </div>
       </div>
