@@ -8,7 +8,7 @@ import {
 import { ButtonIcon } from './ButtonIcon';
 import { drawerOpen } from '../context/navigation';
 
-interface PageProps {
+export interface PageProps {
   children: ReactNode,
   icons?: ReactNode,
 }
