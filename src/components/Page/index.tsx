@@ -1,4 +1,3 @@
-import { ReactNode } from 'react';
 import { Helmet } from 'react-helmet';
 import { useAtom } from 'jotai';
 import {
@@ -6,14 +5,9 @@ import {
   ChevronLeftIcon,
 } from '@heroicons/react/24/solid';
 
-import { ButtonIcon } from './ButtonIcon';
-import { drawerOpen } from '../context/navigation';
-
-export interface PageProps {
-  children: ReactNode,
-  icons?: ReactNode,
-  title?: string,
-}
+import { ButtonIcon } from '../ButtonIcon';
+import { drawerOpen } from '../../context/navigation';
+import type { PageProps } from './types';
 
 export function Page({
   children,

@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom';
 
-import { classNames } from '../utils/classNames';
-import { SidebarHeader } from './SidebarHeader';
+import { classNames } from '../../utils/classNames';
+import { SidebarHeader } from '../SidebarHeader';
 
 export function Sidebar() {
   return (

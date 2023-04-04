@@ -5,7 +5,7 @@ import {
   WrenchScrewdriverIcon,
 } from '@heroicons/react/24/outline';
 
-import { ButtonIcon } from './ButtonIcon';
+import { ButtonIcon } from '../ButtonIcon';
 
 export function SidebarHeader() {
   const navigate = useNavigate();
