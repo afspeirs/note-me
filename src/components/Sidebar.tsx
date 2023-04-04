@@ -28,6 +28,15 @@ export function Sidebar() {
         >
           Note
         </NavLink>
+        <NavLink
+          className={({ isActive }) => classNames(
+            'block px-4 py-2',
+            isActive ? 'bg-gray-400 bg-opacity-30' : '',
+          )}
+          to="/settings/"
+        >
+          Settings
+        </NavLink>
       </div>
     </>
   );

@@ -11,6 +11,7 @@ import { Page } from '../components/Page';
 export function Note() {
   return (
     <Page
+      title="Note"
       icons={(
         <>
           <ButtonIcon

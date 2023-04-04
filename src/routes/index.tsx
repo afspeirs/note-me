@@ -3,6 +3,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import { Layout } from './Layout';
 import { Home } from './Home';
 import { Note } from './Note';
+import { Settings } from './Settings';
 
 export const router = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ export const router = createBrowserRouter([
       //   path: '/note/:id',
       //   element: <Note />,
       // },
+      {
+        path: '/settings/',
+        element: <Settings />,
+      },
     ],
   },
 ]);

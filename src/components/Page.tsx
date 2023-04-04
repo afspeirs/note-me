@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import { Helmet } from 'react-helmet';
 import { useAtom } from 'jotai';
 import {
   Bars2Icon,
@@ -11,16 +12,22 @@ import { drawerOpen } from '../context/navigation';
 export interface PageProps {
   children: ReactNode,
   icons?: ReactNode,
+  title?: string,
 }
 
 export function Page({
   children,
   icons,
+  title,
 }: PageProps) {
   const [open, setOpen] = useAtom(drawerOpen);
 
   return (
     <>
+      <Helmet>
+        <title>{`${title ? `${title} | ` : ''}NoteMe`}</title>
+      </Helmet>
+
       <header className="flex gap-2 p-2">
         <ButtonIcon
           className="mr-auto"
@@ -30,7 +37,7 @@ export function Page({
         />
         {icons}
       </header>
-      <main className="flex-1 px-4 pt-2 overflow-y-auto">
+      <main className="flex-1 px-4 pt-1 overflow-y-auto">
         {children}
       </main>
     </>

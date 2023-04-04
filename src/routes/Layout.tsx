@@ -20,7 +20,7 @@ export function Layout() {
           leave="transition-transform duration-400"
           leaveFrom="translate-x-0"
           leaveTo="-translate-x-[19.75rem]"
-          className="absolute w-80 p-1 h-full flex flex-col gap-2"
+          className="absolute w-80 p-1 h-full flex flex-col gap-1"
         >
           <Sidebar />
         </Transition.Child>
@@ -37,7 +37,7 @@ export function Layout() {
       <div className="relative flex-1 px-1 pt-1 min-w-full sm:min-w-[initial]">
         <button
           type="button"
-          className="absolute inset-0 disabled:hidden sm:hidden rounded-t-xl z-10"
+          className="absolute inset-0 mx-1 mt-1 disabled:hidden sm:hidden rounded-t-xl z-10"
           disabled={!open}
           onClick={() => setOpen((prevState) => !prevState)}
         >

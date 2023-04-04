@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import {
   MagnifyingGlassIcon,
   AdjustmentsHorizontalIcon,
@@ -7,6 +8,8 @@ import {
 import { ButtonIcon } from './ButtonIcon';
 
 export function SidebarHeader() {
+  const navigate = useNavigate();
+
   return (
     <nav className="flex justify-between p-2">
       <ButtonIcon
@@ -22,7 +25,7 @@ export function SidebarHeader() {
       <ButtonIcon
         label="View Setting"
         Icon={WrenchScrewdriverIcon}
-        onClick={() => console.log('View Setting')} // eslint-disable-line no-console
+        onClick={() => navigate('/settings/')}
       />
     </nav>
   );
