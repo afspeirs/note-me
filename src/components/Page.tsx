@@ -30,7 +30,7 @@ export function Page({
         />
         {icons}
       </header>
-      <main className="flex-1 px-4">
+      <main className="flex-1 px-4 pt-2 overflow-y-auto">
         {children}
       </main>
     </>
