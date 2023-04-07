@@ -30,7 +30,12 @@
   }
 }
 
+/* Toast styles */
+.Toastify__toast {
+  margin: 1rem;
+}
 
+/* Scrollbar styles */
 ::-webkit-scrollbar {
   max-width: 8px;
   max-height: 8px;
