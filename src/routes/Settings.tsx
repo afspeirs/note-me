@@ -1,3 +1,5 @@
+import { AppVersion } from '../components/AppVersion';
+import { CheckForUpdate } from '../components/CheckForUpdate';
 import { Page } from '../components/Page';
 
 export function Settings() {
@@ -6,8 +8,8 @@ export function Settings() {
       Settings
 
       <ul role="list">
-        <li>{`App version: ${import.meta.env.PACKAGE_VERSION}`}</li>
-        {/* <li>Check for update</li> */}
+        <AppVersion />
+        <CheckForUpdate />
         {/* <li>Theme</li> */}
       </ul>
     </Page>

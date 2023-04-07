@@ -19,6 +19,7 @@
     "import/no-extraneous-dependencies": ["off", { "devDependencies": true }],
     "import/prefer-default-export": "off",
     "jsx-a11y/no-redundant-roles": ["error", { "ul": ["list"] }],
+    "react/jsx-no-useless-fragment": ["error", { "allowExpressions": true }],
     "react/require-default-props": "off"
   }
 }
