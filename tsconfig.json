@@ -18,6 +18,7 @@
   },
   "include": [
     "src",
+    "*.d.ts",
     "*.config.cjs",
     "*.config.ts"
   ],
