@@ -1,4 +1,5 @@
 import { AppVersion } from '../components/AppVersion';
+import { ChangeTheme } from '../components/ChangeTheme';
 import { CheckForUpdate } from '../components/CheckForUpdate';
 import { Page } from '../components/Page';
 
@@ -10,7 +11,7 @@ export function Settings() {
       <ul role="list">
         <AppVersion />
         <CheckForUpdate />
-        {/* <li>Theme</li> */}
+        <ChangeTheme />
       </ul>
     </Page>
   );

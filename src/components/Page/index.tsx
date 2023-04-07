@@ -6,7 +6,7 @@ import {
 } from '@heroicons/react/24/solid';
 
 import { ButtonIcon } from '../ButtonIcon';
-import { drawerOpen } from '../../context/navigation';
+import { drawerOpenAtom } from '../../context/navigation';
 import type { PageProps } from './types';
 
 export function Page({
@@ -14,7 +14,7 @@ export function Page({
   icons,
   title,
 }: PageProps) {
-  const [open, setOpen] = useAtom(drawerOpen);
+  const [open, setOpen] = useAtom(drawerOpenAtom);
 
   return (
     <>

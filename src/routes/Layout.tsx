@@ -1,18 +1,34 @@
+import { useMemo } from 'react';
 import { Outlet } from 'react-router-dom';
 import { Transition } from '@headlessui/react';
 import { useAtom } from 'jotai';
 
 import { Sidebar } from '../components/Sidebar';
 import { Topbar } from '../components/Topbar';
-import { drawerOpen } from '../context/navigation';
+import { drawerOpenAtom } from '../context/navigation';
+import { themeAtom } from '../context/theme';
+import { classNames } from '../utils/classNames';
 
 export function Layout() {
-  const [open, setOpen] = useAtom(drawerOpen);
+  const [drawerOpen, setDrawerOpen] = useAtom(drawerOpenAtom);
+  const [theme] = useAtom(themeAtom);
+  const appTheme = useMemo(() => {
+    if (theme !== 'default') return theme;
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      return 'dark';
+    }
+    return 'light';
+  }, [theme]);
 
   return (
-    <div className="absolute inset-0 flex overflow-hidden mt-[env(titlebar-area-height)]">
+    <div
+      className={classNames(
+        'absolute inset-0 flex overflow-hidden mt-[env(titlebar-area-height)]',
+        appTheme,
+      )}
+    >
       <Topbar />
-      <Transition show={open}>
+      <Transition show={drawerOpen}>
         <Transition.Child
           as="aside"
           unmount={false}
@@ -40,8 +56,8 @@ export function Layout() {
         <button
           type="button"
           className="absolute inset-0 mx-1 mt-1 disabled:hidden sm:hidden rounded-t-xl z-10"
-          disabled={!open}
-          onClick={() => setOpen((prevState) => !prevState)}
+          disabled={!drawerOpen}
+          onClick={() => setDrawerOpen((prevState) => !prevState)}
         >
           <span className="sr-only">Hide Sidebar</span>
         </button>
