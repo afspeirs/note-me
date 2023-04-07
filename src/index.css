@@ -12,7 +12,24 @@
   .text-link {
     @apply underline text-primary hover:text-current;
   }
+
+  .pwa-header {
+    left: env(titlebar-area-x, 0);
+    top: env(titlebar-area-y, 0);
+    width: env(titlebar-area-width, 0);
+    height: env(titlebar-area-height, 0);
+  }
+
+  .drag {
+    -webkit-app-region: drag;
+    app-region: drag;
+  }
+  .no-drag {
+    -webkit-app-region: no-drag;
+    app-region: no-drag;
+  }
 }
+
 
 ::-webkit-scrollbar {
   max-width: 8px;

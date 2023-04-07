@@ -3,13 +3,15 @@ import { Transition } from '@headlessui/react';
 import { useAtom } from 'jotai';
 
 import { Sidebar } from '../components/Sidebar';
+import { Topbar } from '../components/Topbar';
 import { drawerOpen } from '../context/navigation';
 
 export function Layout() {
   const [open, setOpen] = useAtom(drawerOpen);
 
   return (
-    <div className="absolute inset-0 flex overflow-hidden">
+    <div className="absolute inset-0 flex overflow-hidden mt-[env(titlebar-area-height)]">
+      <Topbar />
       <Transition show={open}>
         <Transition.Child
           as="aside"
