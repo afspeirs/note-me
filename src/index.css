@@ -3,6 +3,12 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    @apply hidden overscroll-none;
+    -webkit-font-smoothing: antialiased;
+    text-size-adjust: 100%;
+  }
+
   body {
     @apply bg-primary;
   }
