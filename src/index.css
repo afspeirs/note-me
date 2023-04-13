@@ -12,6 +12,32 @@
   body {
     @apply bg-primary;
   }
+
+  /* Scrollbar styles */
+  ::-webkit-scrollbar {
+    max-width: 8px;
+    max-height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-gray-300;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-gray-400;
+  }
+  ::-webkit-scrollbar-thumb:active {
+    @apply bg-gray-500;
+  }
+  ::-webkit-scrollbar-button {
+    @apply w-0 h-0;
+  }
+
+  /* Toast styles */
+  .Toastify__toast {
+    @apply m-4;
+  }
 }
 
 @layer utilities {
@@ -34,32 +60,4 @@
     -webkit-app-region: no-drag;
     app-region: no-drag;
   }
-}
-
-/* Toast styles */
-.Toastify__toast {
-  margin: 1rem;
-}
-
-/* Scrollbar styles */
-::-webkit-scrollbar {
-  max-width: 8px;
-  max-height: 8px;
-}
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-::-webkit-scrollbar-thumb {
-  background: #ccc;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #aaa;
-}
-::-webkit-scrollbar-thumb:active {
-  background: #888;
-}
-::-webkit-scrollbar-button {
-  background: #ccc;
-  height: 0;
-  width: 0;
 }
