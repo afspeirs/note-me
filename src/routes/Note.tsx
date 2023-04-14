@@ -1,28 +1,43 @@
+import { useEffect, useState } from 'react';
 import {
   InformationCircleIcon,
   PencilIcon,
+  PencilSquareIcon,
   StarIcon as StarOutlineIcon,
   TrashIcon,
 } from '@heroicons/react/24/outline';
+import {
+  StarIcon as StarSolidIcon,
+} from '@heroicons/react/24/solid';
 
 import { ButtonIcon } from '../components/ButtonIcon';
 import { Page } from '../components/Page';
 
 export function Note() {
+  const [edit, setEdit] = useState(false);
+  const [favourite, setFavourite] = useState(false);
+  const [text, setText] = useState('');
+
+  useEffect(() => {
+    if (!edit && text === '') {
+      setEdit(true);
+    }
+  }, [edit, text]);
+
   return (
     <Page
       title="Note"
       icons={(
         <>
           <ButtonIcon
-            Icon={PencilIcon}
-            label="Edit Note"
-            onClick={() => console.log('Edit Note')} // eslint-disable-line no-console
+            Icon={edit ? PencilSquareIcon : PencilIcon}
+            label={`${edit ? 'Save' : 'Edit'} Note`}
+            onClick={() => setEdit((prevState) => !prevState)}
           />
           <ButtonIcon
-            Icon={StarOutlineIcon}
-            label="Favourite Note"
-            onClick={() => console.log('Favourite Note')} // eslint-disable-line no-console
+            Icon={favourite ? StarSolidIcon : StarOutlineIcon}
+            label={`${favourite ? 'Unfavourite' : 'Favourite'} Note`}
+            onClick={() => setFavourite((prevState) => !prevState)}
           />
           <ButtonIcon
             Icon={InformationCircleIcon}
@@ -38,7 +53,22 @@ export function Note() {
         </>
       )}
     >
-      Note
+      {edit ? (
+        <label htmlFor="note-text">
+          <span className="sr-only">note body copy</span>
+          <textarea
+            name="note-text"
+            id="note-text"
+            value={text}
+            onChange={(event) => setText(event.target.value)}
+            className="w-full h-full px-4 pt-1 border-none outline-none resize-none"
+          />
+        </label>
+      ) : (
+        <div className="w-full h-full px-4 pt-1">
+          {text}
+        </div>
+      )}
     </Page>
   );
 }
