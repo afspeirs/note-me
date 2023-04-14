@@ -61,7 +61,7 @@ export function Layout() {
         >
           <span className="sr-only">Hide Sidebar</span>
         </button>
-        <div className="flex flex-col h-full bg-white dark:bg-black dark:text-white rounded-t-xl overflow-y-hidden shadow">
+        <div className="flex flex-col h-full bg-white dark:bg-black dark:text-white rounded-t-xl overflow-hidden shadow">
           <Outlet />
         </div>
       </div>

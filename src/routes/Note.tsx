@@ -9,6 +9,7 @@ import {
 import {
   StarIcon as StarSolidIcon,
 } from '@heroicons/react/24/solid';
+import Markdown from 'markdown-to-jsx';
 
 import { ButtonIcon } from '../components/ButtonIcon';
 import { Page } from '../components/Page';
@@ -53,22 +54,38 @@ export function Note() {
         </>
       )}
     >
-      {edit ? (
-        <label htmlFor="note-text">
-          <span className="sr-only">note body copy</span>
-          <textarea
-            name="note-text"
-            id="note-text"
-            value={text}
-            onChange={(event) => setText(event.target.value)}
-            className="w-full h-full px-4 pt-1 border-none outline-none resize-none"
-          />
-        </label>
-      ) : (
-        <div className="w-full h-full px-4 pt-1">
-          {text}
-        </div>
-      )}
+      <>
+        {edit ? (
+          <label htmlFor="note-text">
+            <span className="sr-only">note body copy</span>
+            <textarea
+              name="note-text"
+              id="note-text"
+              value={text}
+              onChange={(event) => setText(event.target.value)}
+              className="w-full h-full px-4 pt-1 bg-white dark:bg-black dark:text-white border-none outline-none resize-none overflow-auto"
+            />
+          </label>
+        ) : (
+          <Markdown
+            className="w-full h-full px-4 pt-1 prose dark:prose-invert overflow-auto"
+            options={{
+              disableParsingRawHTML: true,
+              forceWrapper: true,
+              overrides: {
+                a: {
+                  // component: RendererLink,
+                  props: {
+                    className: 'text-link',
+                  },
+                },
+              },
+            }}
+          >
+            {text}
+          </Markdown>
+        )}
+      </>
     </Page>
   );
 }
