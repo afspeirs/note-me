@@ -15,27 +15,9 @@ export function Sidebar() {
             'block px-4 py-2',
             isActive ? 'bg-gray-400 bg-opacity-30' : '',
           )}
-          to="/"
-        >
-          Home
-        </NavLink>
-        <NavLink
-          className={({ isActive }) => classNames(
-            'block px-4 py-2',
-            isActive ? 'bg-gray-400 bg-opacity-30' : '',
-          )}
           to="/note/"
         >
           Note
-        </NavLink>
-        <NavLink
-          className={({ isActive }) => classNames(
-            'block px-4 py-2',
-            isActive ? 'bg-gray-400 bg-opacity-30' : '',
-          )}
-          to="/settings/"
-        >
-          Settings
         </NavLink>
       </div>
     </>

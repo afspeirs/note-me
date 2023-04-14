@@ -1,15 +1,13 @@
-import { useNavigate } from 'react-router-dom';
 import {
   MagnifyingGlassIcon,
   AdjustmentsHorizontalIcon,
   WrenchScrewdriverIcon,
+  HomeIcon,
 } from '@heroicons/react/24/outline';
 
 import { ButtonIcon } from '../ButtonIcon';
 
 export function SidebarHeader() {
-  const navigate = useNavigate();
-
   return (
     <nav className="flex justify-between p-2">
       <ButtonIcon
@@ -23,9 +21,14 @@ export function SidebarHeader() {
         onClick={() => console.log('Filter Notes')} // eslint-disable-line no-console
       />
       <ButtonIcon
+        label="Home"
+        Icon={HomeIcon}
+        href="/"
+      />
+      <ButtonIcon
         label="View Setting"
         Icon={WrenchScrewdriverIcon}
-        onClick={() => navigate('/settings/')}
+        href="/settings/"
       />
     </nav>
   );
