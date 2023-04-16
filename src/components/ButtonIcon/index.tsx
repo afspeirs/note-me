@@ -13,21 +13,26 @@ export function ButtonIcon({
   return href ? (
     <NavLink
       className={({ isActive }) => classNames(
-        'block px-4 py-2',
-        isActive ? 'text-neutral-500' : 'text-primary',
+        'p-2 rounded-full hover:bg-neutral-300/50 active:bg-neutral-400/50 dark:hover:bg-neutral-500/50 dark:active:bg-neutral-600/50',
+        className || '',
+        isActive ? 'text-neutral-700 dark:text-neutral-200' : 'text-primary',
       )}
       to={href}
     >
-      <Icon className="h-6 w-6 " />
+      <span className="sr-only">{label}</span>
+      <Icon className="h-6 w-6" role="presentation" />
     </NavLink>
   ) : (
     <button
       type="button"
-      aria-label={label}
       onClick={onClick}
-      className={`p-2 rounded-full ${className || ''}`}
+      className={classNames(
+        'p-2 rounded-full hover:bg-neutral-300/50 active:bg-neutral-400/50 dark:hover:bg-neutral-500/50 dark:active:bg-neutral-600/50',
+        className || '',
+      )}
     >
-      <Icon className="h-6 w-6 text-primary" />
+      <span className="sr-only">{label}</span>
+      <Icon className="h-6 w-6 text-primary" role="presentation" />
     </button>
   );
 }
