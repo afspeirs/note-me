@@ -17,6 +17,7 @@ export function ButtonIcon({
         className || '',
         isActive ? 'text-neutral-700 dark:text-neutral-200' : 'text-primary',
       )}
+      title={label}
       to={href}
     >
       <span className="sr-only">{label}</span>
@@ -30,6 +31,7 @@ export function ButtonIcon({
         'p-2 rounded-full hover:bg-neutral-300/50 active:bg-neutral-400/50 dark:hover:bg-neutral-500/50 dark:active:bg-neutral-600/50',
         className || '',
       )}
+      title={label}
     >
       <span className="sr-only">{label}</span>
       <Icon className="h-6 w-6 text-primary" role="presentation" />
