@@ -34,11 +34,6 @@
   ::-webkit-scrollbar-button {
     @apply w-0 h-0;
   }
-
-  /* Toast styles */
-  .Toastify__toast {
-    @apply m-4;
-  }
 }
 
 @layer utilities {
@@ -62,3 +57,8 @@
     app-region: no-drag;
   }
 }
+
+  /* Toast styles */
+  .Toastify__toast {
+    @apply m-4;
+  }
