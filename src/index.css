@@ -10,10 +10,6 @@
     text-size-adjust: 100%;
   }
 
-  body {
-    @apply bg-primary;
-  }
-
   /* Scrollbar styles */
   ::-webkit-scrollbar {
     max-width: 8px;
