@@ -13,9 +13,9 @@ export function ButtonIcon({
   return href ? (
     <NavLink
       className={({ isActive }) => classNames(
-        'p-2 rounded-full hover:bg-neutral-300/50 dark:hover:bg-neutral-500/50',
+        'p-2 rounded-full',
         className || '',
-        isActive ? 'text-neutral-700 dark:text-neutral-200' : 'text-primary',
+        isActive ? 'bg-primary text-white dark:text-black hover:bg-neutral-600/60 dark:hover:bg-neutral-100/60' : 'text-primary hover:bg-neutral-300/60 dark:hover:bg-neutral-600/60',
       )}
       title={label}
       to={href}
@@ -28,7 +28,7 @@ export function ButtonIcon({
       type="button"
       onClick={onClick}
       className={classNames(
-        'p-2 rounded-full hover:bg-neutral-300/50 dark:hover:bg-neutral-500/50',
+        'p-2 rounded-full hover:bg-neutral-300/60 dark:hover:bg-neutral-600/60',
         className || '',
       )}
       title={label}
