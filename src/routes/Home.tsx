@@ -6,7 +6,7 @@ export function Home() {
   return (
     <Page>
       <div className="flex items-center justify-center w-full h-full">
-        <div className="grid gap-2 text-center max-w-md">
+        <div className="grid gap-2 text-center max-w-md p-4">
           <p>Hello and welcome to NoteMe</p>
 
           <p>
