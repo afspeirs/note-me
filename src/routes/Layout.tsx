@@ -24,7 +24,7 @@ export function Layout() {
     <>
       <Helmet>
         <meta name="theme-color" content={appTheme === 'light' ? '#ee6e00' : '#000000'} />
-        <body className={appTheme} />
+        <body className={`${appTheme} ${appTheme === 'light' ? 'bg-primary' : 'bg-black'}`} />
       </Helmet>
 
       <div
