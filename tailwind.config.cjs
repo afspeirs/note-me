@@ -1,5 +1,8 @@
 const typography = require('@tailwindcss/typography');
 
+const sidebarWidth = 20;
+const sidebarGap = 0.25;
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -16,8 +19,10 @@ module.exports = {
       boxShadow: {
         DEFAULT: '-1px 1px 4px 0px rgba(0, 0, 0, 0.4)',
       },
-      minWidth: {
-        80: '20rem',
+      spacing: {
+        sidebarGap: `${sidebarGap}rem`,
+        sidebarAdjusted: `${sidebarWidth - (sidebarGap)}rem`,
+        sidebar: `${sidebarWidth}rem`,
       },
       typography: {
         DEFAULT: {
