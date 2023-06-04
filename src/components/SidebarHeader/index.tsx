@@ -1,7 +1,7 @@
 import {
   MagnifyingGlassIcon,
   AdjustmentsHorizontalIcon,
-  WrenchScrewdriverIcon,
+  Cog6ToothIcon,
   HomeIcon,
 } from '@heroicons/react/24/outline';
 
@@ -27,7 +27,7 @@ export function SidebarHeader() {
       />
       <ButtonIcon
         label="View Setting"
-        Icon={WrenchScrewdriverIcon}
+        Icon={Cog6ToothIcon}
         href="/settings/"
       />
     </nav>

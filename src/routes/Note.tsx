@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import {
   InformationCircleIcon,
-  PencilIcon,
-  PencilSquareIcon,
+  LockClosedIcon,
+  LockOpenIcon,
   StarIcon as StarOutlineIcon,
   TrashIcon,
 } from '@heroicons/react/24/outline';
@@ -31,7 +31,7 @@ export function Note() {
       icons={(
         <>
           <ButtonIcon
-            Icon={edit ? PencilSquareIcon : PencilIcon}
+            Icon={edit ? LockOpenIcon : LockClosedIcon}
             label={`${edit ? 'Save' : 'Edit'} Note`}
             onClick={() => setEdit((prevState) => !prevState)}
           />
