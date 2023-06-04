@@ -36,12 +36,12 @@ export function Layout() {
             as="aside"
             unmount={false}
             enter="transition-transform duration-400"
-            enterFrom="-translate-x-[20rem]"
+            enterFrom="-translate-x-sidebarAdjusted"
             enterTo="translate-x-0"
             leave="transition-transform duration-400"
             leaveFrom="translate-x-0"
-            leaveTo="-translate-x-[20rem]"
-            className="absolute w-80 px-1 pt-0.5 pb-1 h-full flex flex-col gap-1"
+            leaveTo="-translate-x-sidebarAdjusted"
+            className="absolute w-sidebar p-sidebarGap [@media(display-mode:window-controls-overlay)]:pt-0 h-full flex flex-col gap-1"
           >
             <Sidebar />
           </Transition.Child>
@@ -49,16 +49,16 @@ export function Layout() {
             role="presentation"
             enter="transition-[margin-left] duration-400"
             enterFrom="ml-0"
-            enterTo="ml-[20rem]"
+            enterTo="ml-sidebarAdjusted"
             leave="transition-[margin-left] duration-400"
-            leaveFrom="ml-[20rem]"
+            leaveFrom="ml-sidebarAdjusted"
             leaveTo="scale-x-100"
           />
         </Transition>
-        <div className="relative flex-1 pt-0.5 min-w-full sm:min-w-[initial]">
+        <div className="relative flex-1 px-sidebarGap pt-sidebarGap [@media(display-mode:window-controls-overlay)]:pt-0 min-w-full sm:min-w-[initial]">
           <button
             type="button"
-            className="absolute inset-0 mt-0.5 disabled:hidden sm:hidden rounded-t-xl z-10"
+            className="absolute inset-0 mx-sidebarGap mt-sidebarGap [@media(display-mode:window-controls-overlay)]:mt-0 disabled:hidden sm:hidden rounded-t-xl z-10"
             disabled={!drawerOpen}
             onClick={() => setDrawerOpen((prevState) => !prevState)}
           >
