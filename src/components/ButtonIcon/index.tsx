@@ -5,6 +5,7 @@ import type { ButtonIconProps } from './types';
 
 export function ButtonIcon({
   className,
+  disabled,
   href,
   Icon,
   label,
@@ -26,11 +27,13 @@ export function ButtonIcon({
   ) : (
     <button
       type="button"
-      onClick={onClick}
       className={classNames(
-        'p-2 rounded-full hover:bg-neutral-300/60 dark:hover:bg-neutral-600/60',
+        'p-2 rounded-full disabled:opacity-40',
         className || '',
+        'hover:enabled:bg-neutral-300/60 dark:hover:enabled:bg-neutral-600/60',
       )}
+      disabled={disabled}
+      onClick={onClick}
       title={label}
     >
       <span className="sr-only">{label}</span>

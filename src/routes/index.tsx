@@ -13,18 +13,24 @@ export const router = createBrowserRouter([
         path: '/',
         element: <Home />,
       },
+      // TODO: create a new note and redirect the user to that note if the id isn't present
+      // {
+      //   path: '/note/',
+      //   element: <NoteCreate />,
+      // },
       {
-        path: '/note/',
+        path: '/note/:id',
         element: <Note />,
       },
-      // {
-      //   path: '/note/:id',
-      //   element: <Note />,
-      // },
       {
         path: '/settings/',
         element: <Settings />,
       },
+      // TODO: Create 404 page
+      // {
+      //   path: '*',
+      //   element: <NoPage />,
+      // },
     ],
   },
 ]);

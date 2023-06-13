@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import {
   InformationCircleIcon,
   LockClosedIcon,
@@ -10,20 +9,38 @@ import {
   StarIcon as StarSolidIcon,
 } from '@heroicons/react/24/solid';
 import Markdown from 'markdown-to-jsx';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { useRxData } from 'rxdb-hooks';
 
+import { favouriteNote, updateNote } from '../api/notes';
+import type { NoteDocType } from '../api/types';
 import { ButtonIcon } from '../components/ButtonIcon';
 import { Page } from '../components/Page';
 
 export function Note() {
+  const { id } = useParams();
   const [edit, setEdit] = useState(false);
-  const [favourite, setFavourite] = useState(false);
   const [text, setText] = useState('');
+  const { result: [note] } = useRxData<NoteDocType>(
+    'notes',
+    (collection) => collection.findOne(id),
+  );
 
   useEffect(() => {
-    if (!edit && text === '') {
-      setEdit(true);
+    const compare = !edit && id && text !== note?.text;
+
+    if (compare) {
+      updateNote(note, text);
     }
-  }, [edit, text]);
+  }, [edit]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    if (note) {
+      setText(note.text || '');
+      setEdit(note.text === '');
+    }
+  }, [note]);
 
   return (
     <Page
@@ -36,17 +53,19 @@ export function Note() {
             onClick={() => setEdit((prevState) => !prevState)}
           />
           <ButtonIcon
-            Icon={favourite ? StarSolidIcon : StarOutlineIcon}
-            label={`${favourite ? 'Unfavourite' : 'Favourite'} Note`}
-            onClick={() => setFavourite((prevState) => !prevState)}
+            Icon={note?.favourite ? StarSolidIcon : StarOutlineIcon}
+            label={`${note?.favourite ? 'Unfavourite' : 'Favourite'} Note`}
+            onClick={() => favouriteNote(note)}
           />
           <ButtonIcon
             Icon={InformationCircleIcon}
+            disabled
             label="View Note information"
             onClick={() => console.log('View Note information')} // eslint-disable-line no-console
           />
           <ButtonIcon
             className="text-red-500"
+            disabled
             Icon={TrashIcon}
             label="Delete Note"
             onClick={() => console.log('Delete Note')} // eslint-disable-line no-console
