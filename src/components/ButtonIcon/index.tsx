@@ -18,6 +18,7 @@ export function ButtonIcon({
         className || '',
         isActive ? 'bg-primary text-white dark:text-black hover:bg-neutral-600/60 dark:hover:bg-neutral-100/60' : 'text-primary hover:bg-neutral-300/60 dark:hover:bg-neutral-600/60',
       )}
+      end // This is essentially the same as the old exact prop
       title={label}
       to={href}
     >

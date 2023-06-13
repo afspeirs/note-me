@@ -5,15 +5,10 @@ import {
   MagnifyingGlassIcon,
   PlusIcon,
 } from '@heroicons/react/24/outline';
-import { useRxCollection } from 'rxdb-hooks';
 
-import { createNote } from '../../api/notes';
-import type { NoteDocType } from '../../api/types';
 import { ButtonIcon } from '../ButtonIcon';
 
 export function Header() {
-  const collection = useRxCollection<NoteDocType>('notes');
-
   return (
     <nav className="flex justify-between p-2">
       <ButtonIcon
@@ -29,8 +24,7 @@ export function Header() {
       <ButtonIcon
         label="Create Note"
         Icon={PlusIcon}
-        disabled={!collection}
-        onClick={() => createNote(collection!)}
+        href="/note"
       />
       <ButtonIcon
         label="Home"

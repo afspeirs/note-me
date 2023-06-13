@@ -1,8 +1,9 @@
 import { createBrowserRouter } from 'react-router-dom';
 
-import { Layout } from './Layout';
 import { Home } from './Home';
+import { Layout } from './Layout';
 import { Note } from './Note';
+import { NoteCreate } from './NoteCreate';
 import { Settings } from './Settings';
 
 export const router = createBrowserRouter([
@@ -13,11 +14,10 @@ export const router = createBrowserRouter([
         path: '/',
         element: <Home />,
       },
-      // TODO: create a new note and redirect the user to that note if the id isn't present
-      // {
-      //   path: '/note/',
-      //   element: <NoteCreate />,
-      // },
+      {
+        path: '/note/',
+        element: <NoteCreate />,
+      },
       {
         path: '/note/:id',
         element: <Note />,
