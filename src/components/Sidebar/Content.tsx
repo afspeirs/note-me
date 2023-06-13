@@ -17,7 +17,10 @@ export function Content() {
   return (
     <ul>
       {isFetching && (
-        <li>Loading</li>
+        <li className="block px-4 py-2">Loading</li>
+      )}
+      {notes.length === 0 && (
+        <li className="block px-4 py-2">No notes found</li>
       )}
       {notes.map((note) => (
         <li key={note.id}>

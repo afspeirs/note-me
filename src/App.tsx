@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
 import { HelmetProvider } from 'react-helmet-async';
 import { RouterProvider } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
+import { Toaster } from 'react-hot-toast';
 import { Provider } from 'rxdb-hooks';
-import 'react-toastify/dist/ReactToastify.css';
 
 import { ServiceWorkerEvents } from './components/ServiceWorkerEvents';
 import { router } from './routes';
@@ -26,7 +25,7 @@ export function App() {
       </HelmetProvider>
 
       <ServiceWorkerEvents />
-      <ToastContainer position="bottom-right" />
+      <Toaster position="bottom-center" />
     </>
   );
 }
