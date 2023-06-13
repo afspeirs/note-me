@@ -2,7 +2,7 @@ import toast from 'react-hot-toast';
 
 import type { NoteCollection, NoteDocument } from './types';
 
-export const favouriteNote = async (note: NoteDocument) => {
+export async function favouriteNote(note: NoteDocument) {
   await note?.modify((prevState) => ({
     ...prevState,
     favourite: !prevState.favourite,
@@ -10,20 +10,31 @@ export const favouriteNote = async (note: NoteDocument) => {
     .then((note2) => toast(`Note ${note2?.favourite ? 'added to favourites' : 'removed from favourites'}`, {
       id: 'favourite',
     }));
-};
+}
 
-export const updateNote = async (note: NoteDocument, text: string) => {
+export async function updateNote(note: NoteDocument, text: string) {
   await note?.patch({
     text,
   });
-};
+}
 
-export function createNote(collection: NoteCollection) {
+export async function createNote(collection: NoteCollection) {
   const newNote = {
     id: window.crypto.randomUUID(),
     dateCreated: new Date().toISOString(),
     text: '',
   };
 
-  collection.insert(newNote);
+  const existingNote = await collection.findOne({
+    selector: {
+      text: '',
+    },
+  }).exec();
+
+  if (existingNote?.id) {
+    return existingNote.id;
+  }
+
+  await collection.insert(newNote);
+  return newNote.id;
 }
