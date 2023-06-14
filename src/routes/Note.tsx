@@ -10,6 +10,7 @@ import {
 } from '@heroicons/react/24/solid';
 import Markdown from 'markdown-to-jsx';
 import { useEffect, useState } from 'react';
+import { useHotkeys } from 'react-hotkeys-hook';
 import { useParams } from 'react-router-dom';
 import { useRxData } from 'rxdb-hooks';
 
@@ -26,6 +27,11 @@ export function Note() {
     'notes',
     (collection) => collection.findOne(id),
   );
+
+  useHotkeys('ctrl+s, meta+s', () => setEdit((prevState) => !prevState), {
+    enableOnFormTags: true,
+    preventDefault: true,
+  });
 
   useEffect(() => {
     const compare = !edit && id && text !== note?.text;

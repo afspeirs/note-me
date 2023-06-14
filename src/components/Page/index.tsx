@@ -1,12 +1,13 @@
-import { Helmet } from 'react-helmet-async';
-import { useAtom } from 'jotai';
 import {
   Bars2Icon,
   ChevronLeftIcon,
 } from '@heroicons/react/24/solid';
+import { useAtom } from 'jotai';
+import { Helmet } from 'react-helmet-async';
+import { useHotkeys } from 'react-hotkeys-hook';
 
-import { ButtonIcon } from '../ButtonIcon';
 import { drawerOpenAtom } from '../../context/navigation';
+import { ButtonIcon } from '../ButtonIcon';
 import type { PageProps } from './types';
 
 export function Page({
@@ -15,6 +16,9 @@ export function Page({
   title,
 }: PageProps) {
   const [open, setOpen] = useAtom(drawerOpenAtom);
+  const toggleOpen = () => setOpen((prevState) => !prevState);
+
+  useHotkeys('ctrl+b', toggleOpen);
 
   return (
     <>
@@ -27,7 +31,7 @@ export function Page({
           className="mr-auto"
           Icon={open ? ChevronLeftIcon : Bars2Icon}
           label={`${open ? 'Close' : 'Open'} Sidebar`}
-          onClick={() => setOpen((prevState) => !prevState)}
+          onClick={toggleOpen}
         />
         {icons}
       </header>

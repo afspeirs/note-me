@@ -22,6 +22,7 @@
     "react-dom": "^18.2.0",
     "react-helmet-async": "^1.3.0",
     "react-hot-toast": "^2.4.1",
+    "react-hotkeys-hook": "^4.4.0",
     "react-router-dom": "^6.11.2",
     "rxdb": "^14.13.0",
     "rxdb-hooks": "^5.0.2",
