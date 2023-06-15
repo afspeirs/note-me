@@ -18,7 +18,7 @@ export function Page({
   const [open, setOpen] = useAtom(drawerOpenAtom);
   const toggleOpen = () => setOpen((prevState) => !prevState);
 
-  useHotkeys('ctrl+b', toggleOpen);
+  useHotkeys('ctrl+b, meta+b', toggleOpen);
 
   return (
     <>
