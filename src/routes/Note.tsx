@@ -11,22 +11,32 @@ import {
 import Markdown from 'markdown-to-jsx';
 import { useEffect, useState } from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useRxData } from 'rxdb-hooks';
 
-import { favouriteNote, updateNote } from '../api/notes';
+import { deleteNote, favouriteNote, updateNote } from '../api/notes';
 import type { NoteDocType } from '../api/types';
 import { ButtonIcon } from '../components/ButtonIcon';
 import { Page } from '../components/Page';
 
 export function Note() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [edit, setEdit] = useState(false);
   const [text, setText] = useState('');
   const { result: [note] } = useRxData<NoteDocType>(
     'notes',
     (collection) => collection.findOne(id),
   );
+
+  const handleDeleteNote = () => {
+    const confirm = window.confirm('Are you sure you want to delete this note?'); // eslint-disable-line no-alert
+
+    if (confirm) {
+      deleteNote(note)
+        .then(() => navigate('/', { replace: true }));
+    }
+  };
 
   useHotkeys('ctrl+s, meta+s', () => setEdit((prevState) => !prevState), {
     enableOnFormTags: true,
@@ -71,10 +81,9 @@ export function Note() {
           />
           <ButtonIcon
             className="text-red-500"
-            disabled
             Icon={TrashIcon}
             label="Delete Note"
-            onClick={() => console.log('Delete Note')} // eslint-disable-line no-console
+            onClick={handleDeleteNote}
           />
         </>
       )}
