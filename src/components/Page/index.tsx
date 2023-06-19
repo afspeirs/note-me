@@ -35,7 +35,7 @@ export function Page({
         />
         {icons}
       </header>
-      <main className="flex-1">
+      <main className="flex-1 overflow-auto">
         {children}
       </main>
     </>
