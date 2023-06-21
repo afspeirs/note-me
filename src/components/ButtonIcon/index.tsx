@@ -23,7 +23,7 @@ export function ButtonIcon({
       to={href}
     >
       <span className="sr-only">{label}</span>
-      <Icon className="h-6 w-6" role="presentation" />
+      <Icon className="h-6 w-6" aria-hidden="true" />
     </NavLink>
   ) : (
     <button

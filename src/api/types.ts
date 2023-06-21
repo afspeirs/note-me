@@ -1,13 +1,13 @@
 import type { RxCollection, RxDatabase, RxDocument } from 'rxdb';
 
-export interface NoteDocType {
-  dateCreated: string
+export type NoteDocType = {
+  dateCreated: string,
   dateModified?: string,
   favourite?: boolean,
   id: string,
   text: string,
   // title?: string,
-}
+};
 
 export type NoteDocument = RxDocument<NoteDocType>;
 export type NoteCollection = RxCollection<NoteDocType>;
