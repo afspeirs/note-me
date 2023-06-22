@@ -14,7 +14,7 @@ export function Button({
   return (
     <NavLink
       className={({ isActive }) => classNames(
-        isActive ? 'bg-gray-200 hover:bg-gray-300 font-semibold' : 'text-gray-700 hover:bg-gray-100',
+        isActive ? 'bg-gray-200 dark:bg-neutral-700/60 dark:hover:bg-neutral-600/60 hover:bg-gray-300 font-semibold' : 'text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:bg-neutral-600/60',
         'group flex items-center gap-x-3 rounded-md p-2',
       )}
       end // This is essentially the same as the old exact prop
