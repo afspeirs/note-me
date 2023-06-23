@@ -21,7 +21,7 @@ export function Button({
       to={to}
     >
       {IconStart && (
-        <IconStart className={classNames('h-6 w-6', IconStartClassName)} aria-hidden="true" />
+        <IconStart className={classNames('h-6 w-6 flex-shrink-0', IconStartClassName)} aria-hidden="true" />
       )}
 
       <span className="overflow-hidden text-ellipsis whitespace-nowrap">
@@ -29,7 +29,7 @@ export function Button({
       </span>
 
       {IconEnd && (
-        <IconEnd className={classNames('h-6 w-6 ml-auto', IconEndClassName)} aria-hidden="true" />
+        <IconEnd className={classNames('h-6 w-6 flex-shrink-0 ml-auto', IconEndClassName)} aria-hidden="true" />
       )}
     </NavLink>
   );
