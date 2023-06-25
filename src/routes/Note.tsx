@@ -11,13 +11,14 @@ import {
 import Markdown from 'markdown-to-jsx';
 import { useEffect, useState } from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useRxData } from 'rxdb-hooks';
 
 import { deleteNote, favouriteNote, updateNote } from '../api/notes';
 import type { NoteDocType } from '../api/types';
 import { ButtonIcon } from '../components/ButtonIcon';
 import { Page } from '../components/Page';
+import { classNames } from '../utils/classNames';
 
 export function Note() {
   const { id } = useParams();
@@ -97,20 +98,24 @@ export function Note() {
               id="note-text"
               value={text}
               onChange={(event) => setText(event.target.value)}
-              className="block w-full h-full px-4 pt-1 bg-transparent border-none outline-none resize-none overflow-auto"
+              className="block w-full h-full px-4 pt-1 pb-4 bg-transparent border-none outline-none resize-none overflow-auto"
             />
           </label>
         ) : (
           <Markdown
-            className="w-full h-full px-4 pt-1 prose dark:prose-invert overflow-auto"
+            className={classNames(
+              'w-full h-full px-4 pt-1 pb-4 overflow-auto prose dark:prose-invert',
+              'prose-headings:mb-2 prose-headings:mt-4 first:prose-headings:mt-0 prose-a:text-link',
+              'prose-ol:m-0 prose-ul:m-0 prose-li:relative prose-li:my-1',
+            )}
             options={{
               disableParsingRawHTML: true,
               forceWrapper: true,
               overrides: {
-                a: {
-                  // component: RendererLink,
+                // a: RendererLink,
+                input: {
                   props: {
-                    className: 'text-link',
+                    className: 'absolute top-1/2 -left-5 m-0 -translate-y-1/2 accent-primary',
                   },
                 },
               },
