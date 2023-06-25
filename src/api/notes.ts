@@ -6,6 +6,7 @@ export async function createNote(collection: NoteCollection) {
   const newNote = {
     id: window.crypto.randomUUID(),
     dateCreated: new Date().toISOString(),
+    dateModified: new Date().toISOString(),
     text: '',
   };
 
@@ -33,6 +34,7 @@ export async function deleteNote(note: NoteDocument) {
 export async function favouriteNote(note: NoteDocument) {
   await note?.modify((prevState) => ({
     ...prevState,
+    dateModified: new Date().toISOString(),
     favourite: !prevState.favourite,
   }))
     .then((note2) => toast(`Note ${note2?.favourite ? 'added to favourites' : 'removed from favourites'}`, {
@@ -42,6 +44,7 @@ export async function favouriteNote(note: NoteDocument) {
 
 export async function updateNote(note: NoteDocument, text: string) {
   await note?.patch({
+    dateModified: new Date().toISOString(),
     text,
   });
 }

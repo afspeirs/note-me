@@ -12,7 +12,7 @@ export function Content() {
     'notes',
     (collection) => collection.find({
       sort: [
-        { dateCreated: 'asc' },
+        { dateModified: 'desc' },
       ],
     }),
   );
