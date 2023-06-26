@@ -13,23 +13,26 @@ export function Footer() {
         <li>
           <Button
             IconStart={PlusIcon}
-            label="Create Note"
-            to="/note"
-          />
+            href="/note"
+          >
+            Create Note
+          </Button>
         </li>
         <li>
           <Button
             IconStart={HomeIcon}
-            label="Home"
-            to="/"
-          />
+            href="/"
+          >
+            Home
+          </Button>
         </li>
         <li>
           <Button
-            label="Settings"
             IconStart={Cog6ToothIcon}
-            to="/settings/"
-          />
+            href="/settings/"
+          >
+            Settings
+          </Button>
         </li>
       </ul>
     </nav>

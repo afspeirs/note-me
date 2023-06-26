@@ -1,6 +1,9 @@
+import { DevicePhoneMobileIcon } from '@heroicons/react/24/outline';
 import { useAtom } from 'jotai';
 import { useEffect, useRef, useState } from 'react';
+
 import { updateAvailableAtom } from '../../context/serviceWorker';
+import { Button } from '../Button';
 
 export function CheckForUpdate() {
   const [updateAvailable] = useAtom(updateAvailableAtom);
@@ -29,9 +32,14 @@ export function CheckForUpdate() {
   };
 
   return (
-    <li>
-      <button type="button" onClick={handleButtonClick} className="flex justify-between w-full">
-        <span>Check for update</span>
+    <li className="m-2">
+      <Button
+        IconStart={DevicePhoneMobileIcon}
+        onClick={handleButtonClick}
+      >
+        Check for update
+      </Button>
+      <div className="ml-auto">
         {updateAvailable ? (
           <span>UPDATE</span>
         ) : (
@@ -39,7 +47,7 @@ export function CheckForUpdate() {
             {loading && <span>Loading</span>}
           </>
         )}
-      </button>
+      </div>
     </li>
   );
 }

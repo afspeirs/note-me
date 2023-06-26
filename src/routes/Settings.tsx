@@ -6,15 +6,11 @@ import { Page } from '../components/Page';
 export function Settings() {
   return (
     <Page title="Settings">
-      <div>
-        Settings
-
-        <ul role="list">
-          <AppVersion />
-          <CheckForUpdate />
-          <ChangeTheme />
-        </ul>
-      </div>
+      <ul role="list">
+        <AppVersion />
+        <CheckForUpdate />
+        <ChangeTheme />
+      </ul>
     </Page>
   );
 }

@@ -31,9 +31,10 @@ export function Content() {
             <Button
               IconEnd={note.favourite ? StarSolidIcon : undefined}
               IconEndClassName="text-primary"
-              label={getTitle(note)}
-              to={`/note/${note.id}`}
-            />
+              href={`/note/${note.id}`}
+            >
+              {getTitle(note)}
+            </Button>
           </li>
         ))}
       </ul>
