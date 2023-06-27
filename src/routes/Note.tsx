@@ -115,7 +115,7 @@ export function Note() {
                 // a: RendererLink,
                 input: {
                   props: {
-                    className: 'absolute top-1/2 -left-5 m-0 -translate-y-1/2 accent-primary',
+                    className: 'absolute -left-5 top-2 m-0 accent-primary',
                   },
                 },
               },
