@@ -5,6 +5,7 @@ import { Helmet } from 'react-helmet-async';
 import { Outlet } from 'react-router-dom';
 import { useMediaQuery } from 'usehooks-ts';
 
+import { Card } from '../components/Card';
 import { Sidebar } from '../components/Sidebar';
 import { Topbar } from '../components/Topbar';
 import { drawerOpenAtom } from '../context/navigation';
@@ -64,9 +65,9 @@ export function Layout() {
           >
             <span className="sr-only">Hide Sidebar</span>
           </button>
-          <div className="flex flex-col h-full bg-white dark:bg-neutral-800 dark:text-white rounded-t-xl overflow-hidden shadow">
+          <Card className="flex flex-col h-full" roundedTop>
             <Outlet />
-          </div>
+          </Card>
         </div>
       </div>
     </>

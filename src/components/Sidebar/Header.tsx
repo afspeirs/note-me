@@ -7,10 +7,11 @@ import {
 } from '@heroicons/react/24/outline';
 
 import { ButtonIcon } from '../ButtonIcon';
+import { Card } from '../Card';
 
 export function Header() {
   return (
-    <nav className="flex justify-between p-2">
+    <Card as="nav" className="flex justify-between p-2">
       <ButtonIcon
         label="Search Notes"
         Icon={MagnifyingGlassIcon}
@@ -36,6 +37,6 @@ export function Header() {
         Icon={Cog6ToothIcon}
         href="/settings/"
       />
-    </nav>
+    </Card>
   );
 }

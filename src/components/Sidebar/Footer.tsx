@@ -5,10 +5,11 @@ import {
 } from '@heroicons/react/24/outline';
 
 import { Button } from '../Button';
+import { Card } from '../Card';
 
 export function Footer() {
   return (
-    <nav aria-label="sidebar footer">
+    <Card as="nav" aria-label="sidebar footer">
       <ul role="list" className="flex flex-col gap-1 p-2">
         <li>
           <Button
@@ -35,6 +36,6 @@ export function Footer() {
           </Button>
         </li>
       </ul>
-    </nav>
+    </Card>
   );
 }
