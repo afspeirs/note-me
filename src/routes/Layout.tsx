@@ -1,8 +1,9 @@
-import { useMemo } from 'react';
-import { Outlet } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
 import { Transition } from '@headlessui/react';
 import { useAtom } from 'jotai';
+import { useMemo } from 'react';
+import { Helmet } from 'react-helmet-async';
+import { Outlet } from 'react-router-dom';
+import { useMediaQuery } from 'usehooks-ts';
 
 import { Sidebar } from '../components/Sidebar';
 import { Topbar } from '../components/Topbar';
@@ -12,13 +13,12 @@ import { themeAtom } from '../context/theme';
 export function Layout() {
   const [drawerOpen, setDrawerOpen] = useAtom(drawerOpenAtom);
   const [theme] = useAtom(themeAtom);
+  const matches = useMediaQuery('(prefers-color-scheme: dark)');
   const appTheme = useMemo(() => {
     if (theme !== 'default') return theme;
-    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      return 'dark';
-    }
+    if (matches) return 'dark';
     return 'light';
-  }, [theme]);
+  }, [matches, theme]);
 
   return (
     <>
