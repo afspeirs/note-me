@@ -13,7 +13,7 @@ export function Footer() {
       <ul role="list" className="flex flex-col gap-1 p-2">
         <li>
           <Button
-            IconStart={PlusIcon}
+            Icon={PlusIcon}
             href="/note"
           >
             Create Note
@@ -21,7 +21,7 @@ export function Footer() {
         </li>
         <li>
           <Button
-            IconStart={HomeIcon}
+            Icon={HomeIcon}
             href="/"
           >
             Home
@@ -29,7 +29,7 @@ export function Footer() {
         </li>
         <li>
           <Button
-            IconStart={Cog6ToothIcon}
+            Icon={Cog6ToothIcon}
             href="/settings/"
           >
             Settings

@@ -13,10 +13,9 @@ export function Button({
   children,
   disabled,
   href,
-  IconEnd,
-  IconEndClassName,
-  IconStart,
-  IconStartClassName,
+  Icon,
+  IconClassName,
+  secondaryAction,
   onClick,
   target = '_self',
 }: ButtonProps) {
@@ -31,16 +30,18 @@ export function Button({
       target={target}
       to={href}
     >
-      {IconStart && (
-        <IconStart className={classNames('h-6 w-6 flex-shrink-0', IconStartClassName)} aria-hidden="true" />
+      {Icon && (
+        <Icon className={classNames('h-6 w-6 flex-shrink-0', IconClassName)} aria-hidden="true" />
       )}
 
       <span className="truncate">
         {children}
       </span>
 
-      {IconEnd && (
-        <IconEnd className={classNames('h-6 w-6 flex-shrink-0 ml-auto', IconEndClassName)} aria-hidden="true" />
+      {secondaryAction && (
+        <div className="ml-auto">
+          {secondaryAction}
+        </div>
       )}
     </NavLink>
   ) : (
@@ -53,16 +54,18 @@ export function Button({
       disabled={disabled}
       onClick={onClick}
     >
-      {IconStart && (
-        <IconStart className={classNames('h-6 w-6 flex-shrink-0', IconStartClassName)} aria-hidden="true" />
+      {Icon && (
+        <Icon className={classNames('h-6 w-6 flex-shrink-0', IconClassName)} aria-hidden="true" />
       )}
 
       <span className="truncate">
         {children}
       </span>
 
-      {IconEnd && (
-        <IconEnd className={classNames('h-6 w-6 flex-shrink-0 ml-auto', IconEndClassName)} aria-hidden="true" />
+      {secondaryAction && (
+        <div className="ml-auto">
+          {secondaryAction}
+        </div>
       )}
     </button>
   );

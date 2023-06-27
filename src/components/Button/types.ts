@@ -1,12 +1,11 @@
 import { HomeIcon } from '@heroicons/react/24/solid';
-import type { MouseEvent } from 'react';
+import type { MouseEvent, ReactNode } from 'react';
 
 interface BaseProps {
   children: string,
-  IconEnd?: typeof HomeIcon;
-  IconEndClassName?: string,
-  IconStart?: typeof HomeIcon;
-  IconStartClassName?: string,
+  Icon?: typeof HomeIcon;
+  IconClassName?: string,
+  secondaryAction?: ReactNode,
 }
 
 interface ButtonOptions extends BaseProps {

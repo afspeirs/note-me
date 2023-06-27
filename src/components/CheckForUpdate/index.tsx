@@ -34,20 +34,18 @@ export function CheckForUpdate() {
   return (
     <li className="m-2">
       <Button
-        IconStart={DevicePhoneMobileIcon}
+        Icon={DevicePhoneMobileIcon}
         onClick={handleButtonClick}
-      >
-        Check for update
-      </Button>
-      <div className="ml-auto">
-        {updateAvailable ? (
+        secondaryAction={updateAvailable ? (
           <span>UPDATE</span>
         ) : (
           <>
             {loading && <span>Loading</span>}
           </>
         )}
-      </div>
+      >
+        Check for update
+      </Button>
     </li>
   );
 }

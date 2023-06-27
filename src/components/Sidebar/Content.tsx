@@ -30,9 +30,10 @@ export function Content() {
         {notes.map((note) => (
           <li key={note.id}>
             <Button
-              IconEnd={note.favourite ? StarSolidIcon : undefined}
-              IconEndClassName="text-primary"
               href={`/note/${note.id}`}
+              secondaryAction={note.favourite && (
+                <StarSolidIcon className="h-6 w-6 flex-shrink-0 text-primary" aria-hidden="true" />
+              )}
             >
               {getTitle(note)}
             </Button>
