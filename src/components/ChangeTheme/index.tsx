@@ -1,5 +1,5 @@
 import { Listbox } from '@headlessui/react';
-import { PaintBrushIcon } from '@heroicons/react/24/outline';
+import { CheckIcon, PaintBrushIcon } from '@heroicons/react/24/outline';
 import { useAtom } from 'jotai';
 
 import { themeAtom, themeOptions } from '../../context/theme';
@@ -26,17 +26,20 @@ export function ChangeTheme() {
           </div>
         </Listbox.Button>
 
-        <Listbox.Options className="absolute mt-1 ml-1 max-h-60 overflow-auto rounded-md bg-gray-200 dark:bg-neutral-700 text-base shadow-lg">
+        <Listbox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-gray-200 dark:bg-neutral-700 text-base shadow-lg">
           {Object.entries(themeOptions).map(([value, label]) => (
             <Listbox.Option
               key={value}
-              className={({ active }) => classNames(
-                'relative cursor-default select-none pl-4 pr-8 py-2',
-                active ? 'bg-primary text-white' : 'text-gray-900 dark:text-white',
-              )}
+              className="relative cursor-default select-none pl-12 py-2 text-gray-900 dark:text-white ui-active:text-white ui-active:bg-primary"
               value={value}
             >
-              {label}
+              <span className="block truncate ui-selected:font-semibold">
+                {label}
+              </span>
+
+              <span className="absolute inset-y-0 left-0 items-center pl-3 hidden ui-selected:flex">
+                <CheckIcon className="h-6 w-6 text-gray-900 dark:text-white ui-active:text-white" aria-hidden="true" />
+              </span>
             </Listbox.Option>
           ))}
         </Listbox.Options>

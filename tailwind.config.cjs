@@ -1,4 +1,5 @@
 const typography = require('@tailwindcss/typography');
+const headlessui = require('@headlessui/tailwindcss');
 
 const sidebarWidth = 20;
 const sidebarGap = 0.25;
@@ -35,5 +36,6 @@ module.exports = {
   },
   plugins: [
     typography,
+    headlessui,
   ],
 };
