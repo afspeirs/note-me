@@ -6,37 +6,47 @@ import {
   PlusIcon,
 } from '@heroicons/react/24/outline';
 
-import { ButtonIcon } from '../ButtonIcon';
+import { Button } from '../Button';
 import { Card } from '../Card';
 
 export function Header() {
   return (
     <Card as="nav" className="flex justify-between p-2">
-      <ButtonIcon
-        label="Search Notes"
+      <Button
         Icon={MagnifyingGlassIcon}
+        iconOnly
         onClick={() => console.log('Search Notes')} // eslint-disable-line no-console
-      />
-      <ButtonIcon
-        label="Filter Notes"
+      >
+        Search Notes
+      </Button>
+      <Button
         Icon={AdjustmentsHorizontalIcon}
+        iconOnly
         onClick={() => console.log('Filter Notes')} // eslint-disable-line no-console
-      />
-      <ButtonIcon
-        label="Create Note"
+      >
+        Filter Notes
+      </Button>
+      <Button
         Icon={PlusIcon}
+        iconOnly
         href="/note"
-      />
-      <ButtonIcon
-        label="Home"
+      >
+        Create Note
+      </Button>
+      <Button
         Icon={HomeIcon}
+        iconOnly
         href="/"
-      />
-      <ButtonIcon
-        label="View Settings"
+      >
+        Home
+      </Button>
+      <Button
         Icon={Cog6ToothIcon}
+        iconOnly
         href="/settings/"
-      />
+      >
+        View Settings
+      </Button>
     </Card>
   );
 }

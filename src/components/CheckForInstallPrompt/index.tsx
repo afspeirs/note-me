@@ -1,4 +1,4 @@
-import { ArrowDownOnSquareIcon } from '@heroicons/react/24/outline';
+import { ArrowDownOnSquareIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { useAtom } from 'jotai';
 
 import { beforeInstallPromptAtom } from '../../context/serviceWorker';
@@ -29,7 +29,11 @@ export function CheckForInstallPrompt() {
       >
         Install NoteMe
       </Button>
-      <Button onClick={handleDismissClick}>
+      <Button
+        iconOnly
+        Icon={XMarkIcon}
+        onClick={handleDismissClick}
+      >
         Dismiss
       </Button>
     </Card>

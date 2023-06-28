@@ -7,7 +7,7 @@ import { Helmet } from 'react-helmet-async';
 import { useHotkeys } from 'react-hotkeys-hook';
 
 import { drawerOpenAtom } from '../../context/navigation';
-import { ButtonIcon } from '../ButtonIcon';
+import { Button } from '../Button';
 import type { PageProps } from './types';
 
 export function Page({
@@ -27,14 +27,19 @@ export function Page({
       </Helmet>
 
       <header className="flex gap-2 p-2">
-        <ButtonIcon
-          className="mr-auto"
+        <Button
           Icon={open ? ChevronLeftIcon : Bars2Icon}
-          label={`${open ? 'Close' : 'Open'} Sidebar`}
+          iconOnly
           onClick={toggleOpen}
-        />
+        >
+          {`${open ? 'Close' : 'Open'} Sidebar`}
+        </Button>
+
+        <div className="ml-auto" />
+
         {icons}
       </header>
+
       <main className="grid flex-1 overflow-auto">
         {children}
       </main>

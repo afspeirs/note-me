@@ -15,6 +15,7 @@ export function ChangeTheme() {
         <Listbox.Button
           className={classNames(
             classes.base,
+            classes.baseText,
             classes.hover,
           )}
         >

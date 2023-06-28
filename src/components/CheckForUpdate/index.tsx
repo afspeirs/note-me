@@ -1,4 +1,4 @@
-import { DevicePhoneMobileIcon } from '@heroicons/react/24/outline';
+import { ArrowPathIcon, DevicePhoneMobileIcon } from '@heroicons/react/24/outline';
 import { useAtom } from 'jotai';
 import { useEffect, useRef, useState } from 'react';
 
@@ -39,9 +39,14 @@ export function CheckForUpdate() {
         secondaryAction={updateAvailable ? (
           <span>UPDATE</span>
         ) : (
-          <>
-            {loading && <span>Loading</span>}
-          </>
+          <div
+            aria-busy={loading}
+            aria-hidden={!loading}
+            className={!loading ? 'hidden' : ''}
+          >
+            <ArrowPathIcon className="h-6 w-6 animate-spin" aria-hidden="true" />
+            <span className="sr-only">Loading</span>
+          </div>
         )}
       >
         Check for update

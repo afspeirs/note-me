@@ -5,6 +5,7 @@ interface BaseProps {
   children: string,
   Icon?: typeof HomeIcon;
   IconClassName?: string,
+  iconOnly?: boolean,
   secondaryAction?: ReactNode,
 }
 

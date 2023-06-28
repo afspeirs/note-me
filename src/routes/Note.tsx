@@ -16,7 +16,7 @@ import { useRxData } from 'rxdb-hooks';
 
 import { deleteNote, favouriteNote, updateNote } from '../api/notes';
 import type { NoteDocType } from '../api/types';
-import { ButtonIcon } from '../components/ButtonIcon';
+import { Button } from '../components/Button';
 import { Page } from '../components/Page';
 import { classNames } from '../utils/classNames';
 
@@ -64,28 +64,39 @@ export function Note() {
       title="Note"
       icons={(
         <>
-          <ButtonIcon
+          <Button
             Icon={edit ? LockOpenIcon : LockClosedIcon}
-            label={`${edit ? 'Save' : 'Edit'} Note`}
+            IconClassName="text-primary"
+            iconOnly
             onClick={() => setEdit((prevState) => !prevState)}
-          />
-          <ButtonIcon
+          >
+            {`${edit ? 'Save' : 'Edit'} Note`}
+          </Button>
+          <Button
             Icon={note?.favourite ? StarSolidIcon : StarOutlineIcon}
-            label={`${note?.favourite ? 'Unfavourite' : 'Favourite'} Note`}
+            IconClassName="text-primary"
+            iconOnly
             onClick={() => favouriteNote(note)}
-          />
-          <ButtonIcon
+          >
+            {`${note?.favourite ? 'Unfavourite' : 'Favourite'} Note`}
+          </Button>
+          <Button
             Icon={InformationCircleIcon}
+            IconClassName="text-primary"
+            iconOnly
             disabled
-            label="View Note information"
             onClick={() => console.log('View Note information')} // eslint-disable-line no-console
-          />
-          <ButtonIcon
-            className="text-red-500"
+          >
+            View Note information
+          </Button>
+          <Button
             Icon={TrashIcon}
-            label="Delete Note"
+            IconClassName="text-red-500"
+            iconOnly
             onClick={handleDeleteNote}
-          />
+          >
+            Delete Note
+          </Button>
         </>
       )}
     >
