@@ -1,3 +1,4 @@
+import { CheckForInstallPrompt } from '../CheckForInstallPrompt';
 import { Content } from './Content';
 // import { Header } from './Header';
 import { Footer } from './Footer';
@@ -7,6 +8,7 @@ export function Sidebar() {
     <>
       {/* <Header /> */}
       <Content />
+      <CheckForInstallPrompt />
       <Footer />
     </>
   );

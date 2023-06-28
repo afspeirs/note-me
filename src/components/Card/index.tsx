@@ -15,7 +15,7 @@ export function Card({
         roundedTop ? 'rounded-t-xl' : 'rounded-xl',
         className,
       )}
-      {...props}
+      {...props} // eslint-disable-line react/jsx-props-no-spreading
     >
       {children}
     </Component>
