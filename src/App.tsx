@@ -25,7 +25,14 @@ export function App() {
       </HelmetProvider>
 
       <ServiceWorkerEvents />
-      <Toaster position="bottom-center" />
+
+      <Toaster
+        position="bottom-center"
+        containerClassName="select-none"
+        toastOptions={{
+          className: 'bg-neutral-800 text-white dark:bg-white dark:text-black max-w-none',
+        }}
+      />
     </>
   );
 }
