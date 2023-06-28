@@ -1,6 +1,7 @@
 import toast from 'react-hot-toast';
 
 import type { NoteCollection, NoteDocument } from './types';
+import { getTitle } from '../utils/getTitle';
 
 export async function createNote(collection: NoteCollection) {
   const newNote = {
@@ -37,7 +38,7 @@ export async function favouriteNote(note: NoteDocument) {
     dateModified: new Date().toISOString(),
     favourite: !prevState.favourite,
   }))
-    .then((note2) => toast(`Note ${note2?.favourite ? 'added to favourites' : 'removed from favourites'}`, {
+    .then((note2) => toast(`"${getTitle(note)}" ${note2?.favourite ? 'added to favourites' : 'removed from favourites'}`, {
       id: 'favourite',
     }));
 }

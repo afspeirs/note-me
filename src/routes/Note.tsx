@@ -19,6 +19,7 @@ import type { NoteDocType } from '../api/types';
 import { Button } from '../components/Button';
 import { Page } from '../components/Page';
 import { classNames } from '../utils/classNames';
+import { getTitle } from '../utils/getTitle';
 
 export function Note() {
   const { id } = useParams();
@@ -31,7 +32,7 @@ export function Note() {
   );
 
   const handleDeleteNote = () => {
-    const confirm = window.confirm('Are you sure you want to delete this note?'); // eslint-disable-line no-alert
+    const confirm = window.confirm(`Are you sure you want to delete "${getTitle(note)}"?`); // eslint-disable-line no-alert
 
     if (confirm) {
       deleteNote(note)
