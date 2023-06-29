@@ -18,7 +18,9 @@ export function Page({
   const [open, setOpen] = useAtom(drawerOpenAtom);
   const toggleOpen = () => setOpen((prevState) => !prevState);
 
-  useHotkeys('ctrl+b, meta+b', toggleOpen);
+  useHotkeys('ctrl+b, meta+b', toggleOpen, {
+    enableOnFormTags: true,
+  });
 
   return (
     <>
