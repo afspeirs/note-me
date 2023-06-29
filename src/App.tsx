@@ -26,11 +26,12 @@ export function App() {
 
       <ServiceWorkerEvents />
 
+      {/* TODO: Remove the need for !important styles */}
       <Toaster
         position="bottom-center"
-        containerClassName="select-none"
+        containerClassName="!select-none"
         toastOptions={{
-          className: 'bg-neutral-800 text-white dark:bg-white dark:text-black max-w-none',
+          className: '!bg-neutral-800 !text-white dark:!bg-white dark:!text-black !max-w-none',
         }}
       />
     </>
