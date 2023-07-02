@@ -1,17 +1,25 @@
 import {
   StarIcon as StarSolidIcon,
 } from '@heroicons/react/24/solid';
+import { useAtomValue } from 'jotai';
 import { useRxData } from 'rxdb-hooks';
 
 import type { NoteDocType } from '../../api/types';
+import { notesSearchAtom } from '../../context/notesSearch';
 import { getTitle } from '../../utils/getTitle';
 import { Button } from '../Button';
 import { Card } from '../Card';
 
 export function Content() {
+  const search = useAtomValue(notesSearchAtom);
   const { result: notes, isFetching } = useRxData<NoteDocType>(
     'notes',
     (collection) => collection.find({
+      selector: {
+        text: {
+          $regex: RegExp(search, 'i'),
+        },
+      },
       sort: [
         { dateModified: 'desc' },
       ],
