@@ -2,7 +2,7 @@ import { HomeIcon } from '@heroicons/react/24/solid';
 import type { MouseEvent, ReactNode } from 'react';
 
 interface BaseProps {
-  children: string,
+  children: ReactNode,
   Icon?: typeof HomeIcon;
   IconClassName?: string,
   iconOnly?: boolean,

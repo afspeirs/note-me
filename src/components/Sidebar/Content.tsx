@@ -6,12 +6,14 @@ import { useRxData } from 'rxdb-hooks';
 
 import type { NoteDocType } from '../../api/types';
 import { notesSearchAtom } from '../../context/notesSearch';
+import { notesSortAtom, notesSortOptions } from '../../context/notesSort';
 import { getTitle } from '../../utils/getTitle';
 import { Button } from '../Button';
 import { Card } from '../Card';
 
 export function Content() {
   const search = useAtomValue(notesSearchAtom);
+  const sort = useAtomValue(notesSortAtom);
   const { result: notes, isFetching } = useRxData<NoteDocType>(
     'notes',
     (collection) => collection.find({
@@ -20,14 +22,12 @@ export function Content() {
           $regex: RegExp(search, 'i'),
         },
       },
-      sort: [
-        { dateModified: 'desc' },
-      ],
+      sort: notesSortOptions[sort].value,
     }),
   );
 
   return (
-    <Card as="nav" className="flex-1 h-full" aria-label="Sidebar">
+    <Card as="nav" className="flex-1 h-full overflow-hidden" aria-label="Sidebar">
       <ul role="list" className="flex flex-col gap-1 p-2 overflow-y-auto h-full">
         {isFetching && (
           <li className="block px-4 py-2">Loading...</li>

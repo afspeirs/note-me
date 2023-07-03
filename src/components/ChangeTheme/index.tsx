@@ -3,8 +3,7 @@ import { CheckIcon, PaintBrushIcon } from '@heroicons/react/24/outline';
 import { useAtom } from 'jotai';
 
 import { themeAtom, themeOptions } from '../../context/theme';
-import { classNames } from '../../utils/classNames';
-import { classes } from '../Button';
+import { Button } from '../Button';
 
 export function ChangeTheme() {
   const [theme, setTheme] = useAtom(themeAtom);
@@ -13,14 +12,9 @@ export function ChangeTheme() {
     <li className="relative m-2">
       <Listbox value={theme} onChange={setTheme}>
         <Listbox.Button
-          className={classNames(
-            classes.base,
-            classes.baseText,
-            classes.hover,
-          )}
+          as={Button}
+          Icon={PaintBrushIcon}
         >
-          <PaintBrushIcon className="h-6 w-6" aria-hidden="true" />
-
           <div className="flex flex-col items-start">
             <Listbox.Label className="cursor-pointer">Theme</Listbox.Label>
             <span className="text-gray-500 dark:text-gray-400">{themeOptions[theme]}</span>

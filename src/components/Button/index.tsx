@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { classNames } from '../../utils/classNames';
 import { ButtonProps } from './types';
 
-export const classes = {
+const classes = {
   base: 'relative p-2 group rounded-lg select-none disabled:opacity-40 disabled:pointer-events-none focus-visible',
   baseIcon: '',
   baseText: 'flex items-center gap-4 w-full',
