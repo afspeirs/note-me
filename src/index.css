@@ -57,8 +57,3 @@
     app-region: no-drag;
   }
 }
-
-/* Toast styles */
-.Toastify__toast {
-  @apply m-4;
-}
