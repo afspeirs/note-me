@@ -27,7 +27,7 @@ export function ChangeTheme() {
           </div>
         </Listbox.Button>
 
-        <Listbox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-gray-200 dark:bg-neutral-700 text-base shadow-lg">
+        <Listbox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-gray-200 dark:bg-neutral-700 text-base shadow-lg focus-visible">
           {Object.entries(themeOptions).map(([value, label]) => (
             <Listbox.Option
               key={value}

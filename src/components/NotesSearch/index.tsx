@@ -24,7 +24,7 @@ export function NotesSearch({
         id="notes-search"
         value={search}
         onChange={(event) => setSearch(event.target.value)}
-        className="block w-full rounded-lg border-0 py-2 pl-10 pr-10 bg-inherit outline-offset-1 placeholder:text-gray-400"
+        className="block w-full rounded-lg border-0 py-2 pl-10 pr-10 bg-inherit outline-offset-1 placeholder:text-gray-400 focus-visible"
         placeholder="Search Notes"
       />
       <div className="absolute inset-y-0 right-0">
