@@ -3,11 +3,14 @@ import {
   XMarkIcon,
 } from '@heroicons/react/24/outline';
 import { useAtom } from 'jotai';
+import type { PropsWithChildren } from 'react';
 
 import { notesSearchAtom } from '../../context/notesSearch';
 import { Button } from '../Button';
 
-export function NotesSearch() {
+export function NotesSearch({
+  children,
+}: PropsWithChildren) {
   const [search, setSearch] = useAtom(notesSearchAtom);
 
   return (
@@ -21,11 +24,11 @@ export function NotesSearch() {
         id="notes-search"
         value={search}
         onChange={(event) => setSearch(event.target.value)}
-        className="block w-full rounded-md border-0 py-2 pl-10 pr-10 bg-inherit ring-1 ring-gray-400 placeholder:text-gray-400"
+        className="block w-full rounded-lg border-0 py-2 pl-10 pr-10 bg-inherit outline-offset-1 placeholder:text-gray-400"
         placeholder="Search Notes"
       />
-      {search.length > 0 && (
-        <div className="absolute inset-y-0 right-0">
+      <div className="absolute inset-y-0 right-0">
+        {search.length > 0 && (
           <Button
             Icon={XMarkIcon}
             IconClassName="text-gray-400"
@@ -35,8 +38,9 @@ export function NotesSearch() {
           >
             Clear
           </Button>
-        </div>
-      )}
+        )}
+        {children}
+      </div>
     </label>
   );
 }

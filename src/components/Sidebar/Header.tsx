@@ -5,8 +5,9 @@ import { NotesSearch } from '../NotesSearch';
 export function Header() {
   return (
     <Card as="nav" className="flex gap-2 p-2">
-      <NotesSearch />
-      <NotesFilter />
+      <NotesSearch>
+        <NotesFilter />
+      </NotesSearch>
     </Card>
   );
 }
