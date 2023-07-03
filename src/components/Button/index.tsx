@@ -4,7 +4,7 @@ import { classNames } from '../../utils/classNames';
 import { ButtonProps } from './types';
 
 export const classes = {
-  base: 'relative p-2 group rounded-md select-none disabled:opacity-40 disabled:pointer-events-none',
+  base: 'relative p-2 group rounded-lg select-none disabled:opacity-40 disabled:pointer-events-none',
   baseIcon: '',
   baseText: 'flex items-center gap-4 w-full',
   hover: 'text-gray-700 dark:text-white hover:bg-gray-200 dark:hover:bg-neutral-600/60',
