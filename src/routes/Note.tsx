@@ -17,6 +17,7 @@ import { useRxData } from 'rxdb-hooks';
 import { deleteNote, favouriteNote, updateNote } from '../api/notes';
 import type { NoteDocType } from '../api/types';
 import { Button } from '../components/Button';
+import { NotesMoreInformation } from '../components/NotesMoreInformation';
 import { Page } from '../components/Page';
 import { classNames } from '../utils/classNames';
 import { getTitle } from '../utils/getTitle';
@@ -25,6 +26,7 @@ export function Note() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [edit, setEdit] = useState(false);
+  const [showMoreInformation, setShowMoreInformation] = useState(false);
   const [text, setText] = useState('');
   const { result: [note] } = useRxData<NoteDocType>(
     'notes',
@@ -85,11 +87,15 @@ export function Note() {
             Icon={InformationCircleIcon}
             IconClassName="text-primary"
             iconOnly
-            disabled
-            onClick={() => console.log('View Note information')} // eslint-disable-line no-console
+            onClick={() => setShowMoreInformation(true)}
           >
             View Note information
           </Button>
+          <NotesMoreInformation
+            note={note}
+            open={showMoreInformation}
+            setOpen={setShowMoreInformation}
+          />
           <Button
             Icon={TrashIcon}
             IconClassName="text-red-500"
