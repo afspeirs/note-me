@@ -1,9 +1,9 @@
 import { ArrowDownOnSquareIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { useAtom } from 'jotai';
 
-import { beforeInstallPromptAtom } from '../../context/serviceWorker';
-import { Button } from '../Button';
-import { Card } from '../Card';
+import { Button } from '@/components/Button';
+import { Card } from '@/components/Card';
+import { beforeInstallPromptAtom } from '@/context/serviceWorker';
 
 export function CheckForInstallPrompt() {
   const [beforeInstallPrompt, setBeforeInstallPrompt] = useAtom(beforeInstallPromptAtom);

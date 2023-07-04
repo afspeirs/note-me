@@ -4,12 +4,12 @@ import {
 import { useAtomValue } from 'jotai';
 import { useRxData } from 'rxdb-hooks';
 
-import type { NoteDocType } from '../../api/types';
-import { notesSearchAtom } from '../../context/notesSearch';
-import { notesSortAtom, notesSortOptions } from '../../context/notesSort';
-import { getTitle } from '../../utils/getTitle';
-import { Button } from '../Button';
-import { Card } from '../Card';
+import type { NoteDocType } from '@/api/types';
+import { Button } from '@/components/Button';
+import { Card } from '@/components/Card';
+import { notesSearchAtom } from '@/context/notesSearch';
+import { notesSortAtom, notesSortOptions } from '@/context/notesSort';
+import { getTitle } from '@/utils/getTitle';
 
 export function Content() {
   const search = useAtomValue(notesSearchAtom);

@@ -1,7 +1,6 @@
-import { Modal } from '../Modal';
+import { Modal } from '@/components/Modal';
+import { formatDate } from '@/utils/formatDate';
 import type { NotesMoreInformationProps } from './types';
-
-import { formatDate } from '../../utils/formatDate';
 
 export function NotesMoreInformation({
   note,

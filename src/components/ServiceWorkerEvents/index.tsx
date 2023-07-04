@@ -5,7 +5,7 @@ import toast from 'react-hot-toast';
 import {
   beforeInstallPromptAtom,
   updateAvailableAtom,
-} from '../../context/serviceWorker';
+} from '@/context/serviceWorker';
 import type { BeforeInstallPromptEvent } from './types';
 
 export function ServiceWorkerEvents() {

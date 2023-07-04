@@ -21,5 +21,19 @@
     "jsx-a11y/no-redundant-roles": ["error", { "ul": ["list"] }],
     "react/jsx-no-useless-fragment": ["error", { "allowExpressions": true }],
     "react/require-default-props": "off"
+  },
+  "settings": {
+    "import/resolver": {
+      "typescript": {},
+      "alias": {
+        "map": [
+          ["@", "./src"]
+        ]
+      },
+      "node": {
+        "paths": ["src"],
+        "extensions": [".ts", ".tsx"]
+      }
+    }
   }
 }

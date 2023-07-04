@@ -1,6 +1,6 @@
-import { Card } from '../Card';
-import { NotesSearch } from '../NotesSearch';
-import { NotesSort } from '../NotesSort';
+import { Card } from '@/components/Card';
+import { NotesSearch } from '@/components/NotesSearch';
+import { NotesSort } from '@/components/NotesSort';
 
 export function Header() {
   return (

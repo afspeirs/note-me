@@ -1,7 +1,7 @@
 import { atomWithStorage } from 'jotai/utils';
 import type { MangoQuerySortPart } from 'rxdb';
 
-import type { NoteDocType } from '../api/types';
+import type { NoteDocType } from '@/api/types';
 
 export type NotesSortOptions = {
   [key: string]: {

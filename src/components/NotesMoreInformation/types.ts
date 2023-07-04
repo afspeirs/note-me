@@ -1,6 +1,6 @@
 import type { Dispatch, SetStateAction } from 'react';
 
-import { NoteDocument } from '../../api/types';
+import { NoteDocument } from '@/api/types';
 
 export type NotesMoreInformationProps = {
   note: NoteDocument,

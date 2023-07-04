@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
 
-import { classNames } from '../../utils/classNames';
+import { classNames } from '@/utils/classNames';
 import { ButtonProps } from './types';
 
 const classes = {

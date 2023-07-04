@@ -2,8 +2,8 @@ import { Listbox } from '@headlessui/react';
 import { CheckIcon, PaintBrushIcon } from '@heroicons/react/24/outline';
 import { useAtom } from 'jotai';
 
-import { themeAtom, themeOptions } from '../../context/theme';
-import { Button } from '../Button';
+import { Button } from '@/components/Button';
+import { themeAtom, themeOptions } from '@/context/theme';
 
 export function ChangeTheme() {
   const [theme, setTheme] = useAtom(themeAtom);

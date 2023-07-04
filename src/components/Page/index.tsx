@@ -6,8 +6,8 @@ import { useAtom } from 'jotai';
 import { Helmet } from 'react-helmet-async';
 import { useHotkeys } from 'react-hotkeys-hook';
 
-import { drawerOpenAtom } from '../../context/navigation';
-import { Button } from '../Button';
+import { Button } from '@/components/Button';
+import { drawerOpenAtom } from '@/context/navigation';
 import type { PageProps } from './types';
 
 export function Page({

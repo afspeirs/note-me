@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import { HelmetProvider } from 'react-helmet-async';
-import { RouterProvider } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
+import { RouterProvider } from 'react-router-dom';
 import { Provider } from 'rxdb-hooks';
 
-import { ServiceWorkerEvents } from './components/ServiceWorkerEvents';
-import { router } from './routes';
-import { initialise } from './api';
-import type { MyDatabase } from './api/types';
+import { initialise } from '@/api';
+import type { MyDatabase } from '@/api/types';
+import { ServiceWorkerEvents } from '@/components/ServiceWorkerEvents';
+import { router } from '@/routes';
 
 export function App() {
   const [db, setDb] = useState<MyDatabase | null>(null);

@@ -4,8 +4,8 @@ import {
   PlusIcon,
 } from '@heroicons/react/24/outline';
 
-import { Button } from '../Button';
-import { Card } from '../Card';
+import { Button } from '@/components/Button';
+import { Card } from '@/components/Card';
 
 export function Footer() {
   return (

@@ -1,10 +1,10 @@
 import { createBrowserRouter } from 'react-router-dom';
 
-import { Home } from './Home';
-import { Layout } from './Layout';
-import { Note } from './Note';
-import { NoteCreate } from './NoteCreate';
-import { Settings } from './Settings';
+import { Home } from '@/routes/Home';
+import { Layout } from '@/routes/Layout';
+import { Note } from '@/routes/Note';
+import { NoteCreate } from '@/routes/NoteCreate';
+import { Settings } from '@/routes/Settings';
 
 export const router = createBrowserRouter([
   {

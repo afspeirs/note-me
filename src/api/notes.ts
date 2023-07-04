@@ -1,7 +1,7 @@
 import toast from 'react-hot-toast';
 
+import { getTitle } from '@/utils/getTitle';
 import type { NoteCollection, NoteDocument } from './types';
-import { getTitle } from '../utils/getTitle';
 
 export async function createNote(collection: NoteCollection) {
   const newNote = {

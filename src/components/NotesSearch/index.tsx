@@ -5,8 +5,8 @@ import {
 import { useAtom } from 'jotai';
 import type { PropsWithChildren } from 'react';
 
-import { notesSearchAtom } from '../../context/notesSearch';
-import { Button } from '../Button';
+import { Button } from '@/components/Button';
+import { notesSearchAtom } from '@/context/notesSearch';
 
 export function NotesSearch({
   children,

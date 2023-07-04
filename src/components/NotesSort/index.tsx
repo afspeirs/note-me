@@ -2,9 +2,8 @@ import { Listbox } from '@headlessui/react';
 import { CheckIcon, FunnelIcon } from '@heroicons/react/24/outline';
 import { useAtom } from 'jotai';
 
-import { Button } from '../Button';
-
-import { notesSortAtom, notesSortOptions } from '../../context/notesSort';
+import { Button } from '@/components/Button';
+import { notesSortAtom, notesSortOptions } from '@/context/notesSort';
 
 export function NotesSort() {
   const [sort, setSort] = useAtom(notesSortAtom);

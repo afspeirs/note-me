@@ -2,8 +2,8 @@ import { ArrowPathIcon, DevicePhoneMobileIcon } from '@heroicons/react/24/outlin
 import { useAtom } from 'jotai';
 import { useEffect, useRef, useState } from 'react';
 
-import { updateAvailableAtom } from '../../context/serviceWorker';
-import { Button } from '../Button';
+import { Button } from '@/components/Button';
+import { updateAvailableAtom } from '@/context/serviceWorker';
 
 export function CheckForUpdate() {
   const [updateAvailable] = useAtom(updateAvailableAtom);

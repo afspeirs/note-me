@@ -1,4 +1,4 @@
-import type { NoteDocument } from '../api/types';
+import type { NoteDocument } from '@/api/types';
 
 const maxCharacters = 35;
 

@@ -5,11 +5,11 @@ import { Helmet } from 'react-helmet-async';
 import { Outlet } from 'react-router-dom';
 import { useMediaQuery } from 'usehooks-ts';
 
-import { Card } from '../components/Card';
-import { Sidebar } from '../components/Sidebar';
-import { Topbar } from '../components/Topbar';
-import { drawerOpenAtom } from '../context/navigation';
-import { themeAtom } from '../context/theme';
+import { Card } from '@/components/Card';
+import { Sidebar } from '@/components/Sidebar';
+import { TopBar } from '@/components/TopBar';
+import { drawerOpenAtom } from '@/context/navigation';
+import { themeAtom } from '@/context/theme';
 
 export function Layout() {
   const [drawerOpen, setDrawerOpen] = useAtom(drawerOpenAtom);
@@ -31,7 +31,7 @@ export function Layout() {
       <div
         className="absolute inset-0 flex overflow-hidden mt-[env(titlebar-area-height)] bg-primary dark:bg-black"
       >
-        <Topbar />
+        <TopBar />
         <Transition appear={drawerOpen} show={drawerOpen}>
           <Transition.Child
             as="aside"
