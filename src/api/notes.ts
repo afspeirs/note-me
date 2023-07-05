@@ -35,7 +35,7 @@ export async function deleteNote(note: NoteDocument) {
 export async function favouriteNote(note: NoteDocument) {
   await note?.modify((prevState) => ({
     ...prevState,
-    dateModified: new Date().toISOString(),
+    // dateModified: new Date().toISOString(),
     favourite: !prevState.favourite,
   }))
     .then((note2) => toast(`"${getTitle(note)}" ${note2?.favourite ? 'added to favourites' : 'removed from favourites'}`, {
