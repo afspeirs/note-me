@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
+import JSZip from 'jszip';
+import { saveAs } from 'file-saver';
 import {
   Button,
   Checkbox,
@@ -57,16 +59,22 @@ function NotesExport() {
   };
 
   const exportMarkdownFile = (exportedNotes) => {
-    const element = document.createElement('a');
-    const currentDate = dayjs().format('YYYYMMDD-HHmm');
-    const stringOfNotes = JSON.stringify(exportedNotes);
+    const zip = new JSZip();
+    const currentDate = dayjs().format('YYYY-MM-DD-HHmm');
 
-    element.setAttribute('href', `data:text/plain;charset=utf-8,${encodeURIComponent(stringOfNotes)}`);
-    element.setAttribute('download', `${import.meta.env.VITE_APP_TITLE}-${currentDate}.json`);
-    element.style.display = 'none';
-    document.body.appendChild(element);
-    element.click();
-    document.body.removeChild(element);
+    exportedNotes.forEach((note) => {
+      const fileName = note.title.substring(0, 50).trim();
+      const contents = `---
+        ${Object.entries(note).filter(([key]) => !['id', 'text', 'title'].includes(key)).map(([key, value]) => `${key}: ${value}`).join('\n')}
+      ---`
+        .replace(/^\s+|\s+$/gm, '')
+        .concat(`\n${note.text}`);
+
+      zip.file(`${fileName}.md`, contents);
+    });
+
+    zip.generateAsync({ type: 'blob' })
+      .then((blob) => saveAs(blob, `NoteMe_${currentDate}.zip`), (error) => console.error(error)); // eslint-disable-line no-console
   };
 
   const handleExportClick = () => {
