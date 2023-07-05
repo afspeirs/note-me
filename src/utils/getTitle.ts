@@ -1,6 +1,6 @@
 import type { NoteDocument } from '@/api/types';
 
-const maxCharacters = 35;
+const maxCharacters = 50;
 
 export function getTitle(note: NoteDocument) {
   const title = note.text
