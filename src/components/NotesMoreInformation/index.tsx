@@ -11,7 +11,7 @@ export function NotesMoreInformation({
   return (
     <Modal
       open={open}
-      setOpen={setOpen}
+      onClose={() => setOpen(false)}
       title="More Information"
     >
       <p className="mb-2">

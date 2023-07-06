@@ -1,8 +1,8 @@
-import type { Dispatch, ReactNode, SetStateAction } from 'react';
+import type { ReactNode } from 'react';
 
 export type ModalProps = {
   children: ReactNode,
+  onClose: () => void,
   open: boolean,
-  setOpen: Dispatch<SetStateAction<boolean>>,
   title?: string,
 };

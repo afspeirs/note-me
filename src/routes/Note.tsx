@@ -21,12 +21,14 @@ import { NotesMoreInformation } from '@/components/NotesMoreInformation';
 import { Page } from '@/components/Page';
 import { classNames } from '@/utils/classNames';
 import { getTitle } from '@/utils/getTitle';
+import { ModalConfirm } from '@/components/ModalConfirm';
 
 export function Note() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [edit, setEdit] = useState(false);
   const [showMoreInformation, setShowMoreInformation] = useState(false);
+  const [showDeleteNoteModal, setShowDeleteNoteModal] = useState(false);
   const [text, setText] = useState('');
   const { result: [note] } = useRxData<NoteDocType>(
     'notes',
@@ -34,12 +36,9 @@ export function Note() {
   );
 
   const handleDeleteNote = () => {
-    const confirm = window.confirm(`Are you sure you want to delete "${getTitle(note)}"?`); // eslint-disable-line no-alert
-
-    if (confirm) {
-      deleteNote(note)
-        .then(() => navigate('/', { replace: true }));
-    }
+    setShowDeleteNoteModal(false);
+    deleteNote(note)
+      .then(() => navigate('/', { replace: true }));
   };
 
   useHotkeys('ctrl+s, meta+s', () => setEdit((prevState) => !prevState), {
@@ -96,10 +95,16 @@ export function Note() {
           <Button
             Icon={TrashIcon}
             iconOnly
-            onClick={handleDeleteNote}
+            onClick={() => setShowDeleteNoteModal(true)}
           >
             Delete Note
           </Button>
+          <ModalConfirm
+            message={note && `Are you sure you want to delete "${getTitle(note)}"?`}
+            onClose={() => setShowDeleteNoteModal(false)}
+            onConfirm={handleDeleteNote}
+            open={showDeleteNoteModal}
+          />
         </>
       )}
     >
