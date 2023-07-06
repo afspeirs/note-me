@@ -3,6 +3,7 @@ import type { MouseEvent, ReactNode } from 'react';
 
 interface BaseProps {
   children: ReactNode,
+  className?: string,
   Icon?: typeof HomeIcon;
   IconClassName?: string,
   iconOnly?: boolean,

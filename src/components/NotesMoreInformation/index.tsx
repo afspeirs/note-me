@@ -1,3 +1,6 @@
+import { XMarkIcon } from '@heroicons/react/24/outline';
+
+import { Button } from '@/components/Button';
 import { Modal } from '@/components/Modal';
 import { formatDate } from '@/utils/formatDate';
 import type { NotesMoreInformationProps } from './types';
@@ -14,6 +17,15 @@ export function NotesMoreInformation({
       onClose={() => setOpen(false)}
       title="More Information"
     >
+      <Button
+        className="absolute top-2 right-2"
+        Icon={XMarkIcon}
+        iconOnly
+        onClick={() => setOpen(false)}
+      >
+        Close
+      </Button>
+
       <p className="mb-2">
         <span className="font-medium">Date Created: </span>
         {formatDate(note.dateCreated)}

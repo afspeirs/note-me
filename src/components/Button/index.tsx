@@ -1,18 +1,19 @@
 import { NavLink } from 'react-router-dom';
 
 import { classNames } from '@/utils/classNames';
-import { ButtonProps } from './types';
+import type { ButtonProps } from './types';
 
-const classes = {
-  base: 'relative p-2 group rounded-lg select-none disabled:opacity-40 disabled:pointer-events-none focus-visible',
-  baseIcon: '',
-  baseText: 'flex items-center gap-4 w-full',
-  hover: 'text-gray-700 dark:text-white hover:bg-gray-200 dark:hover:bg-neutral-600/60',
-  isActiveHover: 'bg-gray-200 dark:bg-neutral-700/60 dark:hover:bg-neutral-600/60 hover:bg-gray-300 font-semibold',
+export const style = {
+  root: 'p-2 rounded-lg select-none disabled:opacity-40 disabled:pointer-events-none focus-visible',
+  iconOnly: '',
+  withText: 'flex items-center gap-4 w-full',
+  colour: 'text-gray-700 dark:text-white hover:bg-gray-200 dark:hover:bg-neutral-600/60',
+  colourActive: 'bg-gray-200 dark:bg-neutral-700/60 dark:hover:bg-neutral-600/60 hover:bg-gray-300 font-semibold',
 } as const;
 
 export function Button({
   children,
+  className,
   disabled,
   href,
   Icon,
@@ -25,9 +26,10 @@ export function Button({
   return href ? (
     <NavLink
       className={({ isActive }) => classNames(
-        isActive ? classes.isActiveHover : classes.hover,
-        iconOnly ? classes.baseIcon : classes.baseText,
-        classes.base,
+        iconOnly ? style.iconOnly : style.withText,
+        isActive ? style.colourActive : style.colour,
+        style.root,
+        className,
       )}
       end // This is essentially the same as the old exact prop
       rel={target === '_blank' ? 'noreferrer' : undefined}
@@ -52,9 +54,10 @@ export function Button({
     <button
       type="button"
       className={classNames(
-        classes.hover,
-        iconOnly ? classes.baseIcon : classes.baseText,
-        classes.base,
+        iconOnly ? style.iconOnly : style.withText,
+        style.colour,
+        style.root,
+        className,
       )}
       disabled={disabled}
       onClick={onClick}

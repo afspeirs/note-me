@@ -38,7 +38,7 @@
   }
 
   .focus-visible {
-    @apply outline-none focus-visible:ring-2 focus-visible:ring-primary;
+    @apply outline-none focus-visible:ring-2 focus-visible:ring-primary dark:focus-visible:ring-primary;
   }
 
   .pwa-header {
