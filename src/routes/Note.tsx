@@ -69,7 +69,6 @@ export function Note() {
         <>
           <Button
             Icon={edit ? LockOpenIcon : LockClosedIcon}
-            IconClassName="text-primary"
             iconOnly
             onClick={() => setEdit((prevState) => !prevState)}
           >
@@ -77,7 +76,6 @@ export function Note() {
           </Button>
           <Button
             Icon={note?.favourite ? StarSolidIcon : StarOutlineIcon}
-            IconClassName="text-primary"
             iconOnly
             onClick={() => favouriteNote(note)}
           >
@@ -85,7 +83,6 @@ export function Note() {
           </Button>
           <Button
             Icon={InformationCircleIcon}
-            IconClassName="text-primary"
             iconOnly
             onClick={() => setShowMoreInformation(true)}
           >
@@ -98,7 +95,6 @@ export function Note() {
           />
           <Button
             Icon={TrashIcon}
-            IconClassName="text-red-500"
             iconOnly
             onClick={handleDeleteNote}
           >

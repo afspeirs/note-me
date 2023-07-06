@@ -31,7 +31,6 @@ export function Page({
       <header className="flex gap-2 p-2">
         <Button
           Icon={open ? ChevronLeftIcon : Bars2Icon}
-          IconClassName="text-primary"
           iconOnly
           onClick={toggleOpen}
         >
