@@ -20,6 +20,7 @@
     }
   },
   "include": [
+    "scripts",
     "src",
     "*.d.ts",
     "*.config.cjs",

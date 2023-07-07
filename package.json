@@ -7,8 +7,10 @@
     "start": "vite",
     "dev": "vite",
     "build": "tsc && vite build",
-    "postbuild": "workbox generateSW workbox.config.cjs",
+    "postbuild": "npm run generate:webmanifest && npm run generate:service-worker",
     "preview": "vite preview",
+    "generate:service-worker": "workbox generateSW workbox.config.cjs",
+    "generate:webmanifest": "node ./scripts/webmanifest",
     "pwa": "npm run build && npm run preview",
     "type": "tsc",
     "lint": "eslint . --ext .ts,.tsx"
