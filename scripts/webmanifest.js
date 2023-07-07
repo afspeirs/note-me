@@ -8,9 +8,19 @@ fs.readFile('./dist/manifest.webmanifest', 'utf8', (err, data) => {
     webmanifest.name += ` (${branchName})`;
   }
 
+  const webmanifestApple = JSON.parse(JSON.stringify(webmanifest));
+  webmanifestApple.icons = [
+    {
+      src: '/icon-512x512-apple.png',
+      sizes: '512x512',
+      type: 'image/png',
+    },
+  ];
+
   fs.writeFile('./dist/manifest.webmanifest', JSON.stringify(webmanifest, null, 2), (error) => {
-    if (error) {
-      console.log('An error has occurred ', error); // eslint-disable-line no-console
-    }
+    if (error) console.log('An error has occurred ', error); // eslint-disable-line no-console
+  });
+  fs.writeFile('./dist/manifest-apple.webmanifest', JSON.stringify(webmanifestApple, null, 2), (error) => {
+    if (error) console.log('An error has occurred ', error); // eslint-disable-line no-console
   });
 });
