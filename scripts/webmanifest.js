@@ -4,13 +4,9 @@ fs.readFile('./dist/manifest.webmanifest', 'utf8', (err, data) => {
   const webmanifest = JSON.parse(data);
   const branchName = process.env.HEAD;
 
-  console.log(process.env);
-
-  if (branchName) {
+  if (branchName && branchName !== 'main') {
     webmanifest.name += ` (${branchName})`;
   }
-
-  console.log(webmanifest);
 
   fs.writeFile('./dist/manifest.webmanifest', JSON.stringify(webmanifest, null, 2), (error) => {
     if (error) {
