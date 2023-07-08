@@ -26,5 +26,20 @@
       "sizes": "512x512",
       "type": "image/png"
     }
+  ],
+  "shortcuts": [
+    {
+      "name": "Create Note",
+      "short_name": "Create Note",
+      "description": "Create a new note",
+      "icons": [
+        {
+          "src": "/create-note-96x96.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ],
+      "url": "/note/"
+    }
   ]
 }
