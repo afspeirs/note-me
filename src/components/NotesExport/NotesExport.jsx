@@ -65,7 +65,7 @@ function NotesExport() {
     exportedNotes.forEach((note) => {
       const fileName = note.title.substring(0, 50).trim();
       const contents = `---
-        ${Object.entries(note).filter(([key]) => !['id', 'text', 'title'].includes(key)).map(([key, value]) => `${key}: ${value}`).join('\n')}
+        ${Object.entries(note).filter(([key]) => !['text', 'title'].includes(key)).map(([key, value]) => `${key}: ${value}`).join('\n')}
       ---`
         .replace(/^\s+|\s+$/gm, '')
         .concat(`\n${note.text}`);
