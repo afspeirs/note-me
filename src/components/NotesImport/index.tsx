@@ -38,12 +38,12 @@ export function NotesImport() {
         const reader = new FileReader();
         reader.onload = () => {
           // TODO: refactor with grey-matter package
-          const fileInfo = frontMatter(reader.result);
+          const fileInfo = frontMatter(reader.result as string);
 
           setFilesToImport((prevState) => [
             ...prevState,
             {
-              ...fileInfo.attributes,
+              ...fileInfo.attributes!,
               text: fileInfo.body,
             },
           ]);
