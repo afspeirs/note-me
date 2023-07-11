@@ -19,11 +19,11 @@ export function NotesSort() {
         <span>{notesSortOptions[sort].label}</span>
       </Listbox.Button>
 
-      <Listbox.Options className="absolute right-0 z-10 mt-1 w-72 max-h-60 overflow-auto rounded-md bg-gray-200 dark:bg-neutral-700 text-base shadow-lg focus-visible">
+      <Listbox.Options className="absolute right-0 mt-1 w-72 max-h-80 z-10 overflow-auto rounded-lg bg-gray-200 dark:bg-neutral-700 text-base shadow-lg focus-visible">
         {Object.entries(notesSortOptions).map(([value, option]) => (
           <Listbox.Option
             key={value}
-            className="relative cursor-default select-none pl-12 py-2 text-gray-900 dark:text-white ui-active:text-white ui-active:bg-primary"
+            className="relative cursor-default select-none pl-12 py-3 text-gray-900 dark:text-white ui-active:text-white ui-active:bg-primary"
             value={value}
           >
             <span className="block truncate ui-selected:font-semibold">
