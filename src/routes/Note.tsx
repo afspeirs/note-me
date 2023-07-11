@@ -100,7 +100,7 @@ export function Note() {
             Delete Note
           </Button>
           <ModalConfirm
-            message={note && `Are you sure you want to delete "${getTitle(note)}"?`}
+            message={note && `Are you sure you want to delete "${getTitle(note.text)}"?`}
             onClose={() => setShowDeleteNoteModal(false)}
             onConfirm={handleDeleteNote}
             open={showDeleteNoteModal}

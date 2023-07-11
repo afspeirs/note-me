@@ -1,15 +1,23 @@
 import toast from 'react-hot-toast';
 
 import { getTitle } from '@/utils/getTitle';
-import type { NoteCollection, NoteDocument } from './types';
+import type { NoteCollection, NoteDocType, NoteDocument } from './types';
+
+const returnNoteObject = ({
+  dateCreated,
+  dateModified,
+  favourite,
+  text,
+}: Partial<NoteDocType> = {}) => ({
+  id: window.crypto.randomUUID(),
+  dateCreated: dateCreated ? new Date(dateCreated).toISOString() : new Date().toISOString(),
+  dateModified: dateModified ? new Date(dateModified).toISOString() : new Date().toISOString(),
+  favourite: favourite || false,
+  text: text || '',
+});
 
 export async function createNote(collection: NoteCollection) {
-  const newNote = {
-    id: window.crypto.randomUUID(),
-    dateCreated: new Date().toISOString(),
-    dateModified: new Date().toISOString(),
-    text: '',
-  };
+  const newNote = returnNoteObject();
 
   const existingNote = await collection.findOne({
     selector: {
@@ -38,9 +46,15 @@ export async function favouriteNote(note: NoteDocument) {
     // dateModified: new Date().toISOString(),
     favourite: !prevState.favourite,
   }))
-    .then((note2) => toast(`"${getTitle(note)}" ${note2?.favourite ? 'added to favourites' : 'removed from favourites'}`, {
+    .then((note2) => toast(`"${getTitle(note.text)}" ${note2?.favourite ? 'added to favourites' : 'removed from favourites'}`, {
       id: 'favourite',
     }));
+}
+
+export async function importNotes(collection: NoteCollection, files: Partial<NoteDocType>[]) {
+  const notes = files.map((note) => returnNoteObject(note));
+
+  await collection.bulkInsert(notes);
 }
 
 export async function updateNote(note: NoteDocument, text: string) {

@@ -43,7 +43,7 @@ export function Content() {
                 <StarSolidIcon className="h-6 w-6 flex-shrink-0 text-primary" aria-hidden="true" />
               )}
             >
-              {getTitle(note)}
+              {getTitle(note.text)}
             </Button>
           </li>
         ))}

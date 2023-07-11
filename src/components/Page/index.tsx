@@ -1,7 +1,7 @@
 import {
   Bars2Icon,
   ChevronLeftIcon,
-} from '@heroicons/react/24/solid';
+} from '@heroicons/react/24/outline';
 import { useAtom } from 'jotai';
 import { Helmet } from 'react-helmet-async';
 import { useHotkeys } from 'react-hotkeys-hook';

@@ -1,9 +1,7 @@
-import type { NoteDocument } from '@/api/types';
-
 const maxCharacters = 50;
 
-export function getTitle(note: NoteDocument) {
-  const title = note.text
+export function getTitle(text: string) {
+  const title = text
     .trim()
     .split('\n')[0]
     .replace(/#+ /g, '');
