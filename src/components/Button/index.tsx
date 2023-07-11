@@ -12,6 +12,7 @@ export const style = {
 } as const;
 
 export function Button({
+  active,
   children,
   className,
   disabled,
@@ -55,7 +56,7 @@ export function Button({
       type="button"
       className={classNames(
         iconOnly ? style.iconOnly : style.withText,
-        style.colour,
+        active ? style.colourActive : style.colour,
         style.root,
         className,
       )}

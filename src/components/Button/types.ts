@@ -1,4 +1,4 @@
-import { HomeIcon } from '@heroicons/react/24/solid';
+import { HomeIcon } from '@heroicons/react/24/outline';
 import type { MouseEvent, ReactNode } from 'react';
 
 interface BaseProps {
@@ -11,6 +11,7 @@ interface BaseProps {
 }
 
 interface ButtonOptions extends BaseProps {
+  active?: boolean,
   disabled?: boolean,
   href?: never,
   onClick?: (event: MouseEvent<HTMLButtonElement>) => void
@@ -18,6 +19,7 @@ interface ButtonOptions extends BaseProps {
 }
 
 interface LinkOptions extends BaseProps {
+  active?: never,
   disabled?: never,
   href: string,
   onClick?: never,
