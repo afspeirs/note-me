@@ -30,10 +30,10 @@ export function Content() {
     <Card as="nav" className="flex-1 h-full overflow-hidden" aria-label="Sidebar">
       <ul role="list" className="flex flex-col gap-1 p-2 overflow-y-auto h-full">
         {isFetching && (
-          <li className="block px-4 py-2">Loading...</li>
+          <li className="block p-3">Loading...</li>
         )}
         {!isFetching && notes.length === 0 && (
-          <li className="block px-4 py-2">No notes found</li>
+          <li className="block p-3">No notes found</li>
         )}
         {notes.map((note) => (
           <li key={note.id}>
