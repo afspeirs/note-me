@@ -4,7 +4,7 @@ import { classNames } from '@/utils/classNames';
 import type { ButtonProps } from './types';
 
 export const style = {
-  root: 'p-2 rounded-lg select-none disabled:opacity-40 disabled:pointer-events-none focus-visible',
+  root: 'p-3 rounded-lg select-none disabled:opacity-40 disabled:pointer-events-none focus-visible',
   iconOnly: '',
   withText: 'flex items-center gap-4 w-full',
   colour: 'text-gray-700 dark:text-white hover:bg-gray-200 dark:hover:bg-neutral-600/60',
