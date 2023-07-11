@@ -4,6 +4,7 @@ import { Home } from '@/routes/Home';
 import { Layout } from '@/routes/Layout';
 import { Note } from '@/routes/Note';
 import { NoteCreate } from '@/routes/NoteCreate';
+import { NotFound } from '@/routes/NotFound';
 import { Settings } from '@/routes/Settings';
 
 export const router = createBrowserRouter([
@@ -26,11 +27,10 @@ export const router = createBrowserRouter([
         path: '/settings/',
         element: <Settings />,
       },
-      // TODO: Create 404 page
-      // {
-      //   path: '*',
-      //   element: <NoPage />,
-      // },
+      {
+        path: '*',
+        element: <NotFound />,
+      },
     ],
   },
 ]);

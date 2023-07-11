@@ -17,11 +17,11 @@ import { useRxData } from 'rxdb-hooks';
 import { deleteNote, favouriteNote, updateNote } from '@/api/notes';
 import type { NoteDocType } from '@/api/types';
 import { Button } from '@/components/Button';
+import { ModalConfirm } from '@/components/ModalConfirm';
 import { NotesMoreInformation } from '@/components/NotesMoreInformation';
 import { Page } from '@/components/Page';
 import { classNames } from '@/utils/classNames';
 import { getTitle } from '@/utils/getTitle';
-import { ModalConfirm } from '@/components/ModalConfirm';
 
 export function Note() {
   const { id } = useParams();
