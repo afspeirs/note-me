@@ -117,7 +117,7 @@ export function Note() {
               id="note-text"
               value={text}
               onChange={(event) => setText(event.target.value)}
-              className="block w-full h-full px-4 pt-1 pb-4 bg-transparent border-none outline-none resize-none overflow-auto"
+              className="block w-full h-full px-4 pt-1 pb-4 bg-transparent font-mono border-none outline-none resize-none overflow-auto"
             />
           </label>
         ) : (
