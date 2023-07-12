@@ -54,6 +54,7 @@ export function NotesExport() {
   return (
     <li className="m-2">
       <Button
+        disabled={notes.length === 0}
         Icon={ArrowDownCircleIcon}
         onClick={() => setOpen(true)}
       >
