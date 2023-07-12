@@ -1,4 +1,15 @@
-export function formatDate(date: string | Date) {
-  const dateTime = new Intl.DateTimeFormat('en-GB', { dateStyle: 'long', timeStyle: 'short' });
+type FormatDate = {
+  date?: string | Date,
+  locale?: string,
+  options?: Intl.DateTimeFormatOptions,
+};
+
+export function formatDate({
+  date,
+  locale = 'en-GB',
+  options = { dateStyle: 'long', timeStyle: 'short' },
+}: FormatDate) {
+  const dateTime = new Intl.DateTimeFormat(locale, options);
+
   return dateTime.format(typeof date === 'string' ? new Date(date) : date);
 }

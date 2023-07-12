@@ -2,7 +2,7 @@ import type { RxCollection, RxDatabase, RxDocument } from 'rxdb';
 
 export type NoteDocType = {
   dateCreated: string,
-  dateModified?: string,
+  dateModified: string,
   favourite?: boolean,
   id: string,
   text: string,
