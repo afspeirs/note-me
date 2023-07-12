@@ -32,7 +32,7 @@ export function Layout() {
         className="absolute inset-0 flex overflow-hidden mt-[env(titlebar-area-height)] bg-primary dark:bg-black"
       >
         <TopBar />
-        <Transition appear={drawerOpen} show={drawerOpen}>
+        <Transition appear show={drawerOpen}>
           <Transition.Child
             as="aside"
             unmount={false}
