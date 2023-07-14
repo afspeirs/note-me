@@ -1,3 +1,3 @@
-import { atomWithStorage } from 'jotai/utils';
+import { atom } from 'jotai';
 
-export const drawerOpenAtom = atomWithStorage('drawer-open', true);
+export const drawerOpenAtom = atom(true);
