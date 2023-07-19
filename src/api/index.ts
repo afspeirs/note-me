@@ -43,9 +43,6 @@ export async function initialise() {
       text: {
         type: 'string',
       },
-      // title: {
-      //   type: 'string',
-      // },
     },
     required: ['id', 'dateCreated'],
   } as const;

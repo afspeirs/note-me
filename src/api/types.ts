@@ -6,7 +6,6 @@ export type NoteDocType = {
   favourite?: boolean,
   id: string,
   text: string,
-  // title?: string,
 };
 
 export type NoteDocument = RxDocument<NoteDocType>;
