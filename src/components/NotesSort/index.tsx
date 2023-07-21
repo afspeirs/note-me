@@ -15,7 +15,7 @@ export function NotesSort() {
         Icon={FunnelIcon}
         iconOnly
       >
-        <Listbox.Label>Theme:</Listbox.Label>
+        <Listbox.Label>Sort:</Listbox.Label>
         <span>{notesSortOptions[sort].label}</span>
       </Listbox.Button>
 
