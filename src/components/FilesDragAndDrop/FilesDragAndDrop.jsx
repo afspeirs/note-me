@@ -1,17 +1,19 @@
+import frontMatter from 'front-matter';
 import { useEffect, useRef, useState } from 'react';
 import { useConfirm } from 'material-ui-confirm';
 
 import { useNotes } from '@/hooks/Notes';
 import { useSnackbar } from '@/hooks/Snackbar';
+import { getTitle } from '@/utils';
 import { DropZoneStyled } from './FilesDragAndDrop.styled';
 
 function FilesDragAndDrop() {
   const confirm = useConfirm();
-  const { createNote, importNotes } = useNotes();
+  const { importNotes } = useNotes();
   const drop = useRef(null);
   const snackbar = useSnackbar();
   const [dragging, setDragging] = useState(false);
-  const [fileContent, setFileContent] = useState(null);
+  const [filesToImport, setFilesToImport] = useState({});
 
   const handleDragOver = (event) => {
     event.preventDefault();
@@ -24,28 +26,31 @@ function FilesDragAndDrop() {
 
     const { files } = event.dataTransfer;
 
-    if (files.length === 1) {
-      const [file] = files;
-      // console.log(file);
-
+    [...files].forEach((file) => {
       if (
-        file.name.toLowerCase().endsWith('json')
-        || file.name.toLowerCase().endsWith('md')
+        file.name.toLowerCase().endsWith('md')
         || file.type.toLowerCase().startsWith('text/')
       ) {
         const reader = new FileReader();
-        reader.onload = () => setFileContent(reader.result);
+        reader.onload = () => {
+          const fileInfo = frontMatter(reader.result);
+          // console.log(fileInfo);
+
+          setFilesToImport((prevState) => ({
+            ...prevState,
+            [file.name]: {
+              ...fileInfo.attributes,
+              text: fileInfo.body,
+            },
+          }));
+        };
         reader.readAsText(file);
       } else {
         snackbar.showMessage({
-          message: 'Only JSON/markdown/text files are supported',
+          message: `"${file.name}" cannot be imported. Only markdown/text files are supported`,
         });
       }
-    } else if (files.length > 1) {
-      snackbar.showMessage({
-        message: 'Only one file can be imported at a time',
-      });
-    }
+    });
 
     setDragging(false);
   };
@@ -64,48 +69,29 @@ function FilesDragAndDrop() {
     event.stopPropagation();
 
     setDragging(false);
-    setFileContent(false);
+    setFilesToImport({});
   };
 
   useEffect(() => {
-    if (fileContent) {
-      if (fileContent.startsWith('[{')) {
-        const listOfNotes = JSON.parse(fileContent) || [];
+    const notesToImport = Object.values(filesToImport);
 
-        confirm({
-          title: 'Do you want to import the following notes?',
-          description: listOfNotes.map((note) => `"${note.title}"`).join(', '),
-          cancellationText: 'No',
-          confirmationText: 'Yes',
+    if (notesToImport?.length > 0) {
+      confirm({
+        title: 'Do you want to import the following files?',
+        description: `${notesToImport.map((note) => `"${getTitle(note.text)}"`).join(', ')}`,
+        cancellationText: 'No',
+        confirmationText: 'Yes',
+      })
+        .then(() => {
+          importNotes(notesToImport);
+          setFilesToImport({});
         })
-          .then(() => {
-            importNotes(listOfNotes);
-            setFileContent(null);
-          })
-          .catch((error) => {
-            if (error) console.error(error); // eslint-disable-line no-console
-            setFileContent(null);
-          });
-      } else {
-        confirm({
-          title: 'Do you want to import the file with the following contents?',
-          description: fileContent,
-          cancellationText: 'No',
-          confirmationText: 'Yes',
-        })
-          .then(() => {
-            createNote(fileContent);
-            setFileContent(null);
-          })
-          .catch((error) => {
-            if (error) console.error(error); // eslint-disable-line no-console
-            setFileContent(null);
-          });
-
-        setFileContent(null);
-      }
+        .catch((error) => {
+          if (error) console.error(error); // eslint-disable-line no-console
+          setFilesToImport({});
+        });
     }
-  }, [fileContent]);
+  }, [filesToImport]);
 
   useEffect(() => {
     const { current } = drop;

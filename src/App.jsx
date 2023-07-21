@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { CssBaseline, useMediaQuery } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { ConfirmProvider } from 'material-ui-confirm';
@@ -7,12 +7,14 @@ import theme from './theme';
 import Container from './components/Container';
 import Routes from './components/Routes';
 import FilesDragAndDrop from './components/FilesDragAndDrop';
+import { NotesDepreciationNoticeModal } from './components/NotesDepreciationNotice';
 import ServiceWorkerContent from './components/shared/ServiceWorkerContent';
 import { useGlobalState } from './hooks/GlobalState';
 import { NotesProvider } from './hooks/Notes';
 import { SnackbarProvider } from './hooks/Snackbar';
 
 function App() {
+  const [open, setOpen] = useState(!window.localStorage.getItem('deprecation-notice-dismissed'));
   const [{ settings: { appTheme } }] = useGlobalState();
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
   const muiTheme = useMemo(
@@ -62,6 +64,11 @@ function App() {
               <Container>
                 <Routes />
               </Container>
+
+              <NotesDepreciationNoticeModal
+                open={open}
+                onClose={() => setOpen(false)}
+              />
 
               <FilesDragAndDrop />
               <ServiceWorkerContent />
