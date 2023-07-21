@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 
 import './index.css';
+import './webmanifest-apple';
 import App from './App';
 import UserConfirmation from './components/shared/UserConfirmation';
 import { AuthProvider } from './hooks/Auth';

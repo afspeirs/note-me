@@ -14,11 +14,7 @@ import { useConfirm } from 'material-ui-confirm';
 import { useAuth } from '@/hooks/Auth';
 import { useSnackbar } from '@/hooks/Snackbar';
 import { db } from '@/firebase';
-
-const getTitle = (text) => {
-  const title = text.split('\n')[0].replace(/#+ /g, '');
-  return title.length > 0 ? title : 'Untitled';
-};
+import { getTitle } from '@/utils';
 
 const NotesValue = () => {
   const { user } = useAuth();
@@ -133,8 +129,7 @@ const NotesValue = () => {
     const batch = writeBatch(db);
 
     listOfNotes.forEach((note) => {
-      // TODO: Check if the note already exists before making a new document
-      const noteRef = doc(db, user.uid, note.id);
+      const noteRef = note.id ? doc(db, user.uid, note.id) : doc(collection(db, user.uid));
       const value = returnNoteObject(note);
 
       batch.set(noteRef, value);

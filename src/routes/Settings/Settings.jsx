@@ -3,6 +3,7 @@ import {
   List,
 } from '@mui/material';
 
+import NotesDepreciationNotice from '@/components/NotesDepreciationNotice';
 import NotesExport from '@/components/NotesExport';
 import SortNotesFavourite from '@/components/SortNotesFavourite';
 import SortNotesOrder from '@/components/SortNotesOrder';
@@ -34,6 +35,10 @@ function Settings() {
         <Divider />
 
         <NotesExport />
+
+        <Divider />
+
+        <NotesDepreciationNotice />
       </List>
     </Modal>
   );
