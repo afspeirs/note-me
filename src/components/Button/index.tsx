@@ -1,3 +1,5 @@
+import { forwardRef } from 'react';
+import type { Ref } from 'react';
 import { NavLink } from 'react-router-dom';
 
 import { classNames } from '@/utils/classNames';
@@ -11,7 +13,7 @@ export const style = {
   colourActive: 'bg-gray-200 hover:bg-gray-300 dark:bg-neutral-700/60 dark:hover:bg-neutral-700',
 } as const;
 
-export function Button({
+export const Button = forwardRef(({
   active,
   children,
   className,
@@ -23,7 +25,7 @@ export function Button({
   onClick,
   secondaryAction,
   target = '_self',
-}: ButtonProps) {
+}: ButtonProps, ref) => {
   return href ? (
     <NavLink
       className={({ isActive }) => classNames(
@@ -33,6 +35,7 @@ export function Button({
         className,
       )}
       end // This is essentially the same as the old exact prop
+      ref={ref as Ref<HTMLAnchorElement>}
       rel={target === '_blank' ? 'noreferrer' : undefined}
       target={target}
       to={href}
@@ -62,6 +65,7 @@ export function Button({
       )}
       disabled={disabled}
       onClick={onClick}
+      ref={ref as Ref<HTMLButtonElement>}
     >
       {Icon && (
         <Icon className={classNames('h-6 w-6 flex-shrink-0', IconClassName)} aria-hidden="true" />
@@ -78,4 +82,4 @@ export function Button({
       )}
     </button>
   );
-}
+});
