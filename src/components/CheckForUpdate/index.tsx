@@ -37,7 +37,9 @@ export function CheckForUpdate() {
         Icon={DevicePhoneMobileIcon}
         onClick={handleButtonClick}
         secondaryAction={updateAvailable ? (
-          <span>UPDATE</span>
+          <span className="text-white bg-primary px-4 py-1.5 rounded-full">
+            UPDATE
+          </span>
         ) : (
           <div
             aria-busy={loading}
