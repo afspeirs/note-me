@@ -10,6 +10,7 @@ export function Modal({
   onClose,
   open,
   showCloseButton = true,
+  theme,
   title,
 }: ModalProps) {
   return (
@@ -31,7 +32,7 @@ export function Modal({
           <div className="fixed inset-0 bg-primary/70 dark:bg-black/70" />
         </Transition.Child>
 
-        <div className="fixed inset-0 overflow-y-auto">
+        <div className={`fixed inset-0 overflow-y-auto ${theme}`}>
           <div className="flex min-h-full items-center justify-center p-4 text-center">
             <Transition.Child
               as={Fragment}
@@ -45,20 +46,21 @@ export function Modal({
               <Dialog.Panel className="w-full max-w-md transform overflow-hidden p-5 text-left align-middle transition-all bg-white dark:bg-neutral-800 text-gray-700 dark:text-white rounded-xl">
                 {showCloseButton && (
                   <Button
-                    className="absolute top-2 right-2"
-                    Icon={XMarkIcon}
-                    iconOnly
-                    onClick={onClose}
+                  className="absolute top-2 right-2"
+                  Icon={XMarkIcon}
+                  iconOnly
+                  onClick={onClose}
                   >
                     Close
                   </Button>
                 )}
 
                 {title && (
-                  <Dialog.Title as="h3" className="mb-6 text-xl font-medium dark:">
+                  <Dialog.Title as="h3" className="mb-6 text-xl font-medium">
                     {title}
                   </Dialog.Title>
                 )}
+
                 {children}
               </Dialog.Panel>
             </Transition.Child>

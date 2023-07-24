@@ -46,6 +46,7 @@ export function AuthUserInformation() {
       <Modal
         open={open}
         onClose={() => setOpen(false)}
+        theme="dark"
       >
         <Auth
           appearance={{
