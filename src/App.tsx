@@ -1,21 +1,22 @@
 import { useSetAtom } from 'jotai';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { HelmetProvider } from 'react-helmet-async';
 import { Toaster } from 'react-hot-toast';
 import { RouterProvider } from 'react-router-dom';
 import { Provider } from 'rxdb-hooks';
 
-import { db } from '@/api';
-import { setReplication } from '@/api/supabase';
+import { initialise } from '@/api';
 import { ServiceWorkerEvents } from '@/components/ServiceWorkerEvents';
 import { authAtom } from '@/context/auth';
 import { router } from '@/routes';
+import { MyDatabase } from './api/types';
 
 export function App() {
+  const [db, setDb] = useState<MyDatabase | null>(null)
   const setAuth = useSetAtom(authAtom);
 
   useEffect(() => {
-    setReplication(setAuth);
+    initialise(setAuth).then(setDb);
   }, []);
 
   return (

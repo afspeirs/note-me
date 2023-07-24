@@ -4,7 +4,7 @@ import { ThemeSupa } from '@supabase/auth-ui-shared';
 import { useAtomValue } from 'jotai';
 import { useEffect, useState } from 'react';
 
-import { supabase } from '@/api/supabase';
+import { supabase } from '@/api';
 import { Button } from '@/components/Button';
 import { authAtom } from '@/context/auth';
 import { Modal } from '../Modal';
