@@ -15,9 +15,8 @@ export function AuthUserInformation() {
 
   const signOut = async () => {
     const { error } = await supabase.auth.signOut();
-
-    if (error) console.error(error);
-  }
+    if (error) console.error(error); // eslint-disable-line no-console
+  };
 
   useEffect(() => {
     if (auth?.user) {

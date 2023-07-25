@@ -46,10 +46,10 @@ export function Modal({
               <Dialog.Panel className="w-full max-w-md transform overflow-hidden p-5 text-left align-middle transition-all bg-white dark:bg-neutral-800 text-gray-700 dark:text-white rounded-xl">
                 {showCloseButton && (
                   <Button
-                  className="absolute top-2 right-2"
-                  Icon={XMarkIcon}
-                  iconOnly
-                  onClick={onClose}
+                    className="absolute top-2 right-2"
+                    Icon={XMarkIcon}
+                    iconOnly
+                    onClick={onClose}
                   >
                     Close
                   </Button>

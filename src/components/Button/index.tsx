@@ -25,61 +25,59 @@ export const Button = forwardRef(({
   onClick,
   secondaryAction,
   target = '_self',
-}: ButtonProps, ref) => {
-  return href ? (
-    <NavLink
-      className={({ isActive }) => classNames(
-        iconOnly ? style.iconOnly : style.withText,
-        isActive ? style.colourActive : style.colour,
-        style.root,
-        className,
-      )}
-      end // This is essentially the same as the old exact prop
-      ref={ref as Ref<HTMLAnchorElement>}
-      rel={target === '_blank' ? 'noreferrer' : undefined}
-      target={target}
-      to={href}
-    >
-      {Icon && (
-        <Icon className={classNames('h-6 w-6 flex-shrink-0', IconClassName)} aria-hidden="true" />
-      )}
+}: ButtonProps, ref) => (href ? (
+  <NavLink
+    className={({ isActive }) => classNames(
+      iconOnly ? style.iconOnly : style.withText,
+      isActive ? style.colourActive : style.colour,
+      style.root,
+      className,
+    )}
+    end // This is essentially the same as the old exact prop
+    ref={ref as Ref<HTMLAnchorElement>}
+    rel={target === '_blank' ? 'noreferrer' : undefined}
+    target={target}
+    to={href}
+  >
+    {Icon && (
+      <Icon className={classNames('h-6 w-6 flex-shrink-0', IconClassName)} aria-hidden="true" />
+    )}
 
-      <span className={classNames('truncate', (iconOnly && Icon) ? 'sr-only' : '')}>
-        {children}
-      </span>
+    <span className={classNames('truncate', (iconOnly && Icon) ? 'sr-only' : '')}>
+      {children}
+    </span>
 
-      {secondaryAction && (
-        <div className="ml-auto">
-          {secondaryAction}
-        </div>
-      )}
-    </NavLink>
-  ) : (
-    <button
-      type="button"
-      className={classNames(
-        iconOnly ? style.iconOnly : style.withText,
-        active ? style.colourActive : style.colour,
-        style.root,
-        className,
-      )}
-      disabled={disabled}
-      onClick={onClick}
-      ref={ref as Ref<HTMLButtonElement>}
-    >
-      {Icon && (
-        <Icon className={classNames('h-6 w-6 flex-shrink-0', IconClassName)} aria-hidden="true" />
-      )}
+    {secondaryAction && (
+      <div className="ml-auto">
+        {secondaryAction}
+      </div>
+    )}
+  </NavLink>
+) : (
+  <button
+    type="button"
+    className={classNames(
+      iconOnly ? style.iconOnly : style.withText,
+      active ? style.colourActive : style.colour,
+      style.root,
+      className,
+    )}
+    disabled={disabled}
+    onClick={onClick}
+    ref={ref as Ref<HTMLButtonElement>}
+  >
+    {Icon && (
+      <Icon className={classNames('h-6 w-6 flex-shrink-0', IconClassName)} aria-hidden="true" />
+    )}
 
-      <span className={classNames('truncate', (iconOnly && Icon) ? 'sr-only' : '')}>
-        {children}
-      </span>
+    <span className={classNames('truncate', (iconOnly && Icon) ? 'sr-only' : '')}>
+      {children}
+    </span>
 
-      {secondaryAction && (
-        <div className="ml-auto">
-          {secondaryAction}
-        </div>
-      )}
-    </button>
-  );
-});
+    {secondaryAction && (
+      <div className="ml-auto">
+        {secondaryAction}
+      </div>
+    )}
+  </button>
+)));

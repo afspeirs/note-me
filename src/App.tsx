@@ -12,12 +12,12 @@ import { router } from '@/routes';
 import { MyDatabase } from './api/types';
 
 export function App() {
-  const [db, setDb] = useState<MyDatabase | null>(null)
+  const [db, setDb] = useState<MyDatabase | null>(null);
   const setAuth = useSetAtom(authAtom);
 
   useEffect(() => {
     initialise(setAuth).then(setDb);
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <>
