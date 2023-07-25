@@ -1,6 +1,4 @@
-import type { Session } from '@supabase/supabase-js';
 import { createClient } from '@supabase/supabase-js';
-import type { SetStateAction } from 'jotai';
 import type { RxJsonSchema } from 'rxdb';
 import { addRxPlugin, createRxDatabase } from 'rxdb';
 import { SupabaseReplication } from 'rxdb-supabase';
@@ -17,9 +15,12 @@ if (!import.meta.env.PROD) {
     .then((module) => addRxPlugin(module.RxDBDevModePlugin as any));
 }
 
-export const supabase = createClient(import.meta.env.VITE_SUPABASE_URL, import.meta.env.VITE_SUPABASE_KEY)
+export const supabase = createClient(
+  import.meta.env.VITE_SUPABASE_URL,
+  import.meta.env.VITE_SUPABASE_KEY,
+);
 
-export async function initialise(setAuth: (session: SetStateAction<Session | null>) => void) {
+export async function initialise() {
   const db: MyDatabase = await createRxDatabase<MyDatabaseCollections>({
     name: 'notemedb', // the name of the database
     storage: getRxStorageDexie(),
@@ -68,7 +69,11 @@ export async function initialise(setAuth: (session: SetStateAction<Session | nul
   //   false, // not async
   // );
 
-  const replication = new SupabaseReplication({
+  return db;
+}
+
+export function enableReplication(db: MyDatabase) {
+  const replication = new SupabaseReplication<NoteDocType>({
     supabaseClient: supabase,
     collection: db.notes,
     /**
@@ -85,22 +90,8 @@ export async function initialise(setAuth: (session: SetStateAction<Session | nul
     // TODO: update this to only pull down users notes instead of them all
     pull: {}, // If absent, no data is pulled from Supabase
     push: {}, // If absent, no changes are pushed to Supabase
-    autoStart: false,
+    // autoStart: false,
   });
 
-  supabase.auth.onAuthStateChange((event, session) => {
-    console.log({event, session});
-    if (event == 'SIGNED_IN') {
-      setAuth(session);
-      console.log('replication start');
-      replication.start();
-    }
-    if (event == 'SIGNED_OUT') {
-      setAuth(session);
-      console.log('replication stop');
-      replication.cancel();
-    }
-  });
-
-  return db;
+  return replication;
 }
