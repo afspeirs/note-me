@@ -35,9 +35,9 @@ export function App() {
 
   // TODO: Fix double running of this code
   useEffect(() => {
-    if (auth?.user && db) {
-      // TODO: await this code
-      const replicationSetup = enableReplication(db);
+    if (auth?.user?.id && db) {
+      // TODO: lazy load this code
+      const replicationSetup = enableReplication(db, auth.user);
       console.log('replication start'); // eslint-disable-line no-console
       replicationSetup.start();
       setReplication(replicationSetup);

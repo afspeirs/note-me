@@ -1,3 +1,4 @@
+import type { User } from '@supabase/supabase-js';
 import { createClient } from '@supabase/supabase-js';
 import type { RxJsonSchema } from 'rxdb';
 import { addRxPlugin, createRxDatabase } from 'rxdb';
@@ -72,12 +73,13 @@ export async function initialise() {
   return db;
 }
 
-export function enableReplication(db: MyDatabase) {
+export function enableReplication(db: MyDatabase, user: User) {
+  const userId = user.id.replaceAll('-', '_');
   const replication = new SupabaseReplication<NoteDocType>({
     supabaseClient: supabase,
     collection: db.notes,
-    replicationIdentifier: `notes_${import.meta.env.VITE_SUPABASE_URL}`,
-    // TODO: update this to only pull down users notes instead of them all
+    table: `notes_${userId}`,
+    replicationIdentifier: `notes_${import.meta.env.VITE_SUPABASE_URL}_${userId}`,
     pull: {}, // If absent, no data is pulled from Supabase
     push: {}, // If absent, no changes are pushed to Supabase
   });
