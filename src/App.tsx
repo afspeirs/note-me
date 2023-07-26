@@ -4,13 +4,13 @@ import { HelmetProvider } from 'react-helmet-async';
 import { Toaster } from 'react-hot-toast';
 import { RouterProvider } from 'react-router-dom';
 import { Provider } from 'rxdb-hooks';
+import type { SupabaseReplication } from 'rxdb-supabase';
 
 import { enableReplication, initialise, supabase } from '@/api';
 import type { MyDatabase, NoteDocType } from '@/api/types';
 import { ServiceWorkerEvents } from '@/components/ServiceWorkerEvents';
 import { authAtom } from '@/context/auth';
 import { router } from '@/routes';
-import type { SupabaseReplication } from 'rxdb-supabase';
 
 export function App() {
   const [auth, setAuth] = useAtom(authAtom);
@@ -37,10 +37,10 @@ export function App() {
   useEffect(() => {
     if (auth?.user && db) {
       // TODO: await this code
-      const temp = enableReplication(db);
+      const replicationSetup = enableReplication(db);
       console.log('replication start'); // eslint-disable-line no-console
-      temp.start();
-      setReplication(temp);
+      replicationSetup.start();
+      setReplication(replicationSetup);
     } else {
       console.log('replication stop'); // eslint-disable-line no-console
       replication?.cancel();
