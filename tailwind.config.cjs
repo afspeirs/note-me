@@ -28,6 +28,9 @@ module.exports = {
       typography: {
         DEFAULT: {
           css: {
+            '--tw-prose-bullets': 'var(--tw-prose-body)',
+            '--tw-prose-invert-body': 'white',
+            '--tw-prose-invert-bullets': 'var(--tw-prose-invert-body)',
             maxWidth: '100%',
           },
         },

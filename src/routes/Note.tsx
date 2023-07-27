@@ -123,7 +123,7 @@ export function Note() {
         ) : (
           <Markdown
             className={classNames(
-              'w-full h-full px-4 pt-1 pb-4 overflow-auto prose dark:prose-invert dark:text-white',
+              'w-full h-full px-4 pt-1 pb-4 overflow-auto prose dark:prose-invert',
               'prose-headings:mb-2 prose-headings:mt-4 first:prose-headings:mt-0 prose-a:text-link',
               'prose-ol:m-0 prose-ul:m-0 prose-li:relative prose-li:my-1',
             )}
