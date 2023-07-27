@@ -10,6 +10,7 @@ export function Modal({
   onClose,
   open,
   showCloseButton = true,
+  theme,
   title,
 }: ModalProps) {
   return (
@@ -31,7 +32,7 @@ export function Modal({
           <div className="fixed inset-0 bg-primary/70 dark:bg-black/70" />
         </Transition.Child>
 
-        <div className="fixed inset-0 overflow-y-auto">
+        <div className={`fixed inset-0 overflow-y-auto ${theme}`}>
           <div className="flex min-h-full items-center justify-center p-4 text-center">
             <Transition.Child
               as={Fragment}
@@ -55,10 +56,11 @@ export function Modal({
                 )}
 
                 {title && (
-                  <Dialog.Title as="h3" className="mb-6 text-xl font-medium dark:">
+                  <Dialog.Title as="h3" className="mb-6 text-xl font-medium">
                     {title}
                   </Dialog.Title>
                 )}
+
                 {children}
               </Dialog.Panel>
             </Transition.Child>

@@ -1,21 +1,27 @@
-import { addRxPlugin, createRxDatabase } from 'rxdb';
-import { getRxStorageDexie } from 'rxdb/plugins/storage-dexie';
+import type { User } from '@supabase/supabase-js';
+import { createClient } from '@supabase/supabase-js';
 import type { RxJsonSchema } from 'rxdb';
+import { addRxPlugin, createRxDatabase } from 'rxdb';
+import { SupabaseReplication } from 'rxdb-supabase';
+import { getRxStorageDexie } from 'rxdb/plugins/storage-dexie';
 
 import type {
   MyDatabase,
   MyDatabaseCollections,
-  // NoteCollection,
   NoteDocType,
-  // NoteDocument,
 } from './types';
 
-export async function initialise() {
-  if (!import.meta.env.PROD) {
-    await import('rxdb/plugins/dev-mode')
-      .then((module) => addRxPlugin(module.RxDBDevModePlugin as any));
-  }
+if (!import.meta.env.PROD) {
+  await import('rxdb/plugins/dev-mode')
+    .then((module) => addRxPlugin(module.RxDBDevModePlugin as any));
+}
 
+export const supabase = createClient(
+  import.meta.env.VITE_SUPABASE_URL,
+  import.meta.env.VITE_SUPABASE_KEY,
+);
+
+export async function initialise() {
   const db: MyDatabase = await createRxDatabase<MyDatabaseCollections>({
     name: 'notemedb', // the name of the database
     storage: getRxStorageDexie(),
@@ -65,4 +71,18 @@ export async function initialise() {
   // );
 
   return db;
+}
+
+export function enableReplication(db: MyDatabase, user: User) {
+  const userId = user.id.replaceAll('-', '_');
+  const replication = new SupabaseReplication<NoteDocType>({
+    supabaseClient: supabase,
+    collection: db.notes,
+    table: `notes_${userId}`,
+    replicationIdentifier: `notes_${import.meta.env.VITE_SUPABASE_URL}_${userId}`,
+    pull: {}, // If absent, no data is pulled from Supabase
+    push: {}, // If absent, no changes are pushed to Supabase
+  });
+
+  return replication;
 }

@@ -5,5 +5,6 @@ export type ModalProps = {
   onClose: () => void,
   open: boolean,
   showCloseButton?: boolean,
+  theme?: 'light' | 'dark',
   title?: string,
 };

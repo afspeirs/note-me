@@ -1,20 +1,51 @@
+import { useAtom } from 'jotai';
 import { useEffect, useState } from 'react';
 import { HelmetProvider } from 'react-helmet-async';
 import { Toaster } from 'react-hot-toast';
 import { RouterProvider } from 'react-router-dom';
 import { Provider } from 'rxdb-hooks';
+import type { SupabaseReplication } from 'rxdb-supabase';
 
-import { initialise } from '@/api';
-import type { MyDatabase } from '@/api/types';
+import { enableReplication, initialise, supabase } from '@/api';
+import type { MyDatabase, NoteDocType } from '@/api/types';
 import { ServiceWorkerEvents } from '@/components/ServiceWorkerEvents';
+import { authAtom } from '@/context/auth';
 import { router } from '@/routes';
 
 export function App() {
+  const [auth, setAuth] = useAtom(authAtom);
   const [db, setDb] = useState<MyDatabase | null>(null);
+  const [replication, setReplication] = useState<SupabaseReplication<NoteDocType> | null>(null);
 
   useEffect(() => {
     initialise().then(setDb);
-  }, []);
+
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setAuth(session);
+    });
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setAuth(session);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // TODO: Fix double running of this code
+  useEffect(() => {
+    if (auth?.user?.id && db) {
+      // TODO: lazy load this code
+      const replicationSetup = enableReplication(db, auth.user);
+      console.log('replication start'); // eslint-disable-line no-console
+      replicationSetup.start();
+      setReplication(replicationSetup);
+    } else {
+      console.log('replication stop'); // eslint-disable-line no-console
+      replication?.cancel();
+    }
+  }, [auth, db]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <>
