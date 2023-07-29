@@ -9,7 +9,7 @@ export function ChangeTheme() {
   const [theme, setTheme] = useAtom(themeAtom);
 
   return (
-    <li className="relative m-2">
+    <div className="relative m-2">
       <Listbox value={theme} onChange={setTheme}>
         {({ open }) => (
           <>
@@ -44,6 +44,6 @@ export function ChangeTheme() {
           </>
         )}
       </Listbox>
-    </li>
+    </div>
   );
 }

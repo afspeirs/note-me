@@ -32,7 +32,7 @@ export function CheckForUpdate() {
   };
 
   return (
-    <li className="m-2">
+    <div className="m-2">
       <Button
         Icon={DevicePhoneMobileIcon}
         onClick={handleButtonClick}
@@ -53,6 +53,6 @@ export function CheckForUpdate() {
       >
         Check for update
       </Button>
-    </li>
+    </div>
   );
 }

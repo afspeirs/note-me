@@ -10,15 +10,23 @@ export function Settings() {
   return (
     <Page title="Settings">
       <ul role="list">
-        <AuthUserInformation />
-        <li aria-hidden="true"><hr className="mx-4 border-gray-400" /></li>
-        <AppVersion />
-        <CheckForUpdate />
-        <li aria-hidden="true"><hr className="mx-4 border-gray-400" /></li>
-        <ChangeTheme />
-        <li aria-hidden="true"><hr className="mx-4 border-gray-400" /></li>
-        <NotesImport />
-        <NotesExport />
+        <li>
+          <AuthUserInformation />
+        </li>
+        <li aria-hidden="true"><hr className="mx-4 border-gray-300 dark:border-gray-400" /></li>
+        <li>
+          <AppVersion />
+          <CheckForUpdate />
+        </li>
+        <li aria-hidden="true"><hr className="mx-4 border-gray-300 dark:border-gray-400" /></li>
+        <li>
+          <ChangeTheme />
+        </li>
+        <li aria-hidden="true"><hr className="mx-4 border-gray-300 dark:border-gray-400" /></li>
+        <li>
+          <NotesImport />
+          <NotesExport />
+        </li>
       </ul>
     </Page>
   );

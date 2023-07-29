@@ -28,7 +28,7 @@ export function AuthUserInformation() {
   }, [auth?.user]);
 
   return (
-    <li className="flex m-2">
+    <div className="flex m-2">
       {auth ? (
         <>
           <div className="relative flex items-center gap-x-4 p-3 w-full text-gray-700 dark:text-white select-none">
@@ -91,6 +91,6 @@ export function AuthUserInformation() {
           theme="dark"
         />
       </Modal>
-    </li>
+    </div>
   );
 }

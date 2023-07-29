@@ -104,7 +104,7 @@ export function NotesImport() {
   useEventListener('drop', handleDrop, dropRef);
 
   return (
-    <li className="m-2">
+    <div className="m-2">
       <Button
         active={open}
         Icon={ArrowUpCircleIcon}
@@ -185,6 +185,6 @@ export function NotesImport() {
           </div>
         )}
       </Modal>
-    </li>
+    </div>
   );
 }

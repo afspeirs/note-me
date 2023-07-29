@@ -52,7 +52,7 @@ export function NotesExport() {
   };
 
   return (
-    <li className="m-2">
+    <div className="m-2">
       <Button
         active={open}
         disabled={notes.length === 0}
@@ -74,6 +74,6 @@ export function NotesExport() {
         }}
         open={open}
       />
-    </li>
+    </div>
   );
 }
