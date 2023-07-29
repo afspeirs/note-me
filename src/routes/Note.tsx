@@ -20,6 +20,7 @@ import { Button } from '@/components/Button';
 import { ModalConfirm } from '@/components/ModalConfirm';
 import { NotesMoreInformation } from '@/components/NotesMoreInformation';
 import { Page } from '@/components/Page';
+import { Tooltip } from '@/components/Tooltip';
 import { classNames } from '@/utils/classNames';
 import { getTitle } from '@/utils/getTitle';
 
@@ -66,39 +67,47 @@ export function Note() {
       title="Note"
       icons={(
         <>
-          <Button
-            Icon={edit ? LockOpenIcon : LockClosedIcon}
-            iconOnly
-            onClick={() => setEdit((prevState) => !prevState)}
-          >
-            {`${edit ? 'Save' : 'Edit'} Note`}
-          </Button>
-          <Button
-            Icon={note?.favourite ? StarSolidIcon : StarOutlineIcon}
-            iconOnly
-            onClick={() => favouriteNote(note)}
-          >
-            {`${note?.favourite ? 'Unfavourite' : 'Favourite'} Note`}
-          </Button>
-          <Button
-            Icon={InformationCircleIcon}
-            iconOnly
-            onClick={() => setShowMoreInformation(true)}
-          >
-            View Note information
-          </Button>
+          <Tooltip label={`${edit ? 'Save' : 'Edit'} Note`}>
+            <Button
+              Icon={edit ? LockOpenIcon : LockClosedIcon}
+              iconOnly
+              onClick={() => setEdit((prevState) => !prevState)}
+            >
+              {`${edit ? 'Save' : 'Edit'} Note`}
+            </Button>
+          </Tooltip>
+          <Tooltip label={`${note?.favourite ? 'Unfavourite' : 'Favourite'} Note`}>
+            <Button
+              Icon={note?.favourite ? StarSolidIcon : StarOutlineIcon}
+              iconOnly
+              onClick={() => favouriteNote(note)}
+            >
+              {`${note?.favourite ? 'Unfavourite' : 'Favourite'} Note`}
+            </Button>
+          </Tooltip>
+          <Tooltip label="More information">
+            <Button
+              Icon={InformationCircleIcon}
+              iconOnly
+              onClick={() => setShowMoreInformation(true)}
+            >
+              More information
+            </Button>
+          </Tooltip>
           <NotesMoreInformation
             note={note}
             open={showMoreInformation}
             setOpen={setShowMoreInformation}
           />
-          <Button
-            Icon={TrashIcon}
-            iconOnly
-            onClick={() => setShowDeleteNoteModal(true)}
-          >
-            Delete Note
-          </Button>
+          <Tooltip label="Delete Note">
+            <Button
+              Icon={TrashIcon}
+              iconOnly
+              onClick={() => setShowDeleteNoteModal(true)}
+            >
+              Delete Note
+            </Button>
+          </Tooltip>
           <ModalConfirm
             message={note && `Are you sure you want to delete "${getTitle(note.text)}"?`}
             onClose={() => setShowDeleteNoteModal(false)}

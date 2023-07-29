@@ -8,6 +8,7 @@ import { useHotkeys } from 'react-hotkeys-hook';
 
 import { Button } from '@/components/Button';
 import { drawerOpenAtom } from '@/context/navigation';
+import { Tooltip } from '../Tooltip';
 import type { PageProps } from './types';
 
 export function Page({
@@ -29,13 +30,15 @@ export function Page({
       </Helmet>
 
       <header className="flex gap-2 p-2">
-        <Button
-          Icon={open ? ChevronLeftIcon : Bars2Icon}
-          iconOnly
-          onClick={toggleOpen}
-        >
-          {`${open ? 'Close' : 'Open'} Sidebar`}
-        </Button>
+        <Tooltip label={`${open ? 'Close' : 'Open'} Sidebar`}>
+          <Button
+            Icon={open ? ChevronLeftIcon : Bars2Icon}
+            iconOnly
+            onClick={toggleOpen}
+          >
+            {`${open ? 'Close' : 'Open'} Sidebar`}
+          </Button>
+        </Tooltip>
 
         <div className="ml-auto" />
 

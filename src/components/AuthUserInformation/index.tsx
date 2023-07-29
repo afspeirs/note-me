@@ -8,6 +8,7 @@ import { supabase } from '@/api';
 import { Button } from '@/components/Button';
 import { authAtom } from '@/context/auth';
 import { Modal } from '../Modal';
+import { Tooltip } from '../Tooltip';
 
 export function AuthUserInformation() {
   const auth = useAtomValue(authAtom);
@@ -34,13 +35,15 @@ export function AuthUserInformation() {
               <p>{auth?.user.email}</p>
             </div>
           </div>
-          <Button
-            Icon={ArrowRightOnRectangleIcon}
-            iconOnly
-            onClick={signOut}
-          >
-            Sign out
-          </Button>
+          <Tooltip label="Sign Out">
+            <Button
+              Icon={ArrowRightOnRectangleIcon}
+              iconOnly
+              onClick={signOut}
+            >
+              Sign out
+            </Button>
+          </Tooltip>
         </>
       ) : (
         <Button

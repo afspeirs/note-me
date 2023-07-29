@@ -1,26 +1,28 @@
-import { useMemo } from 'react';
 import { Listbox } from '@headlessui/react';
-import { CheckIcon, BarsArrowUpIcon, BarsArrowDownIcon } from '@heroicons/react/24/outline';
+import { BarsArrowDownIcon, BarsArrowUpIcon, CheckIcon } from '@heroicons/react/24/outline';
 import { useAtom } from 'jotai';
+import { useMemo } from 'react';
 
 import { Button } from '@/components/Button';
+import { Tooltip } from '@/components/Tooltip';
 import { notesSortAtom, notesSortOptions } from '@/context/notesSort';
 
 export function NotesSort() {
   const [sort, setSort] = useAtom(notesSortAtom);
   const direction = useMemo(() => sort.includes('-asc'), [sort]);
-  console.log(direction);
 
   return (
     <Listbox value={sort} onChange={setSort}>
-      <Listbox.Button
-        as={Button}
-        Icon={direction ? BarsArrowUpIcon : BarsArrowDownIcon}
-        iconOnly
-      >
-        <Listbox.Label>Sort:</Listbox.Label>
-        <span>{notesSortOptions[sort].label}</span>
-      </Listbox.Button>
+      <Tooltip label="Sort Notes">
+        <Listbox.Button
+          as={Button}
+          Icon={direction ? BarsArrowUpIcon : BarsArrowDownIcon}
+          iconOnly
+        >
+          <Listbox.Label>Sort:</Listbox.Label>
+          <span>{notesSortOptions[sort].label}</span>
+        </Listbox.Button>
+      </Tooltip>
 
       <Listbox.Options className="absolute right-0 mt-1 w-72 max-h-80 z-10 overflow-auto rounded-lg bg-gray-200 dark:bg-neutral-700 text-base shadow-lg focus-visible">
         {Object.entries(notesSortOptions).map(([value, option]) => (
