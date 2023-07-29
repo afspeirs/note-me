@@ -30,15 +30,13 @@ export function Page({
       </Helmet>
 
       <header className="flex gap-2 p-2">
-        <Tooltip label={`${open ? 'Close' : 'Open'} Sidebar`}>
-          <Button
-            Icon={open ? ChevronLeftIcon : Bars2Icon}
-            iconOnly
-            onClick={toggleOpen}
-          >
-            {`${open ? 'Close' : 'Open'} Sidebar`}
-          </Button>
-        </Tooltip>
+        <Button
+          Icon={open ? ChevronLeftIcon : Bars2Icon}
+          iconOnly
+          onClick={toggleOpen}
+        >
+          {`${open ? 'Close' : 'Open'} Sidebar`}
+        </Button>
 
         <div className="ml-auto" />
 

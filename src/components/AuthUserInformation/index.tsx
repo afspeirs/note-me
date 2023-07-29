@@ -37,7 +37,10 @@ export function AuthUserInformation() {
               <p>{auth?.user.email}</p>
             </div>
           </div>
-          <Tooltip label="Sign Out">
+          <Tooltip
+            label="Sign Out"
+            position="left"
+          >
             <Button
               active={openSignOutConfirmation}
               Icon={ArrowRightOnRectangleIcon}

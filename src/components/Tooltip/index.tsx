@@ -1,9 +1,18 @@
+import { classNames } from '@/utils/classNames';
 import type { TooltipProps } from './types';
+
+export const styles = {
+  top: 'bottom-12 left-1/2 -translate-x-1/2',
+  bottom: 'top-12 left-1/2 -translate-x-1/2',
+  left: 'top-1/2 right-12 -translate-y-1/2',
+  right: 'top-1/2 left-12 -translate-y-1/2',
+};
 
 export function Tooltip({
   children,
   disabled = false,
   label,
+  position = 'bottom'
 }: TooltipProps) {
   return (
     <div className="group/tooltip relative flex z-10">
@@ -11,7 +20,10 @@ export function Tooltip({
 
       {!disabled && (
         <span
-          className="absolute top-12 left-1/2 -translate-x-1/2 p-2 transition-transform scale-0 group-hover/tooltip:scale-100 group-hover/tooltip:delay-200 peer-focus-visible/button:scale-100 rounded-lg whitespace-nowrap text-xs bg-black text-white dark:bg-white dark:!text-black"
+          className={classNames(
+            'absolute p-2 transition-transform scale-0 group-hover/tooltip:scale-100 group-hover/tooltip:delay-200 peer-focus-visible/button:scale-100 rounded-lg whitespace-nowrap text-xs bg-black text-white dark:text-black dark:bg-white',
+            styles[position],
+          )}
           aria-hidden="true"
         >
           {label}

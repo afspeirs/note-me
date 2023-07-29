@@ -15,7 +15,11 @@ export function NotesSort() {
     <Listbox value={sort} onChange={setSort}>
       {({ open }) => (
         <>
-          <Tooltip disabled={open} label="Sort Notes">
+          <Tooltip
+            disabled={open}
+            label="Sort Notes"
+            position="left"
+          >
             <Listbox.Button
               active={open}
               as={Button}
