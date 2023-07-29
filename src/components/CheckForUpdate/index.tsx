@@ -37,7 +37,7 @@ export function CheckForUpdate() {
         Icon={DevicePhoneMobileIcon}
         onClick={handleButtonClick}
         secondaryAction={updateAvailable ? (
-          <span className="text-white bg-primary px-4 py-1.5 rounded-full">
+          <span className="text-white bg-primary px-4 py-1 -my-1 rounded-full">
             UPDATE
           </span>
         ) : (
