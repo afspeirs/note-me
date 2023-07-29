@@ -9,7 +9,7 @@ export const style = {
   root: 'peer/button p-3 rounded-lg select-none disabled:opacity-40 disabled:pointer-events-none focus-visible',
   iconOnly: '',
   withText: 'flex items-center gap-4 w-full',
-  colour: 'text-gray-700 dark:text-white hover:bg-gray-200 dark:hover:bg-neutral-700',
+  colour: 'text-gray-700 dark:text-white hover:bg-gray-300 dark:hover:bg-neutral-700',
   colourActive: 'bg-gray-200 hover:bg-gray-300 dark:bg-neutral-700/60 dark:hover:bg-neutral-700',
 } as const;
 
@@ -48,7 +48,7 @@ export const Button = forwardRef(({
     </span>
 
     {secondaryAction && (
-      <div className="ml-auto">
+      <div className="ml-auto flex gap-2">
         {secondaryAction}
       </div>
     )}
@@ -75,7 +75,7 @@ export const Button = forwardRef(({
     </span>
 
     {secondaryAction && (
-      <div className="ml-auto">
+      <div className="ml-auto flex gap-2">
         {secondaryAction}
       </div>
     )}

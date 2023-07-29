@@ -22,7 +22,7 @@ export function CheckForInstallPrompt() {
   };
 
   return beforeInstallPrompt && (
-    <Card className="flex [&>button:last-child]:w-fit p-2">
+    <Card className="flex p-2">
       <Button
         Icon={ArrowDownOnSquareIcon}
         onClick={handleInstallClick}
