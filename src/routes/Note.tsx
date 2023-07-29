@@ -8,7 +8,6 @@ import {
 import {
   StarIcon as StarSolidIcon,
 } from '@heroicons/react/24/solid';
-import Markdown from 'markdown-to-jsx';
 import { useEffect, useState } from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -17,11 +16,11 @@ import { useRxData } from 'rxdb-hooks';
 import { deleteNote, favouriteNote, updateNote } from '@/api/notes';
 import type { NoteDocType } from '@/api/types';
 import { Button } from '@/components/Button';
+import { Markdown } from '@/components/Markdown';
 import { ModalConfirm } from '@/components/ModalConfirm';
 import { NotesMoreInformation } from '@/components/NotesMoreInformation';
 import { Page } from '@/components/Page';
 import { Tooltip } from '@/components/Tooltip';
-import { classNames } from '@/utils/classNames';
 import { getTitle } from '@/utils/getTitle';
 
 export function Note() {
@@ -130,25 +129,7 @@ export function Note() {
             />
           </label>
         ) : (
-          <Markdown
-            className={classNames(
-              'w-full h-full px-4 pt-1 pb-4 overflow-auto prose dark:prose-invert',
-              'prose-headings:mb-2 prose-headings:mt-4 first:prose-headings:mt-0 prose-a:text-link',
-              'prose-ol:m-0 prose-ul:m-0 prose-li:relative prose-li:my-1',
-            )}
-            options={{
-              disableParsingRawHTML: true,
-              forceWrapper: true,
-              overrides: {
-                // a: RendererLink,
-                input: {
-                  props: {
-                    className: 'absolute -left-5 top-2 m-0 accent-primary',
-                  },
-                },
-              },
-            }}
-          >
+          <Markdown>
             {text}
           </Markdown>
         )}
