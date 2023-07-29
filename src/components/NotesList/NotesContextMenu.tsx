@@ -38,7 +38,7 @@ export const NotesContextMenu = forwardRef(({
           <Menu.Button
             active={open}
             as={Button}
-            className="hidden group-hover:block"
+            className="hidden group-hover:block group-focus-within:block"
             Icon={EllipsisHorizontalIcon}
             iconOnly
             ref={ref}
