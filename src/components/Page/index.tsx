@@ -8,7 +8,6 @@ import { useHotkeys } from 'react-hotkeys-hook';
 
 import { Button } from '@/components/Button';
 import { drawerOpenAtom } from '@/context/navigation';
-import { Tooltip } from '../Tooltip';
 import type { PageProps } from './types';
 
 export function Page({

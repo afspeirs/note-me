@@ -12,7 +12,7 @@ export function Tooltip({
   children,
   disabled = false,
   label,
-  position = 'bottom'
+  position = 'bottom',
 }: TooltipProps) {
   return (
     <div className="group/tooltip relative flex z-10">

@@ -2,13 +2,13 @@ import { ArrowDownCircleIcon } from '@heroicons/react/24/outline';
 import { saveAs } from 'file-saver';
 import JSZip from 'jszip';
 import { useState } from 'react';
+import { toast } from 'react-hot-toast';
 import { useRxData } from 'rxdb-hooks';
 
 import type { NoteDocType } from '@/api/types';
 import { Button } from '@/components/Button';
 import { ModalConfirm } from '@/components/ModalConfirm';
 import { formatDate } from '@/utils/formatDate';
-import { toast } from 'react-hot-toast';
 import { getTitle } from '@/utils/getTitle';
 
 export function NotesExport() {

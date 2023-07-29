@@ -28,9 +28,7 @@ export function Layout() {
         <body className={`${appTheme} ${appTheme === 'light' ? 'bg-primary' : 'bg-black'}`} />
       </Helmet>
 
-      <div
-        className="absolute inset-0 flex overflow-hidden mt-[env(titlebar-area-height)] bg-primary dark:bg-black"
-      >
+      <div className="absolute inset-0 flex overflow-hidden mt-[env(titlebar-area-height)] bg-primary dark:bg-black">
         <TopBar />
         <Transition appear show={drawerOpen}>
           <Transition.Child
