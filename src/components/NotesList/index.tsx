@@ -34,7 +34,6 @@ export function NotesList() {
       {notes.map((note) => (
         <li key={note.id} className="group relative flex">
           <Button
-            className="group-hover:pr-14"
             href={`/note/${note.id}`}
             secondaryAction={note.favourite && (
               <StarSolidIcon className="h-6 w-6 flex-shrink-0 text-primary" aria-hidden="true" />
@@ -42,10 +41,7 @@ export function NotesList() {
           >
             {getTitle(note.text)}
           </Button>
-          {/* TODO: Have this styled like CheckForInstallPrompt */}
-          <div className="absolute right-0">
-            <NotesContextMenu note={note} />
-          </div>
+          <NotesContextMenu note={note} />
         </li>
       ))}
     </ul>
