@@ -1,4 +1,4 @@
-import { UserIcon } from '@heroicons/react/24/solid';
+import { ArrowRightOnRectangleIcon, UserIcon } from '@heroicons/react/24/outline';
 import { Auth } from '@supabase/auth-ui-react';
 import { ThemeSupa } from '@supabase/auth-ui-shared';
 import { useAtomValue } from 'jotai';
@@ -25,14 +25,23 @@ export function AuthUserInformation() {
   }, [auth?.user]);
 
   return (
-    <li className="m-2">
+    <li className="flex m-2">
       {auth ? (
-        <Button
-          Icon={UserIcon}
-          onClick={signOut}
-        >
-          Sign out
-        </Button>
+        <>
+          <div className="relative flex items-center gap-x-4 p-3 w-full text-gray-700 dark:text-white select-none">
+            <UserIcon className="h-6 w-6" aria-hidden="true" />
+            <div>
+              <p>{auth?.user.email}</p>
+            </div>
+          </div>
+          <Button
+            Icon={ArrowRightOnRectangleIcon}
+            iconOnly
+            onClick={signOut}
+          >
+            Sign out
+          </Button>
+        </>
       ) : (
         <Button
           Icon={UserIcon}
