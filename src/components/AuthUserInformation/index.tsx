@@ -50,7 +50,7 @@ export function AuthUserInformation() {
           Icon={UserIcon}
           onClick={() => setOpen(true)}
         >
-          Login
+          Sign in
         </Button>
       )}
 
