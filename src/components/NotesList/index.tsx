@@ -22,7 +22,7 @@ export function NotesList() {
   );
 
   return (
-    <ul role="list" className="flex flex-col p-2 gap-1 overflow-y-auto h-full">
+    <ul role="list" className="flex flex-col p-2 gap-1 overflow-y-auto overflow-x-hidden h-full">
       {isFetching && (
         <li className="block p-3">Loading...</li>
       )}
