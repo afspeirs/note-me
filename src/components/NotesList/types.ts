@@ -1,5 +1,5 @@
 import type { NoteDocument } from '@/api/types';
 
-export type NotesContextMenuProps = {
+export type NotesProps = {
   note: NoteDocument,
 };

@@ -1,12 +1,10 @@
-import type { NoteDocType } from '@/api/types';
-import { Button } from '@/components/Button';
-import { notesSearchAtom } from '@/context/notesSearch';
-import { notesSortAtom, notesSortOptions } from '@/context/notesSort';
-import { getTitle } from '@/utils/getTitle';
-import { StarIcon as StarSolidIcon } from '@heroicons/react/24/solid';
 import { useAtomValue } from 'jotai';
 import { useRxData } from 'rxdb-hooks';
-import { NotesContextMenu } from './NotesContextMenu';
+
+import type { NoteDocType } from '@/api/types';
+import { notesSearchAtom } from '@/context/notesSearch';
+import { notesSortAtom, notesSortOptions } from '@/context/notesSort';
+import { NotesListItem } from './NotesListItem';
 
 export function NotesList() {
   const search = useAtomValue(notesSearchAtom);
@@ -31,19 +29,7 @@ export function NotesList() {
       {!isFetching && notes.length === 0 && (
         <li className="block p-3">No notes found</li>
       )}
-      {notes.map((note) => (
-        <li key={note.id} className="group relative flex">
-          <Button
-            href={`/note/${note.id}`}
-            secondaryAction={note.favourite && (
-              <StarSolidIcon className="h-6 w-6 flex-shrink-0 text-primary" aria-hidden="true" />
-            )}
-          >
-            {getTitle(note.text)}
-          </Button>
-          <NotesContextMenu note={note} />
-        </li>
-      ))}
+      {notes.map((note) => <NotesListItem note={note} />)}
     </ul>
   );
 }

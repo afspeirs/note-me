@@ -1,14 +1,15 @@
 import { Menu, Transition } from '@headlessui/react';
 import {
+  ClockIcon,
   EllipsisHorizontalIcon,
   StarIcon as StarOutlineIcon,
   TrashIcon,
-  ClockIcon,
 } from '@heroicons/react/24/outline';
 import {
   StarIcon as StarSolidIcon,
 } from '@heroicons/react/24/solid';
-import { Fragment, useState } from 'react';
+import type { Ref } from 'react';
+import { Fragment, forwardRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { deleteNote, favouriteNote } from '@/api/notes';
@@ -16,11 +17,11 @@ import { Button } from '@/components/Button';
 import { ModalConfirm } from '@/components/ModalConfirm';
 import { formatDate } from '@/utils/formatDate';
 import { getTitle } from '@/utils/getTitle';
-import type { NotesContextMenuProps } from './types';
+import type { NotesProps } from './types';
 
-export function NotesContextMenu({
+export const NotesContextMenu = forwardRef(({
   note,
-}: NotesContextMenuProps) {
+}: NotesProps, ref: Ref<HTMLButtonElement>) => {
   const navigate = useNavigate();
   const [showDeleteNoteModal, setShowDeleteNoteModal] = useState(false);
 
@@ -37,11 +38,12 @@ export function NotesContextMenu({
           <Menu.Button
             active={open}
             as={Button}
+            className="hidden group-hover:block"
             Icon={EllipsisHorizontalIcon}
             iconOnly
-            className="hidden group-hover:block"
+            ref={ref}
           >
-            Options
+            Open Note context menu
           </Menu.Button>
 
           <Transition
@@ -122,4 +124,4 @@ export function NotesContextMenu({
       )}
     </Menu>
   );
-}
+});
