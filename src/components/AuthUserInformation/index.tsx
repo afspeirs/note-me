@@ -31,7 +31,7 @@ export function AuthUserInformation() {
     <div className="flex m-2">
       {auth ? (
         <>
-          <div className="relative flex items-center gap-x-4 p-3 w-full text-gray-700 dark:text-white select-none">
+          <div className="relative flex items-center gap-x-4 p-3 min-w-0 w-full text-gray-700 dark:text-white select-none">
             <UserIcon className="h-6 w-6" aria-hidden="true" />
             <div>
               <p>{auth?.user.email}</p>
