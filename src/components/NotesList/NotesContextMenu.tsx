@@ -55,10 +55,10 @@ export const NotesContextMenu = forwardRef(({
             leaveFrom="transform opacity-100 scale-100"
             leaveTo="transform opacity-0 scale-95"
           >
-            <Menu.Items className="absolute right-0 top-12 mt-1 w-72 z-10 origin-top-right divide-y divide-gray-300 rounded-md bg-gray-200 dark:bg-neutral-700 text-gray-900 dark:text-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+            <Menu.Items className="absolute right-0 top-12 mt-1 w-72 z-10 origin-top-right divide-y divide-gray-300 rounded-lg text-sm bg-gray-200 dark:bg-neutral-700 text-gray-900 dark:text-white shadow-lg focus-visible">
               <div className="px-1 py-1">
                 <Menu.Item disabled>
-                  <div className="flex w-full items-center rounded-md px-2 py-2 text-sm select-none">
+                  <div className="flex w-full items-center rounded-md px-2 py-2 select-none">
                     <ClockIcon
                       className="mr-2 h-5 w-5"
                       aria-hidden="true"
@@ -70,7 +70,7 @@ export const NotesContextMenu = forwardRef(({
                   </div>
                 </Menu.Item>
                 <Menu.Item disabled>
-                  <div className="flex w-full items-center rounded-md px-2 py-2 text-sm select-none">
+                  <div className="flex w-full items-center rounded-md px-2 py-2 select-none">
                     <ClockIcon
                       className="mr-2 h-5 w-5"
                       aria-hidden="true"
@@ -86,7 +86,7 @@ export const NotesContextMenu = forwardRef(({
                 <Menu.Item>
                   <button
                     type="button"
-                    className="ui-active:bg-primary ui-active:text-white flex w-full items-center rounded-md px-2 py-2 text-sm"
+                    className="ui-active:bg-primary ui-active:text-white flex w-full items-center rounded-md p-2"
                     onClick={() => favouriteNote(note)}
                   >
                     {note.favourite ? (
@@ -94,19 +94,18 @@ export const NotesContextMenu = forwardRef(({
                     ) : (
                       <StarOutlineIcon className="mr-2 h-5 w-5" aria-hidden="true" />
                     )}
+
                     {`${note?.favourite ? 'Unfavourite' : 'Favourite'} Note`}
                   </button>
                 </Menu.Item>
                 <Menu.Item>
                   <button
                     type="button"
-                    className="ui-active:bg-primary ui-active:text-white flex w-full items-center rounded-md px-2 py-2 text-sm"
+                    className="ui-active:bg-primary ui-active:text-white flex gap-2 w-full items-center rounded-md p-2"
                     onClick={() => setShowDeleteNoteModal(true)}
                   >
-                    <TrashIcon
-                      className="mr-2 h-5 w-5"
-                      aria-hidden="true"
-                    />
+                    <TrashIcon className="h-5 w-5" aria-hidden="true" />
+
                     Delete Note
                   </button>
                 </Menu.Item>

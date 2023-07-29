@@ -6,7 +6,7 @@ export function Tooltip({
   label,
 }: TooltipProps) {
   return (
-    <div className="group relative flex">
+    <div className="group relative flex z-10">
       {children}
 
       {!disabled && (
