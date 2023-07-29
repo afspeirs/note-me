@@ -39,6 +39,7 @@ export function AuthUserInformation() {
           </div>
           <Tooltip label="Sign Out">
             <Button
+              active={openSignOutConfirmation}
               Icon={ArrowRightOnRectangleIcon}
               iconOnly
               onClick={() => setOpenSignOutConfirmation(true)}
@@ -59,6 +60,7 @@ export function AuthUserInformation() {
         </>
       ) : (
         <Button
+          active={open}
           Icon={UserIcon}
           onClick={() => setOpen(true)}
         >

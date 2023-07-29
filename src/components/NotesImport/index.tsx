@@ -106,6 +106,7 @@ export function NotesImport() {
   return (
     <li className="m-2">
       <Button
+        active={open}
         Icon={ArrowUpCircleIcon}
         onClick={() => setOpen(true)}
       >

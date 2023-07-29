@@ -11,33 +11,38 @@ export function ChangeTheme() {
   return (
     <li className="relative m-2">
       <Listbox value={theme} onChange={setTheme}>
-        <Listbox.Button
-          as={Button}
-          Icon={PaintBrushIcon}
-        >
-          <div className="flex flex-col items-start">
-            <Listbox.Label className="cursor-pointer">Theme</Listbox.Label>
-            <span className="text-gray-500 dark:text-gray-400">{themeOptions[theme]}</span>
-          </div>
-        </Listbox.Button>
-
-        <Listbox.Options className="absolute mt-1 w-full max-h-80 z-10 overflow-auto rounded-lg bg-gray-200 dark:bg-neutral-700 text-base shadow-lg focus-visible">
-          {Object.entries(themeOptions).map(([value, label]) => (
-            <Listbox.Option
-              key={value}
-              className="relative cursor-default select-none pl-12 py-3 text-gray-900 dark:text-white ui-active:text-white ui-active:bg-primary"
-              value={value}
+        {({ open }) => (
+          <>
+            <Listbox.Button
+              active={open}
+              as={Button}
+              Icon={PaintBrushIcon}
             >
-              <span className="block truncate ui-selected:font-semibold">
-                {label}
-              </span>
+              <div className="flex flex-col items-start">
+                <Listbox.Label className="cursor-pointer">Theme</Listbox.Label>
+                <span className="text-gray-500 dark:text-gray-400">{themeOptions[theme]}</span>
+              </div>
+            </Listbox.Button>
 
-              <span className="absolute inset-y-0 left-0 items-center pl-3 hidden ui-selected:flex">
-                <CheckIcon className="h-6 w-6 text-gray-900 dark:text-white ui-active:text-white" aria-hidden="true" />
-              </span>
-            </Listbox.Option>
-          ))}
-        </Listbox.Options>
+            <Listbox.Options className="absolute mt-1 w-full max-h-80 z-10 overflow-auto rounded-lg bg-gray-200 dark:bg-neutral-700 text-base shadow-lg focus-visible">
+              {Object.entries(themeOptions).map(([value, label]) => (
+                <Listbox.Option
+                  key={value}
+                  className="relative cursor-default select-none pl-12 py-3 text-gray-900 dark:text-white ui-active:text-white ui-active:bg-primary"
+                  value={value}
+                >
+                  <span className="block truncate ui-selected:font-semibold">
+                    {label}
+                  </span>
+
+                  <span className="absolute inset-y-0 left-0 items-center pl-3 hidden ui-selected:flex">
+                    <CheckIcon className="h-6 w-6 text-gray-900 dark:text-white ui-active:text-white" aria-hidden="true" />
+                  </span>
+                </Listbox.Option>
+              ))}
+            </Listbox.Options>
+          </>
+        )}
       </Listbox>
     </li>
   );
