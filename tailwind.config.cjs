@@ -10,6 +10,9 @@ module.exports = {
     './src/**/*.{html,ts,tsx}',
   ],
   darkMode: 'class',
+  future: {
+    hoverOnlyWhenSupported: true,
+  },
   theme: {
     extend: {
       colors: {
