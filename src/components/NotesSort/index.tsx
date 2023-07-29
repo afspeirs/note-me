@@ -1,5 +1,6 @@
+import { useMemo } from 'react';
 import { Listbox } from '@headlessui/react';
-import { CheckIcon, FunnelIcon } from '@heroicons/react/24/outline';
+import { CheckIcon, BarsArrowUpIcon, BarsArrowDownIcon } from '@heroicons/react/24/outline';
 import { useAtom } from 'jotai';
 
 import { Button } from '@/components/Button';
@@ -7,12 +8,14 @@ import { notesSortAtom, notesSortOptions } from '@/context/notesSort';
 
 export function NotesSort() {
   const [sort, setSort] = useAtom(notesSortAtom);
+  const direction = useMemo(() => sort.includes('-asc'), [sort]);
+  console.log(direction);
 
   return (
     <Listbox value={sort} onChange={setSort}>
       <Listbox.Button
         as={Button}
-        Icon={FunnelIcon}
+        Icon={direction ? BarsArrowUpIcon : BarsArrowDownIcon}
         iconOnly
       >
         <Listbox.Label>Sort:</Listbox.Label>

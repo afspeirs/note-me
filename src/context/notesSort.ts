@@ -37,4 +37,4 @@ export const notesSortOptions: NotesSortOptions = {
   },
 };
 
-export const notesSortAtom = atomWithStorage<keyof typeof notesSortOptions>('notes-sort', 'dateModified-desc');
+export const notesSortAtom = atomWithStorage<keyof typeof notesSortOptions & string>('notes-sort', 'dateModified-desc');
