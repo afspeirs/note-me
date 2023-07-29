@@ -27,7 +27,7 @@ export function NotesSort() {
             </Listbox.Button>
           </Tooltip>
 
-          <Listbox.Options className="absolute right-0 mt-1 p-1 w-72 z-10 rounded-lg text-sm bg-gray-200 dark:bg-neutral-700 text-gray-900 dark:text-white shadow-lg focus-visible">
+          <Listbox.Options className="absolute right-0 mt-1 p-1 w-72 z-10 rounded-lg bg-gray-200 dark:bg-neutral-700 text-gray-900 dark:text-white shadow-lg focus-visible">
             {Object.entries(notesSortOptions).map(([value, option]) => (
               <Listbox.Option
                 key={value}
