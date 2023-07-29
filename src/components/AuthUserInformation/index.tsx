@@ -8,11 +8,13 @@ import { supabase } from '@/api';
 import { Button } from '@/components/Button';
 import { authAtom } from '@/context/auth';
 import { Modal } from '../Modal';
+import { ModalConfirm } from '../ModalConfirm';
 import { Tooltip } from '../Tooltip';
 
 export function AuthUserInformation() {
   const auth = useAtomValue(authAtom);
   const [open, setOpen] = useState(false);
+  const [openSignOutConfirmation, setOpenSignOutConfirmation] = useState(false);
 
   const signOut = async () => {
     const { error } = await supabase.auth.signOut();
@@ -39,11 +41,21 @@ export function AuthUserInformation() {
             <Button
               Icon={ArrowRightOnRectangleIcon}
               iconOnly
-              onClick={signOut}
+              onClick={() => setOpenSignOutConfirmation(true)}
             >
               Sign out
             </Button>
           </Tooltip>
+
+          <ModalConfirm
+            open={openSignOutConfirmation}
+            message="Are you sure you want to sign out?"
+            onClose={() => setOpenSignOutConfirmation(false)}
+            onConfirm={() => {
+              setOpenSignOutConfirmation(false);
+              signOut();
+            }}
+          />
         </>
       ) : (
         <Button
