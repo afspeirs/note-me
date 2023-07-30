@@ -6,17 +6,27 @@ import { classNames } from '@/utils/classNames';
 import type { ButtonProps } from './types';
 
 export const style = {
-  root: 'peer/button p-3 rounded-lg select-none disabled:opacity-40 disabled:pointer-events-none focus-visible',
+  base: 'peer/button p-3 rounded-lg select-none disabled:opacity-40 disabled:pointer-events-none focus-visible',
   iconOnly: 'block',
   withText: 'flex items-center gap-4 min-w-0 w-full',
-  colour: 'text-gray-700 dark:text-white hover:bg-gray-300 dark:hover:bg-neutral-700',
-  colourActive: 'bg-gray-200 hover:bg-gray-300 dark:bg-neutral-700/60 dark:hover:bg-neutral-700',
+} as const;
+
+export const colours = {
+  base: 'text-gray-700 dark:text-white hover:bg-gray-300 dark:hover:bg-neutral-700',
+  primary: 'text-white bg-primary hover:bg-primary/90',
+  danger: 'text-white bg-red-600 hover:bg-red-600/90',
+} as const;
+export const coloursActive = {
+  ...colours,
+  base: 'bg-gray-200 hover:bg-gray-300 dark:bg-neutral-700/60 dark:hover:bg-neutral-700',
 } as const;
 
 export const Button = forwardRef(({
   active,
   children,
   className,
+  colour = 'base',
+  colourActive = 'base',
   disabled,
   href,
   Icon,
@@ -29,8 +39,8 @@ export const Button = forwardRef(({
   <NavLink
     className={({ isActive }) => classNames(
       iconOnly ? style.iconOnly : style.withText,
-      isActive ? style.colourActive : style.colour,
-      style.root,
+      isActive ? coloursActive[colourActive] : colours[colour],
+      style.base,
       className,
     )}
     end // This is essentially the same as the old exact prop
@@ -58,8 +68,8 @@ export const Button = forwardRef(({
     type="button"
     className={classNames(
       iconOnly ? style.iconOnly : style.withText,
-      active ? style.colourActive : style.colour,
-      style.root,
+      active ? coloursActive[colourActive] : colours[colour],
+      style.base,
       className,
     )}
     disabled={disabled}

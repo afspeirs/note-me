@@ -1,9 +1,13 @@
 import { HomeIcon } from '@heroicons/react/24/outline';
 import type { MouseEvent, ReactNode } from 'react';
 
+import { colours, coloursActive } from '.';
+
 interface BaseProps {
   children: ReactNode,
   className?: string,
+  colour?: keyof typeof colours;
+  colourActive?: keyof typeof coloursActive;
   Icon?: typeof HomeIcon;
   IconClassName?: string,
   iconOnly?: boolean,

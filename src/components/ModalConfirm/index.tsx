@@ -1,5 +1,7 @@
+import { XCircleIcon, CheckCircleIcon } from '@heroicons/react/24/outline';
 import { Button } from '@/components/Button';
 import { Modal } from '@/components/Modal';
+
 import type { ModalConfirmProps } from './types';
 
 export function ModalConfirm({
@@ -19,13 +21,16 @@ export function ModalConfirm({
       </p>
       <div className="flex justify-end gap-4">
         <Button
+          active
+          Icon={XCircleIcon}
           onClick={onClose}
         >
           Cancel
         </Button>
         <Button
-          active
+          Icon={CheckCircleIcon}
           onClick={onConfirm}
+          colour="primary"
         >
           Confirm
         </Button>
