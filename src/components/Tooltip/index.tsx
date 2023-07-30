@@ -2,10 +2,10 @@ import { classNames } from '@/utils/classNames';
 import type { TooltipProps } from './types';
 
 export const styles = {
-  top: 'bottom-12 left-1/2 -translate-x-1/2',
-  bottom: 'top-12 left-1/2 -translate-x-1/2',
-  left: 'top-1/2 right-12 -translate-y-1/2',
-  right: 'top-1/2 left-12 -translate-y-1/2',
+  top: 'bottom-12 left-1/2 -translate-x-1/2 mb-1',
+  bottom: 'top-12 left-1/2 -translate-x-1/2 mt-1',
+  left: 'top-1/2 right-12 -translate-y-1/2 mr-1',
+  right: 'top-1/2 left-12 -translate-y-1/2 ml-1',
 };
 
 export function Tooltip({
