@@ -7,7 +7,7 @@ import type { ButtonProps } from './types';
 
 export const style = {
   root: 'peer/button p-3 rounded-lg select-none disabled:opacity-40 disabled:pointer-events-none focus-visible',
-  iconOnly: '',
+  iconOnly: 'block',
   withText: 'flex items-center gap-4 min-w-0 w-full',
   colour: 'text-gray-700 dark:text-white hover:bg-gray-300 dark:hover:bg-neutral-700',
   colourActive: 'bg-gray-200 hover:bg-gray-300 dark:bg-neutral-700/60 dark:hover:bg-neutral-700',
