@@ -28,18 +28,17 @@ export function NotesSearch({
         placeholder="Search Notes"
       />
       <div className="absolute inset-y-0 right-0">
-        {search.length > 0 && (
+        {search.length > 0 ? (
           <Button
             Icon={XMarkIcon}
-            IconClassName="text-gray-400"
+            // IconClassName="text-gray-400"
             iconOnly
             disabled={!search.length}
             onClick={() => setSearch('')}
           >
             Clear
           </Button>
-        )}
-        {children}
+        ) : children}
       </div>
     </label>
   );
