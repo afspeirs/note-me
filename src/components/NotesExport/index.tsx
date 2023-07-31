@@ -44,7 +44,9 @@ export function NotesExport() {
         .replace(/^\s+|\s+$/gm, '')
         .concat(`\n${note.text}`);
 
-      zip.file(`${fileName}.md`, contents);
+      zip.file(`${fileName}.md`, contents, {
+        createFolders: false,
+      });
     });
 
     return zip.generateAsync({ type: 'blob' })

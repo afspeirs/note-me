@@ -29,7 +29,7 @@ export function NotesList() {
       {!isFetching && notes.length === 0 && (
         <li className="block p-3">No notes found</li>
       )}
-      {notes.map((note) => <NotesListItem note={note} />)}
+      {notes.map((note) => <NotesListItem key={note.id} note={note} />)}
     </ul>
   );
 }
