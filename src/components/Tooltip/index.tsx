@@ -21,7 +21,7 @@ export function Tooltip({
       {!disabled && (
         <span
           className={classNames(
-            'absolute p-2 transition-transform scale-0 group-hover/tooltip:scale-100 group-hover/tooltip:delay-200 peer-focus-visible/button:scale-100 rounded-lg whitespace-nowrap text-xs bg-black text-white dark:text-black dark:bg-white pointer-events-none',
+            'absolute p-2 transition-transform scale-0 group-hover/tooltip:scale-100 group-hover/tooltip:delay-200 peer-focus-visible/button:scale-100 rounded-lg whitespace-nowrap text-xs bg-dark text-light dark:text-dark dark:bg-light pointer-events-none',
             styles[position],
           )}
           aria-hidden="true"

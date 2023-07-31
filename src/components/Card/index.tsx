@@ -11,7 +11,7 @@ export function Card({
   return (
     <Component
       className={classNames(
-        'bg-white dark:bg-neutral-800 dark:text-white shadow',
+        'bg-light dark:bg-dark dark:text-light shadow',
         roundedTop ? 'rounded-t-xl' : 'rounded-xl',
         className,
       )}

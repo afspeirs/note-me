@@ -3,7 +3,7 @@ import { WrenchIcon } from '@heroicons/react/24/outline';
 export function AppVersion() {
   return (
     <div className="m-2">
-      <div className="relative flex items-center gap-x-4 p-3 min-w-0 w-full text-gray-700 dark:text-white select-none">
+      <div className="relative flex items-center gap-x-4 p-3 min-w-0 w-full text-dark dark:text-light select-none">
         <WrenchIcon className="h-6 w-6" aria-hidden="true" />
         <div>
           <p>App version</p>

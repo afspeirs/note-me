@@ -43,7 +43,7 @@ export function Modal({
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full max-w-md transform overflow-hidden p-5 text-left align-middle transition-all bg-white dark:bg-neutral-800 text-gray-700 dark:text-white rounded-xl">
+              <Dialog.Panel className="w-full max-w-md transform overflow-hidden p-5 text-left align-middle transition-all bg-light dark:bg-dark text-dark dark:text-light rounded-xl">
                 {showCloseButton && (
                   <Button
                     className="absolute top-2 right-2"

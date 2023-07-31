@@ -40,11 +40,11 @@ export function NotesSort() {
             leaveFrom="transform opacity-100 scale-100"
             leaveTo="transform opacity-0 scale-95"
           >
-            <Listbox.Options className="absolute right-0 mt-1 p-1 w-72 z-10 rounded-lg bg-gray-200 dark:bg-neutral-700 text-gray-900 dark:text-white shadow-lg focus-visible">
+            <Listbox.Options className="absolute right-0 mt-1 p-1 w-72 z-10 rounded-lg bg-gray-200 dark:bg-neutral-700 text-dark dark:text-light shadow-lg focus-visible">
               {Object.entries(notesSortOptions).map(([value, option]) => (
                 <Listbox.Option
                   key={value}
-                  className="relative pl-10 p-2 rounded-md select-none ui-active:text-white ui-active:bg-primary"
+                  className="relative pl-10 p-2 rounded-md select-none ui-active:text-light ui-active:bg-primary"
                   value={value}
                 >
                   <span className="absolute inset-y-0 left-0 items-center px-2 hidden ui-selected:flex">

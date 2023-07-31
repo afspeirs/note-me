@@ -12,9 +12,9 @@ export const style = {
 } as const;
 
 export const colours = {
-  base: 'text-gray-700 dark:text-white hover:bg-gray-300 dark:hover:bg-neutral-700',
-  primary: 'text-white bg-primary hover:bg-primary/90',
-  danger: 'text-white bg-red-600 hover:bg-red-600/90',
+  base: 'text-dark dark:text-light hover:bg-gray-300 dark:hover:bg-neutral-700',
+  primary: 'text-light bg-primary hover:bg-primary/90',
+  danger: 'text-light bg-red-600 hover:bg-red-600/90',
 } as const;
 export const coloursActive = {
   ...colours,

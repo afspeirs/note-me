@@ -62,7 +62,7 @@ export function App() {
         position="bottom-center"
         containerClassName="!select-none"
         toastOptions={{
-          className: '!bg-neutral-800 !text-white dark:!bg-white dark:!text-black !max-w-none',
+          className: '!bg-dark !text-light dark:!bg-light dark:!text-dark !max-w-none',
         }}
       />
     </>

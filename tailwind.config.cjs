@@ -1,5 +1,11 @@
 const typography = require('@tailwindcss/typography');
 const headlessui = require('@headlessui/tailwindcss');
+const {
+  gray,
+  neutral,
+  black,
+  white,
+} = require('tailwindcss/colors');
 
 const sidebarWidth = 20;
 const sidebarGap = 0.25;
@@ -14,12 +20,19 @@ module.exports = {
     hoverOnlyWhenSupported: true,
   },
   theme: {
+    colors: {
+      current: 'currentColor',
+      inherit: 'inherit',
+      transparent: 'transparent',
+      primary: '#ee6e00',
+      black,
+      white,
+      dark: neutral[800],
+      light: neutral[50],
+      gray,
+      neutral,
+    },
     extend: {
-      colors: {
-        transparent: 'transparent',
-        current: 'currentColor',
-        primary: '#ee6e00',
-      },
       boxShadow: {
         DEFAULT: '-1px 1px 4px 0px rgba(0, 0, 0, 0.4)',
       },

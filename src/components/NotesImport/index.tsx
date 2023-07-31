@@ -128,7 +128,7 @@ export function NotesImport() {
               htmlFor="input-file-upload"
               className={classNames(
                 'mt-2 flex justify-center rounded-lg border-2 border-dashed px-6 py-20 select-none focus-within:border-primary dark:focus-within:border-primary',
-                dragging ? 'border-primary dark:border-primary' : 'border-gray-900/25 dark:border-white',
+                dragging ? 'border-primary dark:border-primary' : 'border-dark/25 dark:border-light',
               )}
             >
               <input
@@ -140,7 +140,7 @@ export function NotesImport() {
                 onChange={handleChange}
               />
               <div className="text-center">
-                <ArrowUpCircleIcon className="mx-auto h-12 w-12 text-gray-300 dark:text-white" aria-hidden="true" />
+                <ArrowUpCircleIcon className="mx-auto h-12 w-12" aria-hidden="true" />
 
                 <div className="mt-4 flex">
                   <button
