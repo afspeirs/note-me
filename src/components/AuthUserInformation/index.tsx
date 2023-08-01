@@ -6,10 +6,10 @@ import { useEffect, useState } from 'react';
 
 import { supabase } from '@/api';
 import { Button } from '@/components/Button';
+import { Modal } from '@/components/Modal';
+import { ModalConfirm } from '@/components/ModalConfirm';
+import { Tooltip } from '@/components/Tooltip';
 import { authAtom } from '@/context/auth';
-import { Modal } from '../Modal';
-import { ModalConfirm } from '../ModalConfirm';
-import { Tooltip } from '../Tooltip';
 
 export function AuthUserInformation() {
   const auth = useAtomValue(authAtom);

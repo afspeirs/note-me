@@ -1,5 +1,5 @@
-import { Card } from '../Card';
-import { NotesList } from '../NotesList';
+import { Card } from '@/components/Card';
+import { NotesList } from '@/components/NotesList';
 
 export function Content() {
   return (

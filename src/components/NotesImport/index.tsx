@@ -9,9 +9,9 @@ import { useEventListener } from 'usehooks-ts';
 import { importNotes } from '@/api/notes';
 import type { NoteDocType } from '@/api/types';
 import { Button } from '@/components/Button';
+import { Modal } from '@/components/Modal';
 import { classNames } from '@/utils/classNames';
 import { getTitle } from '@/utils/getTitle';
-import { Modal } from '../Modal';
 import type { ImportFile } from './types';
 
 export function NotesImport() {
