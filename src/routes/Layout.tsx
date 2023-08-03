@@ -10,6 +10,7 @@ import { Sidebar } from '@/components/Sidebar';
 import { TopBar } from '@/components/TopBar';
 import { drawerOpenAtom } from '@/context/navigation';
 import { themeAtom } from '@/context/theme';
+import { classNames } from '@/utils/classNames';
 
 export function Layout() {
   const [drawerOpen, setDrawerOpen] = useAtom(drawerOpenAtom);
@@ -35,11 +36,11 @@ export function Layout() {
             as="aside"
             unmount={false}
             enter="transition-transform duration-400"
-            enterFrom="-translate-x-sidebarAdjusted"
+            enterFrom="-translate-x-sidebar"
             enterTo="translate-x-0"
             leave="transition-transform duration-400"
             leaveFrom="translate-x-0"
-            leaveTo="-translate-x-sidebarAdjusted"
+            leaveTo="-translate-x-sidebar"
             className="absolute w-sidebar p-sidebarGap [@media(display-mode:window-controls-overlay)]:pt-0 h-full flex flex-col gap-1"
           >
             <Sidebar />
@@ -48,13 +49,18 @@ export function Layout() {
             role="presentation"
             enter="transition-[margin-left] duration-400"
             enterFrom="ml-0"
-            enterTo="ml-sidebarAdjusted"
+            enterTo="ml-sidebar"
             leave="transition-[margin-left] duration-400"
-            leaveFrom="ml-sidebarAdjusted"
+            leaveFrom="ml-sidebar"
             leaveTo="scale-x-100"
           />
         </Transition>
-        <div className="relative flex-1 px-sidebarGap pt-sidebarGap [@media(display-mode:window-controls-overlay)]:pt-0 min-w-full sm:min-w-[initial]">
+        <div
+          className={classNames(
+            'relative flex-1 pt-sidebarGap [@media(display-mode:window-controls-overlay)]:pt-0 min-w-full sm:min-w-[initial] transition-[margin-right] duration-400',
+            drawerOpen ? 'mr-sidebarGap' : '',
+          )}
+        >
           <button
             type="button"
             className="absolute inset-0 mx-sidebarGap mt-sidebarGap [@media(display-mode:window-controls-overlay)]:mt-0 disabled:hidden sm:hidden rounded-t-xl z-10"

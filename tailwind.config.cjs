@@ -7,9 +7,6 @@ const {
   white,
 } = require('tailwindcss/colors');
 
-const sidebarWidth = 20;
-const sidebarGap = 0.25;
-
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -37,9 +34,8 @@ module.exports = {
         DEFAULT: '-1px 1px 4px 0px rgba(0, 0, 0, 0.4)',
       },
       spacing: {
-        sidebarGap: `${sidebarGap}rem`,
-        sidebarAdjusted: `${sidebarWidth - (sidebarGap)}rem`,
-        sidebar: `${sidebarWidth}rem`,
+        sidebarGap: '0.25rem',
+        sidebar: '20rem',
       },
       typography: {
         DEFAULT: {
