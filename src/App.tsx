@@ -1,7 +1,7 @@
 import { useAtom } from 'jotai';
 import { useEffect, useState } from 'react';
 import { HelmetProvider } from 'react-helmet-async';
-import { Toaster } from 'react-hot-toast';
+import { Toaster, toast } from 'react-hot-toast';
 import { RouterProvider } from 'react-router-dom';
 import { Provider } from 'rxdb-hooks';
 import type { SupabaseReplication } from 'rxdb-supabase';
@@ -21,12 +21,15 @@ export function App() {
     initialise().then(setDb);
 
     supabase.auth.getSession().then(({ data: { session } }) => {
+      console.log('initial', session);
+
       setAuth(session);
     });
 
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
+      console.log(_event, session);
       setAuth(session);
     });
 
@@ -35,15 +38,23 @@ export function App() {
 
   // TODO: Fix double running of this code
   useEffect(() => {
+    console.log('auth', auth);
+
     if (auth?.user?.id && db) {
       // TODO: lazy load this code
       const replicationSetup = enableReplication(db, auth.user);
-      console.log('replication start'); // eslint-disable-line no-console
       replicationSetup.start();
       setReplication(replicationSetup);
+      console.log('replication start'); // eslint-disable-line no-console
+      toast(`Logged in as ${auth.user.email}`, {
+        id: 'logged-in',
+      });
     } else {
-      console.log('replication stop'); // eslint-disable-line no-console
       replication?.cancel();
+      console.log('replication stop'); // eslint-disable-line no-console
+      toast('Not logged in', {
+        id: 'logged-out',
+      });
     }
   }, [auth, db]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -59,7 +70,7 @@ export function App() {
 
       {/* TODO: Remove the need for !important styles */}
       <Toaster
-        position="bottom-center"
+        position="bottom-right"
         containerClassName="!select-none"
         toastOptions={{
           className: '!bg-dark !text-light dark:!bg-light dark:!text-dark !max-w-none',
