@@ -35,8 +35,8 @@ export async function createNote(collection: NoteCollection) {
 
 export async function deleteNote(note: NoteDocument) {
   await note.remove()
-    .then(() => toast('Deleted Note', {
-      id: 'delete',
+    .then(() => toast(`"${getTitle(note.text)}" has been deleted`, {
+      id: `delete-${note.id}`,
     }));
 }
 
@@ -47,7 +47,7 @@ export async function favouriteNote(note: NoteDocument) {
     favourite: !prevState.favourite,
   }))
     .then((note2) => toast(`"${getTitle(note.text)}" ${note2?.favourite ? 'added to favourites' : 'removed from favourites'}`, {
-      id: 'favourite',
+      id: `favourite-${note2.id}`,
     }));
 }
 
