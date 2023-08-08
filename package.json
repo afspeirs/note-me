@@ -6,6 +6,7 @@
   "scripts": {
     "start": "vite",
     "dev": "vite",
+    "prebuild": "npm run semantic-release:dry",
     "build": "tsc && vite build",
     "postbuild": "npm run generate:webmanifest && npm run generate:service-worker",
     "preview": "vite preview",
@@ -14,6 +15,7 @@
     "pwa": "npm run build && npm run preview",
     "type": "tsc",
     "lint": "eslint . --ext .ts,.tsx",
+    "semantic-release:dry": "semantic-release --dry-run --no-ci",
     "outdated": "npx npm-check-updates -t minor",
     "update": "npm run outdated -- -u"
   },
@@ -44,6 +46,8 @@
     "workbox-window": "^7.0.0"
   },
   "devDependencies": {
+    "@semantic-release/exec": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
     "@tailwindcss/typography": "^0.5.9",
     "@types/file-saver": "^2.0.5",
     "@types/node": "^20.4.1",
@@ -63,6 +67,7 @@
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "postcss": "^8.4.25",
+    "semantic-release": "^21.0.7",
     "tailwindcss": "^3.3.2",
     "typescript": "^5.1.6",
     "vite": "^4.4.2",
