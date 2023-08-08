@@ -1,8 +1,8 @@
 import { Transition } from '@headlessui/react';
 import { useAtom } from 'jotai';
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import { useMediaQuery } from 'usehooks-ts';
 
 import { Card } from '@/components/Card';
@@ -13,14 +13,20 @@ import { themeAtom } from '@/context/theme';
 import { classNames } from '@/utils/classNames';
 
 export function Layout() {
+  const { pathname } = useLocation();
   const [drawerOpen, setDrawerOpen] = useAtom(drawerOpenAtom);
   const [theme] = useAtom(themeAtom);
   const matches = useMediaQuery('(prefers-color-scheme: dark)');
+  const mobile = useMediaQuery('(max-width:600px)');
   const appTheme = useMemo(() => {
     if (theme !== 'default') return theme;
     if (matches) return 'dark';
     return 'light';
   }, [matches, theme]);
+
+  useEffect(() => {
+    if (mobile) setDrawerOpen(false);
+  }, [pathname, mobile, setDrawerOpen]);
 
   return (
     <>
