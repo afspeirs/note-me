@@ -6,6 +6,7 @@
   "scripts": {
     "start": "vite",
     "dev": "vite",
+    "prebuild": "npm run semantic-release:dry",
     "build": "tsc && vite build",
     "postbuild": "npm run generate:webmanifest && npm run generate:service-worker",
     "preview": "vite preview",
@@ -14,6 +15,7 @@
     "pwa": "npm run build && npm run preview",
     "type": "tsc",
     "lint": "eslint . --ext .ts,.tsx",
+    "semantic-release:dry": "semantic-release --dry-run --no-ci",
     "outdated": "npx npm-check-updates -t minor",
     "update": "npm run outdated -- -u"
   },
