@@ -7,7 +7,7 @@ export function AppVersion() {
         <WrenchIcon className="h-6 w-6" aria-hidden="true" />
         <div>
           <p>App version</p>
-          <p className="text-gray-500 dark:text-gray-400">{import.meta.env.PACKAGE_VERSION}</p>
+          <p className="text-gray-500 dark:text-gray-400">{import.meta.env.APP_VERSION}</p>
         </div>
       </div>
     </div>
