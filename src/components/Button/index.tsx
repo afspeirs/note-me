@@ -14,7 +14,6 @@ export const style = {
 export const colours = {
   base: 'text-dark dark:text-light hover:bg-gray-300 dark:hover:bg-neutral-700',
   primary: 'text-light bg-primary hover:bg-primary/90',
-  danger: 'text-light bg-red-600 hover:bg-red-600/90',
 } as const;
 export const coloursActive = {
   ...colours,
@@ -53,7 +52,12 @@ export const Button = forwardRef(({
       <Icon className={classNames('h-6 w-6 flex-shrink-0', IconClassName)} aria-hidden="true" />
     )}
 
-    <span className={classNames('truncate', (iconOnly && Icon) ? 'sr-only' : '')}>
+    <span
+      className={classNames(
+        iconOnly ? '' : 'truncate',
+        iconOnly && Icon ? 'sr-only' : '',
+      )}
+    >
       {children}
     </span>
 
@@ -80,7 +84,12 @@ export const Button = forwardRef(({
       <Icon className={classNames('h-6 w-6 flex-shrink-0', IconClassName)} aria-hidden="true" />
     )}
 
-    <span className={classNames('truncate', (iconOnly && Icon) ? 'sr-only' : '')}>
+    <span
+      className={classNames(
+        iconOnly ? '' : 'truncate',
+        iconOnly && Icon ? 'sr-only' : '',
+      )}
+    >
       {children}
     </span>
 

@@ -21,15 +21,12 @@ export function App() {
     initialise().then(setDb);
 
     supabase.auth.getSession().then(({ data: { session } }) => {
-      console.log('initial', session);
-
       setAuth(session);
     });
 
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
-      console.log(_event, session);
       setAuth(session);
     });
 
@@ -38,20 +35,18 @@ export function App() {
 
   // TODO: Fix double running of this code
   useEffect(() => {
-    console.log('auth', auth);
-
     if (auth?.user?.id && db) {
       // TODO: lazy load this code
       const replicationSetup = enableReplication(db, auth.user);
       replicationSetup.start();
       setReplication(replicationSetup);
-      console.log('replication start'); // eslint-disable-line no-console
+      console.log(`Logged in as ${auth.user.email}`); // eslint-disable-line no-console
       toast(`Logged in as ${auth.user.email}`, {
         id: 'logged-in',
       });
     } else {
       replication?.cancel();
-      console.log('replication stop'); // eslint-disable-line no-console
+      console.log('Not logged in'); // eslint-disable-line no-console
       toast('Not logged in', {
         id: 'logged-out',
       });
