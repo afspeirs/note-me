@@ -1,3 +1,6 @@
+import type { avatarSizes } from '.';
+
 export type AvatarIconProps = {
-  name?: string,
+  label?: string,
+  size?: keyof typeof avatarSizes,
 };

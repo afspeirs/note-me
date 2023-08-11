@@ -18,6 +18,7 @@ export function AuthUserInformation() {
   const [openSignOutConfirmation, setOpenSignOutConfirmation] = useState(false);
 
   const signOut = async () => {
+    setOpen(false);
     const { error } = await supabase.auth.signOut();
     if (error) console.error(error); // eslint-disable-line no-console
   };
@@ -30,70 +31,81 @@ export function AuthUserInformation() {
 
   return (
     <>
-      {auth ? (
-        <>
-          <Tooltip
-            label="Sign out"
-            position="top"
-          >
-            <Button
-              active={openSignOutConfirmation}
-              iconOnly
-              onClick={() => setOpenSignOutConfirmation(true)}
-            >
-              <AvatarIcon name={auth.user.email} />
-              <span className="sr-only">{auth.user.email || 'Signed in'}</span>
-            </Button>
-          </Tooltip>
-
-          <ModalConfirm
-            open={openSignOutConfirmation}
-            message="Are you sure you want to sign out?"
-            onClose={() => setOpenSignOutConfirmation(false)}
-            onConfirm={() => {
-              setOpenSignOutConfirmation(false);
-              signOut();
-            }}
-          />
-        </>
-      ) : (
-        <Tooltip
-          label="Sign in"
-          position="top"
+      <Tooltip
+        label={auth ? 'View account' : 'Sign in'}
+        position="top"
+      >
+        <Button
+          active={open}
+          iconOnly
+          Icon={auth ? undefined : UserIcon}
+          onClick={() => setOpen(true)}
         >
-          <Button
-            active={open}
-            iconOnly
-            Icon={UserIcon}
-            onClick={() => setOpen(true)}
-          >
-            Sign in
-          </Button>
-        </Tooltip>
-      )}
+          {auth ? (
+            <>
+              <AvatarIcon label={auth.user.email} size="icon" />
+              <span className="sr-only">View account</span>
+            </>
+          ) : 'Sign in'}
+        </Button>
+      </Tooltip>
 
       <Modal
         open={open}
         onClose={() => setOpen(false)}
-        theme="dark"
+        theme={auth ? undefined : 'dark'}
       >
-        <Auth
-          appearance={{
-            theme: ThemeSupa,
-            variables: {
-              default: {
-                colors: {
-                  brand: '#ee6e00',
-                  brandAccent: '#ee6e00',
+        {auth ? (
+          <>
+            <div className="flex justify-center">
+              <AvatarIcon label={auth.user.email} size="large" />
+            </div>
+
+            <div className="relative flex items-center m-4 py-4 select-none">
+              <p className="flex pl-24">
+                <strong className="absolute left-0">Email:</strong>
+                {auth.user.email || 'Signed in'}
+              </p>
+            </div>
+
+            <Button
+              active={openSignOutConfirmation}
+              colour="primary"
+              Icon={ArrowRightOnRectangleIcon}
+              onClick={() => setOpenSignOutConfirmation(true)}
+            >
+              Sign out
+            </Button>
+
+            <ModalConfirm
+              open={openSignOutConfirmation}
+              message="Are you sure you want to sign out?"
+              onClose={() => setOpenSignOutConfirmation(false)}
+              onConfirm={() => {
+                setOpenSignOutConfirmation(false);
+                signOut();
+              }}
+            />
+          </>
+        ) : (
+          <Auth
+            appearance={{
+              theme: ThemeSupa,
+              variables: {
+                default: {
+                  colors: {
+                    brand: '#ee6e00',
+                    brandAccent: '#ee6e00',
+                  },
                 },
               },
-            },
-          }}
-          // providers={['google', 'github']}
-          providers={[]}
-          supabaseClient={supabase}
-          theme="dark"
-        />
+            }}
+            // providers={['google', 'github']}
+            providers={[]}
+            supabaseClient={supabase}
+            theme="dark"
+          />
+        )}
       </Modal>
     </>
   );
