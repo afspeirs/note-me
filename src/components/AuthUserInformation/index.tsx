@@ -5,6 +5,7 @@ import { useAtomValue } from 'jotai';
 import { useEffect, useState } from 'react';
 
 import { supabase } from '@/api';
+import { AvatarIcon } from '@/components/AvatarIcon';
 import { Button } from '@/components/Button';
 import { Modal } from '@/components/Modal';
 import { ModalConfirm } from '@/components/ModalConfirm';
@@ -28,28 +29,20 @@ export function AuthUserInformation() {
   }, [auth?.user]);
 
   return (
-    <div className="flex m-2">
+    <>
       {auth ? (
         <>
-          <div className="relative flex items-center gap-x-4 p-3 min-w-0 w-full select-none">
-            <span className="inline-flex h-8 w-8 -m-1 items-center justify-center rounded-full bg-dark dark:bg-light text-light dark:text-dark">
-              <span className="font-medium leading-none capitalize">{auth.user.email?.at(0) || 'u'}</span>
-            </span>
-            <div>
-              <p>{auth.user.email || 'Signed in'}</p>
-            </div>
-          </div>
           <Tooltip
-            label="Sign Out"
-            position="left"
+            label="Sign out"
+            position="top"
           >
             <Button
               active={openSignOutConfirmation}
-              Icon={ArrowRightOnRectangleIcon}
               iconOnly
               onClick={() => setOpenSignOutConfirmation(true)}
             >
-              Sign out
+              <AvatarIcon name={auth.user.email} />
+              <span className="sr-only">{auth.user.email || 'Signed in'}</span>
             </Button>
           </Tooltip>
 
@@ -64,13 +57,19 @@ export function AuthUserInformation() {
           />
         </>
       ) : (
-        <Button
-          active={open}
-          Icon={UserIcon}
-          onClick={() => setOpen(true)}
+        <Tooltip
+          label="Sign in"
+          position="top"
         >
-          Sign in
-        </Button>
+          <Button
+            active={open}
+            iconOnly
+            Icon={UserIcon}
+            onClick={() => setOpen(true)}
+          >
+            Sign in
+          </Button>
+        </Tooltip>
       )}
 
       <Modal
@@ -96,6 +95,6 @@ export function AuthUserInformation() {
           theme="dark"
         />
       </Modal>
-    </div>
+    </>
   );
 }

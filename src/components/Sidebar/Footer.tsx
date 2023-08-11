@@ -1,9 +1,10 @@
 import {
   Cog6ToothIcon,
-  HomeIcon,
+  // HomeIcon,
   PlusIcon,
 } from '@heroicons/react/24/outline';
 
+import { AuthUserInformation } from '@/components/AuthUserInformation';
 import { Button } from '@/components/Button';
 import { Card } from '@/components/Card';
 import { Tooltip } from '@/components/Tooltip';
@@ -20,7 +21,7 @@ export function Footer() {
             Create Note
           </Button>
         </li>
-        <li>
+        {/* <li>
           <Tooltip label="Home" position="top">
             <Button
               Icon={HomeIcon}
@@ -30,6 +31,9 @@ export function Footer() {
               Home
             </Button>
           </Tooltip>
+        </li> */}
+        <li>
+          <AuthUserInformation />
         </li>
         <li>
           <Tooltip label="Settings" position="top">

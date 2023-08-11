@@ -53,7 +53,12 @@ export const Button = forwardRef(({
       <Icon className={classNames('h-6 w-6 flex-shrink-0', IconClassName)} aria-hidden="true" />
     )}
 
-    <span className={classNames('truncate', (iconOnly && Icon) ? 'sr-only' : '')}>
+    <span
+      className={classNames(
+        iconOnly ? '' : 'truncate',
+        iconOnly && Icon ? 'sr-only' : '',
+      )}
+    >
       {children}
     </span>
 
@@ -80,7 +85,12 @@ export const Button = forwardRef(({
       <Icon className={classNames('h-6 w-6 flex-shrink-0', IconClassName)} aria-hidden="true" />
     )}
 
-    <span className={classNames('truncate', (iconOnly && Icon) ? 'sr-only' : '')}>
+    <span
+      className={classNames(
+        iconOnly ? '' : 'truncate',
+        iconOnly && Icon ? 'sr-only' : '',
+      )}
+    >
       {children}
     </span>
 
