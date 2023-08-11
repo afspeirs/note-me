@@ -40,15 +40,15 @@ export function App() {
       const replicationSetup = enableReplication(db, auth.user);
       replicationSetup.start();
       setReplication(replicationSetup);
-      console.log(`Logged in as ${auth.user.email}`); // eslint-disable-line no-console
-      toast(`Logged in as ${auth.user.email}`, {
-        id: 'logged-in',
+      console.log('Signed in'); // eslint-disable-line no-console
+      toast('Signed in', {
+        id: 'signed-in',
       });
     } else {
       replication?.cancel();
-      console.log('Not logged in'); // eslint-disable-line no-console
-      toast('Not logged in', {
-        id: 'logged-out',
+      console.log('Not signed in'); // eslint-disable-line no-console
+      toast('Not signed in', {
+        id: 'signed-out',
       });
     }
   }, [auth, db]); // eslint-disable-line react-hooks/exhaustive-deps
