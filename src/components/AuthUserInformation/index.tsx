@@ -31,10 +31,12 @@ export function AuthUserInformation() {
     <div className="flex m-2">
       {auth ? (
         <>
-          <div className="relative flex items-center gap-x-4 p-3 min-w-0 w-full text-dark dark:text-light select-none">
-            <UserIcon className="h-6 w-6" aria-hidden="true" />
+          <div className="relative flex items-center gap-x-4 p-3 min-w-0 w-full select-none">
+            <span className="inline-flex h-8 w-8 -m-1 items-center justify-center rounded-full bg-dark dark:bg-light text-light dark:text-dark">
+              <span className="font-medium leading-none capitalize">{auth.user.email?.at(0) || 'u'}</span>
+            </span>
             <div>
-              <p>{auth?.user.email}</p>
+              <p>{auth.user.email || 'Signed in'}</p>
             </div>
           </div>
           <Tooltip
