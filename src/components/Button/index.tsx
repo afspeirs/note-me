@@ -13,6 +13,7 @@ export const style = {
 
 export const colours = {
   base: 'text-dark dark:text-light hover:bg-gray-300 dark:hover:bg-neutral-700',
+  inverted: 'text-light dark:text-dark hover:bg-neutral-700 dark:hover:bg-gray-300',
   primary: 'text-light bg-primary hover:bg-primary/90',
 } as const;
 export const coloursActive = {

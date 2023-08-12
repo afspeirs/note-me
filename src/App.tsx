@@ -9,6 +9,7 @@ import type { SupabaseReplication } from 'rxdb-supabase';
 import { enableReplication, initialise, supabase } from '@/api';
 import type { MyDatabase, NoteDocType } from '@/api/types';
 import { ServiceWorkerEvents } from '@/components/ServiceWorkerEvents';
+import { Toast } from '@/components/Toast';
 import { authAtom } from '@/context/auth';
 import { router } from '@/routes';
 
@@ -49,6 +50,7 @@ export function App() {
       console.log('Not signed in'); // eslint-disable-line no-console
       toast('Not signed in', {
         id: 'signed-out',
+        duration: Infinity,
       });
     }
   }, [auth, db]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -63,14 +65,12 @@ export function App() {
 
       <ServiceWorkerEvents />
 
-      {/* TODO: Remove the need for !important styles */}
       <Toaster
         position="bottom-right"
-        containerClassName="!select-none"
-        toastOptions={{
-          className: '!bg-dark !text-light dark:!bg-light dark:!text-dark !max-w-none',
-        }}
-      />
+        containerClassName="select-none"
+      >
+        {Toast}
+      </Toaster>
     </>
   );
 }
