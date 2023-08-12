@@ -42,10 +42,7 @@
   }
 
   .pwa-header {
-    left: env(titlebar-area-x, 0);
-    top: env(titlebar-area-y, 0);
-    width: env(titlebar-area-width, 0);
-    height: env(titlebar-area-height, 0);
+    @apply left-titlebar-area-x top-titlebar-area-y w-titlebar-area-width h-titlebar-area-height;
   }
 
   .drag {

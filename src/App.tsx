@@ -50,7 +50,6 @@ export function App() {
       console.log('Not signed in'); // eslint-disable-line no-console
       toast('Not signed in', {
         id: 'signed-out',
-        duration: Infinity,
       });
     }
   }, [auth, db]); // eslint-disable-line react-hooks/exhaustive-deps

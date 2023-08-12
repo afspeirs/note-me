@@ -36,6 +36,10 @@ module.exports = {
       spacing: {
         sidebarGap: '0.25rem',
         sidebar: '20rem',
+        'titlebar-area-x': 'env(titlebar-area-x, 0)',
+        'titlebar-area-y': 'env(titlebar-area-y, 0)',
+        'titlebar-area-width': 'env(titlebar-area-width, 0)',
+        'titlebar-area-height': 'env(titlebar-area-height, 0)',
       },
       typography: {
         DEFAULT: {
