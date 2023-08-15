@@ -21,8 +21,14 @@ export function App() {
   useEffect(() => {
     initialise().then(setDb);
 
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    supabase.auth.getSession().then(({ data: { session }, error }) => {
       setAuth(session);
+      if (error) {
+        toast(error.message, {
+          id: 'get-session-error',
+        });
+        throw new Error(error.message);
+      }
     });
 
     const {
@@ -42,15 +48,9 @@ export function App() {
       replicationSetup.start();
       setReplication(replicationSetup);
       console.log('Signed in'); // eslint-disable-line no-console
-      toast('Signed in', {
-        id: 'signed-in',
-      });
     } else {
       replication?.cancel();
       console.log('Not signed in'); // eslint-disable-line no-console
-      toast('Not signed in', {
-        id: 'signed-out',
-      });
     }
   }, [auth, db]); // eslint-disable-line react-hooks/exhaustive-deps
 
