@@ -42,6 +42,20 @@ export async function initialise() {
       favourite: {
         type: 'boolean',
       },
+      isFolder: {
+        type: 'boolean',
+      },
+      relatedFolder: {
+        type: 'string',
+        ref: 'notes',
+      },
+      relatedNotes: {
+        type: 'array',
+        ref: 'notes',
+        items: {
+          type: 'string',
+        },
+      },
       id: {
         type: 'string',
         maxLength: 100, // <- the primary key must have set maxLength

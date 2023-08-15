@@ -1,6 +1,6 @@
-import react from '@vitejs/plugin-react';
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
+import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 
 const appVersion = readFileSync('./.version', { encoding: 'utf8' }).replace('\n', '') || 'N/A';

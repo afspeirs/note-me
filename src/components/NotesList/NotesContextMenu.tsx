@@ -1,7 +1,9 @@
 import { Menu, Transition } from '@headlessui/react';
 import {
+  ChevronRightIcon,
   ClockIcon,
   EllipsisHorizontalIcon,
+  FolderIcon,
   StarIcon as StarOutlineIcon,
   TrashIcon,
 } from '@heroicons/react/24/outline';
@@ -13,8 +15,10 @@ import { Fragment, forwardRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { deleteNote, favouriteNote } from '@/api/notes';
+import type { NoteDocument } from '@/api/types';
 import { Button } from '@/components/Button';
 import { ModalConfirm } from '@/components/ModalConfirm';
+import { NotesMoveModal } from '@/components/NotesMoveModal';
 import { formatDate } from '@/utils/formatDate';
 import { getTitle } from '@/utils/getTitle';
 import type { NotesProps } from './types';
@@ -24,6 +28,7 @@ export const NotesContextMenu = forwardRef(({
 }: NotesProps, ref: Ref<HTMLButtonElement>) => {
   const navigate = useNavigate();
   const [showDeleteNoteModal, setShowDeleteNoteModal] = useState(false);
+  const [showMoveNoteModal, setShowMoveNoteModal] = useState<NoteDocument | false>(false);
 
   const handleDeleteNote = () => {
     setShowDeleteNoteModal(false);
@@ -56,13 +61,10 @@ export const NotesContextMenu = forwardRef(({
             leaveTo="transform opacity-0 scale-95"
           >
             <Menu.Items className="absolute right-0 top-12 mt-1 w-72 z-10 origin-top-right divide-y divide-gray-300 rounded-lg bg-gray-200 dark:bg-neutral-700 text-dark dark:text-light shadow-lg focus-visible">
-              <div className="px-1 py-1">
+              <div className="p-1">
                 <Menu.Item disabled>
-                  <div className="flex w-full items-center rounded-md px-2 py-2 select-none">
-                    <ClockIcon
-                      className="mr-2 h-5 w-5"
-                      aria-hidden="true"
-                    />
+                  <div className="flex gap-2 w-full items-center rounded-md p-2 select-none">
+                    <ClockIcon className="h-5 w-5" aria-hidden="true" />
                     <div className="text-left">
                       <span className="font-medium">Created: </span>
                       {formatDate({ date: note.dateCreated })}
@@ -70,29 +72,37 @@ export const NotesContextMenu = forwardRef(({
                   </div>
                 </Menu.Item>
                 <Menu.Item disabled>
-                  <div className="flex w-full items-center rounded-md px-2 py-2 select-none">
-                    <ClockIcon
-                      className="mr-2 h-5 w-5"
-                      aria-hidden="true"
-                    />
-                    <span className="">
+                  <div className="flex gap-2 w-full items-center rounded-md p-2 select-none">
+                    <ClockIcon className="h-5 w-5" aria-hidden="true" />
+                    <span>
                       <span className="font-medium">Modified: </span>
                       {note.dateModified ? formatDate({ date: note.dateModified }) : 'Never'}
                     </span>
                   </div>
                 </Menu.Item>
               </div>
-              <div className="px-1 py-1">
+              <div className="p-1">
                 <Menu.Item>
                   <button
                     type="button"
-                    className="ui-active:bg-primary ui-active:text-light flex w-full items-center rounded-md p-2"
+                    className="ui-active:bg-primary ui-active:text-light flex gap-2 w-full items-center rounded-md p-2 select-none"
+                    onClick={() => setShowMoveNoteModal(note)}
+                  >
+                    <FolderIcon className="h-5 w-5" aria-hidden="true" />
+                    Move Note
+                    <ChevronRightIcon className="ml-auto h-5 w-5" aria-hidden="true" />
+                  </button>
+                </Menu.Item>
+                <Menu.Item>
+                  <button
+                    type="button"
+                    className="ui-active:bg-primary ui-active:text-light flex gap-2 w-full items-center rounded-md p-2 select-none"
                     onClick={() => favouriteNote(note)}
                   >
                     {note.favourite ? (
-                      <StarSolidIcon className="mr-2 h-5 w-5" aria-hidden="true" />
+                      <StarSolidIcon className="h-5 w-5" aria-hidden="true" />
                     ) : (
-                      <StarOutlineIcon className="mr-2 h-5 w-5" aria-hidden="true" />
+                      <StarOutlineIcon className="h-5 w-5" aria-hidden="true" />
                     )}
 
                     {`${note?.favourite ? 'Unfavourite' : 'Favourite'} Note`}
@@ -101,17 +111,21 @@ export const NotesContextMenu = forwardRef(({
                 <Menu.Item>
                   <button
                     type="button"
-                    className="ui-active:bg-primary ui-active:text-light flex gap-2 w-full items-center rounded-md p-2"
+                    className="ui-active:bg-primary ui-active:text-light flex gap-2 w-full items-center rounded-md p-2 select-none"
                     onClick={() => setShowDeleteNoteModal(true)}
                   >
                     <TrashIcon className="h-5 w-5" aria-hidden="true" />
-
                     Delete Note
                   </button>
                 </Menu.Item>
               </div>
             </Menu.Items>
           </Transition>
+
+          <NotesMoveModal
+            note={showMoveNoteModal}
+            onClose={() => setShowMoveNoteModal(false)}
+          />
 
           <ModalConfirm
             message={note && `Are you sure you want to delete "${getTitle(note.text)}"?`}

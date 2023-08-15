@@ -5,6 +5,9 @@ export type NoteDocType = {
   dateModified: string,
   favourite?: boolean,
   id: string,
+  isFolder?: boolean,
+  relatedFolder?: string,
+  relatedNotes?: string[],
   text: string,
 };
 

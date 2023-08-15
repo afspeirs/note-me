@@ -5,6 +5,7 @@ import type { NoteDocType } from '@/api/types';
 import { notesSearchAtom } from '@/context/notesSearch';
 import { notesSortAtom, notesSortOptions } from '@/context/notesSort';
 import { NotesListItem } from './NotesListItem';
+import { FolderListItem } from './FolderListItem';
 
 export function NotesList() {
   const search = useAtomValue(notesSearchAtom);
@@ -16,8 +17,32 @@ export function NotesList() {
         text: {
           $regex: RegExp(search, 'i'),
         },
+        $or: [
+          {
+            relatedNotes: {
+              $ne: null,
+            },
+          },
+          {
+            $and: [
+              {
+                isFolder: {
+                  $ne: true,
+                },
+              },
+              {
+                relatedFolder: {
+                  $eq: null,
+                },
+              },
+            ],
+          },
+        ],
       },
-      sort: notesSortOptions[sort].value,
+      sort: [
+        { isFolder: 'desc' },
+        notesSortOptions[sort].value,
+      ],
     }),
   );
 
@@ -27,9 +52,13 @@ export function NotesList() {
         <li className="block p-3">Loading...</li>
       )}
       {!isFetching && notes.length === 0 && (
-        <li className="block p-3">No notes found</li>
+        <li className="block p-3">No notes</li>
       )}
-      {notes.map((note) => <NotesListItem key={note.id} note={note} />)}
+      {notes.map((note) => (note.isFolder ? (
+        <FolderListItem key={note.id} note={note} />
+      ) : (
+        <NotesListItem key={note.id} note={note} />
+      )))}
     </ul>
   );
 }

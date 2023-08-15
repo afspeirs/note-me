@@ -13,7 +13,6 @@ export function NotesListItem({
 
   return (
     <li
-      key={note.id}
       className="group/context-menu relative flex"
       onContextMenu={(event) => {
         event.preventDefault();

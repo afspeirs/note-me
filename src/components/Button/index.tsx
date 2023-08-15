@@ -35,6 +35,7 @@ export const Button = forwardRef(({
   onClick,
   secondaryAction,
   target = '_self',
+  ...props
 }: ButtonProps, ref) => (href ? (
   <NavLink
     className={({ isActive }) => classNames(
@@ -48,6 +49,7 @@ export const Button = forwardRef(({
     rel={target === '_blank' ? 'noreferrer' : undefined}
     target={target}
     to={href}
+    {...props} // eslint-disable-line react/jsx-props-no-spreading
   >
     {Icon && (
       <Icon className={classNames('h-6 w-6 flex-shrink-0', IconClassName)} aria-hidden="true" />
@@ -80,6 +82,7 @@ export const Button = forwardRef(({
     disabled={disabled}
     onClick={onClick}
     ref={ref as Ref<HTMLButtonElement>}
+    {...props} // eslint-disable-line react/jsx-props-no-spreading
   >
     {Icon && (
       <Icon className={classNames('h-6 w-6 flex-shrink-0', IconClassName)} aria-hidden="true" />

@@ -3,7 +3,7 @@ import toast from 'react-hot-toast';
 import { getTitle } from '@/utils/getTitle';
 import type { NoteCollection, NoteDocType, NoteDocument } from './types';
 
-const returnNoteObject = ({
+export const returnNoteObject = ({
   dateCreated,
   dateModified,
   favourite,
@@ -34,6 +34,7 @@ export async function createNote(collection: NoteCollection) {
 }
 
 export async function deleteNote(note: NoteDocument) {
+  // TODO: Remove note.id from any folders relatedNotes field
   await note.remove()
     .then(() => toast(`"${getTitle(note.text)}" has been deleted`, {
       id: `delete-${note.id}`,
@@ -55,6 +56,39 @@ export async function importNotes(collection: NoteCollection, files: Partial<Not
   const notes = files.map((note) => returnNoteObject(note));
 
   await collection.bulkInsert(notes);
+}
+
+export async function removeNoteFromFolder(note: NoteDocument) {
+  const oldFolder: NoteDocument = await note.populate('relatedFolder');
+
+  oldFolder.modify((oldData) => {
+    // eslint-disable-next-line no-param-reassign
+    oldData.relatedNotes = oldData.relatedNotes?.filter((item) => item !== note.id);
+    return oldData;
+  });
+}
+
+export async function moveNote(note: NoteDocument, folder: NoteDocument | null) {
+  if (folder) {
+    const folderNotes = folder.relatedNotes || [];
+
+    folder.patch({
+      relatedNotes: [
+        ...folderNotes,
+        note.id,
+      ],
+    });
+
+    note.patch({
+      relatedFolder: folder.id,
+    });
+  } else {
+    removeNoteFromFolder(note);
+
+    note.patch({
+      relatedFolder: undefined,
+    });
+  }
 }
 
 export async function updateNote(note: NoteDocument, text: string) {
