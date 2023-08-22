@@ -35,8 +35,8 @@ module.exports = {
         DEFAULT: '-1px 1px 4px 0px rgba(0, 0, 0, 0.4)',
       },
       spacing: {
-        sidebarGap: '0.25rem',
         sidebar: '20rem',
+        'sidebar-gap': '0.25rem',
         'titlebar-area-x': 'env(titlebar-area-x, 0)',
         'titlebar-area-y': 'env(titlebar-area-y, 0)',
         'titlebar-area-width': 'env(titlebar-area-width, 0)',

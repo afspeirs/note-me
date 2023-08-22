@@ -47,7 +47,7 @@ export function Layout() {
             leave="transition-transform duration-400"
             leaveFrom="translate-x-0"
             leaveTo="-translate-x-sidebar"
-            className="absolute w-sidebar p-sidebarGap pb-safe [@media(display-mode:window-controls-overlay)]:pt-0 h-full flex flex-col gap-1"
+            className="absolute w-sidebar p-sidebar-gap pb-safe-offset-sidebar-gap [@media(display-mode:window-controls-overlay)]:pt-0 h-full flex flex-col gap-1"
           >
             <Sidebar />
           </Transition.Child>
@@ -63,13 +63,13 @@ export function Layout() {
         </Transition>
         <div
           className={classNames(
-            'relative flex-1 pt-sidebarGap [@media(display-mode:window-controls-overlay)]:pt-0 min-w-full sm:min-w-[initial] transition-[margin-right] duration-400',
-            drawerOpen ? 'mr-sidebarGap' : '',
+            'relative flex-1 pt-sidebar-gap [@media(display-mode:window-controls-overlay)]:pt-0 min-w-full sm:min-w-[initial] transition-[margin-right] duration-400',
+            drawerOpen ? 'mr-sidebar-gap' : '',
           )}
         >
           <button
             type="button"
-            className="absolute inset-0 mx-sidebarGap mt-sidebarGap [@media(display-mode:window-controls-overlay)]:mt-0 disabled:hidden sm:hidden rounded-t-xl z-10"
+            className="absolute inset-0 mx-sidebar-gap mt-sidebar-gap [@media(display-mode:window-controls-overlay)]:mt-0 disabled:hidden sm:hidden rounded-t-xl z-10"
             disabled={!drawerOpen}
             onClick={() => setDrawerOpen((prevState) => !prevState)}
           >
