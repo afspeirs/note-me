@@ -4,14 +4,14 @@ import { getTitle } from '@/utils/getTitle';
 import type { NoteCollection, NoteDocType, NoteDocument } from './types';
 
 const returnNoteObject = ({
-  dateCreated,
-  dateModified,
+  date_created,
+  date_modified,
   favourite,
   text,
 }: Partial<NoteDocType> = {}) => ({
   id: window.crypto.randomUUID(),
-  dateCreated: dateCreated ? new Date(dateCreated).toISOString() : new Date().toISOString(),
-  dateModified: dateModified ? new Date(dateModified).toISOString() : new Date().toISOString(),
+  date_created: date_created ? new Date(date_created).toISOString() : new Date().toISOString(),
+  date_modified: date_modified ? new Date(date_modified).toISOString() : new Date().toISOString(),
   favourite: favourite || false,
   text: text || '',
 });
@@ -43,7 +43,7 @@ export async function deleteNote(note: NoteDocument) {
 export async function favouriteNote(note: NoteDocument) {
   await note?.modify((prevState) => ({
     ...prevState,
-    // dateModified: new Date().toISOString(),
+    // date_modified: new Date().toISOString(),
     favourite: !prevState.favourite,
   }))
     .then((note2) => toast(`"${getTitle(note.text)}" ${note2?.favourite ? 'added to favourites' : 'removed from favourites'}`, {
@@ -59,7 +59,7 @@ export async function importNotes(collection: NoteCollection, files: Partial<Not
 
 export async function updateNote(note: NoteDocument, text: string) {
   await note?.patch({
-    dateModified: new Date().toISOString(),
+    date_modified: new Date().toISOString(),
     text,
   });
 }

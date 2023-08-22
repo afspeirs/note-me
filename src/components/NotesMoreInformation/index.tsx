@@ -16,11 +16,11 @@ export function NotesMoreInformation({
     >
       <p className="mb-2">
         <span className="font-medium">Date Created: </span>
-        {formatDate({ date: note.dateCreated })}
+        {formatDate({ date: note.date_created })}
       </p>
       <p className="mb-2">
         <span className="font-medium">Date Modified: </span>
-        {note.dateModified ? formatDate({ date: note.dateModified }) : 'Never'}
+        {note.date_modified ? formatDate({ date: note.date_modified }) : 'Never'}
       </p>
       <p>
         <span className="font-medium">Favourite: </span>

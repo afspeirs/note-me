@@ -11,21 +11,21 @@ export type NotesSortOptions = {
 };
 
 export const notesSortOptions: NotesSortOptions = {
-  'dateModified-desc': {
+  'date_modified-desc': {
     label: 'Date Modified (Newest First)',
-    value: [{ dateModified: 'desc' }],
+    value: [{ date_modified: 'desc' }],
   },
-  'dateModified-asc': {
+  'date_modified-asc': {
     label: 'Date Modified (Oldest First)',
-    value: [{ dateModified: 'asc' }],
+    value: [{ date_modified: 'asc' }],
   },
-  'dateCreated-desc': {
+  'date_created-desc': {
     label: 'Date Created (Newest First)',
-    value: [{ dateCreated: 'desc' }],
+    value: [{ date_created: 'desc' }],
   },
-  'dateCreated-asc': {
+  'date_created-asc': {
     label: 'Date Created (Oldest First)',
-    value: [{ dateCreated: 'asc' }],
+    value: [{ date_created: 'asc' }],
   },
   'title-asc': {
     label: 'Title (A-Z)',
@@ -37,4 +37,4 @@ export const notesSortOptions: NotesSortOptions = {
   },
 };
 
-export const notesSortAtom = atomWithStorage<keyof typeof notesSortOptions & string>('notes-sort', 'dateModified-desc');
+export const notesSortAtom = atomWithStorage<keyof typeof notesSortOptions & string>('notes-sort', 'date_modified-desc');

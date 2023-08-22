@@ -37,8 +37,8 @@ export function NotesExport() {
     notes.filter((note) => note.text !== '').forEach((note) => {
       const fileName = getTitle(note.text);
       const contents = `---
-        dateCreated: ${note.dateCreated}
-        dateModified: ${note.dateModified}
+        date_created: ${note.date_created}
+        date_modified: ${note.date_modified}
         favourite: ${note.favourite || false}
       ---`
         .replace(/^\s+|\s+$/gm, '')

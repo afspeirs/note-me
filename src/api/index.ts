@@ -33,10 +33,10 @@ export async function initialise() {
     primaryKey: 'id',
     type: 'object',
     properties: {
-      dateCreated: {
+      date_created: {
         type: 'date-time',
       },
-      dateModified: {
+      date_modified: {
         type: 'date-time',
       },
       favourite: {
@@ -50,7 +50,7 @@ export async function initialise() {
         type: 'string',
       },
     },
-    required: ['id', 'dateCreated'],
+    required: ['id', 'date_created'],
   } as const;
 
   await db.addCollections({

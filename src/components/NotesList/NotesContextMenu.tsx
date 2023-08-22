@@ -65,7 +65,7 @@ export const NotesContextMenu = forwardRef(({
                     />
                     <div className="text-left">
                       <span className="font-medium">Created: </span>
-                      {formatDate({ date: note.dateCreated })}
+                      {formatDate({ date: note.date_created })}
                     </div>
                   </div>
                 </Menu.Item>
@@ -77,7 +77,7 @@ export const NotesContextMenu = forwardRef(({
                     />
                     <span className="">
                       <span className="font-medium">Modified: </span>
-                      {note.dateModified ? formatDate({ date: note.dateModified }) : 'Never'}
+                      {note.date_modified ? formatDate({ date: note.date_modified }) : 'Never'}
                     </span>
                   </div>
                 </Menu.Item>
