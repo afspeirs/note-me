@@ -1,7 +1,7 @@
 import { atomWithStorage } from 'jotai/utils';
 
 export const themeOptions = {
-  default: 'Default',
+  default: 'System Default',
   light: 'Light',
   dark: 'Dark',
 } as const;
