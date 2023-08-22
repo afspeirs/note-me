@@ -1,5 +1,6 @@
 const typography = require('@tailwindcss/typography');
 const headlessui = require('@headlessui/tailwindcss');
+const safeArea = require('tailwindcss-safe-area');
 const {
   gray,
   neutral,
@@ -56,5 +57,6 @@ module.exports = {
   plugins: [
     typography,
     headlessui,
+    safeArea,
   ],
 };

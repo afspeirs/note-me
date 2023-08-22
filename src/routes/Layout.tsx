@@ -35,7 +35,7 @@ export function Layout() {
         <body className={`${appTheme} ${appTheme === 'light' ? 'bg-primary' : 'bg-black'}`} />
       </Helmet>
 
-      <div className="absolute inset-0 flex overflow-hidden mt-[env(titlebar-area-height)] bg-primary dark:bg-black">
+      <div className="absolute inset-0 px-safe flex overflow-hidden mt-titlebar-area-height bg-primary dark:bg-black">
         <TopBar />
         <Transition appear show={drawerOpen}>
           <Transition.Child
@@ -47,7 +47,7 @@ export function Layout() {
             leave="transition-transform duration-400"
             leaveFrom="translate-x-0"
             leaveTo="-translate-x-sidebar"
-            className="absolute w-sidebar p-sidebarGap [@media(display-mode:window-controls-overlay)]:pt-0 h-full flex flex-col gap-1"
+            className="absolute w-sidebar p-sidebarGap pb-safe [@media(display-mode:window-controls-overlay)]:pt-0 h-full flex flex-col gap-1"
           >
             <Sidebar />
           </Transition.Child>
