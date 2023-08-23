@@ -1,22 +1,21 @@
 import { useAtom } from 'jotai';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { HelmetProvider } from 'react-helmet-async';
 import { Toaster, toast } from 'react-hot-toast';
 import { RouterProvider } from 'react-router-dom';
 import { Provider } from 'rxdb-hooks';
-import type { SupabaseReplication } from 'rxdb-supabase';
 
 import { enableReplication, initialise, supabase } from '@/api';
-import type { MyDatabase, NoteDocType } from '@/api/types';
 import { ServiceWorkerEvents } from '@/components/ServiceWorkerEvents';
 import { Toast } from '@/components/Toast';
 import { authAtom } from '@/context/auth';
+import { dbAtom, replicationAtom } from '@/context/db';
 import { router } from '@/routes';
 
 export function App() {
   const [auth, setAuth] = useAtom(authAtom);
-  const [db, setDb] = useState<MyDatabase | null>(null);
-  const [replication, setReplication] = useState<SupabaseReplication<NoteDocType> | null>(null);
+  const [db, setDb] = useAtom(dbAtom);
+  const [replication, setReplication] = useAtom(replicationAtom);
 
   useEffect(() => {
     initialise().then(setDb);

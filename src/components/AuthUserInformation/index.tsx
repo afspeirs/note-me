@@ -11,16 +11,22 @@ import { Modal } from '@/components/Modal';
 import { ModalConfirm } from '@/components/ModalConfirm';
 import { Tooltip } from '@/components/Tooltip';
 import { authAtom } from '@/context/auth';
+import { dbAtom } from '@/context/db';
 
 export function AuthUserInformation() {
   const auth = useAtomValue(authAtom);
+  const db = useAtomValue(dbAtom);
   const [open, setOpen] = useState(false);
   const [openSignOutConfirmation, setOpenSignOutConfirmation] = useState(false);
 
   const signOut = async () => {
     setOpen(false);
+
     const { error } = await supabase.auth.signOut();
     if (error) console.error(error); // eslint-disable-line no-console
+
+    db?.remove()
+      .then(() => window.location.reload()); // TODO: Remove the need for the page reload
   };
 
   useEffect(() => {
