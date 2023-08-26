@@ -1,32 +1,24 @@
-import { ArrowPathIcon, DevicePhoneMobileIcon } from '@heroicons/react/24/outline';
-import { useAtom } from 'jotai';
+import { ArrowPathIcon, CircleStackIcon } from '@heroicons/react/24/outline';
+import { useAtomValue } from 'jotai';
 import { useEffect, useRef, useState } from 'react';
 
 import { Button } from '@/components/Button';
-import { updateAvailableAtom } from '@/context/serviceWorker';
+import { replicationAtom } from '@/context/db';
+import { authAtom } from '@/context/auth';
 
-export function CheckForUpdate() {
-  const [updateAvailable] = useAtom(updateAvailableAtom);
+export function NotesReSync() {
+  const auth = useAtomValue(authAtom);
+  const replication = useAtomValue(replicationAtom);
   const [loading, setLoading] = useState(false);
   const timer = useRef<ReturnType<typeof setTimeout>>();
 
   // This abominable one-liner will clear the timer if CheckForUpdate component un-mounts
   useEffect(() => () => clearTimeout(timer.current), []);
 
-  const updateServiceWorker = () => {
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.ready.then((registration) => registration.update());
-    } else {
-      setTimeout(() => window.location.reload(), 1500);
-    }
-  };
-
   const handleButtonClick = () => {
-    if (updateAvailable) {
-      window.location.reload();
-    } else if (!loading) {
+    if (!loading) {
       setLoading(true);
-      updateServiceWorker();
+      replication?.reSync();
       timer.current = setTimeout(() => setLoading(false), 2000);
     }
   };
@@ -34,13 +26,10 @@ export function CheckForUpdate() {
   return (
     <div className="m-2">
       <Button
-        Icon={DevicePhoneMobileIcon}
+        disabled={!auth?.user}
+        Icon={CircleStackIcon}
         onClick={handleButtonClick}
-        secondaryAction={updateAvailable ? (
-          <span className="text-light bg-primary px-4 py-1 -my-1 rounded-full">
-            UPDATE
-          </span>
-        ) : (
+        secondaryAction={(
           <div
             aria-busy={loading}
             aria-live="polite"
@@ -51,7 +40,7 @@ export function CheckForUpdate() {
           </div>
         )}
       >
-        Check for update
+        Sync Database
       </Button>
     </div>
   );
