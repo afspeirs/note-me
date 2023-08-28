@@ -26,6 +26,7 @@ import { useConfirm } from 'material-ui-confirm';
 import { useAuth } from '@/hooks/Auth';
 import { useNotes } from '@/hooks/Notes';
 import { useSnackbar } from '@/hooks/Snackbar';
+import { getTitle } from '@/utils';
 import styles from './NotesExport.styled';
 
 function NotesExport() {
@@ -63,7 +64,9 @@ function NotesExport() {
     const currentDate = dayjs().format('YYYY-MM-DD-HHmm');
 
     exportedNotes.forEach((note) => {
-      const fileName = note.title.substring(0, 50).trim();
+      const fileName = getTitle(note.text)
+        .replaceAll(/[^\w\s]/gi, ''); // Remove non-word characters (except spaces)
+
       const contents = `---
         ${Object.entries(note).filter(([key]) => !['text', 'title'].includes(key)).map(([key, value]) => `${key}: ${value}`).join('\n')}
       ---`
