@@ -26,7 +26,7 @@ import { useConfirm } from 'material-ui-confirm';
 import { useAuth } from '@/hooks/Auth';
 import { useNotes } from '@/hooks/Notes';
 import { useSnackbar } from '@/hooks/Snackbar';
-import { getTitle } from '@/utils';
+import { camelToSnakeCase, getTitle } from '@/utils';
 import styles from './NotesExport.styled';
 
 function NotesExport() {
@@ -67,8 +67,16 @@ function NotesExport() {
       const fileName = getTitle(note.text)
         .replaceAll(/[^\w\s]/gi, ''); // Remove non-word characters (except spaces)
 
+      const frontMatter = Object.entries(note)
+        .filter(([key]) => !['text', 'title'].includes(key))
+        .map(([key, value]) => {
+          const keyCamel = camelToSnakeCase(key);
+          return `${key}: ${value}${keyCamel !== key ? `\n${keyCamel}: ${value}` : ''}`;
+        })
+        .join('\n');
+
       const contents = `---
-        ${Object.entries(note).filter(([key]) => !['text', 'title'].includes(key)).map(([key, value]) => `${key}: ${value}`).join('\n')}
+        ${frontMatter}
       ---`
         .replace(/^\s+|\s+$/gm, '')
         .concat(`\n${note.text}`);
