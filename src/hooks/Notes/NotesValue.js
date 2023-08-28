@@ -33,8 +33,8 @@ const NotesValue = () => {
     text,
     title,
   }) => ({
-    dateCreated: dateCreated || +new Date(),
-    dateModified: dateModified || +new Date(),
+    dateCreated: +new Date(dateCreated) || +new Date(),
+    dateModified: +new Date(dateModified) || +new Date(),
     favourite: favourite || false,
     text: text || '',
     title: title || getTitle(text || ''),
