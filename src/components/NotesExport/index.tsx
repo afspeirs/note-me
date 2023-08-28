@@ -36,7 +36,7 @@ export function NotesExport() {
 
     notes.filter((note) => note.text !== '').forEach((note) => {
       const fileName = getTitle(note.text)
-        .replaceAll(/(\W+)/gi, ''); // Remove non-word characters
+        .replaceAll(/[^\w\s]/gi, ''); // Remove non-word characters (except spaces)
 
       const contents = `---
         date_created: ${note.date_created}
