@@ -30,3 +30,5 @@ export function getTitle(text) {
   }
   return 'Untitled';
 }
+
+export const camelToSnakeCase = (str) => str.replace(/[A-Z]/g, (letter) => `_${letter.toLowerCase()}`);
