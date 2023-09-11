@@ -1,6 +1,5 @@
 import {
   Cog6ToothIcon,
-  // HomeIcon,
   PlusIcon,
 } from '@heroicons/react/24/outline';
 
@@ -21,19 +20,8 @@ export function Footer() {
             Create Note
           </Button>
         </li>
-        {/* <li>
-          <Tooltip label="Home" position="top">
-            <Button
-              Icon={HomeIcon}
-              iconOnly
-              href="/"
-            >
-              Home
-            </Button>
-          </Tooltip>
-        </li> */}
         <li>
-          <AuthUserInformation />
+          <AuthUserInformation tooltipPosition="top" />
         </li>
         <li>
           <Tooltip label="Settings" position="top">

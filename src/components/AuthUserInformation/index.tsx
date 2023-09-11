@@ -12,8 +12,11 @@ import { ModalConfirm } from '@/components/ModalConfirm';
 import { Tooltip } from '@/components/Tooltip';
 import { authAtom } from '@/context/auth';
 import { dbAtom } from '@/context/db';
+import type { AuthUserInformationProps } from './types';
 
-export function AuthUserInformation() {
+export function AuthUserInformation({
+  tooltipPosition,
+}: AuthUserInformationProps) {
   const auth = useAtomValue(authAtom);
   const db = useAtomValue(dbAtom);
   const [open, setOpen] = useState(false);
@@ -39,7 +42,7 @@ export function AuthUserInformation() {
     <>
       <Tooltip
         label={auth ? 'View account' : 'Sign in'}
-        position="top"
+        position={tooltipPosition}
       >
         <Button
           active={open}

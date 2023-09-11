@@ -1,4 +1,5 @@
 import { AppVersion } from '@/components/AppVersion';
+import { AuthUserInformation } from '@/components/AuthUserInformation';
 import { ChangeTheme } from '@/components/ChangeTheme';
 import { CheckForUpdate } from '@/components/CheckForUpdate';
 import { NotesExport } from '@/components/NotesExport';
@@ -8,7 +9,12 @@ import { Page } from '@/components/Page';
 
 export function Settings() {
   return (
-    <Page title="Settings">
+    <Page
+      title="Settings"
+      icons={(
+        <AuthUserInformation />
+      )}
+    >
       <ul role="list">
         <li>
           <AppVersion />

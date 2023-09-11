@@ -1,10 +1,15 @@
+import { AuthUserInformation } from '@/components/AuthUserInformation';
 import { Page } from '@/components/Page';
 
 export function Home() {
   const user: boolean | null = true; // TODO: Implement user logic
 
   return (
-    <Page>
+    <Page
+      icons={(
+        <AuthUserInformation />
+      )}
+    >
       <div className="flex items-center justify-center w-full h-full">
         <div className="grid gap-2 text-center max-w-md p-4">
           <p>Hello and welcome to NoteMe</p>
