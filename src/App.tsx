@@ -4,6 +4,7 @@ import { HelmetProvider } from 'react-helmet-async';
 import { Toaster, toast } from 'react-hot-toast';
 import { RouterProvider } from 'react-router-dom';
 import { Provider } from 'rxdb-hooks';
+import { useEventListener } from 'usehooks-ts';
 
 import { enableReplication, initialise, supabase } from '@/api';
 import { ServiceWorkerEvents } from '@/components/ServiceWorkerEvents';
@@ -52,6 +53,21 @@ export function App() {
       console.log('Not signed in'); // eslint-disable-line no-console
     }
   }, [auth, db]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEventListener('online', () => {
+    if (replication) {
+      replication.reSync();
+      console.log('Online'); // eslint-disable-line no-console
+      toast('Online');
+    }
+  });
+
+  useEventListener('offline', () => {
+    if (replication) {
+      console.log('Offline'); // eslint-disable-line no-console
+      toast('Offline');
+    }
+  });
 
   return (
     <>
