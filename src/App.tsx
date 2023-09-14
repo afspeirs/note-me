@@ -1,5 +1,5 @@
 import { useAtom } from 'jotai';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { HelmetProvider } from 'react-helmet-async';
 import { Toaster, toast } from 'react-hot-toast';
 import { RouterProvider } from 'react-router-dom';
@@ -17,6 +17,7 @@ export function App() {
   const [auth, setAuth] = useAtom(authAtom);
   const [db, setDb] = useAtom(dbAtom);
   const [replication, setReplication] = useAtom(replicationAtom);
+  const documentRef = useRef(document);
 
   useEffect(() => {
     initialise().then(setDb);
@@ -55,19 +56,43 @@ export function App() {
   }, [auth, db]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEventListener('online', () => {
-    if (replication) {
+    if (!replication) return;
+    if (replication.isStopped()) {
+      replication.start();
+      console.log('replication start');
+    } else {
       replication.reSync();
-      console.log('Online'); // eslint-disable-line no-console
-      toast('Online');
+      console.log('replication resync');
     }
+    console.log('Online'); // eslint-disable-line no-console
+    toast('Online');
   });
 
   useEventListener('offline', () => {
-    if (replication) {
-      console.log('Offline'); // eslint-disable-line no-console
-      toast('Offline');
-    }
+    if (!replication) return;
+    replication.cancel();
+    console.log('Offline'); // eslint-disable-line no-console
+    toast('Offline');
   });
+
+  useEventListener('visibilitychange', () => {
+    if (!replication) return;
+    if (document.hidden) {
+      replication?.cancel();
+      console.log('Hidden');
+      toast('Hidden');
+    } else {
+      if (replication.isStopped()) {
+        replication.start();
+        console.log('replication start');
+      } else {
+        replication.reSync();
+        console.log('replication resync');
+      }
+      console.log('Visible');
+      toast('Visible');
+    }
+  }, documentRef);
 
   return (
     <>
