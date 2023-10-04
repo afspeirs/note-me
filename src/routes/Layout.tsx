@@ -25,7 +25,7 @@ export function Layout() {
   }, [matches, theme]);
 
   useEffect(() => {
-    if (mobile) setDrawerOpen(false);
+    if (mobile && pathname !== '/') setDrawerOpen(false);
   }, [pathname, mobile, setDrawerOpen]);
 
   return (
