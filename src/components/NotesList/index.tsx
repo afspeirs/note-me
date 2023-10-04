@@ -27,7 +27,7 @@ export function NotesList() {
   return (
     <ul
       role="list"
-      className="flex flex-col h-full p-2 gap-1 overflow-y-auto overflow-x-hidden"
+      className="flex flex-col h-full p-2 overflow-y-auto overflow-x-hidden"
       ref={ref}
     >
       {isFetching && (
