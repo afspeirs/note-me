@@ -38,6 +38,7 @@
     "react-hot-toast": "^2.4.1",
     "react-hotkeys-hook": "^4.4.1",
     "react-router-dom": "^6.16.0",
+    "react-viewport-list": "^7.1.1",
     "rxdb": "^14.17.1",
     "rxdb-hooks": "^5.0.2",
     "rxdb-supabase": "^1.0.4",
