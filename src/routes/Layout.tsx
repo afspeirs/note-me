@@ -47,7 +47,7 @@ export function Layout() {
             leave="transition-transform duration-400"
             leaveFrom="translate-x-0"
             leaveTo="-translate-x-sidebar"
-            className="absolute w-sidebar p-sidebar-gap pb-safe-offset-sidebar-gap [@media(display-mode:window-controls-overlay)]:pt-0 h-full flex flex-col gap-1"
+            className="absolute w-sidebar p-sidebar-gap pb-safe-offset-sidebar-gap h-full flex flex-col gap-1"
           >
             <Sidebar />
           </Transition.Child>
@@ -63,7 +63,7 @@ export function Layout() {
         </Transition>
         <div
           className={classNames(
-            'relative flex-1 pt-sidebar-gap [@media(display-mode:window-controls-overlay)]:pt-0 min-w-full sm:min-w-[initial] transition-[margin-right] duration-400',
+            'relative flex-1 pt-sidebar-gap min-w-full sm:min-w-[initial] transition-[margin-right] duration-400',
             drawerOpen ? 'mr-sidebar-gap' : '',
           )}
         >
