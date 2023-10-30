@@ -1,6 +1,6 @@
 import { Transition } from '@headlessui/react';
 import { useAtom } from 'jotai';
-import { useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Outlet, useLocation } from 'react-router-dom';
 import { useMediaQuery } from 'usehooks-ts';
@@ -9,20 +9,14 @@ import { Card } from '@/components/Card';
 import { Sidebar } from '@/components/Sidebar';
 import { TopBar } from '@/components/TopBar';
 import { drawerOpenAtom } from '@/context/navigation';
-import { themeAtom } from '@/context/theme';
 import { classNames } from '@/utils/classNames';
+import { useTheme } from '@/hooks/theme';
 
 export function Layout() {
   const { pathname } = useLocation();
   const [drawerOpen, setDrawerOpen] = useAtom(drawerOpenAtom);
-  const [theme] = useAtom(themeAtom);
-  const matches = useMediaQuery('(prefers-color-scheme: dark)');
   const mobile = useMediaQuery('(max-width:600px)');
-  const appTheme = useMemo(() => {
-    if (theme !== 'default') return theme;
-    if (matches) return 'dark';
-    return 'light';
-  }, [matches, theme]);
+  const theme = useTheme();
 
   useEffect(() => {
     if (mobile && pathname !== '/') setDrawerOpen(false);
@@ -31,8 +25,8 @@ export function Layout() {
   return (
     <>
       <Helmet>
-        <meta name="theme-color" content={appTheme === 'light' ? '#ee6e00' : '#000000'} />
-        <body className={`${appTheme} ${appTheme === 'light' ? 'bg-primary' : 'bg-black'}`} />
+        <meta name="theme-color" content={theme === 'light' ? '#ee6e00' : '#000000'} />
+        <body className={`${theme} ${theme === 'light' ? 'bg-primary' : 'bg-black'}`} />
       </Helmet>
 
       <div className="absolute inset-0 px-safe flex overflow-hidden mt-titlebar-area-height bg-primary dark:bg-black">
