@@ -28,6 +28,8 @@ export function Layout() {
         <meta name="theme-color" content={theme === 'light' ? '#ee6e00' : '#000000'} />
         <body className={`${theme} ${theme === 'light' ? 'bg-primary' : 'bg-black'}`} />
 
+        <meta name="description" content="Store and edit your markdown notes" />
+
         {/* Facebook Meta Tags */}
         <meta property="og:url" content={`${window.location.origin}/`} />
         <meta property="og:type" content="website" />
