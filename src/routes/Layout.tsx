@@ -27,6 +27,21 @@ export function Layout() {
       <Helmet>
         <meta name="theme-color" content={theme === 'light' ? '#ee6e00' : '#000000'} />
         <body className={`${theme} ${theme === 'light' ? 'bg-primary' : 'bg-black'}`} />
+
+        {/* Facebook Meta Tags */}
+        <meta property="og:url" content={`${window.location.origin}/`} />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="NoteMe" />
+        <meta property="og:description" content="Store and edit your markdown notes" />
+        <meta property="og:image" content={`${window.location.origin}/social-banner.png`} />
+
+        {/* Twitter Meta Tags */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta property="twitter:domain" content={window.location.hostname} />
+        <meta property="twitter:url" content={`${window.location.origin}/`} />
+        <meta name="twitter:title" content="NoteMe" />
+        <meta name="twitter:description" content="Store and edit your markdown notes" />
+        <meta name="twitter:image" content={`${window.location.origin}/social-banner.png`} />
       </Helmet>
 
       <div className="absolute inset-0 px-safe flex overflow-hidden mt-titlebar-area-height bg-primary dark:bg-black">
