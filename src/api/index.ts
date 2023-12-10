@@ -1,5 +1,6 @@
 import type { User } from '@supabase/supabase-js';
 import { createClient } from '@supabase/supabase-js';
+import toast from 'react-hot-toast';
 import type { RxJsonSchema } from 'rxdb';
 import { addRxPlugin, createRxDatabase } from 'rxdb';
 import { SupabaseReplication } from 'rxdb-supabase';
@@ -82,6 +83,15 @@ export function enableReplication(db: MyDatabase, user: User) {
     replicationIdentifier: `notes_${import.meta.env.VITE_SUPABASE_URL}_${userId}`,
     pull: {}, // If absent, no data is pulled from Supabase
     push: {}, // If absent, no changes are pushed to Supabase
+  });
+
+  replication.error$.subscribe((error) => {
+    const message = error.parameters.errors?.[0].message;
+    console.log(message); // eslint-disable-line no-console
+
+    toast(`An error has occurred: "${message}"`, {
+      id: 'replication-error',
+    });
   });
 
   return replication;
