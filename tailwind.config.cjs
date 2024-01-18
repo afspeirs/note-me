@@ -55,8 +55,8 @@ module.exports = {
     },
   },
   plugins: [
-    typography,
     headlessui,
     safeArea,
+    typography,
   ],
 };
