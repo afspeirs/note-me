@@ -1,7 +1,7 @@
 import { useAtomValue } from 'jotai';
-import { useRef } from 'react';
+import { useCallback, useMemo, useRef } from 'react';
 import { ViewportList } from 'react-viewport-list';
-import { useRxData } from 'rxdb-hooks';
+import { useRxData, type QueryConstructor } from 'rxdb-hooks';
 
 import type { NoteDocType } from '@/api/types';
 import { notesSearchAtom } from '@/context/notesSearch';
@@ -12,17 +12,29 @@ export function NotesList() {
   const ref = useRef<HTMLUListElement | null>(null);
   const search = useAtomValue(notesSearchAtom);
   const sort = useAtomValue(notesSortAtom);
-  const { result: notes, isFetching } = useRxData<NoteDocType>(
-    'notes',
+  const notesQuery: QueryConstructor<NoteDocType> = useCallback(
     (collection) => collection.find({
       selector: {
+        folder: {
+          $exists: false,
+        },
         text: {
           $regex: RegExp(search, 'i'),
         },
       },
       sort: notesSortOptions[sort].value,
     }),
+    [search, sort],
   );
+
+  const { result: notes, isFetching } = useRxData<NoteDocType>('notes', notesQuery);
+  const folders = useMemo(() => {
+    const allFolders = notes.map((note) => note.folder).filter(Boolean);
+    return [...new Set(allFolders)];
+  }, [notes]);
+
+  // console.log(notes.map((folder) => folder.toJSON()));
+  console.log(folders);
 
   return (
     <ul
