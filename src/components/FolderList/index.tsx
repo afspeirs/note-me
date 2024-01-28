@@ -34,7 +34,7 @@ export function FolderList() {
 
   useEffect(() => {
     const allFolders = notes.map((note) => note.folder ?? '').filter(Boolean);
-    const newFolders = [...new Set(allFolders)];
+    const newFolders = [...new Set(allFolders)].sort();
     // console.log(newFolders);
     setFolders(newFolders);
   }, [notes, setFolders]);
