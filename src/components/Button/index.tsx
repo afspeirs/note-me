@@ -6,7 +6,7 @@ import { classNames } from '@/utils/classNames';
 import type { ButtonProps } from './types';
 
 export const style = {
-  base: 'peer/button p-3 rounded-lg select-none disabled:opacity-40 disabled:pointer-events-none focus-visible',
+  base: 'peer/button p-3 rounded-lg select-none disabled:opacity-40 disabled:pointer-events-none focus-visible ring-inset',
   iconOnly: 'block',
   withText: 'flex items-center gap-4 min-w-0 w-full',
 } as const;
