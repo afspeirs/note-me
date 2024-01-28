@@ -59,7 +59,6 @@ export async function importNotes(collection: NoteCollection, files: Partial<Not
 
 export async function moveNote(note: NoteDocument, newFolder: string) {
   await note?.patch({
-    date_modified: new Date().toISOString(),
     folder: newFolder,
   })
     .then((note2) => toast(`"${getTitle(note.text)}" ${note2?.folder ? `moved to "${note2.folder}"` : 'removed from folder'}`, {
