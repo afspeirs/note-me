@@ -42,7 +42,7 @@ export const NotesContextMenu = forwardRef(({
     <>
       <Menu as="div" className="inline-block text-left">
         {({ open }) => (
-          <Float placement="bottom-end" offset={4} portal>
+          <Float placement="bottom-end" offset={4} portal flip>
             <Menu.Button
               active={open}
               as={Button}

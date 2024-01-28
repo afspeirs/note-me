@@ -1,5 +1,5 @@
 import { Disclosure } from '@headlessui/react';
-import { ChevronUpIcon } from '@heroicons/react/24/outline';
+import { ChevronUpIcon, FolderIcon } from '@heroicons/react/24/outline';
 import { useAtomValue } from 'jotai';
 import { useCallback } from 'react';
 import { useRxData } from 'rxdb-hooks';
@@ -45,6 +45,8 @@ export function FolderListItem({
           <>
             <Disclosure.Button
               as={Button}
+              className="mb-1"
+              Icon={FolderIcon}
               secondaryAction={(
                 <ChevronUpIcon
                   className={classNames(
@@ -57,7 +59,7 @@ export function FolderListItem({
             >
               {folder}
             </Disclosure.Button>
-            <Disclosure.Panel className="w-full pl-8 my-1">
+            <Disclosure.Panel className="w-full pl-8 mb-1">
               <NotesList
                 notes={notes}
                 isFetching={isFetching}
