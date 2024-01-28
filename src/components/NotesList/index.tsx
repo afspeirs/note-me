@@ -1,19 +1,26 @@
 import { useAtomValue } from 'jotai';
-import { useRef } from 'react';
+import { useMemo, useRef } from 'react';
 import { ViewportList } from 'react-viewport-list';
 
+import { FolderListItem } from '@/components/FolderList/FolderListItem';
 import { foldersAtom } from '@/context/folders';
 import { classNames } from '@/utils/classNames';
 import { NotesListItem } from './NotesListItem';
 import { NotesListProps } from './types';
 
 export function NotesList({
-  notes,
+  includeFolders,
   isFetching,
-  padding = false,
+  notes,
+  padding,
 }: NotesListProps) {
   const ref = useRef<HTMLUListElement | null>(null);
   const folders = useAtomValue(foldersAtom);
+
+  const items = useMemo(() => [
+    ...(includeFolders ? folders : []),
+    ...notes.filter((note) => (includeFolders ? !note.folder : true)),
+  ], [folders, includeFolders, notes]);
 
   return (
     <ul
@@ -32,9 +39,18 @@ export function NotesList({
       )}
       <ViewportList
         viewportRef={ref}
-        items={notes}
+        items={items}
       >
-        {(note) => <NotesListItem key={note.id} note={note} />}
+        {(note) => {
+          if (typeof note === 'string') {
+            return (
+              <FolderListItem key={note} folder={note} />
+            );
+          }
+          return (
+            <NotesListItem key={note.id} note={note} />
+          );
+        }}
       </ViewportList>
     </ul>
   );

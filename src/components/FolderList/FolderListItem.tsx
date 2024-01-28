@@ -2,12 +2,11 @@ import { Disclosure } from '@headlessui/react';
 import { ChevronUpIcon } from '@heroicons/react/24/outline';
 import { useAtomValue } from 'jotai';
 import { useCallback } from 'react';
-import { useRxData, type QueryConstructor } from 'rxdb-hooks';
+import { useRxData } from 'rxdb-hooks';
 
-import { type NoteDocType } from '@/api/types';
+import type { NoteDocType, NoteQuery } from '@/api/types';
 import { Button } from '@/components/Button';
-// import { FolderContextMenu } from './FolderContextMenu';
-import { NotesList } from '@/components/NotesList';
+import { NotesList } from '@/components/NotesList'; // eslint-disable-line import/no-cycle
 import { notesSearchAtom } from '@/context/notesSearch';
 import { notesSortAtom, notesSortOptions } from '@/context/notesSort';
 import { classNames } from '@/utils/classNames';
@@ -18,7 +17,7 @@ export function FolderListItem({
 }: FolderListItemProps) {
   const search = useAtomValue(notesSearchAtom);
   const sort = useAtomValue(notesSortAtom);
-  const notesQuery: QueryConstructor<NoteDocType> = useCallback(
+  const notesQuery: NoteQuery = useCallback(
     (collection) => collection.find({
       selector: {
         folder: {
@@ -34,6 +33,7 @@ export function FolderListItem({
   );
 
   const { result: notes, isFetching } = useRxData<NoteDocType>('notes', notesQuery);
+
   return (
     <li
       key={folder}
@@ -57,13 +57,10 @@ export function FolderListItem({
             >
               {folder}
             </Disclosure.Button>
-            <Disclosure.Panel
-              className="w-full pl-8"
-            >
+            <Disclosure.Panel className="w-full pl-8 my-1">
               <NotesList
                 notes={notes}
                 isFetching={isFetching}
-                padding={false}
               />
             </Disclosure.Panel>
           </>

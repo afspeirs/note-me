@@ -1,31 +1,21 @@
-import { useAtomValue } from 'jotai';
-import { useCallback } from 'react';
-import { useRxData, type QueryConstructor } from 'rxdb-hooks';
+import { useAtomValue, useSetAtom } from 'jotai';
+import { useCallback, useEffect } from 'react';
+import { useRxData } from 'rxdb-hooks';
 
-import type { NoteDocType } from '@/api/types';
+import type { NoteDocType, NoteQuery } from '@/api/types';
 import { Card } from '@/components/Card';
-import { FolderList } from '@/components/FolderList';
 import { NotesList } from '@/components/NotesList';
+import { foldersAtom } from '@/context/folders';
 import { notesSearchAtom } from '@/context/notesSearch';
 import { notesSortAtom, notesSortOptions } from '@/context/notesSort';
 
 export function Content() {
   const search = useAtomValue(notesSearchAtom);
   const sort = useAtomValue(notesSortAtom);
-  const notesQuery: QueryConstructor<NoteDocType> = useCallback(
+  const setFolders = useSetAtom(foldersAtom);
+  const notesQuery: NoteQuery = useCallback(
     (collection) => collection.find({
       selector: {
-        $or: [
-          {
-            folder: { $exists: false },
-          },
-          {
-            folder: { $eq: '' },
-          },
-          {
-            folder: { $eq: null },
-          },
-        ],
         text: {
           $regex: RegExp(search, 'i'),
         },
@@ -38,16 +28,24 @@ export function Content() {
   const { result: notes, isFetching } = useRxData<NoteDocType>('notes', notesQuery);
   // console.log(notes.map((folder) => folder.toJSON()));
 
+  useEffect(() => {
+    const allFolders = notes.map((note) => note.folder ?? '').filter(Boolean);
+    const newFolders = [...new Set(allFolders)].sort();
+    // console.log(newFolders);
+    setFolders(newFolders);
+  }, [notes, setFolders]);
+
   return (
     <Card
       as="nav"
-      className="flex-1 h-full overflow-hidden p-2"
+      className="flex-1 h-full overflow-hidden"
       aria-label="Sidebar"
     >
-      <FolderList />
       <NotesList
-        notes={notes}
+        includeFolders
         isFetching={isFetching}
+        notes={notes}
+        padding
       />
     </Card>
   );

@@ -8,13 +8,13 @@ import {
 import {
   StarIcon as StarSolidIcon,
 } from '@heroicons/react/24/solid';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useRxData } from 'rxdb-hooks';
 
 import { deleteNote, favouriteNote, updateNote } from '@/api/notes';
-import type { NoteDocType } from '@/api/types';
+import type { NoteDocType, NoteQuery } from '@/api/types';
 import { Button } from '@/components/Button';
 import { Markdown } from '@/components/Markdown';
 import { ModalConfirm } from '@/components/ModalConfirm';
@@ -30,10 +30,11 @@ export function Note() {
   const [showMoreInformation, setShowMoreInformation] = useState(false);
   const [showDeleteNoteModal, setShowDeleteNoteModal] = useState(false);
   const [text, setText] = useState('');
-  const { result: [note] } = useRxData<NoteDocType>(
-    'notes',
+  const notesQuery: NoteQuery = useCallback(
     (collection) => collection.findOne(id),
+    [id],
   );
+  const { result: [note] } = useRxData<NoteDocType>('notes', notesQuery);
 
   const handleDeleteNote = () => {
     setShowDeleteNoteModal(false);

@@ -1,4 +1,5 @@
 import type { RxCollection, RxDatabase, RxDocument } from 'rxdb';
+import type { QueryConstructor } from 'rxdb-hooks';
 
 export type NoteDocType = {
   date_created: string,
@@ -11,6 +12,7 @@ export type NoteDocType = {
 
 export type NoteDocument = RxDocument<NoteDocType>;
 export type NoteCollection = RxCollection<NoteDocType>;
+export type NoteQuery = QueryConstructor<NoteDocType>;
 
 export type MyDatabaseCollections = {
   notes: NoteCollection,
