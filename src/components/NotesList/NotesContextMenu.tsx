@@ -18,7 +18,7 @@ import { deleteNote, favouriteNote } from '@/api/notes';
 import type { NoteDocument } from '@/api/types';
 import { Button } from '@/components/Button';
 import { ModalConfirm } from '@/components/ModalConfirm';
-import { NotesMoveModal } from '@/components/NotesMove';
+import { NotesMoveModal } from '@/components/NotesMoveModal';
 import { classNames } from '@/utils/classNames';
 import { formatDate } from '@/utils/formatDate';
 import { getTitle } from '@/utils/getTitle';

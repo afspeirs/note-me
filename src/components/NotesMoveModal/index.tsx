@@ -45,7 +45,7 @@ export function NotesMoveModal({
           id="folder-create"
           value={newFolderName}
           onChange={(event) => setNewFolderName(event.target.value)}
-          className="block w-full rounded-lg bg-white border border-gray-200 py-3 pl-10 pr-20 bg-inherit outline-offset-1 placeholder:text-gray-400 placeholder:select-none focus-visible"
+          className="block w-full rounded-lg bg-white dark:bg-black border border-gray-200 py-3 pl-10 pr-20 bg-inherit outline-offset-1 placeholder:text-gray-400 placeholder:select-none focus-visible"
           placeholder="Create a name for a new folder"
         />
         <div className="absolute inset-y-0 right-0">
@@ -65,8 +65,8 @@ export function NotesMoveModal({
       {note && (
         <>
           <RadioGroup value={selected} onChange={setSelected}>
-            <RadioGroup.Label className="sr-only">Pricing plans</RadioGroup.Label>
-            <div className="relative -space-y-px rounded-lg bg-white">
+            <RadioGroup.Label className="sr-only">Folder Names</RadioGroup.Label>
+            <div className="relative -space-y-px rounded-lg bg-white dark:bg-black">
               {[...folders, newFolderName].map((folder, folderIdx) => (
                 <RadioGroup.Option
                   key={folder}
@@ -79,25 +79,25 @@ export function NotesMoveModal({
                     folderIdx === 0 ? 'rounded-tl-lg rounded-tr-lg' : '',
                     folderIdx === folders.length ? 'rounded-bl-lg rounded-br-lg' : '',
                     checked ? 'z-10 border-primary' : 'border-gray-200',
-                    'relative flex cursor-pointer bg- flex-col border p-4 focus:outline-none md:pl-4 md:pr-6 aria-disabled:opacity-40 aria-disabled:bg-dark/5 overflow-hidden select-none',
+                    'relative flex cursor-pointer flex-col border p-4 focus:outline-none md:pl-4 md:pr-6 aria-disabled:opacity-40 aria-disabled:bg-dark/5 dark:aria-disabled:bg-white/20 overflow-hidden select-none',
                   )}
                 >
                   {({ active, checked }) => (
                     <span className="flex items-center text-sm">
                       <span
                         className={classNames(
-                          checked ? 'bg-primary border-transparent' : 'bg-white border-gray-300',
+                          checked ? 'bg-primary border-transparent' : 'bg-white dark:bg-black border-gray-300',
                           active ? 'ring-2 ring-offset-2 ring-primary' : '',
                           'h-4 w-4 rounded-full border flex items-center justify-center flex-shrink-0',
                         )}
                         aria-hidden="true"
                       >
-                        <span className="rounded-full bg-white w-1.5 h-1.5" />
+                        <span className="rounded-full bg-white dark:bg-black w-1.5 h-1.5" />
                       </span>
                       <RadioGroup.Label
                         as="span"
                         className={classNames(
-                          checked ? 'text-primary' : 'text-gray-900',
+                          checked ? 'text-primary' : 'text-dark dark:text-light',
                           'ml-8 font-medium',
                         )}
                       >
