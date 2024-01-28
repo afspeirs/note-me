@@ -3,6 +3,7 @@ import { FolderIcon, FolderPlusIcon, XMarkIcon } from '@heroicons/react/24/outli
 import { useAtomValue } from 'jotai';
 import { useState } from 'react';
 
+import { moveNote } from '@/api/notes';
 import { Button } from '@/components/Button';
 import { Modal } from '@/components/Modal';
 import { foldersAtom } from '@/context/folders';
@@ -24,7 +25,8 @@ export function NotesMoveModal({
   };
 
   const handleMoveNote = () => {
-    console.log(`Move note to "${selected}"`);
+    if (!note || selected === null) return;
+    moveNote(note, selected);
   };
 
   return (
