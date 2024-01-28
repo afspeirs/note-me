@@ -15,9 +15,14 @@ export function Content() {
   const notesQuery: QueryConstructor<NoteDocType> = useCallback(
     (collection) => collection.find({
       selector: {
-        folder: {
-          $exists: false,
-        },
+        $or: [
+          {
+            folder: { $exists: false },
+          },
+          {
+            folder: { $eq: '' },
+          },
+        ],
         text: {
           $regex: RegExp(search, 'i'),
         },
