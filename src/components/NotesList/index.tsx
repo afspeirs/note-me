@@ -1,6 +1,8 @@
+import { useAtom } from 'jotai';
 import { useRef } from 'react';
 import { ViewportList } from 'react-viewport-list';
 
+import { foldersAtom } from '@/context/folders';
 import { classNames } from '@/utils/classNames';
 import { NotesListItem } from './NotesListItem';
 import { NotesListProps } from './types';
@@ -11,6 +13,7 @@ export function NotesList({
   padding = false,
 }: NotesListProps) {
   const ref = useRef<HTMLUListElement | null>(null);
+  const folders = useAtom(foldersAtom);
 
   return (
     <ul
@@ -24,7 +27,7 @@ export function NotesList({
       {isFetching && (
         <li className="block p-3">Loading...</li>
       )}
-      {!isFetching && notes?.length === 0 && (
+      {!isFetching && notes?.length === 0 && folders.length < 1 && (
         <li className="block p-3">No notes found</li>
       )}
       <ViewportList
