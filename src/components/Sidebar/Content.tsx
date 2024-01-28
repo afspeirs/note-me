@@ -1,5 +1,5 @@
 import { useAtomValue } from 'jotai';
-import { useCallback, useMemo } from 'react';
+import { useCallback } from 'react';
 import { useRxData, type QueryConstructor } from 'rxdb-hooks';
 
 import type { NoteDocType } from '@/api/types';
@@ -15,9 +15,9 @@ export function Content() {
   const notesQuery: QueryConstructor<NoteDocType> = useCallback(
     (collection) => collection.find({
       selector: {
-        // folder: {
-        //   $exists: false,
-        // },
+        folder: {
+          $exists: false,
+        },
         text: {
           $regex: RegExp(search, 'i'),
         },
@@ -28,13 +28,7 @@ export function Content() {
   );
 
   const { result: notes, isFetching } = useRxData<NoteDocType>('notes', notesQuery);
-  const folders = useMemo(() => {
-    const allFolders = notes.map((note) => note.folder ?? '').filter(Boolean);
-    return [...new Set(allFolders)];
-  }, [notes]);
-
   // console.log(notes.map((folder) => folder.toJSON()));
-  console.log(folders);
 
   return (
     <Card
@@ -42,10 +36,7 @@ export function Content() {
       className="flex-1 h-full overflow-hidden p-2"
       aria-label="Sidebar"
     >
-      <FolderList
-        folders={folders}
-        isFetching={isFetching}
-      />
+      <FolderList />
       <NotesList
         notes={notes}
         isFetching={isFetching}

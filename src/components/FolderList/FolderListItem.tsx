@@ -1,6 +1,7 @@
 import { Disclosure } from '@headlessui/react';
 import { ChevronUpIcon } from '@heroicons/react/24/outline';
-import { useCallback, useRef } from 'react';
+import { useAtomValue } from 'jotai';
+import { useCallback } from 'react';
 import { useRxData, type QueryConstructor } from 'rxdb-hooks';
 
 import { type NoteDocType } from '@/api/types';
@@ -10,13 +11,11 @@ import { NotesList } from '@/components/NotesList';
 import { notesSearchAtom } from '@/context/notesSearch';
 import { notesSortAtom, notesSortOptions } from '@/context/notesSort';
 import { classNames } from '@/utils/classNames';
-import { useAtomValue } from 'jotai';
 import type { FolderListItemProps } from './types';
 
 export function FolderListItem({
   folder,
 }: FolderListItemProps) {
-  const contextButton = useRef<HTMLButtonElement>(null);
   const search = useAtomValue(notesSearchAtom);
   const sort = useAtomValue(notesSortAtom);
   const notesQuery: QueryConstructor<NoteDocType> = useCallback(
@@ -35,15 +34,11 @@ export function FolderListItem({
   );
 
   const { result: notes, isFetching } = useRxData<NoteDocType>('notes', notesQuery);
-
   return (
     <li
       key={folder}
       className="group/folder-context-menu relative flex flex-col"
-      onContextMenu={(event) => {
-        event.preventDefault();
-        contextButton?.current?.click();
-      }}
+      onContextMenu={(event) => event.preventDefault()}
     >
       <Disclosure>
         {({ open }) => (
@@ -74,10 +69,6 @@ export function FolderListItem({
           </>
         )}
       </Disclosure>
-      {/* <FolderContextMenu
-        note={note}
-        ref={contextButton}
-      /> */}
     </li>
   );
 }
