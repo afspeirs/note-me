@@ -43,6 +43,9 @@ export async function initialise() {
       favourite: {
         type: 'boolean',
       },
+      folder: {
+        type: 'string',
+      },
       id: {
         type: 'string',
         maxLength: 100, // <- the primary key must have set maxLength

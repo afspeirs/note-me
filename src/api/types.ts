@@ -4,6 +4,7 @@ export type NoteDocType = {
   date_created: string,
   date_modified: string,
   favourite?: boolean,
+  folder?: string,
   id: string,
   text: string,
 };
