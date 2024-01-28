@@ -22,6 +22,9 @@ export function Content() {
           {
             folder: { $eq: '' },
           },
+          {
+            folder: { $eq: null },
+          },
         ],
         text: {
           $regex: RegExp(search, 'i'),
