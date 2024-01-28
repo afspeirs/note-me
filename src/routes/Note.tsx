@@ -64,7 +64,7 @@ export function Note() {
 
   return (
     <Page
-      title="Note"
+      title={getTitle(note?.text)}
       icons={(
         <>
           <Tooltip label={`${edit ? 'Save' : 'Edit'} Note`}>

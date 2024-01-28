@@ -1,6 +1,6 @@
 const maxCharacters = 50;
 
-export function getTitle(text: string) {
+export function getTitle(text: string = '') {
   const title = text
     .trim()
     .split('\n')[0]
