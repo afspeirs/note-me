@@ -2,6 +2,7 @@ import { Menu, Transition } from '@headlessui/react';
 import {
   ClockIcon,
   EllipsisHorizontalIcon,
+  FolderIcon,
   StarIcon as StarOutlineIcon,
   TrashIcon,
 } from '@heroicons/react/24/outline';
@@ -13,18 +14,21 @@ import { Fragment, forwardRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { deleteNote, favouriteNote } from '@/api/notes';
+import type { NoteDocument } from '@/api/types';
 import { Button } from '@/components/Button';
 import { ModalConfirm } from '@/components/ModalConfirm';
+import { NotesMoveModal } from '@/components/NotesMove';
 import { formatDate } from '@/utils/formatDate';
 import { getTitle } from '@/utils/getTitle';
-import type { NotesProps } from './types';
 import { NotesContextMenuItem } from './NotesContextMenuItem';
+import type { NotesProps } from './types';
 
 export const NotesContextMenu = forwardRef(({
   note,
 }: NotesProps, ref: Ref<HTMLButtonElement>) => {
   const navigate = useNavigate();
   const [showDeleteNoteModal, setShowDeleteNoteModal] = useState(false);
+  const [showMoveNoteModal, setShowMoveNoteModal] = useState<NoteDocument | false>(false);
 
   const handleDeleteNote = () => {
     setShowDeleteNoteModal(false);
@@ -74,6 +78,10 @@ export const NotesContextMenu = forwardRef(({
                 </NotesContextMenuItem>
               </div>
               <div className="p-1">
+                <NotesContextMenuItem onClick={() => setShowMoveNoteModal(note)}>
+                  <FolderIcon className="h-5 w-5" aria-hidden="true" />
+                  Move Note
+                </NotesContextMenuItem>
                 <NotesContextMenuItem onClick={() => favouriteNote(note)}>
                   {note.favourite ? (
                     <StarSolidIcon className="h-5 w-5" aria-hidden="true" />
@@ -95,6 +103,10 @@ export const NotesContextMenu = forwardRef(({
             onClose={() => setShowDeleteNoteModal(false)}
             onConfirm={handleDeleteNote}
             open={showDeleteNoteModal}
+          />
+          <NotesMoveModal
+            setShowMoveNoteModal={setShowMoveNoteModal}
+            showMoveNoteModal={showMoveNoteModal}
           />
         </>
       )}
