@@ -17,7 +17,7 @@ export function NotesSearch({
     <label htmlFor="notes-search" className="relative block flex-1">
       <span className="sr-only">Search Notes</span>
       <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-2">
-        <MagnifyingGlassIcon className="h-6 w-6 text-gray-400" aria-hidden="true" />
+        <MagnifyingGlassIcon className="size-6 text-gray-400" aria-hidden="true" />
       </div>
       <input
         name="notes-search"

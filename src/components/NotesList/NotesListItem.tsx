@@ -23,7 +23,7 @@ export function NotesListItem({
       <Button
         href={`/note/${note.id}`}
         secondaryAction={note.favourite && (
-          <StarSolidIcon className="h-6 w-6 flex-shrink-0 text-primary" aria-hidden="true" />
+          <StarSolidIcon className="size-6 flex-shrink-0 text-primary" aria-hidden="true" />
         )}
       >
         {getTitle(note.text)}

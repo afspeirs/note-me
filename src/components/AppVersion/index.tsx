@@ -4,7 +4,7 @@ export function AppVersion() {
   return (
     <div className="m-2">
       <div className="relative flex items-center gap-x-4 p-3 min-w-0 w-full text-dark dark:text-light select-none">
-        <WrenchIcon className="h-6 w-6" aria-hidden="true" />
+        <WrenchIcon className="size-6" aria-hidden="true" />
         <div>
           <p>App version</p>
           <p className="text-gray-500 dark:text-gray-400">{import.meta.env.APP_VERSION}</p>

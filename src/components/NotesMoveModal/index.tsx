@@ -38,7 +38,7 @@ export function NotesMoveModal({
       <label htmlFor="folder-create" className="relative block mb-4">
         <span className="sr-only">Search Notes</span>
         <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-2">
-          <FolderPlusIcon className="h-6 w-6 text-gray-400" aria-hidden="true" />
+          <FolderPlusIcon className="size-6 text-gray-400" aria-hidden="true" />
         </div>
         <input
           name="folder-create"
@@ -88,11 +88,11 @@ export function NotesMoveModal({
                         className={classNames(
                           checked ? 'bg-primary border-transparent' : 'bg-white dark:bg-black border-gray-300',
                           active ? 'ring-2 ring-offset-2 ring-primary' : '',
-                          'h-4 w-4 rounded-full border flex items-center justify-center flex-shrink-0',
+                          'size-4 rounded-full border flex items-center justify-center flex-shrink-0',
                         )}
                         aria-hidden="true"
                       >
-                        <span className="rounded-full bg-white dark:bg-black w-1.5 h-1.5" />
+                        <span className="size-1.5 rounded-full bg-white dark:bg-black" />
                       </span>
                       <RadioGroup.Label
                         as="span"

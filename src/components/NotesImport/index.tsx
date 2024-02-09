@@ -140,7 +140,7 @@ export function NotesImport() {
                 onChange={handleChange}
               />
               <div className="text-center">
-                <ArrowUpCircleIcon className="mx-auto h-12 w-12" aria-hidden="true" />
+                <ArrowUpCircleIcon className="mx-auto size-12" aria-hidden="true" />
 
                 <div className="mt-4 flex">
                   <button

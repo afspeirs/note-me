@@ -69,14 +69,14 @@ export const NotesContextMenu = forwardRef(({
               <Menu.Items className="w-72 z-10 origin-top-right divide-y divide-gray-300 rounded-lg bg-gray-200 dark:bg-neutral-700 text-dark dark:text-light shadow-lg focus-visible">
                 <div className="p-1">
                   <NotesContextMenuItem disabled>
-                    <ClockIcon className="h-5 w-5" aria-hidden="true" />
+                    <ClockIcon className="size-5" aria-hidden="true" />
                     <span>
                       <span className="font-medium">Created: </span>
                       {formatDate({ date: note.date_created })}
                     </span>
                   </NotesContextMenuItem>
                   <NotesContextMenuItem disabled>
-                    <ClockIcon className="h-5 w-5" aria-hidden="true" />
+                    <ClockIcon className="size-5" aria-hidden="true" />
                     <span>
                       <span className="font-medium">Modified: </span>
                       {note.date_modified ? formatDate({ date: note.date_modified }) : 'Never'}
@@ -85,19 +85,19 @@ export const NotesContextMenu = forwardRef(({
                 </div>
                 <div className="p-1">
                   <NotesContextMenuItem onClick={() => setShowMoveNoteModal(note)}>
-                    <FolderIcon className="h-5 w-5" aria-hidden="true" />
+                    <FolderIcon className="size-5" aria-hidden="true" />
                     Move Note
                   </NotesContextMenuItem>
                   <NotesContextMenuItem onClick={() => favouriteNote(note)}>
                     {note.favourite ? (
-                      <StarSolidIcon className="h-5 w-5" aria-hidden="true" />
+                      <StarSolidIcon className="size-5" aria-hidden="true" />
                     ) : (
-                      <StarOutlineIcon className="h-5 w-5" aria-hidden="true" />
+                      <StarOutlineIcon className="size-5" aria-hidden="true" />
                     )}
                     {`${note?.favourite ? 'Unfavourite' : 'Favourite'} Note`}
                   </NotesContextMenuItem>
                   <NotesContextMenuItem onClick={() => setShowDeleteNoteModal(true)}>
-                    <TrashIcon className="h-5 w-5" aria-hidden="true" />
+                    <TrashIcon className="size-5" aria-hidden="true" />
                     Delete Note
                   </NotesContextMenuItem>
                 </div>

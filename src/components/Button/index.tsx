@@ -50,7 +50,7 @@ export const Button = forwardRef(({
     to={href}
   >
     {Icon && (
-      <Icon className={classNames('h-6 w-6 flex-shrink-0', IconClassName)} aria-hidden="true" />
+      <Icon className={classNames('size-6 flex-shrink-0', IconClassName)} aria-hidden="true" />
     )}
 
     <span
@@ -82,7 +82,7 @@ export const Button = forwardRef(({
     ref={ref as Ref<HTMLButtonElement>}
   >
     {Icon && (
-      <Icon className={classNames('h-6 w-6 flex-shrink-0', IconClassName)} aria-hidden="true" />
+      <Icon className={classNames('size-6 flex-shrink-0', IconClassName)} aria-hidden="true" />
     )}
 
     <span

@@ -42,7 +42,7 @@ export function ChangeTheme() {
                     value={value}
                   >
                     <span className="absolute inset-y-0 left-0 items-center px-2 hidden ui-selected:flex">
-                      <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                      <CheckIcon className="size-5" aria-hidden="true" />
                     </span>
 
                     <span className="truncate ui-selected:font-semibold">

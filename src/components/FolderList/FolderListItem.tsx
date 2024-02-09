@@ -50,7 +50,7 @@ export function FolderListItem({
               secondaryAction={(
                 <ChevronUpIcon
                   className={classNames(
-                    'h-6 w-6 transform transition-transform',
+                    'size-6 transform transition-transform',
                     open ? 'rotate-180' : 'rotate-90',
                   )}
                   aria-hidden="true"

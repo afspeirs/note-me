@@ -35,7 +35,7 @@ export function NotesReSync() {
             aria-live="polite"
             className={!loading ? 'hidden' : ''}
           >
-            <ArrowPathIcon className="h-6 w-6 animate-spin" aria-hidden="true" />
+            <ArrowPathIcon className="size-6 animate-spin" aria-hidden="true" />
             <span className="sr-only">Loading</span>
           </div>
         )}
