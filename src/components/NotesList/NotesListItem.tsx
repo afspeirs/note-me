@@ -1,4 +1,6 @@
+import { EllipsisHorizontalIcon } from '@heroicons/react/24/outline';
 import { StarIcon as StarSolidIcon } from '@heroicons/react/24/solid';
+import * as ContextMenu from '@radix-ui/react-context-menu';
 import { useRef } from 'react';
 
 import { Button } from '@/components/Button';
@@ -9,29 +11,52 @@ import type { NotesProps } from './types';
 export function NotesListItem({
   note,
 }: NotesProps) {
-  const contextButton = useRef<HTMLButtonElement>(null);
+  const contextTriggerRef = useRef<HTMLLIElement>(null);
+  const contextButtonRef = useRef<HTMLButtonElement>(null);
 
   return (
-    <li
-      key={note.id}
-      className="group/note-context-menu relative flex [&+&]:mt-1"
-      onContextMenu={(event) => {
-        event.preventDefault();
-        contextButton?.current?.click();
-      }}
-    >
-      <Button
-        href={`/note/${note.id}`}
-        secondaryAction={note.favourite && (
-          <StarSolidIcon className="size-6 flex-shrink-0 text-primary" aria-hidden="true" />
-        )}
-      >
-        {getTitle(note.text)}
-      </Button>
+    <ContextMenu.Root key={note.id} modal>
+      <ContextMenu.Trigger asChild ref={contextTriggerRef}>
+        <li className="group/note-context-menu relative flex [&+&]:mt-1">
+          <Button
+            href={`/note/${note.id}`}
+            secondaryAction={note.favourite && (
+              <StarSolidIcon className="size-6 flex-shrink-0 text-primary" aria-hidden="true" />
+            )}
+          >
+            {getTitle(note.text)}
+          </Button>
+          <Button
+            className="hidden group-hover/note-context-menu:block"
+            Icon={EllipsisHorizontalIcon}
+            iconOnly
+            ref={contextButtonRef}
+            onClick={() => {
+              if (!contextTriggerRef.current || !contextButtonRef.current) return;
+              const {
+                height,
+                width,
+                x,
+                y,
+              } = contextButtonRef.current.getBoundingClientRect();
+
+              contextTriggerRef.current.dispatchEvent(
+                new MouseEvent('contextmenu', {
+                  bubbles: true,
+                  clientX: x + width,
+                  clientY: y + (height / 2),
+                }),
+              );
+            }}
+          >
+            Open Note context menu
+          </Button>
+        </li>
+      </ContextMenu.Trigger>
+
       <NotesContextMenu
         note={note}
-        ref={contextButton}
       />
-    </li>
+    </ContextMenu.Root>
   );
 }

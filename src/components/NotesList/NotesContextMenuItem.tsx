@@ -1,4 +1,4 @@
-import { Menu } from '@headlessui/react';
+import * as ContextMenu from '@radix-ui/react-context-menu';
 
 import type { NotesContextMenuItemProps } from './types';
 
@@ -9,22 +9,26 @@ export function NotesContextMenuItem({
 }: NotesContextMenuItemProps) {
   if (onClick) {
     return (
-      <Menu.Item disabled={disabled}>
+      <ContextMenu.Item
+        asChild
+        disabled={disabled}
+      >
         <button
           type="button"
-          className="ui-active:bg-primary ui-active:text-light flex gap-2 w-full items-center rounded-md p-2"
+          className="data-[highlighted]:bg-primary data-[highlighted]:text-light flex gap-2 w-full items-center rounded-md p-2 text-sm select-none"
           onClick={onClick}
         >
           {children}
         </button>
-      </Menu.Item>
+      </ContextMenu.Item>
     );
   }
   return (
-    <Menu.Item disabled>
-      <div className="flex gap-2 w-full items-center rounded-md p-2 select-none">
-        {children}
-      </div>
-    </Menu.Item>
+    <ContextMenu.Item
+      className="flex gap-2 w-full items-center rounded-md p-2 text-sm select-none"
+      disabled
+    >
+      {children}
+    </ContextMenu.Item>
   );
 }

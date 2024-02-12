@@ -29,7 +29,7 @@ export function Layout() {
         <body className={`${theme} ${theme === 'light' ? 'bg-primary' : 'bg-black'}`} />
       </Helmet>
 
-      <div className="absolute inset-0 px-safe flex overflow-hidden mt-titlebar-area-height bg-primary dark:bg-black">
+      <div className="fixed inset-0 px-safe flex overflow-hidden mt-titlebar-area-height bg-primary dark:bg-black">
         <TopBar />
         <Transition appear show={drawerOpen}>
           <Transition.Child
