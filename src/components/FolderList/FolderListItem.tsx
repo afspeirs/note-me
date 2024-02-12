@@ -45,7 +45,6 @@ export function FolderListItem({
           <>
             <Disclosure.Button
               as={Button}
-              className="mb-1"
               Icon={FolderIcon}
               secondaryAction={(
                 <ChevronUpIcon
@@ -59,7 +58,7 @@ export function FolderListItem({
             >
               {folder}
             </Disclosure.Button>
-            <Disclosure.Panel className="w-full pl-8 mb-1">
+            <Disclosure.Panel className="w-full pl-8">
               <NotesList
                 notes={notes}
                 isFetching={isFetching}

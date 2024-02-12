@@ -15,9 +15,9 @@ export function NotesListItem({
   const contextButtonRef = useRef<HTMLButtonElement>(null);
 
   return (
-    <ContextMenu.Root key={note.id} modal>
+    <ContextMenu.Root key={note.id}>
       <ContextMenu.Trigger asChild ref={contextTriggerRef}>
-        <li className="group/note-context-menu relative flex [&+&]:mt-1">
+        <li className="group/note-context-menu relative flex">
           <Button
             href={`/note/${note.id}`}
             secondaryAction={note.favourite && (
