@@ -80,7 +80,7 @@ export function Layout() {
                   </Transition.Child>
 
                   <div className="absolute flex flex-col w-sidebar h-full p-sidebar-gap pb-safe-offset-sidebar-gap gap-1 z-50">
-                    <Sidebar />
+                    <Sidebar name="mobile" />
                   </div>
                 </Dialog.Panel>
               </Transition.Child>
@@ -100,7 +100,7 @@ export function Layout() {
             leaveTo="-translate-x-sidebar"
             className="absolute flex flex-col w-sidebar h-full p-sidebar-gap pb-safe-offset-sidebar-gap gap-1 z-50"
           >
-            <Sidebar />
+            <Sidebar name="desktop" />
           </Transition.Child>
           <Transition.Child
             role="presentation"
