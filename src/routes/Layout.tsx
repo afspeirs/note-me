@@ -1,16 +1,18 @@
-import { Transition } from '@headlessui/react';
+import { Dialog, Transition } from '@headlessui/react';
+import { XMarkIcon } from '@heroicons/react/24/outline';
 import { useAtom } from 'jotai';
-import { useEffect } from 'react';
+import { Fragment, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Outlet, useLocation } from 'react-router-dom';
 import { useMediaQuery } from 'usehooks-ts';
 
+import { Button } from '@/components/Button';
 import { Card } from '@/components/Card';
 import { Sidebar } from '@/components/Sidebar';
 import { TopBar } from '@/components/TopBar';
 import { drawerOpenAtom } from '@/context/navigation';
-import { classNames } from '@/utils/classNames';
 import { useTheme } from '@/hooks/theme';
+import { classNames } from '@/utils/classNames';
 
 export function Layout() {
   const { pathname } = useLocation();
@@ -31,7 +33,62 @@ export function Layout() {
 
       <div className="fixed inset-0 px-safe flex overflow-hidden mt-titlebar-area-height bg-primary dark:bg-black">
         <TopBar />
-        <Transition appear show={drawerOpen}>
+
+        <Transition.Root show={mobile && drawerOpen} as={Fragment}>
+          <Dialog as="div" className="relative z-50 sm:hidden" onClose={setDrawerOpen}>
+            <Transition.Child
+              as={Fragment}
+              enter="transition-opacity ease-linear duration-300"
+              enterFrom="opacity-0"
+              enterTo="opacity-100"
+              leave="transition-opacity ease-linear duration-300"
+              leaveFrom="opacity-100"
+              leaveTo="opacity-0"
+            >
+              <div className="fixed inset-0 bg-primary/70 dark:bg-black/70" />
+            </Transition.Child>
+
+            <div className="fixed inset-0 flex">
+              <Transition.Child
+                as={Fragment}
+                enter="transition ease-in-out duration-300 transform"
+                enterFrom="-translate-x-full"
+                enterTo="translate-x-0"
+                leave="transition ease-in-out duration-300 transform"
+                leaveFrom="translate-x-0"
+                leaveTo="-translate-x-full"
+              >
+                <Dialog.Panel className="relative mr-16 flex w-full max-w-xs flex-1">
+                  <Transition.Child
+                    as={Fragment}
+                    enter="ease-in-out duration-300"
+                    enterFrom="opacity-0"
+                    enterTo="opacity-100"
+                    leave="ease-in-out duration-300"
+                    leaveFrom="opacity-100"
+                    leaveTo="opacity-0"
+                  >
+                    <div className="absolute left-full top-0 flex justify-center m-2 pt-16">
+                      <Button
+                        Icon={XMarkIcon}
+                        iconOnly
+                        onClick={() => setDrawerOpen(false)}
+                      >
+                        Close sidebar
+                      </Button>
+                    </div>
+                  </Transition.Child>
+
+                  <div className="absolute flex flex-col w-sidebar h-full p-sidebar-gap pb-safe-offset-sidebar-gap gap-1 z-50">
+                    <Sidebar />
+                  </div>
+                </Dialog.Panel>
+              </Transition.Child>
+            </div>
+          </Dialog>
+        </Transition.Root>
+
+        <Transition appear show={drawerOpen} className="hidden sm:block">
           <Transition.Child
             as="aside"
             unmount={false}
@@ -41,7 +98,7 @@ export function Layout() {
             leave="transition-transform duration-400"
             leaveFrom="translate-x-0"
             leaveTo="-translate-x-sidebar"
-            className="absolute w-sidebar p-sidebar-gap pb-safe-offset-sidebar-gap h-full flex flex-col gap-1"
+            className="absolute flex flex-col w-sidebar h-full p-sidebar-gap pb-safe-offset-sidebar-gap gap-1 z-50"
           >
             <Sidebar />
           </Transition.Child>
@@ -55,20 +112,13 @@ export function Layout() {
             leaveTo="scale-x-100"
           />
         </Transition>
+
         <div
           className={classNames(
             'relative flex-1 pt-sidebar-gap min-w-full sm:min-w-[initial] transition-[margin-right] duration-400',
-            drawerOpen ? 'mr-sidebar-gap' : '',
+            drawerOpen && !mobile ? 'mr-sidebar-gap' : '',
           )}
         >
-          <button
-            type="button"
-            className="absolute inset-0 mx-sidebar-gap mt-sidebar-gap [@media(display-mode:window-controls-overlay)]:mt-0 disabled:hidden sm:hidden rounded-t-xl z-10"
-            disabled={!drawerOpen}
-            onClick={() => setDrawerOpen((prevState) => !prevState)}
-          >
-            <span className="sr-only">Hide Sidebar</span>
-          </button>
           <Card className="flex flex-col h-full" roundedTop>
             <Outlet />
           </Card>

@@ -31,7 +31,6 @@ export function NotesSearch({
         {search.length > 0 ? (
           <Button
             Icon={XMarkIcon}
-            // IconClassName="text-gray-400"
             iconOnly
             disabled={!search.length}
             onClick={() => setSearch('')}
