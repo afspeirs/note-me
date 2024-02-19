@@ -1,5 +1,5 @@
-import { ArrowUpCircleIcon } from '@heroicons/react/24/outline';
 import frontMatter from 'front-matter';
+import { ArrowUpCircleIcon } from 'lucide-react';
 import type { ChangeEvent } from 'react';
 import { useRef, useState } from 'react';
 import toast from 'react-hot-toast';

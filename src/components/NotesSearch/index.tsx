@@ -1,8 +1,5 @@
-import {
-  MagnifyingGlassIcon,
-  XMarkIcon,
-} from '@heroicons/react/24/outline';
 import { useAtom } from 'jotai';
+import { SearchIcon, XIcon } from 'lucide-react';
 
 import { Button } from '@/components/Button';
 import { notesSearchAtom } from '@/context/notesSearch';
@@ -18,7 +15,7 @@ export function NotesSearch({
     <label htmlFor={`notes-search-${name}`} className="relative block flex-1">
       <span className="sr-only">Search Notes</span>
       <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-2">
-        <MagnifyingGlassIcon className="size-6 text-gray-400" aria-hidden="true" />
+        <SearchIcon className="size-6 text-gray-400" aria-hidden="true" />
       </div>
       <input
         name="notes-search"
@@ -31,7 +28,7 @@ export function NotesSearch({
       <div className="absolute inset-y-0 right-0">
         {search.length > 0 ? (
           <Button
-            Icon={XMarkIcon}
+            Icon={XIcon}
             iconOnly
             disabled={!search.length}
             onClick={() => setSearch('')}

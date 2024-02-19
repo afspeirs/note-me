@@ -2,13 +2,10 @@ import * as ContextMenu from '@radix-ui/react-context-menu';
 
 import {
   ClockIcon,
-  FolderIcon,
-  StarIcon as StarOutlineIcon,
-  TrashIcon,
-} from '@heroicons/react/24/outline';
-import {
-  StarIcon as StarSolidIcon,
-} from '@heroicons/react/24/solid';
+  FolderInputIcon as FolderIcon,
+  StarIcon,
+  Trash2Icon as TrashIcon,
+} from 'lucide-react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -16,6 +13,7 @@ import { deleteNote, favouriteNote } from '@/api/notes';
 import type { NoteDocument } from '@/api/types';
 import { ModalConfirm } from '@/components/ModalConfirm';
 import { NotesMoveModal } from '@/components/NotesMoveModal';
+import { classNames } from '@/utils/classNames';
 import { formatDate } from '@/utils/formatDate';
 import { getTitle } from '@/utils/getTitle';
 import { NotesContextMenuItem } from './NotesContextMenuItem';
@@ -60,11 +58,7 @@ export function NotesContextMenu({
             Move Note
           </NotesContextMenuItem>
           <NotesContextMenuItem onClick={() => favouriteNote(note)}>
-            {note.favourite ? (
-              <StarSolidIcon className="size-5" aria-hidden="true" />
-            ) : (
-              <StarOutlineIcon className="size-5" aria-hidden="true" />
-            )}
+            <StarIcon className={classNames(note?.favourite ? 'fill-current' : '', 'size-5')} aria-hidden="true" />
             {`${note?.favourite ? 'Unfavourite' : 'Favourite'} Note`}
           </NotesContextMenuItem>
           <NotesContextMenuItem onClick={() => setShowDeleteNoteModal(true)}>

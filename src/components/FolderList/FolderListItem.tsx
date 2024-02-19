@@ -1,6 +1,6 @@
 import { Disclosure } from '@headlessui/react';
-import { ChevronUpIcon, FolderIcon } from '@heroicons/react/24/outline';
 import { useAtomValue } from 'jotai';
+import { ChevronUpIcon, FolderClosedIcon, FolderOpenIcon } from 'lucide-react';
 import { useCallback } from 'react';
 import { useRxData } from 'rxdb-hooks';
 
@@ -45,7 +45,7 @@ export function FolderListItem({
           <>
             <Disclosure.Button
               as={Button}
-              Icon={FolderIcon}
+              Icon={open ? FolderOpenIcon : FolderClosedIcon}
               secondaryAction={(
                 <ChevronUpIcon
                   className={classNames(

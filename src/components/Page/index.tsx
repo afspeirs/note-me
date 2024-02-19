@@ -1,8 +1,5 @@
-import {
-  Bars2Icon,
-  ChevronLeftIcon,
-} from '@heroicons/react/24/outline';
 import { useAtom } from 'jotai';
+import { ChevronLeftIcon, MenuIcon } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 import { useHotkeys } from 'react-hotkeys-hook';
 
@@ -30,7 +27,7 @@ export function Page({
 
       <header className="flex gap-2 p-2">
         <Button
-          Icon={open ? ChevronLeftIcon : Bars2Icon}
+          Icon={open ? ChevronLeftIcon : MenuIcon}
           iconOnly
           onClick={toggleOpen}
         >

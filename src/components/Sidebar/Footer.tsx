@@ -1,7 +1,4 @@
-import {
-  Cog6ToothIcon,
-  PlusIcon,
-} from '@heroicons/react/24/outline';
+import { PlusIcon, SettingsIcon } from 'lucide-react';
 
 import { AuthUserInformation } from '@/components/AuthUserInformation';
 import { Button } from '@/components/Button';
@@ -26,7 +23,7 @@ export function Footer() {
         <li>
           <Tooltip label="Settings" position="top">
             <Button
-              Icon={Cog6ToothIcon}
+              Icon={SettingsIcon}
               iconOnly
               href="/settings/"
             >

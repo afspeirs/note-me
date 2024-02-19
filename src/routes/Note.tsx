@@ -1,13 +1,10 @@
 import {
-  InformationCircleIcon,
-  LockClosedIcon,
-  LockOpenIcon,
-  StarIcon as StarOutlineIcon,
-  TrashIcon,
-} from '@heroicons/react/24/outline';
-import {
-  StarIcon as StarSolidIcon,
-} from '@heroicons/react/24/solid';
+  InfoIcon,
+  PencilIcon,
+  SaveIcon,
+  Star as StarIcon,
+  Trash2Icon as TrashIcon,
+} from 'lucide-react';
 import { useCallback, useEffect, useState } from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -69,7 +66,7 @@ export function Note() {
         <>
           <Tooltip label={`${edit ? 'Save' : 'Edit'} Note`}>
             <Button
-              Icon={edit ? LockOpenIcon : LockClosedIcon}
+              Icon={edit ? SaveIcon : PencilIcon}
               iconOnly
               onClick={() => setEdit((prevState) => !prevState)}
             >
@@ -78,7 +75,8 @@ export function Note() {
           </Tooltip>
           <Tooltip label={`${note?.favourite ? 'Unfavourite' : 'Favourite'} Note`}>
             <Button
-              Icon={note?.favourite ? StarSolidIcon : StarOutlineIcon}
+              Icon={StarIcon}
+              IconClassName={note?.favourite ? 'fill-current' : ''}
               iconOnly
               onClick={() => favouriteNote(note)}
             >
@@ -87,7 +85,7 @@ export function Note() {
           </Tooltip>
           <Tooltip label="More information">
             <Button
-              Icon={InformationCircleIcon}
+              Icon={InfoIcon}
               iconOnly
               onClick={() => setShowMoreInformation(true)}
             >

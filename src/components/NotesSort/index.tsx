@@ -1,6 +1,6 @@
 import { Listbox, Transition } from '@headlessui/react';
-import { BarsArrowDownIcon, BarsArrowUpIcon, CheckIcon } from '@heroicons/react/24/outline';
 import { useAtom } from 'jotai';
+import { ArrowDownAZIcon, ArrowUpAZIcon, CheckIcon } from 'lucide-react';
 import { Fragment, useMemo } from 'react';
 
 import { Button } from '@/components/Button';
@@ -23,7 +23,7 @@ export function NotesSort() {
             <Listbox.Button
               active={open}
               as={Button}
-              Icon={direction ? BarsArrowUpIcon : BarsArrowDownIcon}
+              Icon={direction ? ArrowDownAZIcon : ArrowUpAZIcon}
               iconOnly
             >
               <Listbox.Label>Sort:</Listbox.Label>
