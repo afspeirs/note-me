@@ -11,21 +11,21 @@ export type NotesSortOptions = {
 };
 
 export const notesSortOptions: NotesSortOptions = {
-  'date_modified-desc': {
-    label: 'Date Modified (Newest First)',
-    value: [{ date_modified: 'desc' }],
-  },
   'date_modified-asc': {
     label: 'Date Modified (Oldest First)',
     value: [{ date_modified: 'asc' }],
   },
-  'date_created-desc': {
-    label: 'Date Created (Newest First)',
-    value: [{ date_created: 'desc' }],
+  'date_modified-desc': {
+    label: 'Date Modified (Newest First)',
+    value: [{ date_modified: 'desc' }],
   },
   'date_created-asc': {
     label: 'Date Created (Oldest First)',
     value: [{ date_created: 'asc' }],
+  },
+  'date_created-desc': {
+    label: 'Date Created (Newest First)',
+    value: [{ date_created: 'desc' }],
   },
   'title-asc': {
     label: 'Title (A-Z)',
