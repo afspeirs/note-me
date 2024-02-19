@@ -17,7 +17,7 @@ import { classNames } from '@/utils/classNames';
 export function Layout() {
   const { pathname } = useLocation();
   const [drawerOpen, setDrawerOpen] = useAtom(drawerOpenAtom);
-  const mobile = useMediaQuery('(max-width:600px)');
+  const mobile = useMediaQuery('(max-width:640px)');
   const theme = useTheme();
 
   useEffect(() => {
@@ -35,7 +35,7 @@ export function Layout() {
         <TopBar />
 
         <Transition.Root show={mobile && drawerOpen} as={Fragment}>
-          <Dialog as="div" className="relative z-50 sm:hidden" onClose={setDrawerOpen}>
+          <Dialog as="div" className="relative sm:hidden" onClose={setDrawerOpen}>
             <Transition.Child
               as={Fragment}
               enter="transition-opacity ease-linear duration-300"
@@ -79,7 +79,7 @@ export function Layout() {
                     </div>
                   </Transition.Child>
 
-                  <div className="absolute flex flex-col w-sidebar h-full p-sidebar-gap pb-safe-offset-sidebar-gap gap-1 z-50">
+                  <div className="absolute flex flex-col w-sidebar h-full p-sidebar-gap pb-safe-offset-sidebar-gap gap-1">
                     <div className="h-titlebar-area-height w-full" aria-hidden="true" />
                     <Sidebar name="mobile" />
                   </div>
@@ -99,7 +99,7 @@ export function Layout() {
             leave="transition-transform duration-400"
             leaveFrom="translate-x-0"
             leaveTo="-translate-x-sidebar"
-            className="absolute flex flex-col w-sidebar h-full p-sidebar-gap pb-safe-offset-sidebar-gap gap-1 z-50"
+            className="absolute flex flex-col w-sidebar h-full p-sidebar-gap pb-safe-offset-sidebar-gap gap-1"
           >
             <Sidebar name="desktop" />
           </Transition.Child>
