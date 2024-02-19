@@ -60,7 +60,7 @@ export function Note() {
       setText(note.text || '');
       setEdit(note.text === '');
     }
-  }, [note]);
+  }, [note?.text]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <Page
