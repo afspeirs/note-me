@@ -80,6 +80,7 @@ export function Layout() {
                   </Transition.Child>
 
                   <div className="absolute flex flex-col w-sidebar h-full p-sidebar-gap pb-safe-offset-sidebar-gap gap-1 z-50">
+                    <div className="h-titlebar-area-height w-full" aria-hidden="true" />
                     <Sidebar name="mobile" />
                   </div>
                 </Dialog.Panel>
