@@ -8,6 +8,7 @@ export function Tooltip({
   open,
   defaultOpen,
   onOpenChange,
+  side = 'bottom',
   ...props
 }: TooltipProps) {
   return (
@@ -22,7 +23,7 @@ export function Tooltip({
       <TooltipPrimitive.Content
         collisionPadding={8}
         className="p-2 text-xs bg-dark text-light dark:text-dark dark:bg-light rounded-lg pointer-events-none"
-        side="bottom"
+        side={side}
         align="center"
         {...props} // eslint-disable-line react/jsx-props-no-spreading
       >

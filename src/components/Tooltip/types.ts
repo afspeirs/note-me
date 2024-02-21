@@ -6,4 +6,5 @@ export type TooltipProps = {
   open?: boolean,
   defaultOpen?: boolean,
   onOpenChange?: ((open: boolean) => void),
+  side?: 'top' | 'right' | 'bottom' | 'left',
 };

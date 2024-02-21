@@ -16,9 +16,8 @@ export function NotesSort() {
       {({ open }) => (
         <>
           <Tooltip
-            open={open ? false : undefined}
             content="Sort Notes"
-            // side="left"
+            side="left"
           >
             <Listbox.Button
               active={open}
