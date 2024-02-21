@@ -1,4 +1,4 @@
-import { XMarkIcon } from '@heroicons/react/24/outline';
+import { XIcon } from 'lucide-react';
 import type { Toast as ToastType } from 'react-hot-toast';
 import { toast } from 'react-hot-toast';
 
@@ -22,7 +22,7 @@ export function Toast({
       <span className="px-4">{message as string}</span>
       {type !== 'loading' && (
         <Button
-          Icon={XMarkIcon}
+          Icon={XIcon}
           colour="inverted"
           iconOnly
           onClick={() => toast.dismiss(id)}

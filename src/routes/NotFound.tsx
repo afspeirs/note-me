@@ -1,4 +1,4 @@
-import { Cog6ToothIcon, HomeIcon } from '@heroicons/react/24/outline';
+import { HomeIcon, SettingsIcon } from 'lucide-react';
 
 import { Button } from '@/components/Button';
 import { Page } from '@/components/Page';
@@ -24,7 +24,7 @@ export function NotFound() {
             </li>
             <li className="my-1">
               <Button
-                Icon={Cog6ToothIcon}
+                Icon={SettingsIcon}
                 href="/settings"
               >
                 Settings

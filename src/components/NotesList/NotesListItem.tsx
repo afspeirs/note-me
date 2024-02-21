@@ -1,6 +1,5 @@
-import { EllipsisHorizontalIcon } from '@heroicons/react/24/outline';
-import { StarIcon as StarSolidIcon } from '@heroicons/react/24/solid';
 import * as ContextMenu from '@radix-ui/react-context-menu';
+import { MoreHorizontalIcon, StarIcon } from 'lucide-react';
 import { useRef } from 'react';
 
 import { Button } from '@/components/Button';
@@ -21,14 +20,14 @@ export function NotesListItem({
           <Button
             href={`/note/${note.id}`}
             secondaryAction={note.favourite && (
-              <StarSolidIcon className="size-6 flex-shrink-0 text-primary" aria-hidden="true" />
+              <StarIcon className="size-6 flex-shrink-0 text-primary fill-primary" aria-hidden="true" />
             )}
           >
             {getTitle(note.text)}
           </Button>
           <Button
             className="hidden group-hover/note-context-menu:block"
-            Icon={EllipsisHorizontalIcon}
+            Icon={MoreHorizontalIcon}
             iconOnly
             ref={contextButtonRef}
             onClick={() => {

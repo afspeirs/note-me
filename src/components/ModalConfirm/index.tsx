@@ -1,7 +1,7 @@
-import { XCircleIcon, CheckCircleIcon } from '@heroicons/react/24/outline';
+import { CheckCircle2Icon, XCircleIcon } from 'lucide-react';
+
 import { Button } from '@/components/Button';
 import { Modal } from '@/components/Modal';
-
 import type { ModalConfirmProps } from './types';
 
 export function ModalConfirm({
@@ -28,7 +28,7 @@ export function ModalConfirm({
           Cancel
         </Button>
         <Button
-          Icon={CheckCircleIcon}
+          Icon={CheckCircle2Icon}
           onClick={onConfirm}
           colour="primary"
         >

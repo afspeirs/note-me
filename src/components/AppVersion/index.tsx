@@ -1,4 +1,4 @@
-import { WrenchIcon } from '@heroicons/react/24/outline';
+import { WrenchIcon } from 'lucide-react';
 
 export function AppVersion() {
   return (

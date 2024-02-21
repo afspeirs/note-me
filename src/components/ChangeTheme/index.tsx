@@ -1,6 +1,6 @@
 import { Listbox, Transition } from '@headlessui/react';
-import { CheckIcon, PaintBrushIcon } from '@heroicons/react/24/outline';
 import { useAtom } from 'jotai';
+import { CheckIcon, PaletteIcon } from 'lucide-react';
 import { Fragment } from 'react';
 
 import { Button } from '@/components/Button';
@@ -17,7 +17,7 @@ export function ChangeTheme() {
             <Listbox.Button
               active={open}
               as={Button}
-              Icon={PaintBrushIcon}
+              Icon={PaletteIcon}
             >
               <div className="flex flex-col items-start">
                 <Listbox.Label className="cursor-pointer">Theme</Listbox.Label>

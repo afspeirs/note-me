@@ -1,6 +1,6 @@
-import { ArrowDownCircleIcon } from '@heroicons/react/24/outline';
 import { saveAs } from 'file-saver';
 import JSZip from 'jszip';
+import { ArrowDownCircleIcon } from 'lucide-react';
 import { useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { useRxData } from 'rxdb-hooks';

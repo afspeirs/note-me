@@ -1,10 +1,10 @@
-import { ArrowPathIcon, CircleStackIcon } from '@heroicons/react/24/outline';
 import { useAtomValue } from 'jotai';
+import { DatabaseIcon, RefreshCwIcon } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 
 import { Button } from '@/components/Button';
-import { replicationAtom } from '@/context/db';
 import { authAtom } from '@/context/auth';
+import { replicationAtom } from '@/context/db';
 
 export function NotesReSync() {
   const auth = useAtomValue(authAtom);
@@ -27,7 +27,7 @@ export function NotesReSync() {
     <div className="m-2">
       <Button
         disabled={!auth?.user}
-        Icon={CircleStackIcon}
+        Icon={DatabaseIcon}
         onClick={handleButtonClick}
         secondaryAction={(
           <div
@@ -35,7 +35,7 @@ export function NotesReSync() {
             aria-live="polite"
             className={!loading ? 'hidden' : ''}
           >
-            <ArrowPathIcon className="size-6 animate-spin" aria-hidden="true" />
+            <RefreshCwIcon className="size-6 animate-spin" aria-hidden="true" />
             <span className="sr-only">Loading</span>
           </div>
         )}

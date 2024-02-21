@@ -1,7 +1,7 @@
-import { ArrowRightOnRectangleIcon, UserIcon } from '@heroicons/react/24/outline';
 import { Auth } from '@supabase/auth-ui-react';
 import { ThemeSupa } from '@supabase/auth-ui-shared';
 import { useAtomValue } from 'jotai';
+import { LogOutIcon, UserIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 import { supabase } from '@/api';
@@ -80,7 +80,7 @@ export function AuthUserInformation({
             <Button
               active={openSignOutConfirmation}
               colour="primary"
-              Icon={ArrowRightOnRectangleIcon}
+              Icon={LogOutIcon}
               onClick={() => setOpenSignOutConfirmation(true)}
             >
               Sign out

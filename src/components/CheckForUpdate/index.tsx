@@ -1,5 +1,5 @@
-import { ArrowPathIcon, DevicePhoneMobileIcon } from '@heroicons/react/24/outline';
 import { useAtom } from 'jotai';
+import { RefreshCwIcon, RocketIcon } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 
 import { Button } from '@/components/Button';
@@ -34,7 +34,7 @@ export function CheckForUpdate() {
   return (
     <div className="m-2">
       <Button
-        Icon={DevicePhoneMobileIcon}
+        Icon={RocketIcon}
         onClick={handleButtonClick}
         secondaryAction={updateAvailable ? (
           <span className="text-light bg-primary px-4 py-1 -my-1 rounded-full">
@@ -46,7 +46,7 @@ export function CheckForUpdate() {
             aria-live="polite"
             className={!loading ? 'hidden' : ''}
           >
-            <ArrowPathIcon className="size-6 animate-spin" aria-hidden="true" />
+            <RefreshCwIcon className="size-6 animate-spin" aria-hidden="true" />
             <span className="sr-only">Loading</span>
           </div>
         )}

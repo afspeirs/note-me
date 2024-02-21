@@ -1,5 +1,5 @@
-import { ArrowDownOnSquareIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { useAtom } from 'jotai';
+import { ArrowDownSquareIcon, XIcon } from 'lucide-react';
 
 import { Button } from '@/components/Button';
 import { Card } from '@/components/Card';
@@ -24,14 +24,14 @@ export function CheckForInstallPrompt() {
   return beforeInstallPrompt && (
     <Card className="flex p-2">
       <Button
-        Icon={ArrowDownOnSquareIcon}
+        Icon={ArrowDownSquareIcon}
         onClick={handleInstallClick}
       >
         Install NoteMe
       </Button>
       <Button
         iconOnly
-        Icon={XMarkIcon}
+        Icon={XIcon}
         onClick={handleDismissClick}
       >
         Dismiss

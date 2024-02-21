@@ -1,6 +1,6 @@
 import { RadioGroup } from '@headlessui/react';
-import { FolderIcon, FolderPlusIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { useAtomValue } from 'jotai';
+import { FolderInputIcon, FolderPlusIcon, XIcon } from 'lucide-react';
 import { useState } from 'react';
 
 import { moveNote } from '@/api/notes';
@@ -51,7 +51,7 @@ export function NotesMoveModal({
         <div className="absolute inset-y-0 right-0">
           {newFolderName.length > 0 && (
             <Button
-              Icon={XMarkIcon}
+              Icon={XIcon}
               iconOnly
               disabled={!newFolderName.length}
               onClick={() => setNewFolderName('')}
@@ -114,7 +114,7 @@ export function NotesMoveModal({
             colour="primary"
             className="mt-4"
             disabled={selected === null}
-            Icon={FolderIcon}
+            Icon={FolderInputIcon}
             onClick={() => handleMoveNote()}
           >
             {/* eslint-disable-next-line no-nested-ternary */}

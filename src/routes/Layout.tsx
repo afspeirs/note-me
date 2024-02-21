@@ -1,6 +1,6 @@
 import { Dialog, Transition } from '@headlessui/react';
-import { XMarkIcon } from '@heroicons/react/24/outline';
 import { useAtom } from 'jotai';
+import { XIcon } from 'lucide-react';
 import { Fragment, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Outlet, useLocation } from 'react-router-dom';
@@ -70,7 +70,7 @@ export function Layout() {
                   >
                     <div className="absolute left-full top-0 flex justify-center m-2 pt-16">
                       <Button
-                        Icon={XMarkIcon}
+                        Icon={XIcon}
                         iconOnly
                         onClick={() => setDrawerOpen(false)}
                       >

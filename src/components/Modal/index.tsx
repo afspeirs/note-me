@@ -1,5 +1,5 @@
 import { Dialog, Transition } from '@headlessui/react';
-import { XMarkIcon } from '@heroicons/react/24/outline';
+import { XIcon } from 'lucide-react';
 import { Fragment } from 'react';
 
 import { Button } from '@/components/Button';
@@ -43,7 +43,7 @@ export function Modal({
                 {showCloseButton && (
                   <Button
                     className="absolute top-2 right-2"
-                    Icon={XMarkIcon}
+                    Icon={XIcon}
                     iconOnly
                     onClick={onClose}
                   >
