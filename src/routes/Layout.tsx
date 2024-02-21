@@ -121,7 +121,7 @@ export function Layout() {
             drawerOpen && !mobile ? 'ml-0 m-sidebar-gap' : '',
           )}
         >
-          <Card className="flex flex-col h-full overflow-hidden" rounded={drawerOpen}>
+          <Card className="flex flex-col h-full overflow-hidden" fullscreen={!drawerOpen}>
             <Outlet />
           </Card>
         </div>

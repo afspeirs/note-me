@@ -4,5 +4,5 @@ export interface CardProps {
   as?: ElementType,
   children: ReactNode,
   className?: string,
-  rounded?: boolean,
+  fullscreen?: boolean,
 }

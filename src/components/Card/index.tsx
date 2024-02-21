@@ -5,14 +5,14 @@ export function Card({
   as: Component = 'div',
   children,
   className = '',
-  rounded = true,
+  fullscreen,
   ...props
 }: CardProps) {
   return (
     <Component
       className={classNames(
         'bg-light dark:bg-dark dark:text-light shadow',
-        rounded ? 'rounded-xl' : '',
+        fullscreen ? '[@media(display-mode:window-controls-overlay)]:rounded-t-xl' : 'rounded-xl',
         className,
       )}
       {...props} // eslint-disable-line react/jsx-props-no-spreading
