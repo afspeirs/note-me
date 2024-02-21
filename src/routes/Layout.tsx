@@ -68,8 +68,9 @@ export function Layout() {
                     leaveFrom="opacity-100"
                     leaveTo="opacity-0"
                   >
-                    <div className="absolute left-full top-0 flex justify-center m-2 pt-16">
+                    <div className="absolute flex justify-center top-16 left-full m-1 pt-titlebar-area-height">
                       <Button
+                        className="m-2"
                         Icon={XIcon}
                         iconOnly
                         onClick={() => setDrawerOpen(false)}
