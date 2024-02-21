@@ -5,14 +5,14 @@ export function Card({
   as: Component = 'div',
   children,
   className = '',
-  roundedTop,
+  rounded = true,
   ...props
 }: CardProps) {
   return (
     <Component
       className={classNames(
         'bg-light dark:bg-dark dark:text-light shadow',
-        roundedTop ? 'rounded-t-xl' : 'rounded-xl',
+        rounded ? 'rounded-xl' : '',
         className,
       )}
       {...props} // eslint-disable-line react/jsx-props-no-spreading

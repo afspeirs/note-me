@@ -117,11 +117,11 @@ export function Layout() {
 
         <div
           className={classNames(
-            'relative flex-1 pt-sidebar-gap min-w-full sm:min-w-[initial] transition-[margin-right] duration-400',
-            drawerOpen && !mobile ? 'mr-sidebar-gap' : '',
+            'relative flex-1 min-w-full sm:min-w-[initial] transition-[margin] duration-400',
+            drawerOpen && !mobile ? 'ml-0 m-sidebar-gap' : '',
           )}
         >
-          <Card className="flex flex-col h-full" roundedTop>
+          <Card className="flex flex-col h-full overflow-hidden" rounded={drawerOpen}>
             <Outlet />
           </Card>
         </div>
