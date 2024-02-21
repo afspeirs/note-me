@@ -1,18 +1,42 @@
+import { GithubIcon } from 'lucide-react';
+
 import { AppVersion } from '@/components/AppVersion';
-import { AuthUserInformation } from '@/components/AuthUserInformation';
+import { Button } from '@/components/Button';
 import { ChangeTheme } from '@/components/ChangeTheme';
 import { CheckForUpdate } from '@/components/CheckForUpdate';
 import { NotesExport } from '@/components/NotesExport';
 import { NotesImport } from '@/components/NotesImport';
 import { NotesReSync } from '@/components/NotesReSync';
 import { Page } from '@/components/Page';
+import { Tooltip } from '@/components/Tooltip';
 
 export function Settings() {
   return (
     <Page
       title="Settings"
       icons={(
-        <AuthUserInformation />
+        <>
+          {/* <Tooltip content="Visit speirs.dev">
+            <Button
+              Icon={AIcon}
+              iconOnly
+              href="https://speirs.dev"
+              target="_blank"
+            >
+              Visit speirs.dev
+            </Button>
+          </Tooltip> */}
+          <Tooltip content="Visit github.com/afspeirs/note-me">
+            <Button
+              Icon={GithubIcon}
+              iconOnly
+              href="https://github.com/afspeirs/note-me"
+              target="_blank"
+            >
+              Visit github.com/afspeirs/note-me
+            </Button>
+          </Tooltip>
+        </>
       )}
     >
       <ul role="list">
