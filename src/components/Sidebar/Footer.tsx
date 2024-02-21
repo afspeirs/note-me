@@ -18,10 +18,10 @@ export function Footer() {
           </Button>
         </li>
         <li>
-          <AuthUserInformation tooltipPosition="top" />
+          <AuthUserInformation />
         </li>
         <li>
-          <Tooltip label="Settings" position="top">
+          <Tooltip content="Settings">
             <Button
               Icon={SettingsIcon}
               iconOnly

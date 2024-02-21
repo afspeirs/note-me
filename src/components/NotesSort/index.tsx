@@ -16,9 +16,9 @@ export function NotesSort() {
       {({ open }) => (
         <>
           <Tooltip
-            disabled={open}
-            label="Sort Notes"
-            position="left"
+            open={open ? false : undefined}
+            content="Sort Notes"
+            // side="left"
           >
             <Listbox.Button
               active={open}

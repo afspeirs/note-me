@@ -64,7 +64,7 @@ export function Note() {
       title={getTitle(note?.text)}
       icons={(
         <>
-          <Tooltip label={`${edit ? 'Save' : 'Edit'} Note`}>
+          <Tooltip content={`${edit ? 'Save' : 'Edit'} Note`}>
             <Button
               Icon={edit ? SaveIcon : PencilIcon}
               iconOnly
@@ -73,7 +73,7 @@ export function Note() {
               {`${edit ? 'Save' : 'Edit'} Note`}
             </Button>
           </Tooltip>
-          <Tooltip label={`${note?.favourite ? 'Unfavourite' : 'Favourite'} Note`}>
+          <Tooltip content={`${note?.favourite ? 'Unfavourite' : 'Favourite'} Note`}>
             <Button
               Icon={StarIcon}
               IconClassName={note?.favourite ? 'fill-current' : ''}
@@ -83,7 +83,7 @@ export function Note() {
               {`${note?.favourite ? 'Unfavourite' : 'Favourite'} Note`}
             </Button>
           </Tooltip>
-          <Tooltip label="More information">
+          <Tooltip content="More information">
             <Button
               Icon={InfoIcon}
               iconOnly
@@ -97,7 +97,7 @@ export function Note() {
             open={showMoreInformation}
             setOpen={setShowMoreInformation}
           />
-          <Tooltip label="Delete Note">
+          <Tooltip content="Delete Note">
             <Button
               Icon={TrashIcon}
               iconOnly

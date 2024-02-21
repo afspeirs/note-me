@@ -1,34 +1,36 @@
-import { classNames } from '@/utils/classNames';
-import type { TooltipProps } from './types';
+import * as TooltipPrimitive from '@radix-ui/react-tooltip';
 
-export const styles = {
-  top: 'bottom-12 left-1/2 -translate-x-1/2 mb-1',
-  bottom: 'top-12 left-1/2 -translate-x-1/2 mt-1',
-  left: 'top-1/2 right-12 -translate-y-1/2 mr-1',
-  right: 'top-1/2 left-12 -translate-y-1/2 ml-1',
-};
+import { TooltipProps } from './types';
 
 export function Tooltip({
   children,
-  disabled = false,
-  label,
-  position = 'bottom',
+  content,
+  open,
+  defaultOpen,
+  onOpenChange,
+  ...props
 }: TooltipProps) {
   return (
-    <div className="group/tooltip relative flex z-10">
-      {children}
-
-      {!disabled && (
-        <span
-          className={classNames(
-            'absolute p-2 transition-transform scale-0 group-hover/tooltip:scale-100 group-hover/tooltip:delay-500 peer-focus-visible/button:scale-100 rounded-lg whitespace-nowrap text-xs bg-dark text-light dark:text-dark dark:bg-light pointer-events-none',
-            styles[position],
-          )}
-          aria-hidden="true"
-        >
-          {label}
-        </span>
-      )}
-    </div>
+    <TooltipPrimitive.Root
+      open={open}
+      defaultOpen={defaultOpen}
+      onOpenChange={onOpenChange}
+    >
+      <TooltipPrimitive.Trigger asChild className="group/tooltip">
+        {children}
+      </TooltipPrimitive.Trigger>
+      <TooltipPrimitive.Content
+        collisionPadding={8}
+        className="p-2 text-xs bg-dark text-light dark:text-dark dark:bg-light rounded-lg pointer-events-none"
+        side="top"
+        align="center"
+        {...props} // eslint-disable-line react/jsx-props-no-spreading
+      >
+        {content}
+        <TooltipPrimitive.Arrow
+          className="fill-dark dark:fill-light"
+        />
+      </TooltipPrimitive.Content>
+    </TooltipPrimitive.Root>
   );
 }

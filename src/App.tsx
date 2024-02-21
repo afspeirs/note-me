@@ -5,6 +5,7 @@ import { Toaster, toast } from 'react-hot-toast';
 import { RouterProvider } from 'react-router-dom';
 import { Provider } from 'rxdb-hooks';
 import { useEventListener } from 'usehooks-ts';
+import * as TooltipPrimitive from '@radix-ui/react-tooltip';
 
 import { enableReplication, initialise, supabase } from '@/api';
 import { ServiceWorkerEvents } from '@/components/ServiceWorkerEvents';
@@ -63,9 +64,11 @@ export function App() {
   return (
     <>
       <HelmetProvider>
-        <Provider db={db!}>
-          <RouterProvider router={router} />
-        </Provider>
+        <TooltipPrimitive.Provider>
+          <Provider db={db!}>
+            <RouterProvider router={router} />
+          </Provider>
+        </TooltipPrimitive.Provider>
       </HelmetProvider>
 
       <ServiceWorkerEvents />
