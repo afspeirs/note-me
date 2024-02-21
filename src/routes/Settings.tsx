@@ -1,5 +1,6 @@
 import { GithubIcon } from 'lucide-react';
 
+import { AIcon } from '@/components/AIcon';
 import { AppVersion } from '@/components/AppVersion';
 import { Button } from '@/components/Button';
 import { ChangeTheme } from '@/components/ChangeTheme';
@@ -16,7 +17,7 @@ export function Settings() {
       title="Settings"
       icons={(
         <>
-          {/* <Tooltip content="Visit speirs.dev">
+          <Tooltip content="Visit speirs.dev">
             <Button
               Icon={AIcon}
               iconOnly
@@ -25,7 +26,7 @@ export function Settings() {
             >
               Visit speirs.dev
             </Button>
-          </Tooltip> */}
+          </Tooltip>
           <Tooltip content="Visit github.com/afspeirs/note-me">
             <Button
               Icon={GithubIcon}
