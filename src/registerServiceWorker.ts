@@ -1,11 +1,6 @@
-// TODO: turn this into a lazy import
-import { Workbox } from 'workbox-window';
-
-export function registerServiceWorker() {
-  if (
-    'serviceWorker' in navigator
-    && import.meta.env.PROD
-  ) {
+export async function registerServiceWorker() {
+  if ('serviceWorker' in navigator && import.meta.env.PROD) {
+    const { Workbox } = await import('workbox-window');
     const wb = new Workbox('/service-worker.js');
 
     wb.addEventListener('installed', () => {
