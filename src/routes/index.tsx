@@ -1,35 +1,46 @@
 import { createBrowserRouter } from 'react-router-dom';
 
-import { Home } from '@/routes/Home';
-import { Layout } from '@/routes/Layout';
-import { Note } from '@/routes/Note';
-import { NoteCreate } from '@/routes/NoteCreate';
-import { NotFound } from '@/routes/NotFound';
-import { Settings } from '@/routes/Settings';
-
 export const router = createBrowserRouter([
   {
-    element: <Layout />,
+    async lazy() {
+      const { Layout } = await import('./Layout');
+      return { Component: Layout };
+    },
     children: [
       {
         path: '/',
-        element: <Home />,
+        async lazy() {
+          const { Home } = await import('./Home');
+          return { Component: Home };
+        },
       },
       {
         path: '/note/',
-        element: <NoteCreate />,
+        async lazy() {
+          const { NoteCreate } = await import('./NoteCreate');
+          return { Component: NoteCreate };
+        },
       },
       {
         path: '/note/:id',
-        element: <Note />,
+        async lazy() {
+          const { Note } = await import('./Note');
+          return { Component: Note };
+        },
       },
       {
         path: '/settings/',
-        element: <Settings />,
+        async lazy() {
+          const { Settings } = await import('./Settings');
+          return { Component: Settings };
+        },
       },
       {
         path: '*',
-        element: <NotFound />,
+        async lazy() {
+          const { NotFound } = await import('./NotFound');
+          return { Component: NotFound };
+        },
       },
     ],
   },
