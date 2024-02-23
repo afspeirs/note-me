@@ -1,18 +1,18 @@
+import * as TooltipPrimitive from '@radix-ui/react-tooltip';
 import { useAtom } from 'jotai';
 import { useEffect } from 'react';
 import { HelmetProvider } from 'react-helmet-async';
-import { Toaster, toast } from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 import { RouterProvider } from 'react-router-dom';
 import { Provider } from 'rxdb-hooks';
 import { useEventListener } from 'usehooks-ts';
-import * as TooltipPrimitive from '@radix-ui/react-tooltip';
 
 import { enableReplication, initialise, supabase } from '@/api';
 import { ServiceWorkerEvents } from '@/components/ServiceWorkerEvents';
-import { Toast } from '@/components/Toast';
 import { authAtom } from '@/context/auth';
 import { dbAtom, replicationAtom } from '@/context/db';
 import { router } from '@/routes';
+import { Toaster } from './components/Toaster';
 
 export function App() {
   const [auth, setAuth] = useAtom(authAtom);
@@ -73,12 +73,7 @@ export function App() {
 
       <ServiceWorkerEvents />
 
-      <Toaster
-        position="bottom-right"
-        containerClassName="select-none"
-      >
-        {Toast}
-      </Toaster>
+      <Toaster />
     </>
   );
 }
