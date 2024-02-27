@@ -1,5 +1,5 @@
 {
-  "name": "note-me-2",
+  "name": "note-me",
   "private": true,
   "version": "1.0.0-next.48",
   "type": "module",
@@ -20,6 +20,7 @@
     "update": "npm run outdated -- -u"
   },
   "dependencies": {
+    "@afspeirs/service-worker": "^1.0.3",
     "@headlessui/react": "^1.7.17",
     "@headlessui/tailwindcss": "^0.2.0",
     "@radix-ui/react-context-menu": "^2.1.5",
