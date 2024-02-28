@@ -16,8 +16,10 @@
     "type": "tsc",
     "lint": "eslint . --ext .ts,.tsx",
     "semantic-release:dry": "semantic-release --dry-run --no-ci",
-    "outdated": "npx npm-check-updates -t minor",
-    "update": "npm run outdated -- -u"
+    "outdated": "npx npm-check-updates",
+    "outdated:minor": "npx npm-check-updates -t minor",
+    "update": "npm run outdated -- -u",
+    "update:minor": "npm run outdated:minor -- -u"
   },
   "dependencies": {
     "@afspeirs/service-worker": "^1.0.3",
