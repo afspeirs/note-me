@@ -1,6 +1,6 @@
-import fs from 'fs';
+import { readFile, writeFile } from 'fs';
 
-fs.readFile('./dist/manifest.webmanifest', 'utf8', (err, data) => {
+readFile('./dist/manifest.webmanifest', 'utf8', (err, data) => {
   const webmanifest = JSON.parse(data);
   const branchName = process.env.HEAD;
 
@@ -17,10 +17,10 @@ fs.readFile('./dist/manifest.webmanifest', 'utf8', (err, data) => {
     },
   ];
 
-  fs.writeFile('./dist/manifest.webmanifest', JSON.stringify(webmanifest, null, 2), (error) => {
+  writeFile('./dist/manifest.webmanifest', JSON.stringify(webmanifest, null, 2), (error) => {
     if (error) console.log('An error has occurred ', error); // eslint-disable-line no-console
   });
-  fs.writeFile('./dist/manifest-apple.webmanifest', JSON.stringify(webmanifestApple, null, 2), (error) => {
+  writeFile('./dist/manifest-apple.webmanifest', JSON.stringify(webmanifestApple, null, 2), (error) => {
     if (error) console.log('An error has occurred ', error); // eslint-disable-line no-console
   });
 });
