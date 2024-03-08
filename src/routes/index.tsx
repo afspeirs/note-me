@@ -1,46 +1,38 @@
+import { lazy } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
+
+import { SuspenseWrapper } from '@/components/SuspenseWrapper';
+
+const Home = lazy(() => import('./Home').then((module) => ({ default: module.Home })));
+const Layout = lazy(() => import('./Layout').then((module) => ({ default: module.Layout })));
+const Note = lazy(() => import('./Note').then((module) => ({ default: module.Note })));
+const NoteCreate = lazy(() => import('./NoteCreate').then((module) => ({ default: module.NoteCreate })));
+const NotFound = lazy(() => import('./NotFound').then((module) => ({ default: module.NotFound })));
+const Settings = lazy(() => import('./Settings').then((module) => ({ default: module.Settings })));
 
 export const router = createBrowserRouter([
   {
-    async lazy() {
-      const { Layout } = await import('./Layout');
-      return { Component: Layout };
-    },
+    element: <Layout />,
     children: [
       {
         path: '/',
-        async lazy() {
-          const { Home } = await import('./Home');
-          return { Component: Home };
-        },
+        element: <SuspenseWrapper component={Home} />,
       },
       {
         path: '/note/',
-        async lazy() {
-          const { NoteCreate } = await import('./NoteCreate');
-          return { Component: NoteCreate };
-        },
+        element: <SuspenseWrapper component={NoteCreate} />,
       },
       {
         path: '/note/:id',
-        async lazy() {
-          const { Note } = await import('./Note');
-          return { Component: Note };
-        },
+        element: <SuspenseWrapper component={Note} />,
       },
       {
         path: '/settings/',
-        async lazy() {
-          const { Settings } = await import('./Settings');
-          return { Component: Settings };
-        },
+        element: <SuspenseWrapper component={Settings} />,
       },
       {
         path: '*',
-        async lazy() {
-          const { NotFound } = await import('./NotFound');
-          return { Component: NotFound };
-        },
+        element: <SuspenseWrapper component={NotFound} />,
       },
     ],
   },
