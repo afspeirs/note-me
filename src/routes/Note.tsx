@@ -20,6 +20,12 @@ import { Page } from '@/components/Page';
 import { Tooltip } from '@/components/Tooltip';
 import { getTitle } from '@/utils/getTitle';
 
+const placeholderText = `
+What is on your mind?
+
+Start typing here to begin crafting your new note.
+`.trim();
+
 export function Note() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -27,10 +33,7 @@ export function Note() {
   const [showMoreInformation, setShowMoreInformation] = useState(false);
   const [showDeleteNoteModal, setShowDeleteNoteModal] = useState(false);
   const [text, setText] = useState('');
-  const notesQuery: NoteQuery = useCallback(
-    (collection) => collection.findOne(id),
-    [id],
-  );
+  const notesQuery = useCallback<NoteQuery>((collection) => collection.findOne(id), [id]);
   const { result: [note] } = useRxData<NoteDocType>('notes', notesQuery);
 
   const handleDeleteNote = () => {
@@ -122,6 +125,7 @@ export function Note() {
             <textarea
               name="note-text"
               id="note-text"
+              placeholder={placeholderText}
               value={text}
               onChange={(event) => setText(event.target.value)}
               className="block w-full h-full px-4 pt-1 pb-safe-offset-4 bg-transparent font-mono text-lg border-none outline-none resize-none overflow-auto"
