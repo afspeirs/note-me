@@ -1,9 +1,12 @@
 import { WrenchIcon } from 'lucide-react';
 
+import { style } from '@/components/Button';
+import { classNames } from '@/utils/classNames';
+
 export function AppVersion() {
   return (
     <div className="m-2">
-      <div className="relative flex items-center gap-x-4 p-3 min-w-0 w-full text-dark dark:text-light select-none">
+      <div className={classNames(style.withText, 'relative p-3 text-dark dark:text-light select-none')}>
         <WrenchIcon className="size-6" aria-hidden="true" />
         <div>
           <p>App version</p>

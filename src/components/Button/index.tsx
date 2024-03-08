@@ -6,9 +6,9 @@ import { classNames } from '@/utils/classNames';
 import type { ButtonProps } from './types';
 
 export const style = {
-  base: 'peer/button p-3 rounded-lg select-none disabled:opacity-40 disabled:pointer-events-none focus-visible ring-inset',
-  iconOnly: 'block sm:p-2',
-  withText: 'flex items-center gap-3 min-w-0 w-full sm:py-2',
+  base: 'peer/button rounded-lg select-none disabled:opacity-40 disabled:pointer-events-none focus-visible ring-inset',
+  iconOnly: 'block p-3 sm:p-2',
+  withText: 'flex items-center gap-3 p-3 sm:py-2 min-w-0 w-full',
 } as const;
 
 export const colours = {
