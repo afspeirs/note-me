@@ -32,10 +32,10 @@ export function NotesList({
       ref={ref}
     >
       {isFetching && (
-        <li className="block p-3">Loading...</li>
+        <li className="block p-3 sm:py-2">Loading...</li>
       )}
       {!isFetching && notes?.length === 0 && folders.length === 0 && (
-        <li className="block p-3">No notes found</li>
+        <li className="block p-3 sm:py-2">No notes found</li>
       )}
       <ViewportList
         viewportRef={ref}
