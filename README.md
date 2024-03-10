@@ -6,14 +6,33 @@
 
 Create and store markdown notes
 
-## Configuration
+## Table of Contents
 
-Create a `.env.local` with the following variables:
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+- [Available Scripts](#available-scripts)
+- [Acknowledgements](#acknowledgements)
+- [License](#license)
 
-```plaintext
-VITE_SUPABASE_URL='INSERT_SUPABASE_URL_HERE'
-VITE_SUPABASE_KEY='INSERT_SUPABASE_KEY_HERE'
-```
+## Getting Started
+
+### Prerequisites
+
+This project uses Node and NPM.
+To install Node I would recommend using nvm for easy swapping of node versions.
+
+### Installation
+
+1. Clone the repo
+2. Install the dependencies with `npm install`
+3. Create a `.env.local` file with the following variables:
+
+    ```properties
+    GITHUB_TOKEN="INSERT_GITHUB_TOKEN"
+    VITE_SUPABASE_URL="INSERT_SUPABASE_URL_HERE"
+    VITE_SUPABASE_KEY="INSERT_SUPABASE_KEY_HERE"
+    ```
 
 The values, for the variables prefixed with SUPABASE, can be grabbed from project in [Supabase](https://supabase.com).
 
@@ -21,11 +40,19 @@ The values, for the variables prefixed with SUPABASE, can be grabbed from projec
 
 > TODO
 
+## Acknowledgements
+
+A special thanks to [Devisha Bijwe](https://www.linkedin.com/in/devishabijwe) for designing the logo.
+
+## License
+
+[ISC License](/LICENSE.txt) © Andrew Speirs
+
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 [netlify-status-sheild]: https://img.shields.io/netlify/5c3fcfd1-3410-451b-ae2c-82cd72888332?style=for-the-badge&color=ee6e00
 [netlify-status-url]: https://app.netlify.com/sites/noteme/deploys
 [license-shield]: https://img.shields.io/github/license/afspeirs/note-me?style=for-the-badge&color=ee6e00
-[license-url]: LICENSE
+[license-url]: LICENSE.txt
 [package-version-shield]: https://img.shields.io/github/package-json/v/afspeirs/note-me?style=for-the-badge&color=ee6e00
 [github-url]: https://github.com/afspeirs/note-me
