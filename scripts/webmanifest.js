@@ -11,7 +11,7 @@ readFile('./dist/manifest.webmanifest', 'utf8', (err, data) => {
   const webmanifestApple = JSON.parse(JSON.stringify(webmanifest));
   webmanifestApple.icons = [
     {
-      src: '/icon-512x512-apple.png',
+      src: '/icon-apple-512x512.png',
       sizes: '512x512',
       type: 'image/png',
     },
