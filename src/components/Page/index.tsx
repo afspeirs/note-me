@@ -2,6 +2,7 @@ import { useAtom } from 'jotai';
 import { ChevronLeftIcon, MenuIcon } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 import { useHotkeys } from 'react-hotkeys-hook';
+import { useNavigate } from 'react-router-dom';
 
 import { Button } from '@/components/Button';
 import { drawerOpenAtom } from '@/context/navigation';
@@ -14,9 +15,15 @@ export function Page({
 }: PageProps) {
   const [open, setOpen] = useAtom(drawerOpenAtom);
   const toggleOpen = () => setOpen((prevState) => !prevState);
+  const navigate = useNavigate();
 
   useHotkeys('ctrl+b, meta+b', toggleOpen, {
     enableOnFormTags: true,
+  });
+
+  useHotkeys('ctrl+n, meta+n', () => navigate('/note/'), {
+    enableOnFormTags: true,
+    preventDefault: true,
   });
 
   return (
