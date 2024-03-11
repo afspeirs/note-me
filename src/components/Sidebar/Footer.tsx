@@ -8,7 +8,7 @@ import { Tooltip } from '@/components/Tooltip';
 export function Footer() {
   return (
     <Card as="nav" aria-label="sidebar footer">
-      <ul role="list" className="flex gap-1 p-2">
+      <ul role="list" className="flex gap-2 p-2">
         <li className="flex-1">
           <Button
             Icon={PlusIcon}
