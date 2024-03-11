@@ -2,7 +2,7 @@ import { readFile, writeFile } from 'fs';
 
 readFile('./dist/manifest.webmanifest', 'utf8', (err, data) => {
   const webmanifest = JSON.parse(data);
-  const branchName = process.env.HEAD;
+  const branchName = process.env.HEAD || 'local';
 
   if (branchName && branchName !== 'main') {
     webmanifest.name += ` (${branchName})`;
