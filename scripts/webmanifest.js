@@ -2,7 +2,7 @@ import { readFile, writeFile } from 'fs';
 
 readFile('./dist/manifest.webmanifest', 'utf8', (err, data) => {
   const webmanifest = JSON.parse(data);
-  const branchName = process.env.HEAD;
+  const branchName = process.env.HEAD || 'local';
 
   if (branchName && branchName !== 'main') {
     webmanifest.name += ` (${branchName})`;
@@ -11,7 +11,7 @@ readFile('./dist/manifest.webmanifest', 'utf8', (err, data) => {
   const webmanifestApple = JSON.parse(JSON.stringify(webmanifest));
   webmanifestApple.icons = [
     {
-      src: '/icon-512x512-apple.png',
+      src: '/icon-apple-512x512.png',
       sizes: '512x512',
       type: 'image/png',
     },
