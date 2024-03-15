@@ -17,7 +17,7 @@ export function Tooltip({
       defaultOpen={defaultOpen}
       onOpenChange={onOpenChange}
     >
-      <TooltipPrimitive.Trigger asChild className="group/tooltip">
+      <TooltipPrimitive.Trigger asChild>
         {children}
       </TooltipPrimitive.Trigger>
       <TooltipPrimitive.Content
