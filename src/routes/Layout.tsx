@@ -58,7 +58,7 @@ export function Layout() {
                 leaveFrom="translate-x-0"
                 leaveTo="-translate-x-full"
               >
-                <Dialog.Panel className="relative mr-16 flex w-full max-w-xs flex-1">
+                <Dialog.Panel className="relative mr-16 flex w-full max-w-sidebar flex-1">
                   <Transition.Child
                     as={Fragment}
                     enter="ease-in-out duration-300"

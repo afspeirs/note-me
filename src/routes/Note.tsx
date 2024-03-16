@@ -6,6 +6,7 @@ import {
   Trash2Icon as TrashIcon,
 } from 'lucide-react';
 import { useCallback, useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useRxData } from 'rxdb-hooks';
@@ -34,7 +35,7 @@ export function Note() {
   const [showDeleteNoteModal, setShowDeleteNoteModal] = useState(false);
   const [text, setText] = useState('');
   const notesQuery = useCallback<NoteQuery>((collection) => collection.findOne(id), [id]);
-  const { result: [note] } = useRxData<NoteDocType>('notes', notesQuery);
+  const { result: [note], isFetching } = useRxData<NoteDocType>('notes', notesQuery);
 
   const handleDeleteNote = () => {
     setShowDeleteNoteModal(false);
@@ -61,6 +62,13 @@ export function Note() {
       setEdit(note.text === '');
     }
   }, [note?.text]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    if (!note && !isFetching) {
+      toast(`No note found with an id of "${id}"`);
+      navigate('/', { replace: true });
+    }
+  }, [isFetching, note]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <Page

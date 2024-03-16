@@ -1,40 +1,30 @@
-import { AuthUserInformation } from '@/components/AuthUserInformation';
+import { useAtomValue } from 'jotai';
+
+import { SignInButton } from '@/components/AuthUserInformation/SignInButton';
 import { Page } from '@/components/Page';
+import { authAtom } from '@/context/auth';
 
 export function Home() {
-  const user: boolean | null = true; // TODO: Implement user logic
+  const auth = useAtomValue(authAtom);
 
   return (
-    <Page
-      icons={(
-        <AuthUserInformation />
-      )}
-    >
-      <div className="flex items-center justify-center w-full h-full">
-        <div className="grid gap-2 text-center max-w-md p-4">
-          <p>Hello and welcome to NoteMe</p>
+    <Page>
+      <div className="flex flex-col gap-3 p-4">
+        <p>Hello and welcome to NoteMe</p>
 
-          <p>
-            Store and edit your notes as Markdown formatted text (using
-            {' '}
-            <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet" target="_blank" rel="noopener noreferrer" className="text-link">Github flavoured markdown</a>
-            {' '}
-            to support more features)
-          </p>
+        {!auth?.user ? (
+          <>
+            <p>Store and edit your notes as Markdown formatted text</p>
+            <p>
+              Once signed in you can access your notes from any device,
+              and changes will be reflected across other devices seamlessly.
+            </p>
 
-          {!user ? (
-            <>
-              {/* eslint-disable-next-line max-len */}
-              <p>Once signed in you can access your notes from any device, and changes will be reflected across other devices seamlessly.</p>
-
-              {/* <Button variant="contained" color="primary" onClick={signIn}>
-                Sign in with Google
-              </Button> */}
-            </>
-          ) : (
-            <p>Select a note from the left side to get started</p>
-          )}
-        </div>
+            <SignInButton />
+          </>
+        ) : (
+          <p>Select a note from the sidebar to get started</p>
+        )}
       </div>
     </Page>
   );
