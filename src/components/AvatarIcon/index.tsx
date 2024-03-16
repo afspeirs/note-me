@@ -2,7 +2,7 @@ import { classNames } from '@/utils/classNames';
 import type { AvatarIconProps } from './types';
 
 export const avatarSizes = {
-  icon: 'size-8 -m-1',
+  icon: 'size-6',
   normal: 'size-10',
   large: 'size-40 text-8xl',
 } as const;
