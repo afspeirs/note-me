@@ -1,4 +1,4 @@
-import { PlusIcon, SettingsIcon } from 'lucide-react';
+import { HomeIcon, PlusIcon, SettingsIcon } from 'lucide-react';
 import { useMediaQuery } from 'usehooks-ts';
 
 import { AuthUserInformation } from '@/components/AuthUserInformation';
@@ -25,6 +25,17 @@ export function Footer() {
         </li>
         <li>
           <AuthUserInformation />
+        </li>
+        <li className="max-sm:hidden">
+          <Tooltip content="Home">
+            <Button
+              Icon={HomeIcon}
+              iconOnly
+              href="/"
+            >
+              Home
+            </Button>
+          </Tooltip>
         </li>
         <li>
           <Tooltip content="Settings">
