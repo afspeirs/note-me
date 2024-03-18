@@ -6,34 +6,34 @@ import type { NoteDocType } from '@/api/types';
 export type NotesSortOptions = {
   [key: string]: {
     label: string,
-    value: MangoQuerySortPart<NoteDocType>[],
+    value: MangoQuerySortPart<NoteDocType>,
   },
 };
 
 export const notesSortOptions: NotesSortOptions = {
   'date_modified-asc': {
     label: 'Date Modified (Oldest First)',
-    value: [{ date_modified: 'asc' }],
+    value: { date_modified: 'asc' },
   },
   'date_modified-desc': {
     label: 'Date Modified (Newest First)',
-    value: [{ date_modified: 'desc' }],
+    value: { date_modified: 'desc' },
   },
   'date_created-asc': {
     label: 'Date Created (Oldest First)',
-    value: [{ date_created: 'asc' }],
+    value: { date_created: 'asc' },
   },
   'date_created-desc': {
     label: 'Date Created (Newest First)',
-    value: [{ date_created: 'desc' }],
+    value: { date_created: 'desc' },
   },
   'title-asc': {
     label: 'Title (A-Z)',
-    value: [{ text: 'asc' }],
+    value: { text: 'asc' },
   },
   'title-desc': {
     label: 'Title (Z-A)',
-    value: [{ text: 'desc' }],
+    value: { text: 'desc' },
   },
 };
 

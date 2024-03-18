@@ -20,7 +20,7 @@ export function Content() {
           $regex: RegExp(search, 'i'),
         },
       },
-      sort: notesSortOptions[sort].value,
+      sort: [notesSortOptions[sort].value],
     }),
     [search, sort],
   );
