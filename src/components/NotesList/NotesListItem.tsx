@@ -19,8 +19,15 @@ export function NotesListItem({
         <li className="group/note-context-menu relative flex">
           <Button
             href={`/note/${note.id}`}
-            secondaryAction={note.favourite && (
-              <StarIcon className="size-6 flex-shrink-0 text-primary fill-primary" aria-hidden="true" />
+            secondaryAction={(
+              <>
+                {note.folder && (
+                  <span className="text-light bg-dark dark:text-dark dark:bg-light px-4 py-1 -my-1 rounded-full">{note.folder}</span>
+                )}
+                {note.favourite && (
+                  <StarIcon className="size-6 flex-shrink-0 text-primary fill-primary" aria-hidden="true" />
+                )}
+              </>
             )}
           >
             {getTitle(note.text)}

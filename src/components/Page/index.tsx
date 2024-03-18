@@ -46,7 +46,7 @@ export function Page({
         </Tooltip>
 
         {pathname !== '/' && (
-          <Tooltip content="Back">
+          <Tooltip content="Go back">
             <Button
               Icon={ArrowLeftIcon}
               iconOnly
