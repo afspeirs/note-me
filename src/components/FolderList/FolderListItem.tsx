@@ -8,7 +8,7 @@ export function FolderListItem({
   folder,
 }: FolderListItemProps) {
   const [searchParams] = useSearchParams();
-  const searchParamsFolderName = searchParams.get('folder');
+  const searchParamsFolder = searchParams.get('folder');
 
   return (
     <li
@@ -17,7 +17,7 @@ export function FolderListItem({
       onContextMenu={(event) => event.preventDefault()}
     >
       <Button
-        active={folder === searchParamsFolderName}
+        active={folder === searchParamsFolder}
         href={{
           pathname: '/',
           search: `folder=${folder}`,
