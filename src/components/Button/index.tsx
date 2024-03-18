@@ -38,13 +38,13 @@ export const Button = forwardRef(({
   ...props
 }: ButtonProps, ref) => (href ? (
   <NavLink
-    className={({ isActive }) => classNames(
+    className={classNames(
       iconOnly ? style.iconOnly : style.withText,
-      isActive ? coloursActive[colourActive] : colours[colour],
+      active ? coloursActive[colourActive] : colours[colour],
       style.base,
       className,
     )}
-    end // This is essentially the same as the old exact prop
+    end
     ref={ref as Ref<HTMLAnchorElement>}
     rel={target === '_blank' ? 'noreferrer' : undefined}
     target={target}

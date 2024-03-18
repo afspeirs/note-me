@@ -4,6 +4,7 @@ import type { MouseEvent, ReactNode } from 'react';
 import { colours, coloursActive } from '.';
 
 interface BaseProps {
+  active?: boolean,
   children: ReactNode,
   className?: string,
   colour?: keyof typeof colours;
@@ -15,7 +16,6 @@ interface BaseProps {
 }
 
 interface ButtonOptions extends BaseProps {
-  active?: boolean,
   disabled?: boolean,
   href?: never,
   onClick?: (event: MouseEvent<HTMLButtonElement>) => void
@@ -23,7 +23,6 @@ interface ButtonOptions extends BaseProps {
 }
 
 interface LinkOptions extends BaseProps {
-  active?: never,
   disabled?: never,
   href: string,
   onClick?: never,

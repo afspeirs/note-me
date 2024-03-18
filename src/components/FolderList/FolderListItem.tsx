@@ -1,4 +1,5 @@
 import { ChevronUpIcon, FolderClosedIcon } from 'lucide-react';
+import { useSearchParams } from 'react-router-dom';
 
 import { Button } from '@/components/Button';
 import type { FolderListItemProps } from './types';
@@ -6,6 +7,9 @@ import type { FolderListItemProps } from './types';
 export function FolderListItem({
   folder,
 }: FolderListItemProps) {
+  const [searchParams] = useSearchParams();
+  const searchParamsFolderName = searchParams.get('folder');
+
   return (
     <li
       key={folder}
@@ -13,13 +17,14 @@ export function FolderListItem({
       onContextMenu={(event) => event.preventDefault()}
     >
       <Button
+        active={folder === searchParamsFolderName}
+        href={folder ? `/?folder=${folder}` : '/'}
         Icon={FolderClosedIcon}
         secondaryAction={(
           <ChevronUpIcon className="size-6 rotate-90" aria-hidden="true" />
         )}
-        href={folder ? `/?folder=${folder}` : '/'}
       >
-        {folder || 'All Notes'}
+        {folder}
       </Button>
     </li>
   );

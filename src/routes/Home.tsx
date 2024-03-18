@@ -19,11 +19,18 @@ export function Home() {
   const sort = useAtomValue(notesSortAtom);
   const folder = searchParams.get('folder');
   const notesQuery: NoteQuery = useCallback(
-    (collection) => collection.find({
+    (collection) => collection.find(folder ? {
       selector: {
         folder: {
-          $eq: folder || null,
+          $eq: folder,
         },
+        text: {
+          $regex: RegExp(search, 'i'),
+        },
+      },
+      sort: notesSortOptions[sort].value,
+    } : {
+      selector: {
         text: {
           $regex: RegExp(search, 'i'),
         },

@@ -29,7 +29,7 @@ export function Content() {
   // console.log(notes.map((folder) => folder.toJSON()));
 
   useEffect(() => {
-    const allFolders = notes.map((note) => note.folder ?? '');
+    const allFolders = notes.map((note) => note.folder ?? '').filter(Boolean);
     const newFolders = [...new Set(allFolders)].sort();
     // console.log(newFolders);
     setFolders(newFolders);
