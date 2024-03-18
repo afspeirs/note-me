@@ -25,7 +25,7 @@ export function NotesListItem({
             secondaryAction={(
               <>
                 {note.folder && (
-                  <span className="text-light bg-dark dark:text-dark dark:bg-light px-4 py-1 -my-1 rounded-full">{note.folder}</span>
+                  <span className="text-light bg-dark dark:text-dark dark:bg-light px-3 py-1 -my-1 rounded-full">{note.folder}</span>
                 )}
                 {note.favourite && (
                   <StarIcon className="size-6 flex-shrink-0 text-primary fill-primary" aria-hidden="true" />

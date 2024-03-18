@@ -1,4 +1,4 @@
-import { ChevronUpIcon, FolderClosedIcon } from 'lucide-react';
+import { FolderClosedIcon } from 'lucide-react';
 import { useSearchParams } from 'react-router-dom';
 
 import { Button } from '@/components/Button';
@@ -23,9 +23,6 @@ export function FolderListItem({
           search: `folder=${folder}`,
         }}
         Icon={FolderClosedIcon}
-        secondaryAction={(
-          <ChevronUpIcon className="size-6 rotate-90" aria-hidden="true" />
-        )}
       >
         {folder}
       </Button>
