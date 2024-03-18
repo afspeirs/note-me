@@ -18,7 +18,10 @@ export function NotesListItem({
       <ContextMenu.Trigger asChild ref={contextTriggerRef}>
         <li className="group/note-context-menu relative flex">
           <Button
-            href={`/note/${note.id}`}
+            href={{
+              pathname: `/note/${note.id}`,
+              search: `folder=${note.folder}`,
+            }}
             secondaryAction={(
               <>
                 {note.folder && (

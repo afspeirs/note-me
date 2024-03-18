@@ -1,5 +1,6 @@
 import type { LucideIcon } from 'lucide-react';
 import type { MouseEvent, ReactNode } from 'react';
+import type { To } from 'react-router-dom';
 
 import { colours, coloursActive } from '.';
 
@@ -24,7 +25,7 @@ interface ButtonOptions extends BaseProps {
 
 interface LinkOptions extends BaseProps {
   disabled?: never,
-  href: string,
+  href: To,
   onClick?: never,
   target?: '_self' | '_blank',
 }

@@ -1,6 +1,6 @@
 import { forwardRef } from 'react';
 import type { Ref } from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import { classNames } from '@/utils/classNames';
 import type { ButtonProps } from './types';
@@ -37,14 +37,13 @@ export const Button = forwardRef(({
   target = '_self',
   ...props
 }: ButtonProps, ref) => (href ? (
-  <NavLink
+  <Link
     className={classNames(
       iconOnly ? style.iconOnly : style.withText,
       active ? coloursActive[colourActive] : colours[colour],
       style.base,
       className,
     )}
-    end
     ref={ref as Ref<HTMLAnchorElement>}
     rel={target === '_blank' ? 'noreferrer' : undefined}
     target={target}
@@ -69,7 +68,7 @@ export const Button = forwardRef(({
         {secondaryAction}
       </div>
     )}
-  </NavLink>
+  </Link>
 ) : (
   <button
     type="button"

@@ -18,7 +18,10 @@ export function FolderListItem({
     >
       <Button
         active={folder === searchParamsFolderName}
-        href={folder ? `/?folder=${folder}` : '/'}
+        href={{
+          pathname: '/',
+          search: `folder=${folder}`,
+        }}
         Icon={FolderClosedIcon}
         secondaryAction={(
           <ChevronUpIcon className="size-6 rotate-90" aria-hidden="true" />
