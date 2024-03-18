@@ -1,72 +1,26 @@
-import { Disclosure } from '@headlessui/react';
-import { useAtomValue } from 'jotai';
-import { ChevronUpIcon, FolderClosedIcon, FolderOpenIcon } from 'lucide-react';
-import { useCallback } from 'react';
-import { useRxData } from 'rxdb-hooks';
+import { ChevronUpIcon, FolderClosedIcon } from 'lucide-react';
 
-import type { NoteDocType, NoteQuery } from '@/api/types';
 import { Button } from '@/components/Button';
-import { NotesList } from '@/components/NotesList'; // eslint-disable-line import/no-cycle
-import { notesSearchAtom } from '@/context/notesSearch';
-import { notesSortAtom, notesSortOptions } from '@/context/notesSort';
-import { classNames } from '@/utils/classNames';
 import type { FolderListItemProps } from './types';
 
 export function FolderListItem({
   folder,
 }: FolderListItemProps) {
-  const search = useAtomValue(notesSearchAtom);
-  const sort = useAtomValue(notesSortAtom);
-  const notesQuery: NoteQuery = useCallback(
-    (collection) => collection.find({
-      selector: {
-        folder: {
-          $eq: folder,
-        },
-        text: {
-          $regex: RegExp(search, 'i'),
-        },
-      },
-      sort: notesSortOptions[sort].value,
-    }),
-    [folder, search, sort],
-  );
-
-  const { result: notes, isFetching } = useRxData<NoteDocType>('notes', notesQuery);
-
   return (
     <li
       key={folder}
       className="group/folder-context-menu relative flex flex-col"
       onContextMenu={(event) => event.preventDefault()}
     >
-      <Disclosure>
-        {({ open }) => (
-          <>
-            <Disclosure.Button
-              as={Button}
-              Icon={open ? FolderOpenIcon : FolderClosedIcon}
-              secondaryAction={(
-                <ChevronUpIcon
-                  className={classNames(
-                    'size-6 transform transition-transform',
-                    open ? 'rotate-180' : 'rotate-90',
-                  )}
-                  aria-hidden="true"
-                />
-              )}
-            >
-              {folder}
-            </Disclosure.Button>
-            <Disclosure.Panel className="w-full pl-8">
-              <NotesList
-                notes={notes}
-                isFetching={isFetching}
-              />
-            </Disclosure.Panel>
-          </>
+      <Button
+        Icon={FolderClosedIcon}
+        secondaryAction={(
+          <ChevronUpIcon className="size-6 rotate-90" aria-hidden="true" />
         )}
-      </Disclosure>
+        href={folder ? `/?folder=${folder}` : '/'}
+      >
+        {folder || 'All Notes'}
+      </Button>
     </li>
   );
 }

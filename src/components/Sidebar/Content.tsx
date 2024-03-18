@@ -1,10 +1,10 @@
-import { useAtomValue, useSetAtom } from 'jotai';
+import { useAtom, useAtomValue } from 'jotai';
 import { useCallback, useEffect } from 'react';
 import { useRxData } from 'rxdb-hooks';
 
 import type { NoteDocType, NoteQuery } from '@/api/types';
 import { Card } from '@/components/Card';
-import { NotesList } from '@/components/NotesList';
+import { FolderList } from '@/components/FolderList';
 import { foldersAtom } from '@/context/folders';
 import { notesSearchAtom } from '@/context/notesSearch';
 import { notesSortAtom, notesSortOptions } from '@/context/notesSort';
@@ -12,7 +12,7 @@ import { notesSortAtom, notesSortOptions } from '@/context/notesSort';
 export function Content() {
   const search = useAtomValue(notesSearchAtom);
   const sort = useAtomValue(notesSortAtom);
-  const setFolders = useSetAtom(foldersAtom);
+  const [folders, setFolders] = useAtom(foldersAtom);
   const notesQuery: NoteQuery = useCallback(
     (collection) => collection.find({
       selector: {
@@ -29,7 +29,7 @@ export function Content() {
   // console.log(notes.map((folder) => folder.toJSON()));
 
   useEffect(() => {
-    const allFolders = notes.map((note) => note.folder ?? '').filter(Boolean);
+    const allFolders = notes.map((note) => note.folder ?? '');
     const newFolders = [...new Set(allFolders)].sort();
     // console.log(newFolders);
     setFolders(newFolders);
@@ -41,10 +41,9 @@ export function Content() {
       className="flex-1 h-full overflow-hidden"
       aria-label="Sidebar"
     >
-      <NotesList
-        includeFolders
+      <FolderList
+        folders={folders}
         isFetching={isFetching}
-        notes={notes}
         padding
       />
     </Card>

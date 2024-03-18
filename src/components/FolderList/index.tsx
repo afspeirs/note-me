@@ -1,19 +1,16 @@
-import { useAtomValue } from 'jotai';
 import { useRef } from 'react';
 import { ViewportList } from 'react-viewport-list';
 
-import { foldersAtom } from '@/context/folders';
 import { classNames } from '@/utils/classNames';
-import { NotesListItem } from './NotesListItem';
-import { NotesListProps } from './types';
+import { FolderListItem } from './FolderListItem';
+import { FolderListProps } from './types';
 
-export function NotesList({
+export function FolderList({
+  folders,
   isFetching,
-  notes,
   padding,
-}: NotesListProps) {
+}: FolderListProps) {
   const ref = useRef<HTMLUListElement | null>(null);
-  const folders = useAtomValue(foldersAtom);
 
   return (
     <ul
@@ -27,15 +24,15 @@ export function NotesList({
       {isFetching && (
         <li className="block p-3 sm:py-2">Loading...</li>
       )}
-      {!isFetching && notes?.length === 0 && folders.length === 0 && (
-        <li className="block p-3 sm:py-2">No notes found</li>
+      {!isFetching && folders?.length === 0 && folders.length === 0 && (
+        <li className="block p-3 sm:py-2">No folders found</li>
       )}
       <ViewportList
         viewportRef={ref}
-        items={notes}
+        items={folders}
       >
-        {(note) => (
-          <NotesListItem key={note.id} note={note} />
+        {(folder) => (
+          <FolderListItem key={folder} folder={folder} />
         )}
       </ViewportList>
     </ul>
