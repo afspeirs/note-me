@@ -1,6 +1,7 @@
 import * as ContextMenu from '@radix-ui/react-context-menu';
 import { MoreHorizontalIcon, StarIcon } from 'lucide-react';
 import { useRef } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 import { Button } from '@/components/Button';
 import { getTitle } from '@/utils/getTitle';
@@ -10,6 +11,8 @@ import type { NotesProps } from './types';
 export function NotesListItem({
   note,
 }: NotesProps) {
+  const [searchParams] = useSearchParams();
+  const searchParamsFolder = searchParams.get('folder');
   const contextTriggerRef = useRef<HTMLLIElement>(null);
   const contextButtonRef = useRef<HTMLButtonElement>(null);
 
@@ -18,9 +21,19 @@ export function NotesListItem({
       <ContextMenu.Trigger asChild ref={contextTriggerRef}>
         <li className="group/note-context-menu relative flex">
           <Button
-            href={`/note/${note.id}`}
-            secondaryAction={note.favourite && (
-              <StarIcon className="size-6 flex-shrink-0 text-primary fill-primary" aria-hidden="true" />
+            href={{
+              pathname: `/note/${note.id}`,
+              search: `folder=${note.folder}`,
+            }}
+            secondaryAction={(
+              <>
+                {note.folder && !searchParamsFolder && (
+                  <span className="text-light bg-dark dark:text-dark dark:bg-light px-3 py-1 -my-1 rounded-full">{note.folder}</span>
+                )}
+                {note.favourite && (
+                  <StarIcon className="size-6 flex-shrink-0 text-primary fill-primary" aria-hidden="true" />
+                )}
+              </>
             )}
           >
             {getTitle(note.text)}

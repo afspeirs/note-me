@@ -15,14 +15,14 @@ import { useTheme } from '@/hooks/theme';
 import { classNames } from '@/utils/classNames';
 
 export function Layout() {
-  const { pathname } = useLocation();
+  const { pathname, search } = useLocation();
   const [drawerOpen, setDrawerOpen] = useAtom(drawerOpenAtom);
   const mobile = useMediaQuery('(max-width:640px)');
   const theme = useTheme();
 
   useEffect(() => {
-    if (mobile && pathname !== '/') setDrawerOpen(false);
-  }, [pathname, mobile, setDrawerOpen]);
+    if (mobile) setDrawerOpen(false);
+  }, [mobile, pathname, search, setDrawerOpen]);
 
   return (
     <>
