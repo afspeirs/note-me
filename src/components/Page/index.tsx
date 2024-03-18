@@ -13,11 +13,12 @@ export function Page({
   children,
   icons,
   title,
+  titleShow = false,
 }: PageProps) {
   const [open, setOpen] = useAtom(drawerOpenAtom);
   const toggleOpen = () => setOpen((prevState) => !prevState);
   const navigate = useNavigate();
-  const { pathname } = useLocation();
+  const { pathname, search } = useLocation();
 
   useHotkeys('ctrl+b, meta+b', toggleOpen, {
     enableOnFormTags: true,
@@ -45,7 +46,7 @@ export function Page({
           </Button>
         </Tooltip>
 
-        {pathname !== '/' && (
+        {(pathname !== '/' || search !== '') && (
           <Tooltip content="Go back">
             <Button
               Icon={ArrowLeftIcon}
@@ -55,6 +56,10 @@ export function Page({
               Back
             </Button>
           </Tooltip>
+        )}
+
+        {titleShow && (
+          <div className="ml-2 self-center font-bold text-xl">{title}</div>
         )}
 
         <div className="ml-auto" />

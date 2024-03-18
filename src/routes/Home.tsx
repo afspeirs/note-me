@@ -17,12 +17,12 @@ export function Home() {
   const [searchParams] = useSearchParams();
   const search = useAtomValue(notesSearchAtom);
   const sort = useAtomValue(notesSortAtom);
-  const folder = searchParams.get('folder');
+  const searchParamsFolder = searchParams.get('folder');
   const notesQuery: NoteQuery = useCallback(
-    (collection) => collection.find(folder ? {
+    (collection) => collection.find(searchParamsFolder ? {
       selector: {
         folder: {
-          $eq: folder,
+          $eq: searchParamsFolder,
         },
         text: {
           $regex: RegExp(search, 'i'),
@@ -37,7 +37,7 @@ export function Home() {
       },
       sort: notesSortOptions[sort].value,
     }),
-    [folder, search, sort],
+    [searchParamsFolder, search, sort],
   );
 
   const { result: notes, isFetching } = useRxData<NoteDocType>('notes', notesQuery);
@@ -45,6 +45,8 @@ export function Home() {
 
   return (
     <Page
+      title={searchParamsFolder}
+      titleShow
       icons={(
         <>
           <NotesSort />
@@ -70,7 +72,6 @@ export function Home() {
       )} */}
 
       <NotesList
-        // folder={searchParams.get('folder')}
         isFetching={isFetching}
         notes={notes}
         padding
