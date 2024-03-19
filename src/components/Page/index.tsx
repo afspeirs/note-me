@@ -1,10 +1,11 @@
 import { useAtom } from 'jotai';
-import { ChevronLeftIcon, MenuIcon } from 'lucide-react';
+import { ArrowLeftIcon, ChevronLeftIcon, MenuIcon } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 import { useHotkeys } from 'react-hotkeys-hook';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { Button } from '@/components/Button';
+import { Tooltip } from '@/components/Tooltip';
 import { drawerOpenAtom } from '@/context/navigation';
 import type { PageProps } from './types';
 
@@ -12,10 +13,12 @@ export function Page({
   children,
   icons,
   title,
+  titleShow = false,
 }: PageProps) {
   const [open, setOpen] = useAtom(drawerOpenAtom);
   const toggleOpen = () => setOpen((prevState) => !prevState);
   const navigate = useNavigate();
+  const { pathname, search } = useLocation();
 
   useHotkeys('ctrl+b, meta+b', toggleOpen, {
     enableOnFormTags: true,
@@ -33,13 +36,31 @@ export function Page({
       </Helmet>
 
       <header className="flex gap-2 p-2">
-        <Button
-          Icon={open ? ChevronLeftIcon : MenuIcon}
-          iconOnly
-          onClick={toggleOpen}
-        >
-          {`${open ? 'Close' : 'Open'} Sidebar`}
-        </Button>
+        <Tooltip content={`${open ? 'Close' : 'Open'} Sidebar`}>
+          <Button
+            Icon={open ? ChevronLeftIcon : MenuIcon}
+            iconOnly
+            onClick={toggleOpen}
+          >
+            {`${open ? 'Close' : 'Open'} Sidebar`}
+          </Button>
+        </Tooltip>
+
+        {(pathname !== '/' || search.includes('folder')) && (
+          <Tooltip content="Go back">
+            <Button
+              Icon={ArrowLeftIcon}
+              iconOnly
+              onClick={() => navigate(-1)}
+            >
+              Back
+            </Button>
+          </Tooltip>
+        )}
+
+        {titleShow && (
+          <div className="ml-2 self-center font-bold text-xl">{title}</div>
+        )}
 
         <div className="ml-auto" />
 

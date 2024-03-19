@@ -1,9 +1,11 @@
 import type { LucideIcon } from 'lucide-react';
 import type { MouseEvent, ReactNode } from 'react';
+import type { To } from 'react-router-dom';
 
 import { colours, coloursActive } from '.';
 
 interface BaseProps {
+  active?: boolean,
   children: ReactNode,
   className?: string,
   colour?: keyof typeof colours;
@@ -15,7 +17,6 @@ interface BaseProps {
 }
 
 interface ButtonOptions extends BaseProps {
-  active?: boolean,
   disabled?: boolean,
   href?: never,
   onClick?: (event: MouseEvent<HTMLButtonElement>) => void
@@ -23,9 +24,8 @@ interface ButtonOptions extends BaseProps {
 }
 
 interface LinkOptions extends BaseProps {
-  active?: never,
   disabled?: never,
-  href: string,
+  href: To,
   onClick?: never,
   target?: '_self' | '_blank',
 }
