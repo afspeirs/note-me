@@ -7,17 +7,19 @@ const returnNoteObject = ({
   date_created,
   date_modified,
   favourite,
+  folder,
   text,
 }: Partial<NoteDocType> = {}) => ({
-  id: window.crypto.randomUUID(),
   date_created: date_created ? new Date(date_created).toISOString() : new Date().toISOString(),
   date_modified: date_modified ? new Date(date_modified).toISOString() : new Date().toISOString(),
   favourite: favourite || false,
+  folder: folder || null,
+  id: window.crypto.randomUUID(),
   text: text || '',
 });
 
-export async function createNote(collection: NoteCollection) {
-  const newNote = returnNoteObject();
+export async function createNote(collection: NoteCollection, input: Partial<NoteDocType>) {
+  const newNote = returnNoteObject(input);
 
   const existingNote = await collection.findOne({
     selector: {
@@ -25,12 +27,12 @@ export async function createNote(collection: NoteCollection) {
     },
   }).exec();
 
-  if (existingNote?.id) {
-    return existingNote.id;
+  if (existingNote) {
+    return existingNote;
   }
 
   await collection.insert(newNote);
-  return newNote.id;
+  return newNote;
 }
 
 export async function deleteNote(note: NoteDocument) {

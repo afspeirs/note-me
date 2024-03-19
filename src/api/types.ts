@@ -4,9 +4,9 @@ import type { QueryConstructor } from 'rxdb-hooks';
 export type NoteDocType = {
   date_created: string,
   date_modified: string,
-  favourite?: boolean,
-  folder?: string,
-  id: string,
+  favourite: boolean,
+  folder?: string | null,
+  id: `${string}-${string}-${string}-${string}-${string}`,
   text: string,
 };
 
