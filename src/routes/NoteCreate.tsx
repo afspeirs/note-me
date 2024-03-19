@@ -10,7 +10,7 @@ export function NoteCreate() {
 
   if (collection) {
     createNote(collection)
-      .then((id) => navigate(`/note/${id}`));
+      .then((id) => navigate(`/note/${id}`, { replace: true }));
   }
 
   return null;
