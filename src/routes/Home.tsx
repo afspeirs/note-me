@@ -1,23 +1,23 @@
 import { useAtomValue } from 'jotai';
+import { PlusIcon } from 'lucide-react';
 import { useSearchParams } from 'react-router-dom';
-// import { SignInButton } from '@/components/AuthUserInformation/SignInButton';
-import { Page } from '@/components/Page';
-// import { authAtom } from '@/context/auth';
-import { AuthUserInformation } from '@/components/AuthUserInformation';
+
+import type { NoteDocType, NoteQuery } from '@/api/types';
+import { Button } from '@/components/Button';
 import { NotesList } from '@/components/NotesList';
+import { NotesSort } from '@/components/NotesSort';
+import { Page } from '@/components/Page';
+import { Tooltip } from '@/components/Tooltip';
 import { notesSearchAtom } from '@/context/notesSearch';
 import { notesSortAtom, notesSortOptions } from '@/context/notesSort';
-import type { NoteDocType, NoteQuery } from '@/api/types';
 import { useCallback } from 'react';
 import { useRxData } from 'rxdb-hooks';
-import { NotesSort } from '@/components/NotesSort';
 
 export function Home() {
-  // const auth = useAtomValue(authAtom);
   const [searchParams] = useSearchParams();
+  const searchParamsFolder = searchParams.get('folder');
   const search = useAtomValue(notesSearchAtom);
   const sort = useAtomValue(notesSortAtom);
-  const searchParamsFolder = searchParams.get('folder');
   const notesQuery: NoteQuery = useCallback(
     (collection) => collection.find(searchParamsFolder ? {
       selector: {
@@ -49,8 +49,19 @@ export function Home() {
       titleShow
       icons={(
         <>
+          <Tooltip content="Create Note">
+            <Button
+              href={{
+                pathname: '/note',
+                search: searchParamsFolder ? `folder=${searchParamsFolder}` : undefined,
+              }}
+              Icon={PlusIcon}
+              iconOnly
+            >
+              Create Note
+            </Button>
+          </Tooltip>
           <NotesSort />
-          <AuthUserInformation />
         </>
       )}
     >
