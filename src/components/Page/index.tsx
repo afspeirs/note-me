@@ -46,7 +46,7 @@ export function Page({
           </Button>
         </Tooltip>
 
-        {(pathname !== '/' || search !== '') && (
+        {(pathname !== '/' || search.includes('folder')) && (
           <Tooltip content="Go back">
             <Button
               Icon={ArrowLeftIcon}

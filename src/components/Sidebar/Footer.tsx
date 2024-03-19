@@ -21,7 +21,7 @@ export function Footer() {
         </li>
         <li>
           <Button
-            active={pathname === '/' && search === ''}
+            active={pathname === '/' && !search.includes('folder')}
             href="/"
             Icon={HomeIcon}
           >
