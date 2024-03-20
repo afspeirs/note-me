@@ -49,7 +49,7 @@ export function Content() {
       aria-label="Sidebar"
     >
       <div className="flex gap-2 p-2">
-        <div className="ml-2 self-center font-bold text-xl select-none">Folders</div>
+        <div className="ml-2 self-center font-bold text-xl truncate select-none">Folders</div>
 
         <div className="ml-auto" />
 

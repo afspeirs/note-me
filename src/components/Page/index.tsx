@@ -35,7 +35,7 @@ export function Page({
         <title>{`${title ? `${title} | ` : ''}NoteMe`}</title>
       </Helmet>
 
-      <header className="flex gap-2 p-2">
+      <header className="relative flex gap-2 p-2">
         <Tooltip content={`${open ? 'Close' : 'Open'} Sidebar`}>
           <Button
             className={open ? 'sm:hidden' : ''}
@@ -60,7 +60,7 @@ export function Page({
         )}
 
         {!titleHide && (
-          <div className="ml-2 self-center font-bold text-xl select-none">{title}</div>
+          <div className="ml-2 self-center font-bold text-xl truncate select-none">{title}</div>
         )}
 
         <div className="ml-auto" />

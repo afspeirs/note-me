@@ -59,7 +59,7 @@ export function Layout() {
                 <Dialog.Panel className="relative mr-16 flex w-full max-w-sidebar flex-1">
                   <div className="absolute flex flex-col w-full max-w-sidebar h-full p-sidebar-gap pb-safe-offset-sidebar-gap gap-1">
                     <div className="h-titlebar-area-height w-full" aria-hidden="true" />
-                    <Sidebar name="mobile" />
+                    <Sidebar />
                   </div>
                 </Dialog.Panel>
               </Transition.Child>
@@ -79,7 +79,7 @@ export function Layout() {
             leaveTo="-translate-x-sidebar"
             className="absolute flex flex-col w-sidebar h-full p-sidebar-gap pb-safe-offset-sidebar-gap gap-1"
           >
-            <Sidebar name="desktop" />
+            <Sidebar />
           </Transition.Child>
           <Transition.Child
             role="presentation"

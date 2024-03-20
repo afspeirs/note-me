@@ -1,42 +1,82 @@
 import { useAtom } from 'jotai';
-import { SearchIcon, XIcon } from 'lucide-react';
+import { ArrowLeftIcon, SearchIcon, XIcon } from 'lucide-react';
+import { Fragment, useState } from 'react';
 
 import { Button } from '@/components/Button';
+import { Tooltip } from '@/components/Tooltip';
 import { notesSearchAtom } from '@/context/notesSearch';
-import type { NotesSearchProps } from './types';
+import { Transition } from '@headlessui/react';
+import { useHotkeys } from 'react-hotkeys-hook';
 
-export function NotesSearch({
-  children,
-  name,
-}: NotesSearchProps) {
+export function NotesSearch() {
+  const [show, setShow] = useState(false);
   const [search, setSearch] = useAtom(notesSearchAtom);
 
+  useHotkeys('esc', () => setShow(false), {
+    enableOnFormTags: true,
+  });
+
   return (
-    <label htmlFor={`notes-search-${name}`} className="relative block flex-1">
-      <span className="sr-only">Search Notes</span>
-      <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-2">
-        <SearchIcon className="size-6 text-gray-400" aria-hidden="true" />
-      </div>
-      <input
-        name="notes-search"
-        id={`notes-search-${name}`}
-        value={search}
-        onChange={(event) => setSearch(event.target.value)}
-        className="block w-full rounded-lg border-0 py-3 sm:py-2 pl-10 pr-20 bg-inherit outline-offset-1 placeholder:text-gray-400 placeholder:select-none focus-visible"
-        placeholder="Search Notes"
-      />
-      <div className="absolute inset-y-0 right-0">
-        {search.length > 0 ? (
-          <Button
-            Icon={XIcon}
-            iconOnly
-            disabled={!search.length}
-            onClick={() => setSearch('')}
-          >
-            Clear
-          </Button>
-        ) : children}
-      </div>
-    </label>
+    <>
+      <Tooltip content="Show Search">
+        <Button
+          Icon={SearchIcon}
+          iconOnly
+          onClick={() => setShow(true)}
+        >
+          Show Search
+        </Button>
+      </Tooltip>
+
+      <Transition
+        show={show}
+        as={Fragment}
+        enter="transition-[opacity,transform] ease-linear duration-300"
+        enterFrom="opacity-0 translate-x-full"
+        enterTo="opacity-100 translate-x-0"
+        leave="transition-[opacity,transform] ease-linear duration-300"
+        leaveFrom="opacity-100 translate-x-0"
+        leaveTo="opacity-0 translate-x-full"
+      >
+        <label htmlFor="notes-search" className="absolute block inset-0 m-2 bg-dark z-50">
+          <span className="sr-only">Search Notes</span>
+          <div className="absolute flex items-center gap-3">
+            <Tooltip content="Hide Search" side="right">
+              <Button
+                Icon={ArrowLeftIcon}
+                iconOnly
+                onClick={() => {
+                  setShow(false);
+                  setSearch('');
+                }}
+              >
+                Hide Search
+              </Button>
+            </Tooltip>
+            <SearchIcon className="size-6 text-gray-400 pointer-events-none" aria-hidden="true" />
+          </div>
+          <input
+            name="notes-search"
+            id="notes-search"
+            value={search}
+            onChange={(event) => setSearch(event.target.value)}
+            className="block w-full rounded-lg border-0 py-3 sm:py-2 pl-24 pr-4 bg-inherit placeholder:text-gray-400 placeholder:select-none focus-visible"
+            placeholder="Search Notes"
+          />
+          <div className="absolute inset-y-0 right-0">
+            {search.length > 0 && (
+              <Button
+                Icon={XIcon}
+                iconOnly
+                disabled={!search.length}
+                onClick={() => setSearch('')}
+              >
+                Clear
+              </Button>
+            )}
+          </div>
+        </label>
+      </Transition>
+    </>
   );
 }
