@@ -9,8 +9,8 @@ export function Sidebar({
 }: SidebarProps) {
   return (
     <>
-      <Header name={name} />
       <Content />
+      <Header name={name} />
       <CheckForInstallPrompt />
       <Footer />
     </>
