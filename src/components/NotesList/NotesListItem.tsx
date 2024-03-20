@@ -1,5 +1,5 @@
 import * as ContextMenu from '@radix-ui/react-context-menu';
-import { MoreHorizontalIcon, StarIcon } from 'lucide-react';
+import { MoreHorizontalIcon, StarIcon, StickyNoteIcon } from 'lucide-react';
 import { useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
@@ -25,6 +25,7 @@ export function NotesListItem({
               pathname: `/note/${note.id}`,
               search: `folder=${note.folder}`,
             }}
+            Icon={StickyNoteIcon}
             secondaryAction={(
               <>
                 {note.folder && !searchParamsFolder && (
