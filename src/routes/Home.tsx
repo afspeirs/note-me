@@ -1,17 +1,18 @@
 import { useAtomValue } from 'jotai';
 import { PlusIcon } from 'lucide-react';
+import { useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { useRxData } from 'rxdb-hooks';
 
 import type { NoteDocType, NoteQuery } from '@/api/types';
 import { Button } from '@/components/Button';
 import { NotesList } from '@/components/NotesList';
+import { NotesSearch } from '@/components/NotesSearch';
 import { NotesSort } from '@/components/NotesSort';
 import { Page } from '@/components/Page';
 import { Tooltip } from '@/components/Tooltip';
 import { notesSearchAtom } from '@/context/notesSearch';
 import { notesSortAtom, notesSortOptions } from '@/context/notesSort';
-import { useCallback } from 'react';
-import { useRxData } from 'rxdb-hooks';
 
 export function Home() {
   const [searchParams] = useSearchParams();
@@ -45,8 +46,7 @@ export function Home() {
 
   return (
     <Page
-      title={searchParamsFolder}
-      titleShow
+      title={searchParamsFolder || 'All Notes'}
       icons={(
         <>
           <Tooltip content="Create Note">
@@ -61,6 +61,7 @@ export function Home() {
               Create Note
             </Button>
           </Tooltip>
+          <NotesSearch />
           <NotesSort />
         </>
       )}

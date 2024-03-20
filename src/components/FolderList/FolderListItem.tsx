@@ -1,4 +1,4 @@
-import { FolderClosedIcon } from 'lucide-react';
+import { FolderClosedIcon, PlusIcon } from 'lucide-react';
 import { useSearchParams } from 'react-router-dom';
 
 import { Button } from '@/components/Button';
@@ -13,7 +13,7 @@ export function FolderListItem({
   return (
     <li
       key={folder}
-      className="group/folder-context-menu relative flex flex-col"
+      className="group/folder-context-menu relative flex"
       onContextMenu={(event) => event.preventDefault()}
     >
       <Button
@@ -25,6 +25,17 @@ export function FolderListItem({
         Icon={FolderClosedIcon}
       >
         {folder}
+      </Button>
+      <Button
+        className="hidden group-hover/folder-context-menu:block"
+        Icon={PlusIcon}
+        iconOnly
+        href={{
+          pathname: '/note/',
+          search: `folder=${folder}`,
+        }}
+      >
+        Create Note in folder
       </Button>
     </li>
   );

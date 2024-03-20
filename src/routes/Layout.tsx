@@ -1,12 +1,10 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { useAtom } from 'jotai';
-import { XIcon } from 'lucide-react';
 import { Fragment, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Outlet, useLocation } from 'react-router-dom';
 import { useMediaQuery } from 'usehooks-ts';
 
-import { Button } from '@/components/Button';
 import { Card } from '@/components/Card';
 import { Sidebar } from '@/components/Sidebar';
 import { TopBar } from '@/components/TopBar';
@@ -59,30 +57,9 @@ export function Layout() {
                 leaveTo="-translate-x-full"
               >
                 <Dialog.Panel className="relative mr-16 flex w-full max-w-sidebar flex-1">
-                  <Transition.Child
-                    as={Fragment}
-                    enter="ease-in-out duration-300"
-                    enterFrom="opacity-0"
-                    enterTo="opacity-100"
-                    leave="ease-in-out duration-300"
-                    leaveFrom="opacity-100"
-                    leaveTo="opacity-0"
-                  >
-                    <div className="absolute flex justify-center top-16 left-full m-1 pt-titlebar-area-height">
-                      <Button
-                        className="m-2"
-                        Icon={XIcon}
-                        iconOnly
-                        onClick={() => setDrawerOpen(false)}
-                      >
-                        Close sidebar
-                      </Button>
-                    </div>
-                  </Transition.Child>
-
                   <div className="absolute flex flex-col w-full max-w-sidebar h-full p-sidebar-gap pb-safe-offset-sidebar-gap gap-1">
                     <div className="h-titlebar-area-height w-full" aria-hidden="true" />
-                    <Sidebar name="mobile" />
+                    <Sidebar />
                   </div>
                 </Dialog.Panel>
               </Transition.Child>
@@ -102,7 +79,7 @@ export function Layout() {
             leaveTo="-translate-x-sidebar"
             className="absolute flex flex-col w-sidebar h-full p-sidebar-gap pb-safe-offset-sidebar-gap gap-1"
           >
-            <Sidebar name="desktop" />
+            <Sidebar />
           </Transition.Child>
           <Transition.Child
             role="presentation"
