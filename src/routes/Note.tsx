@@ -73,6 +73,7 @@ export function Note() {
   return (
     <Page
       title={getTitle(note?.text)}
+      titleHide
       icons={(
         <>
           <Tooltip content={`${edit ? 'Save' : 'Edit'} Note`}>

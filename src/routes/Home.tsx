@@ -45,8 +45,7 @@ export function Home() {
 
   return (
     <Page
-      title={searchParamsFolder}
-      titleShow
+      title={searchParamsFolder || 'All Notes'}
       icons={(
         <>
           <Tooltip content="Create Note">

@@ -1,5 +1,5 @@
 import { useAtom } from 'jotai';
-import { ArrowLeftIcon, ChevronLeftIcon, MenuIcon } from 'lucide-react';
+import { ArrowLeftIcon, MenuIcon } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -13,7 +13,7 @@ export function Page({
   children,
   icons,
   title,
-  titleShow = false,
+  titleHide = false,
 }: PageProps) {
   const [open, setOpen] = useAtom(drawerOpenAtom);
   const toggleOpen = () => setOpen((prevState) => !prevState);
@@ -38,7 +38,8 @@ export function Page({
       <header className="flex gap-2 p-2">
         <Tooltip content={`${open ? 'Close' : 'Open'} Sidebar`}>
           <Button
-            Icon={open ? ChevronLeftIcon : MenuIcon}
+            className={open ? 'sm:hidden' : ''}
+            Icon={MenuIcon}
             iconOnly
             onClick={toggleOpen}
           >
@@ -58,8 +59,8 @@ export function Page({
           </Tooltip>
         )}
 
-        {titleShow && (
-          <div className="ml-2 self-center font-bold text-xl">{title}</div>
+        {!titleHide && (
+          <div className="ml-2 self-center font-bold text-xl select-none">{title}</div>
         )}
 
         <div className="ml-auto" />
