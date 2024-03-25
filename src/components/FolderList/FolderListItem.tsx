@@ -1,4 +1,4 @@
-import { FolderClosedIcon, PlusIcon } from 'lucide-react';
+import { FolderIcon, PlusIcon } from 'lucide-react';
 import { useSearchParams } from 'react-router-dom';
 
 import { Button } from '@/components/Button';
@@ -22,7 +22,7 @@ export function FolderListItem({
           pathname: '/',
           search: `folder=${folder}`,
         }}
-        Icon={FolderClosedIcon}
+        Icon={FolderIcon}
       >
         {folder}
       </Button>
