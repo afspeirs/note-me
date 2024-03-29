@@ -28,7 +28,10 @@ export function Footer() {
             Home
           </Button>
         </li>
-        <li className="flex">
+        <li>
+          <AuthUserInformation />
+        </li>
+        <li>
           <Button
             active={pathname.startsWith('/settings')}
             href="/settings/"
@@ -36,7 +39,6 @@ export function Footer() {
           >
             Settings
           </Button>
-          <AuthUserInformation />
         </li>
       </ul>
     </Card>

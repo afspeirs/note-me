@@ -4,7 +4,6 @@ import { useState } from 'react';
 
 import { AvatarIcon } from '@/components/AvatarIcon';
 import { Button } from '@/components/Button';
-import { Tooltip } from '@/components/Tooltip';
 import { authAtom } from '@/context/auth';
 import { UserInformationModal } from './UserInformationModal';
 
@@ -14,21 +13,18 @@ export function AuthUserInformation() {
 
   return (
     <>
-      <Tooltip content={auth ? 'View account' : 'Sign in'}>
-        <Button
-          active={open}
-          iconOnly
-          Icon={auth ? undefined : UserIcon}
-          onClick={() => setOpen(true)}
-        >
-          {auth ? (
-            <>
-              <AvatarIcon label={auth.user.email} size="icon" />
-              <span className="sr-only">View account</span>
-            </>
-          ) : 'Sign in'}
-        </Button>
-      </Tooltip>
+      <Button
+        active={open}
+        Icon={auth ? undefined : UserIcon}
+        onClick={() => setOpen(true)}
+      >
+        {auth ? (
+          <div className="flex gap-3">
+            <AvatarIcon label={auth.user.email} size="icon" />
+            <span>View account</span>
+          </div>
+        ) : 'Sign in'}
+      </Button>
 
       <UserInformationModal
         open={open}

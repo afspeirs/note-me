@@ -29,7 +29,7 @@ export function NotesListItem({
             secondaryAction={(
               <>
                 {note.folder && !searchParamsFolder && (
-                  <span className="max-sm:hidden text-light bg-dark dark:text-dark dark:bg-light px-3 py-1 -my-1 truncate max-w-sm rounded-full">{note.folder}</span>
+                  <span className="max-md:hidden text-light bg-dark dark:text-dark dark:bg-light px-3 py-1 -my-1 truncate max-w-48 rounded-full">{note.folder}</span>
                 )}
                 {note.favourite && (
                   <StarIcon className="size-6 flex-shrink-0 text-primary fill-primary" aria-hidden="true" />
