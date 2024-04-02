@@ -9,10 +9,10 @@ import { useEventListener } from 'usehooks-ts';
 
 import { enableReplication, initialise, supabase } from '@/api';
 import { ServiceWorkerEvents } from '@/components/ServiceWorkerEvents';
+import { Toaster } from '@/components/Toaster';
 import { authAtom } from '@/context/auth';
 import { dbAtom, replicationAtom } from '@/context/db';
 import { router } from '@/routes';
-import { Toaster } from './components/Toaster';
 
 export function App() {
   const [auth, setAuth] = useAtom(authAtom);

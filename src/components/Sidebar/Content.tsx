@@ -22,7 +22,7 @@ export function Content() {
     (collection) => collection.find({
       selector: {
         text: {
-          $regex: RegExp(search, 'i'),
+          $regex: RegExp(search, 'i').source,
         },
       },
       sort: [notesSortOptions[sort].value],
