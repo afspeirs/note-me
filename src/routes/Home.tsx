@@ -26,14 +26,14 @@ export function Home() {
           $eq: searchParamsFolder,
         },
         text: {
-          $regex: RegExp(search, 'i'),
+          $regex: RegExp(search, 'i').source,
         },
       },
       sort: [notesSortOptions[sort].value],
     } : {
       selector: {
         text: {
-          $regex: RegExp(search, 'i'),
+          $regex: RegExp(search, 'i').source,
         },
       },
       sort: [notesSortOptions[sort].value],
