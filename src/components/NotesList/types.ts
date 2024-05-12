@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import type { ReactElement, ReactNode } from 'react';
 
 import type { NoteDocument } from '@/api/types';
 
@@ -7,6 +7,7 @@ export type NotesProps = {
 };
 
 export type NotesListProps = {
+  children?: ReactElement
   isFetching: boolean,
   notes: NoteDocument[],
   padding?: boolean,

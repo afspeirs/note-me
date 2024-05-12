@@ -1,9 +1,10 @@
 import * as ContextMenu from '@radix-ui/react-context-menu';
+import { useAtomValue } from 'jotai';
 import { MoreHorizontalIcon, StarIcon, StickyNoteIcon } from 'lucide-react';
 import { useRef } from 'react';
-import { useSearchParams } from 'react-router-dom';
 
 import { Button } from '@/components/Button';
+import { currentFolderAtom } from '@/context/folders';
 import { getTitle } from '@/utils/getTitle';
 import { NotesContextMenu } from './NotesContextMenu';
 import type { NotesProps } from './types';
@@ -11,8 +12,7 @@ import type { NotesProps } from './types';
 export function NotesListItem({
   note,
 }: NotesProps) {
-  const [searchParams] = useSearchParams();
-  const searchParamsFolder = searchParams.get('folder');
+  const currentFolder = useAtomValue(currentFolderAtom);
   const contextTriggerRef = useRef<HTMLLIElement>(null);
   const contextButtonRef = useRef<HTMLButtonElement>(null);
 
@@ -23,13 +23,13 @@ export function NotesListItem({
           <Button
             href={{
               pathname: `/note/${note.id}`,
-              search: `folder=${note.folder}`,
+              search: note.folder ? `folder=${note.folder}` : undefined,
             }}
             Icon={StickyNoteIcon}
             secondaryAction={(
               <>
-                {note.folder && !searchParamsFolder && (
-                  <span className="max-md:hidden text-light bg-dark dark:text-dark dark:bg-light px-3 py-1 -my-1 truncate max-w-48 rounded-full">{note.folder}</span>
+                {note.folder && !currentFolder && (
+                  <span className="max-md:hidden text-light bg-dark dark:text-dark dark:bg-light px-3 py-1 -my-1 truncate max-w-32 rounded-full">{note.folder}</span>
                 )}
                 {note.favourite && (
                   <StarIcon className="size-6 flex-shrink-0 text-primary fill-primary" aria-hidden="true" />

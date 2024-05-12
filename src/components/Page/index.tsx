@@ -38,7 +38,6 @@ export function Page({
       <header className="relative flex gap-2 p-2">
         <Tooltip content={`${open ? 'Close' : 'Open'} Sidebar`}>
           <Button
-            className={open ? 'sm:hidden' : ''}
             Icon={MenuIcon}
             iconOnly
             onClick={toggleOpen}
@@ -60,7 +59,7 @@ export function Page({
         )}
 
         {!titleHide && (
-          <div className="ml-2 self-center font-bold text-xl truncate select-none">{title}</div>
+          <div className="self-center font-bold text-xl truncate select-none">{title}</div>
         )}
 
         <div className="ml-auto" />

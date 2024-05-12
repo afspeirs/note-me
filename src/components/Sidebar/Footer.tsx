@@ -1,27 +1,30 @@
 import { HomeIcon, PlusIcon, SettingsIcon } from 'lucide-react';
-import { useLocation } from 'react-router-dom';
 
 import { AuthUserInformation } from '@/components/AuthUserInformation';
 import { Button } from '@/components/Button';
 import { Card } from '@/components/Card';
+import { currentFolderAtom } from '@/context/folders';
+import { useAtomValue } from 'jotai';
 
 export function Footer() {
-  const { pathname, search } = useLocation();
+  const currentFolder = useAtomValue(currentFolderAtom);
 
   return (
     <Card as="nav" aria-label="sidebar footer">
       <ul role="list" className="flex flex-col p-2">
         <li>
           <Button
-            href="/note"
+            href={{
+              pathname: '/note',
+              search: currentFolder ? `folder=${currentFolder}` : undefined,
+            }}
             Icon={PlusIcon}
           >
-            Create Note
+            {`Create Note${currentFolder ? ` in "${currentFolder}"` : ''}`}
           </Button>
         </li>
         <li>
           <Button
-            active={pathname === '/' && !search.includes('folder')}
             href="/"
             Icon={HomeIcon}
           >
@@ -33,7 +36,6 @@ export function Footer() {
         </li>
         <li>
           <Button
-            active={pathname.startsWith('/settings')}
             href="/settings/"
             Icon={SettingsIcon}
           >
