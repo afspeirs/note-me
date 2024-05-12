@@ -23,7 +23,7 @@ export function ContentHeader({
         </Tooltip>
       )}
 
-      <div className="self-center font-bold text-xl truncate select-none">{title}</div>
+      <div className="ml-2 self-center font-bold text-xl truncate select-none">{title}</div>
 
       <div className="ml-auto" />
 
