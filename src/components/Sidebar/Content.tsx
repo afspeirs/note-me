@@ -40,7 +40,7 @@ export function Content() {
   return (
     <Card
       as="nav"
-      className="flex-1 h-full overflow-hidden relative"
+      className="flex flex-col flex-1 overflow-hidden relative"
       aria-label="Sidebar"
     >
       <FolderList

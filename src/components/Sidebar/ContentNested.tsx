@@ -53,7 +53,7 @@ export function ContentNested() {
       leaveTo="translate-x-full"
       className="absolute top-0 w-full h-full"
     >
-      <Card className="h-full">
+      <Card className="flex flex-col h-full">
         <ContentHeader
           onBack={() => setCurrentFolder(null)}
           title={currentFolder || 'All Notes'}
