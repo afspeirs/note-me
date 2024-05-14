@@ -1,14 +1,14 @@
+import { useAtom } from 'jotai';
 import { FolderIcon, PlusIcon } from 'lucide-react';
-import { useSearchParams } from 'react-router-dom';
 
 import { Button } from '@/components/Button';
+import { currentFolderAtom } from '@/context/folders';
 import type { FolderListItemProps } from './types';
 
 export function FolderListItem({
   folder,
 }: FolderListItemProps) {
-  const [searchParams] = useSearchParams();
-  const searchParamsFolder = searchParams.get('folder');
+  const [currentFolder, setCurrentFolder] = useAtom(currentFolderAtom);
 
   return (
     <li
@@ -17,14 +17,11 @@ export function FolderListItem({
       onContextMenu={(event) => event.preventDefault()}
     >
       <Button
-        active={folder === searchParamsFolder}
-        href={{
-          pathname: '/',
-          search: `folder=${folder}`,
-        }}
+        onClick={() => setCurrentFolder(folder)}
+        active={folder === currentFolder}
         Icon={FolderIcon}
       >
-        {folder}
+        {folder || 'All Notes'}
       </Button>
       <Button
         className="hidden group-hover/folder-context-menu:block"
@@ -32,7 +29,7 @@ export function FolderListItem({
         iconOnly
         href={{
           pathname: '/note/',
-          search: `folder=${folder}`,
+          search: folder ? `folder=${folder}` : undefined,
         }}
       >
         Create Note in folder

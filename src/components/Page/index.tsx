@@ -38,7 +38,6 @@ export function Page({
       <header className="relative flex gap-2 p-2">
         <Tooltip content={`${open ? 'Close' : 'Open'} Sidebar`}>
           <Button
-            className={open ? 'sm:hidden' : ''}
             Icon={MenuIcon}
             iconOnly
             onClick={toggleOpen}
