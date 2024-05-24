@@ -1,5 +1,5 @@
 import { Dialog, Transition } from '@headlessui/react';
-import { useAtom } from 'jotai';
+import { useAtom, useAtomValue } from 'jotai';
 import { Fragment, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Outlet, useLocation } from 'react-router-dom';
@@ -8,19 +8,20 @@ import { useMediaQuery } from 'usehooks-ts';
 import { Card } from '@/components/Card';
 import { Sidebar } from '@/components/Sidebar';
 import { TopBar } from '@/components/TopBar';
-import { drawerOpenAtom } from '@/context/navigation';
+import { drawerOpenAtom, useMobileDrawerAtom } from '@/context/navigation';
 import { useTheme } from '@/hooks/theme';
 import { classNames } from '@/utils/classNames';
 
 export function Layout() {
   const { pathname, search } = useLocation();
   const [drawerOpen, setDrawerOpen] = useAtom(drawerOpenAtom);
+  const useMobileDrawer = useAtomValue(useMobileDrawerAtom);
   const mobile = useMediaQuery('(max-width:640px)');
   const theme = useTheme();
 
   useEffect(() => {
-    if (mobile) setDrawerOpen(false);
-  }, [mobile, pathname, search, setDrawerOpen]);
+    if (useMobileDrawer) setDrawerOpen(false);
+  }, [pathname, search, setDrawerOpen, useMobileDrawer]);
 
   return (
     <>
@@ -32,8 +33,8 @@ export function Layout() {
       <div className="fixed inset-0 px-safe flex overflow-hidden mt-titlebar-area-height bg-primary dark:bg-black">
         <TopBar />
 
-        <Transition.Root show={mobile && drawerOpen} as={Fragment}>
-          <Dialog as="div" className="relative sm:hidden" onClose={setDrawerOpen}>
+        <Transition.Root show={(mobile || useMobileDrawer) && drawerOpen} as={Fragment}>
+          <Dialog as="div" className="relative" onClose={setDrawerOpen}>
             <Transition.Child
               as={Fragment}
               enter="transition-opacity ease-linear duration-300"
@@ -58,7 +59,7 @@ export function Layout() {
               >
                 <Dialog.Panel className="relative mr-16 flex w-full max-w-sidebar flex-1">
                   <div className="absolute flex flex-col w-full max-w-sidebar h-full p-sidebar-gap pb-safe-offset-sidebar-gap gap-1">
-                    <div className="h-titlebar-area-height w-full" aria-hidden="true" />
+                    <div className="hidden [@media(display-mode:window-controls-overlay)]:block -mt-sidebar-gap h-titlebar-area-height w-full" aria-hidden="true" />
                     <Sidebar />
                   </div>
                 </Dialog.Panel>
@@ -67,7 +68,7 @@ export function Layout() {
           </Dialog>
         </Transition.Root>
 
-        <Transition appear show={drawerOpen} className="hidden sm:block">
+        <Transition appear show={(!useMobileDrawer && !mobile) && drawerOpen}>
           <Transition.Child
             as="aside"
             unmount={false}
@@ -95,10 +96,10 @@ export function Layout() {
         <div
           className={classNames(
             'relative flex-1 min-w-full sm:min-w-[initial] transition-[margin] duration-400',
-            drawerOpen && !mobile ? 'ml-0 m-sidebar-gap' : '',
+            drawerOpen && (!mobile && !useMobileDrawer) ? 'ml-0 m-sidebar-gap' : '',
           )}
         >
-          <Card className="flex flex-col h-full overflow-hidden" fullscreen={!drawerOpen || mobile}>
+          <Card className="flex flex-col h-full overflow-hidden" fullscreen={!drawerOpen || mobile || useMobileDrawer}>
             <Outlet />
           </Card>
         </div>
