@@ -1,6 +1,6 @@
 import * as TooltipPrimitive from '@radix-ui/react-tooltip';
 
-import { TooltipProps } from './types';
+import type { TooltipProps } from './types';
 
 export function Tooltip({
   children,

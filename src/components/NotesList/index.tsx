@@ -3,7 +3,7 @@ import { ViewportList } from 'react-viewport-list';
 
 import { classNames } from '@/utils/classNames';
 import { NotesListItem } from './NotesListItem';
-import { NotesListProps } from './types';
+import type { NotesListProps } from './types';
 
 export function NotesList({
   children,

@@ -9,7 +9,7 @@ import { Modal } from '@/components/Modal';
 import { foldersAtom } from '@/context/folders';
 import { classNames } from '@/utils/classNames';
 import { getTitle } from '@/utils/getTitle';
-import { NotesMoveModalProps } from './types';
+import type { NotesMoveModalProps } from './types';
 
 export function NotesMoveModal({
   setShowMoveNoteModal,

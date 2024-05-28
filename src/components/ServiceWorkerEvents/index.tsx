@@ -2,10 +2,7 @@ import { useSetAtom } from 'jotai';
 import { useEffect } from 'react';
 import toast from 'react-hot-toast';
 
-import {
-  beforeInstallPromptAtom,
-  updateAvailableAtom,
-} from '@/context/serviceWorker';
+import { beforeInstallPromptAtom, updateAvailableAtom } from '@/context/serviceWorker';
 import type { BeforeInstallPromptEvent } from './types';
 
 export function ServiceWorkerEvents() {

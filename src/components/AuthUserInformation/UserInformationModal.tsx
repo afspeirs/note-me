@@ -11,7 +11,7 @@ import { Modal } from '@/components/Modal';
 import { ModalConfirm } from '@/components/ModalConfirm';
 import { authAtom } from '@/context/auth';
 import { dbAtom } from '@/context/db';
-import { UserInformationModalProps } from './types';
+import type { UserInformationModalProps } from './types';
 
 export function UserInformationModal({
   open,

@@ -3,7 +3,7 @@ import { ViewportList } from 'react-viewport-list';
 
 import { classNames } from '@/utils/classNames';
 import { FolderListItem } from './FolderListItem';
-import { FolderListProps } from './types';
+import type { FolderListProps } from './types';
 
 export function FolderList({
   children,
