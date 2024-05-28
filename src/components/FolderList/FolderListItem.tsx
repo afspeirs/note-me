@@ -21,7 +21,7 @@ export function FolderListItem({
         active={folder.name === currentFolder}
         Icon={FolderIcon}
         secondaryAction={(
-          <span className="inline-flex h-6 w-6 items-center justify-center rounded-full text-white bg-dark dark:text-dark text-xs font-medium leading-none">
+          <span className="inline-flex h-6 w-6 items-center justify-center rounded-full text-light bg-dark dark:text-dark dark:bg-light text-xs font-medium leading-none">
             {folder.count <= 99 ? folder.count : '99+'}
           </span>
         )}
