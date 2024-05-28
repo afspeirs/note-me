@@ -7,6 +7,7 @@ import type { ModalProps } from './types';
 
 export function Modal({
   children,
+  className,
   onClose,
   open,
   showCloseButton = true,
@@ -57,7 +58,9 @@ export function Modal({
                   </Dialog.Title>
                 )}
 
-                {children}
+                <div className={className}>
+                  {children}
+                </div>
               </Dialog.Panel>
             </Transition.Child>
           </div>
