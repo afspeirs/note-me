@@ -6,16 +6,16 @@ import { useState } from 'react';
 import { moveNote } from '@/api/notes';
 import { Button } from '@/components/Button';
 import { Modal } from '@/components/Modal';
-import { foldersAtom } from '@/context/folders';
+import { folderNamesAtom } from '@/context/folders';
 import { classNames } from '@/utils/classNames';
 import { getTitle } from '@/utils/getTitle';
-import { NotesMoveModalProps } from './types';
+import type { NotesMoveModalProps } from './types';
 
 export function NotesMoveModal({
   setShowMoveNoteModal,
   showMoveNoteModal: note,
 }: NotesMoveModalProps) {
-  const folders = useAtomValue(foldersAtom);
+  const folders = useAtomValue(folderNamesAtom);
   const [selected, setSelected] = useState<string | null>(null);
   const [newFolderName, setNewFolderName] = useState('');
 

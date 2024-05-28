@@ -7,6 +7,7 @@ import type { ModalProps } from './types';
 
 export function Modal({
   children,
+  className,
   onClose,
   open,
   showCloseButton = true,
@@ -52,12 +53,14 @@ export function Modal({
                 )}
 
                 {title && (
-                  <Dialog.Title as="h3" className="mb-6 text-xl font-medium">
+                  <Dialog.Title as="h3" className="mb-6 mr-8 text-xl font-medium">
                     {title}
                   </Dialog.Title>
                 )}
 
-                {children}
+                <div className={className}>
+                  {children}
+                </div>
               </Dialog.Panel>
             </Transition.Child>
           </div>

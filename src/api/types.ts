@@ -10,6 +10,11 @@ export type NoteDocType = {
   text: string,
 };
 
+export type FolderDocType = {
+  name: string,
+  count: number,
+};
+
 export type NoteDocument = RxDocument<NoteDocType>;
 export type NoteCollection = RxCollection<NoteDocType>;
 export type NoteQuery = QueryConstructor<NoteDocType>;

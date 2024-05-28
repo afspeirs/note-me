@@ -2,7 +2,7 @@ import MarkdownToJSX from 'markdown-to-jsx';
 
 import { classNames } from '@/utils/classNames';
 import { RendererLink } from './RendererLink';
-import { MarkdownProps } from './types';
+import type { MarkdownProps } from './types';
 
 export function Markdown({
   children,
