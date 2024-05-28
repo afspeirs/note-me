@@ -1,4 +1,4 @@
-import { useAtom, useAtomValue } from 'jotai';
+import { useAtom } from 'jotai';
 import { PinIcon, PinOffIcon } from 'lucide-react';
 import { useCallback, useEffect } from 'react';
 import { useRxData } from 'rxdb-hooks';
@@ -11,26 +11,12 @@ import { ContentHeader } from '@/components/Sidebar/ContentHeader';
 import { Tooltip } from '@/components/Tooltip';
 import { foldersAtom } from '@/context/folders';
 import { useMobileDrawerAtom } from '@/context/navigation';
-import { notesSearchAtom } from '@/context/notesSearch';
-import { notesSortAtom, notesSortOptions } from '@/context/notesSort';
 import { ContentNested } from './ContentNested';
 
 export function Content() {
-  const search = useAtomValue(notesSearchAtom);
-  const sort = useAtomValue(notesSortAtom);
   const [useMobileDrawer, setUseMobileDrawer] = useAtom(useMobileDrawerAtom);
   const [folders, setFolders] = useAtom(foldersAtom);
-  const notesQuery: NoteQuery = useCallback(
-    (collection) => collection.find({
-      selector: {
-        text: {
-          $regex: RegExp(search, 'i').source,
-        },
-      },
-      sort: [notesSortOptions[sort].value],
-    }),
-    [search, sort],
-  );
+  const notesQuery: NoteQuery = useCallback((collection) => collection.find(), []);
 
   const { result: notes, isFetching } = useRxData<NoteDocType>('notes', notesQuery);
   // console.log(notes.map((folder) => folder.toJSON()));
