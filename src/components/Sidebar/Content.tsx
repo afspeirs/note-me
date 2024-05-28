@@ -37,7 +37,17 @@ export function Content() {
 
   useEffect(() => {
     const allFolders = notes.map((note) => note.folder ?? '').filter(Boolean);
-    const newFolders = [...new Set(['', ...allFolders])].sort();
+    const newFolders = [...new Set(['', ...allFolders])]
+      .sort()
+      .map((folder) => {
+        const numberOfNotesInFolder = allFolders.filter((item) => item === folder).length;
+
+        return {
+          name: folder,
+          count: folder === '' ? notes.length : numberOfNotesInFolder,
+        };
+      });
+
     // console.log(newFolders);
     setFolders(newFolders);
   }, [notes, setFolders]);

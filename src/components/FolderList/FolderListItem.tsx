@@ -12,16 +12,21 @@ export function FolderListItem({
 
   return (
     <li
-      key={folder}
+      key={folder.name}
       className="group/folder-context-menu relative flex"
       onContextMenu={(event) => event.preventDefault()}
     >
       <Button
-        onClick={() => setCurrentFolder(folder)}
-        active={folder === currentFolder}
+        onClick={() => setCurrentFolder(folder.name)}
+        active={folder.name === currentFolder}
         Icon={FolderIcon}
+        secondaryAction={(
+          <span className="inline-flex h-6 w-6 items-center justify-center rounded-full text-white bg-dark dark:text-dark text-xs font-medium leading-none">
+            {folder.count <= 99 ? folder.count : '99+'}
+          </span>
+        )}
       >
-        {folder || 'All Notes'}
+        {folder.name || 'All Notes'}
       </Button>
       <Button
         className="hidden group-hover/folder-context-menu:block"
@@ -29,7 +34,7 @@ export function FolderListItem({
         iconOnly
         href={{
           pathname: '/note/',
-          search: folder ? `folder=${folder}` : undefined,
+          search: folder.name ? `folder=${folder.name}` : undefined,
         }}
       >
         Create Note in folder

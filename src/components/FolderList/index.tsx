@@ -35,7 +35,7 @@ export function FolderList({
           items={folders}
         >
           {(folder) => (
-            <FolderListItem key={folder} folder={folder} />
+            <FolderListItem key={folder.name} folder={folder} />
           )}
         </ViewportList>
       </ul>
