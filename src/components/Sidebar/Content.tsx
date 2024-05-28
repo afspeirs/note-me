@@ -1,12 +1,16 @@
 import { useAtom, useAtomValue } from 'jotai';
+import { PinIcon, PinOffIcon } from 'lucide-react';
 import { useCallback, useEffect } from 'react';
 import { useRxData } from 'rxdb-hooks';
 
 import type { NoteDocType, NoteQuery } from '@/api/types';
+import { Button } from '@/components/Button';
 import { Card } from '@/components/Card';
 import { FolderList } from '@/components/FolderList';
 import { ContentHeader } from '@/components/Sidebar/ContentHeader';
+import { Tooltip } from '@/components/Tooltip';
 import { foldersAtom } from '@/context/folders';
+import { useMobileDrawerAtom } from '@/context/navigation';
 import { notesSearchAtom } from '@/context/notesSearch';
 import { notesSortAtom, notesSortOptions } from '@/context/notesSort';
 import { ContentNested } from './ContentNested';
@@ -14,6 +18,7 @@ import { ContentNested } from './ContentNested';
 export function Content() {
   const search = useAtomValue(notesSearchAtom);
   const sort = useAtomValue(notesSortAtom);
+  const [useMobileDrawer, setUseMobileDrawer] = useAtom(useMobileDrawerAtom);
   const [folders, setFolders] = useAtom(foldersAtom);
   const notesQuery: NoteQuery = useCallback(
     (collection) => collection.find({
@@ -48,7 +53,18 @@ export function Content() {
         isFetching={isFetching}
         padding
       >
-        <ContentHeader title="Folders" />
+        <ContentHeader title="Folders">
+          <Tooltip content={`${useMobileDrawer ? 'Pin' : 'Un-pin'} Sidebar`} side="left">
+            <Button
+              className="hidden sm:block"
+              Icon={useMobileDrawer ? PinIcon : PinOffIcon}
+              iconOnly
+              onClick={() => setUseMobileDrawer((prevState) => !prevState)}
+            >
+              {`${useMobileDrawer ? 'pin' : 'un-pin'} sidebar`}
+            </Button>
+          </Tooltip>
+        </ContentHeader>
       </FolderList>
 
       <ContentNested />
