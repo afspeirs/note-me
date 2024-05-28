@@ -19,9 +19,13 @@ export function Layout() {
   const mobile = useMediaQuery('(max-width:640px)');
   const theme = useTheme();
 
+  /**
+   * Close the Drawer if using the mobile nav.
+   * Deliberately not run the code when mobile or useMobileDrawer updates
+  */
   useEffect(() => {
-    if (useMobileDrawer) setDrawerOpen(false);
-  }, [pathname, search, setDrawerOpen, useMobileDrawer]);
+    if (mobile || useMobileDrawer) setDrawerOpen(false);
+  }, [pathname, search, setDrawerOpen]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <>
