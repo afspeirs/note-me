@@ -9,6 +9,10 @@ readFile('./dist/manifest.webmanifest', 'utf8', (err, data) => {
     webmanifest.name += ` (${branchName})`;
   }
 
+  if (imageBranch !== '') {
+    webmanifest.icons[0].src = `/icon-maskable-512x512${imageBranch}.png`;
+  }
+
   const webmanifestApple = JSON.parse(JSON.stringify(webmanifest));
   webmanifestApple.icons = [
     {
