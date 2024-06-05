@@ -35,6 +35,14 @@ export function App() {
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (session) {
+        window.localStorage.setItem('has-auth-state', 'true');
+      } else if (!session && window.localStorage.getItem('has-auth-state')) {
+        toast('You have been logged out', {
+          id: 'previous-logged-in',
+        });
+      }
+
       setAuth(session);
     });
 

@@ -28,7 +28,10 @@ export function UserInformationModal({
     if (error) console.error(error); // eslint-disable-line no-console
 
     db?.remove()
-      .then(() => window.location.reload()); // TODO: Remove the need for the page reload
+      .then(() => {
+        window.localStorage.removeItem('has-auth-state');
+        window.location.reload();
+      }); // TODO: Remove the need for the page reload
   };
 
   useEffect(() => {
