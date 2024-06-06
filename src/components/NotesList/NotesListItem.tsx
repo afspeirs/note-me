@@ -23,7 +23,7 @@ export function NotesListItem({
           <Button
             href={{
               pathname: `/note/${note.id}`,
-              search: note.folder ? `folder=${note.folder}` : undefined,
+              search: note.folder ? `folder=${window.encodeURIComponent(note.folder)}` : undefined,
             }}
             Icon={StickyNoteIcon}
             secondaryAction={(
