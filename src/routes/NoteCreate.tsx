@@ -14,7 +14,7 @@ export function NoteCreate() {
     createNote(collection, { folder: searchParamsFolder })
       .then((note) => navigate({
         pathname: `/note/${note.id}`,
-        search: note?.folder ? `folder=${note?.folder}` : undefined,
+        search: note?.folder ? `folder=${window.encodeURIComponent(note?.folder)}` : undefined,
       }, { replace: true }));
   }
 

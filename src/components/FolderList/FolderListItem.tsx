@@ -34,7 +34,7 @@ export function FolderListItem({
         iconOnly
         href={{
           pathname: '/note/',
-          search: folder.name ? `folder=${folder.name}` : undefined,
+          search: folder.name ? `folder=${window.encodeURIComponent(folder.name)}` : undefined,
         }}
       >
         Create Note in folder

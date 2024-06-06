@@ -16,7 +16,7 @@ export function Footer() {
           <Button
             href={{
               pathname: '/note',
-              search: currentFolder ? `folder=${currentFolder}` : undefined,
+              search: currentFolder ? `folder=${window.encodeURIComponent(currentFolder)}` : undefined,
             }}
             Icon={PlusIcon}
           >
