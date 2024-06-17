@@ -8,7 +8,8 @@ import type { ButtonProps } from './types';
 export const style = {
   base: 'peer/button rounded-lg select-none disabled:opacity-40 disabled:pointer-events-none focus-visible ring-inset',
   iconOnly: 'block p-3 sm:p-2',
-  withText: 'flex items-center gap-3 p-3 sm:py-2 min-w-0 w-full',
+  fullWidth: 'min-w-0 w-full',
+  withText: 'flex items-center gap-3 p-3 sm:py-2',
 } as const;
 
 export const colours = {
@@ -28,6 +29,7 @@ export const Button = forwardRef(({
   colour = 'base',
   colourActive = 'base',
   disabled,
+  fullWidth = true,
   href,
   Icon,
   IconClassName,
@@ -40,6 +42,7 @@ export const Button = forwardRef(({
   <NavLink
     className={({ isActive }) => classNames(
       iconOnly ? style.iconOnly : style.withText,
+      !iconOnly && fullWidth ? style.fullWidth : '',
       isActive || active ? coloursActive[colourActive] : colours[colour],
       style.base,
       className,
@@ -75,6 +78,7 @@ export const Button = forwardRef(({
     type="button"
     className={classNames(
       iconOnly ? style.iconOnly : style.withText,
+      !iconOnly && fullWidth ? style.fullWidth : '',
       active ? coloursActive[colourActive] : colours[colour],
       style.base,
       className,

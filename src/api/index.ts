@@ -1,16 +1,12 @@
 import type { User } from '@supabase/supabase-js';
 import { createClient } from '@supabase/supabase-js';
-import toast from 'react-hot-toast';
 import type { RxJsonSchema } from 'rxdb';
 import { addRxPlugin, createRxDatabase } from 'rxdb';
 import { SupabaseReplication } from 'rxdb-supabase';
 import { getRxStorageDexie } from 'rxdb/plugins/storage-dexie';
 
-import type {
-  MyDatabase,
-  MyDatabaseCollections,
-  NoteDocType,
-} from './types';
+import { openToast } from '@/components/Toast';
+import type { MyDatabase, MyDatabaseCollections, NoteDocType } from './types';
 
 if (!import.meta.env.PROD) {
   await import('rxdb/plugins/dev-mode')
@@ -92,7 +88,9 @@ export function enableReplication(db: MyDatabase, user: User) {
     const message = error.parameters.errors?.[0].message;
     console.log(message); // eslint-disable-line no-console
 
-    toast(`An error has occurred: "${message}"`, {
+    openToast({
+      message: `An error has occurred: "${message}"`,
+    }, {
       id: 'replication-error',
     });
   });

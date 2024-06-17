@@ -10,6 +10,7 @@ interface BaseProps {
   className?: string,
   colour?: keyof typeof colours;
   colourActive?: keyof typeof coloursActive;
+  fullWidth?: boolean,
   Icon?: LucideIcon;
   IconClassName?: string,
   iconOnly?: boolean,

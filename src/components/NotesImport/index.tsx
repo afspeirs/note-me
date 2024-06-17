@@ -2,7 +2,7 @@ import frontMatter from 'front-matter';
 import { ArrowUpCircleIcon } from 'lucide-react';
 import type { ChangeEvent } from 'react';
 import { useRef, useState } from 'react';
-import toast from 'react-hot-toast';
+import { ErrorIcon } from 'react-hot-toast';
 import { useRxCollection } from 'rxdb-hooks';
 import { useEventListener } from 'usehooks-ts';
 
@@ -10,6 +10,7 @@ import { importNotes } from '@/api/notes';
 import type { NoteDocType } from '@/api/types';
 import { Button } from '@/components/Button';
 import { Modal } from '@/components/Modal';
+import { openToast } from '@/components/Toast';
 import { classNames } from '@/utils/classNames';
 import { getTitle } from '@/utils/getTitle';
 import type { ImportFile } from './types';
@@ -49,7 +50,11 @@ export function NotesImport() {
         };
         reader.readAsText(file);
       } else {
-        toast.error(`"${file.name}" cannot be imported. Only Markdown and other text files are supported`);
+        openToast({
+          message: `"${file.name}" cannot be imported. Only Markdown and other text files are supported`,
+        }, {
+          icon: <ErrorIcon />,
+        });
       }
     });
 

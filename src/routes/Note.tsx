@@ -6,10 +6,9 @@ import {
   Trash2Icon as TrashIcon,
 } from 'lucide-react';
 import { useCallback, useEffect, useState } from 'react';
-import toast from 'react-hot-toast';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useRxData } from 'rxdb-hooks';
+import { useRxCollection, useRxData } from 'rxdb-hooks';
 
 import { deleteNote, favouriteNote, updateNote } from '@/api/notes';
 import type { NoteDocType, NoteQuery } from '@/api/types';
@@ -20,6 +19,7 @@ import { NotesMoreInformation } from '@/components/NotesMoreInformation';
 import { Page } from '@/components/Page';
 import { Tooltip } from '@/components/Tooltip';
 import { getTitle } from '@/utils/getTitle';
+import { openToast } from '@/components/Toast';
 
 const placeholderText = `
 What is on your mind?
@@ -29,17 +29,22 @@ Start typing here to begin crafting your new note.
 
 export function Note() {
   const { id } = useParams();
+  const collection = useRxCollection<NoteDocType>('notes');
   const navigate = useNavigate();
   const [edit, setEdit] = useState(false);
   const [showMoreInformation, setShowMoreInformation] = useState(false);
   const [showDeleteNoteModal, setShowDeleteNoteModal] = useState(false);
   const [text, setText] = useState('');
-  const notesQuery = useCallback<NoteQuery>((collection) => collection.findOne(id), [id]);
+  // TODO: can i do this better now that I need collection for deleteNote?
+  const notesQuery = useCallback<NoteQuery>((collection2) => collection2.findOne(id), [id]);
   const { result: [note], isFetching } = useRxData<NoteDocType>('notes', notesQuery);
 
   const handleDeleteNote = () => {
     setShowDeleteNoteModal(false);
-    deleteNote(note)
+
+    if (!collection) throw new Error('No collection found');
+
+    deleteNote(collection, note)
       .then(() => navigate('/', { replace: true }));
   };
 
@@ -65,7 +70,9 @@ export function Note() {
 
   useEffect(() => {
     if (!note && !isFetching) {
-      toast(`No note found with an id of "${id}"`);
+      openToast({
+        message: `No note found with an id of "${id}"`,
+      });
       navigate('/', { replace: true });
     }
   }, [isFetching, note]); // eslint-disable-line react-hooks/exhaustive-deps

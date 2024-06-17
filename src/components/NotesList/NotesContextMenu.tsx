@@ -1,5 +1,4 @@
 import * as ContextMenu from '@radix-ui/react-context-menu';
-
 import {
   ClockIcon,
   FolderInputIcon as FolderIcon,
@@ -8,9 +7,10 @@ import {
 } from 'lucide-react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useRxCollection } from 'rxdb-hooks';
 
 import { deleteNote, favouriteNote } from '@/api/notes';
-import type { NoteDocument } from '@/api/types';
+import type { NoteDocType, NoteDocument } from '@/api/types';
 import { ModalConfirm } from '@/components/ModalConfirm';
 import { NotesMoveModal } from '@/components/NotesMoveModal';
 import { classNames } from '@/utils/classNames';
@@ -22,13 +22,17 @@ import type { NotesProps } from './types';
 export function NotesContextMenu({
   note,
 }: NotesProps) {
+  const collection = useRxCollection<NoteDocType>('notes');
   const navigate = useNavigate();
   const [showDeleteNoteModal, setShowDeleteNoteModal] = useState(false);
   const [showMoveNoteModal, setShowMoveNoteModal] = useState<NoteDocument | false>(false);
 
   const handleDeleteNote = () => {
     setShowDeleteNoteModal(false);
-    deleteNote(note)
+
+    if (!collection) throw new Error('No collection found');
+
+    deleteNote(collection, note)
       .then(() => navigate('/', { replace: true }));
   };
 
