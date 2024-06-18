@@ -46,8 +46,8 @@ export function Content() {
     >
       <FolderList
         folders={folders}
+        fullHeight
         isFetching={isFetching}
-        padding
       >
         <ContentHeader title="Folders">
           <Tooltip content={`${useMobileDrawer ? 'Pin' : 'Un-pin'} Sidebar`} side="left">

@@ -8,9 +8,9 @@ export type NotesProps = {
 
 export type NotesListProps = {
   children?: ReactElement
+  fullHeight?: boolean,
   isFetching: boolean,
   notes: NoteDocument[],
-  padding?: boolean,
 };
 
 export type NotesContextMenuItemProps = {
