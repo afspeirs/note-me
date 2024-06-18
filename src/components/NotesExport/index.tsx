@@ -2,12 +2,12 @@ import { saveAs } from 'file-saver';
 import JSZip from 'jszip';
 import { ArrowDownCircleIcon } from 'lucide-react';
 import { useState } from 'react';
-import { toast } from 'react-hot-toast';
 import { useRxData } from 'rxdb-hooks';
 
 import type { NoteDocType } from '@/api/types';
 import { Button } from '@/components/Button';
 import { ModalConfirm } from '@/components/ModalConfirm';
+import { openToast } from '@/components/Toast';
 import { formatDate } from '@/utils/formatDate';
 import { getTitle } from '@/utils/getTitle';
 
@@ -73,7 +73,9 @@ export function NotesExport() {
           exportZipFile()
             .then(() => {
               setOpen(false);
-              toast(`${notes.length} note${notes.length > 1 ? 's have' : ' has'} been exported'`);
+              openToast({
+                message: `${notes.length} note${notes.length > 1 ? 's have' : ' has'} been exported'`,
+              });
             });
         }}
         open={open}

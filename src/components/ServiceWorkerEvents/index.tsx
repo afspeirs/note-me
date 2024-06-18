@@ -1,7 +1,7 @@
 import { useSetAtom } from 'jotai';
 import { useEffect } from 'react';
-import toast from 'react-hot-toast';
 
+import { openToast } from '@/components/Toast';
 import { beforeInstallPromptAtom, updateAvailableAtom } from '@/context/serviceWorker';
 import type { BeforeInstallPromptEvent } from './types';
 
@@ -16,16 +16,19 @@ export function ServiceWorkerEvents() {
   };
 
   const swNewContentAvailable = () => {
-    toast('A new version is available');
-    // snackbar.showMessage({
-    //   message: 'A new version is available',
-    //   actionText: 'Update',
-    //   actionFunction: () => window.location.reload(),
-    // });
+    openToast({
+      action: {
+        text: 'Update',
+        function: () => window.location.reload(),
+      },
+      message: 'A new version is available',
+    });
     setUpdateAvailable(true);
   };
 
-  const swContentCached = () => toast('Caching complete! Now available offline');
+  const swContentCached = () => openToast({
+    message: 'Caching complete! Now available offline',
+  });
 
   useEffect(() => {
     window.addEventListener('beforeinstallprompt', swBeforeInstallPrompt);

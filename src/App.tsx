@@ -2,17 +2,17 @@ import * as TooltipPrimitive from '@radix-ui/react-tooltip';
 import { useAtom } from 'jotai';
 import { useEffect } from 'react';
 import { HelmetProvider } from 'react-helmet-async';
-import { toast } from 'react-hot-toast';
+import { Toaster } from 'react-hot-toast';
 import { RouterProvider } from 'react-router-dom';
 import { Provider } from 'rxdb-hooks';
 import { useEventListener } from 'usehooks-ts';
 
 import { enableReplication, initialise, supabase } from '@/api';
 import { ServiceWorkerEvents } from '@/components/ServiceWorkerEvents';
-import { Toaster } from '@/components/Toaster';
 import { authAtom } from '@/context/auth';
 import { dbAtom, replicationAtom } from '@/context/db';
 import { router } from '@/routes';
+import { openToast } from './components/Toast';
 
 export function App() {
   const [auth, setAuth] = useAtom(authAtom);
@@ -25,7 +25,9 @@ export function App() {
     supabase.auth.getSession().then(({ data: { session }, error }) => {
       setAuth(session);
       if (error) {
-        toast(error.message, {
+        openToast({
+          message: error.message,
+        }, {
           id: 'get-session-error',
         });
         throw new Error(error.message);
@@ -73,7 +75,10 @@ export function App() {
 
       <ServiceWorkerEvents />
 
-      <Toaster />
+      <Toaster
+        position="bottom-right"
+        containerClassName="select-none"
+      />
     </>
   );
 }

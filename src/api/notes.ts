@@ -1,5 +1,4 @@
-import toast from 'react-hot-toast';
-
+import { openToast } from '@/components/Toast';
 import { getTitle } from '@/utils/getTitle';
 import type { NoteCollection, NoteDocType, NoteDocument } from './types';
 
@@ -35,22 +34,46 @@ export async function createNote(collection: NoteCollection, input: Partial<Note
   return newNote;
 }
 
-export async function deleteNote(note: NoteDocument) {
+export async function deleteNote(collection: NoteCollection, note: NoteDocument) {
+  const previousNote = window.structuredClone(note.toJSON());
+
   await note.remove()
-    .then(() => toast(`"${getTitle(note.text)}" has been deleted`, {
-      id: `delete-${note.id}`,
-    }));
+    .then(() => {
+      openToast({
+        action: {
+          text: 'Undo',
+          function: async () => {
+            await createNote(collection, previousNote);
+          },
+        },
+        message: `"${getTitle(note.text)}" has been deleted`,
+      }, {
+        id: `delete-${note.id}`,
+      });
+    });
 }
 
 export async function favouriteNote(note: NoteDocument) {
-  await note?.modify((prevState) => ({
-    ...prevState,
-    // date_modified: new Date().toISOString(),
-    favourite: !prevState.favourite,
-  }))
-    .then((note2) => toast(`"${getTitle(note.text)}" ${note2?.favourite ? 'added to favourites' : 'removed from favourites'}`, {
-      id: `favourite-${note2.id}`,
-    }));
+  const previousFavourite = note.favourite;
+
+  await note?.patch({
+    favourite: !previousFavourite,
+  })
+    .then((note2) => {
+      openToast({
+        action: {
+          text: 'Undo',
+          function: async () => {
+            await note2?.patch({
+              favourite: previousFavourite,
+            });
+          },
+        },
+        message: `"${getTitle(note2.text)}" ${note2?.favourite ? 'added to favourites' : 'removed from favourites'}`,
+      }, {
+        id: `favourite-${note2.id}`,
+      });
+    });
 }
 
 export async function importNotes(collection: NoteCollection, files: Partial<NoteDocType>[]) {
@@ -60,12 +83,26 @@ export async function importNotes(collection: NoteCollection, files: Partial<Not
 }
 
 export async function moveNote(note: NoteDocument, newFolder: string) {
+  const oldFolder = note.folder;
+
   await note?.patch({
     folder: newFolder,
   })
-    .then((note2) => toast(`"${getTitle(note.text)}" ${note2?.folder ? `moved to "${note2.folder}"` : 'removed from folder'}`, {
-      id: `move-${note2.id}`,
-    }));
+    .then((note2) => {
+      openToast({
+        action: {
+          text: 'Undo',
+          function: async () => {
+            await note2?.patch({
+              folder: oldFolder,
+            });
+          },
+        },
+        message: `"${getTitle(note2.text)}" ${note2?.folder ? `moved to "${note2.folder}"` : 'removed from folder'}`,
+      }, {
+        id: `move-${note2.id}`,
+      });
+    });
 }
 
 export async function updateNote(note: NoteDocument, text: string) {
