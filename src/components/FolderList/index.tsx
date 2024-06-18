@@ -8,8 +8,8 @@ import type { FolderListProps } from './types';
 export function FolderList({
   children,
   folders,
+  fullHeight,
   isFetching,
-  padding,
 }: FolderListProps) {
   const ref = useRef<HTMLUListElement | null>(null);
 
@@ -19,8 +19,8 @@ export function FolderList({
       <ul
         role="list"
         className={classNames(
-          'flex flex-col h-full overflow-y-auto overflow-x-hidden',
-          padding ? 'px-2' : '',
+          'flex flex-col px-2 overflow-y-auto overflow-x-hidden',
+          fullHeight ? 'h-full' : '',
         )}
         ref={ref}
       >

@@ -34,12 +34,12 @@ export function Home() {
           Select a note from the sidebar to get started,
           or select a recently edited note below:
         </p>
-
-        <NotesList
-          isFetching={isFetching}
-          notes={notes}
-        />
       </div>
+
+      <NotesList
+        isFetching={isFetching}
+        notes={notes}
+      />
     </Page>
   );
 }

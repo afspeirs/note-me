@@ -64,8 +64,8 @@ export function ContentNested() {
 
         <NotesList
           isFetching={isFetching}
+          fullHeight
           notes={notes}
-          padding
         />
       </Card>
     </Transition>

@@ -7,9 +7,9 @@ import type { NotesListProps } from './types';
 
 export function NotesList({
   children,
+  fullHeight,
   isFetching,
   notes,
-  padding,
 }: NotesListProps) {
   const ref = useRef<HTMLUListElement | null>(null);
 
@@ -19,8 +19,8 @@ export function NotesList({
       <ul
         role="list"
         className={classNames(
-          'flex flex-col h-full overflow-y-auto overflow-x-hidden',
-          padding ? 'px-2' : '',
+          'flex flex-col px-2 overflow-y-auto overflow-x-hidden',
+          fullHeight ? ' h-full' : '',
         )}
         ref={ref}
       >
