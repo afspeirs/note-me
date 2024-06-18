@@ -1,35 +1,44 @@
 import { useAtomValue } from 'jotai';
+import { useCallback } from 'react';
+import { useRxData } from 'rxdb-hooks';
 
+import { NoteDocType, NoteQuery } from '@/api/types';
 import { SignInButton } from '@/components/AuthUserInformation/SignInButton';
+import { NotesList } from '@/components/NotesList';
 import { Page } from '@/components/Page';
 import { authAtom } from '@/context/auth';
+import { notesSortOptions } from '@/context/notesSort';
 
 export function Home() {
   const auth = useAtomValue(authAtom);
+  const notesQuery: NoteQuery = useCallback(
+    (collection) => collection.find({
+      sort: [notesSortOptions['date_modified-desc'].value],
+      limit: 10,
+    }),
+    [],
+  );
+  const { result: notes, isFetching } = useRxData<NoteDocType>('notes', notesQuery);
 
   return (
     <Page
       title="NoteMe"
-      // icons={(
-      //   // TODO: add something
-      // )}
+      icons={!auth?.user && (
+        <SignInButton />
+      )}
     >
       <div className="flex flex-col gap-3 p-4">
-        <p>Hello and welcome to NoteMe</p>
+        <p>Hello and welcome to NoteMe.</p>
 
-        {!auth?.user ? (
-          <>
-            <p>Store and edit your notes as Markdown formatted text</p>
-            <p>
-              Once signed in you can access your notes from any device,
-              and changes will be reflected across other devices seamlessly.
-            </p>
+        <p>
+          Select a note from the sidebar to get started,
+          or select a recently edited note below:
+        </p>
 
-            <SignInButton />
-          </>
-        ) : (
-          <p>Select a note from the sidebar to get started</p>
-        )}
+        <NotesList
+          isFetching={isFetching}
+          notes={notes}
+        />
       </div>
     </Page>
   );
