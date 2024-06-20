@@ -1,11 +1,14 @@
 import { useAtomValue } from 'jotai';
+import { PlusIcon } from 'lucide-react';
 import { useCallback } from 'react';
 import { useRxData } from 'rxdb-hooks';
 
-import { NoteDocType, NoteQuery } from '@/api/types';
+import type { NoteDocType, NoteQuery } from '@/api/types';
 import { SignInButton } from '@/components/AuthUserInformation/SignInButton';
+import { Button } from '@/components/Button';
 import { NotesList } from '@/components/NotesList';
 import { Page } from '@/components/Page';
+import { Tooltip } from '@/components/Tooltip';
 import { authAtom } from '@/context/auth';
 import { notesSortOptions } from '@/context/notesSort';
 
@@ -40,6 +43,18 @@ export function Home() {
         isFetching={isFetching}
         notes={notes}
       />
+
+      <Tooltip content="Create Note" side="left">
+        <Button
+          className="absolute bottom-2 right-2"
+          colour="primary"
+          href="/note"
+          Icon={PlusIcon}
+          iconOnly
+        >
+          Create Note
+        </Button>
+      </Tooltip>
     </Page>
   );
 }
