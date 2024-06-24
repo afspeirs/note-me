@@ -1,5 +1,5 @@
 import { useSetAtom } from 'jotai';
-import { useEffect } from 'react';
+import { useEventListener } from 'usehooks-ts';
 
 import { openToast } from '@/components/Toast';
 import { beforeInstallPromptAtom, updateAvailableAtom } from '@/context/serviceWorker';
@@ -30,17 +30,9 @@ export function ServiceWorkerEvents() {
     message: 'Caching complete! Now available offline',
   });
 
-  useEffect(() => {
-    window.addEventListener('beforeinstallprompt', swBeforeInstallPrompt);
-    window.addEventListener('swNewContentAvailable', swNewContentAvailable);
-    window.addEventListener('swContentCached', swContentCached);
-
-    return () => {
-      window.removeEventListener('beforeinstallprompt', swBeforeInstallPrompt);
-      window.removeEventListener('swNewContentAvailable', swNewContentAvailable);
-      window.removeEventListener('swContentCached', swContentCached);
-    };
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  useEventListener('beforeinstallprompt', swBeforeInstallPrompt);
+  useEventListener('swNewContentAvailable', swNewContentAvailable);
+  useEventListener('swContentCached', swContentCached);
 
   return null;
 }

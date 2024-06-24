@@ -22,7 +22,7 @@
     "update:minor": "npm run outdated:minor -- -u"
   },
   "dependencies": {
-    "@afspeirs/service-worker": "^1.0.3",
+    "@afspeirs/service-worker": "^1.0.4",
     "@headlessui/react": "^1.7.17",
     "@headlessui/tailwindcss": "^0.2.0",
     "@radix-ui/react-context-menu": "^2.1.5",
