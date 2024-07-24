@@ -46,12 +46,12 @@ export function ContentNested() {
     <Transition
       show={currentFolder !== null}
       enter="transition ease-in-out duration-300 transform"
-      enterFrom="translate-x-full"
-      enterTo="translate-x-0"
+      enterFrom="-translate-x-full opacity-0"
+      enterTo="translate-x-0 opacity-100"
       leave="transition ease-in-out duration-300 transform"
-      leaveFrom="translate-x-0"
-      leaveTo="translate-x-full"
-      className="absolute top-0 w-full h-full"
+      leaveFrom="translate-x-0 opacity-100"
+      leaveTo="-translate-x-full opacity-0"
+      className="absolute top-0 left-sidebar p-sidebar-gap pl-0 w-full h-full"
     >
       <Card className="flex flex-col h-full">
         <ContentHeader

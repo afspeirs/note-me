@@ -11,7 +11,6 @@ import { ContentHeader } from '@/components/Sidebar/ContentHeader';
 import { Tooltip } from '@/components/Tooltip';
 import { foldersAtom } from '@/context/folders';
 import { useMobileDrawerAtom } from '@/context/navigation';
-import { ContentNested } from './ContentNested';
 
 export function Content() {
   const [useMobileDrawer, setUseMobileDrawer] = useAtom(useMobileDrawerAtom);
@@ -62,8 +61,6 @@ export function Content() {
           </Tooltip>
         </ContentHeader>
       </FolderList>
-
-      <ContentNested />
     </Card>
   );
 }
