@@ -49,6 +49,7 @@ export function Content() {
         isFetching={isFetching}
       >
         <ContentHeader title="Folders">
+          {/* TODO: Hide this when in mobile */}
           <Tooltip content={`${useMobileDrawer ? 'Pin' : 'Un-pin'} Sidebar`} side="left">
             <Button
               className="hidden sm:block"

@@ -1,4 +1,3 @@
-import { Transition } from '@headlessui/react';
 import { useAtom, useAtomValue } from 'jotai';
 import { useCallback } from 'react';
 import { useRxData } from 'rxdb-hooks';
@@ -43,31 +42,20 @@ export function ContentNested() {
   // console.log(notes.map((folder) => folder.toJSON()));
 
   return (
-    <Transition
-      show={currentFolder !== null}
-      enter="transition ease-in-out duration-300 transform"
-      enterFrom="-translate-x-full opacity-0"
-      enterTo="translate-x-0 opacity-100"
-      leave="transition ease-in-out duration-300 transform"
-      leaveFrom="translate-x-0 opacity-100"
-      leaveTo="-translate-x-full opacity-0"
-      className="absolute top-0 left-sidebar p-sidebar-gap pl-0 w-full h-full"
-    >
-      <Card className="flex flex-col h-full">
-        <ContentHeader
-          onBack={() => setCurrentFolder(null)}
-          title={currentFolder || 'All Notes'}
-        >
-          <NotesSort />
-          <NotesSearch />
-        </ContentHeader>
+    <Card className="flex flex-col h-full">
+      <ContentHeader
+        onBack={() => setCurrentFolder(null)}
+        title={currentFolder || 'All Notes'}
+      >
+        <NotesSort />
+        <NotesSearch />
+      </ContentHeader>
 
-        <NotesList
-          isFetching={isFetching}
-          fullHeight
-          notes={notes}
-        />
-      </Card>
-    </Transition>
+      <NotesList
+        isFetching={isFetching}
+        fullHeight
+        notes={notes}
+      />
+    </Card>
   );
 }
