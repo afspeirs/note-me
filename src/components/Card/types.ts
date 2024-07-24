@@ -6,3 +6,9 @@ export interface CardProps {
   className?: string,
   fullscreen?: boolean,
 }
+
+export type CardHeaderProps = {
+  children?: ReactNode,
+  onBack?: () => void,
+  title: string,
+};

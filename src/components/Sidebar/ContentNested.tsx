@@ -4,13 +4,13 @@ import { useRxData } from 'rxdb-hooks';
 
 import type { NoteDocType, NoteQuery } from '@/api/types';
 import { Card } from '@/components/Card';
+import { CardHeader } from '@/components/Card/CardHeader';
 import { NotesList } from '@/components/NotesList';
 import { NotesSearch } from '@/components/NotesSearch';
 import { NotesSort } from '@/components/NotesSort';
 import { currentFolderAtom } from '@/context/folders';
 import { notesSearchAtom } from '@/context/notesSearch';
 import { notesSortAtom, notesSortOptions } from '@/context/notesSort';
-import { ContentHeader } from './ContentHeader';
 
 export function ContentNested() {
   const [currentFolder, setCurrentFolder] = useAtom(currentFolderAtom);
@@ -43,13 +43,13 @@ export function ContentNested() {
 
   return (
     <Card className="flex flex-col h-full">
-      <ContentHeader
+      <CardHeader
         onBack={() => setCurrentFolder(null)}
         title={currentFolder || 'All Notes'}
       >
         <NotesSort />
         <NotesSearch />
-      </ContentHeader>
+      </CardHeader>
 
       <NotesList
         isFetching={isFetching}

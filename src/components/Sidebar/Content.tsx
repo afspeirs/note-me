@@ -6,8 +6,8 @@ import { useRxData } from 'rxdb-hooks';
 import type { NoteDocType, NoteQuery } from '@/api/types';
 import { Button } from '@/components/Button';
 import { Card } from '@/components/Card';
+import { CardHeader } from '@/components/Card/CardHeader';
 import { FolderList } from '@/components/FolderList';
-import { ContentHeader } from '@/components/Sidebar/ContentHeader';
 import { Tooltip } from '@/components/Tooltip';
 import { foldersAtom } from '@/context/folders';
 import { useMobileDrawerAtom } from '@/context/navigation';
@@ -43,25 +43,25 @@ export function Content() {
       className="flex flex-col flex-1 overflow-hidden relative"
       aria-label="Sidebar"
     >
+      <CardHeader title="Folders">
+        {/* TODO: Hide this when in mobile */}
+        <Tooltip content={`${useMobileDrawer ? 'Pin' : 'Un-pin'} Sidebar`} side="left">
+          <Button
+            className="hidden sm:block"
+            Icon={useMobileDrawer ? PinIcon : PinOffIcon}
+            iconOnly
+            onClick={() => setUseMobileDrawer((prevState) => !prevState)}
+          >
+            {`${useMobileDrawer ? 'pin' : 'un-pin'} sidebar`}
+          </Button>
+        </Tooltip>
+      </CardHeader>
+
       <FolderList
         folders={folders}
         fullHeight
         isFetching={isFetching}
-      >
-        <ContentHeader title="Folders">
-          {/* TODO: Hide this when in mobile */}
-          <Tooltip content={`${useMobileDrawer ? 'Pin' : 'Un-pin'} Sidebar`} side="left">
-            <Button
-              className="hidden sm:block"
-              Icon={useMobileDrawer ? PinIcon : PinOffIcon}
-              iconOnly
-              onClick={() => setUseMobileDrawer((prevState) => !prevState)}
-            >
-              {`${useMobileDrawer ? 'pin' : 'un-pin'} sidebar`}
-            </Button>
-          </Tooltip>
-        </ContentHeader>
-      </FolderList>
+      />
     </Card>
   );
 }
