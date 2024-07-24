@@ -48,7 +48,7 @@ export function Layout() {
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
             >
-              <div className="fixed inset-0 bg-primary/70 dark:bg-black/70" />
+              <div className="fixed inset-0 bg-primary/70 dark:bg-black/70 backdrop-blur-sm" />
             </Transition.Child>
 
             <div className="fixed inset-0 flex">
