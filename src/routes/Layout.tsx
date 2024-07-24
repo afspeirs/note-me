@@ -7,7 +7,7 @@ import { useMediaQuery } from 'usehooks-ts';
 
 import { Card } from '@/components/Card';
 import { Sidebar } from '@/components/Sidebar';
-import { ContentNested } from '@/components/Sidebar/ContentNested';
+import { SidebarNotes } from '@/components/SidebarNotes';
 import { TopBar } from '@/components/TopBar';
 import { currentFolderAtom } from '@/context/folders';
 import { drawerOpenAtom, useMobileDrawerAtom } from '@/context/navigation';
@@ -100,7 +100,7 @@ export function Layout() {
                       leaveTo="-ml-sidebar opacity-0"
                       className="relative max-sm:fixed max-sm:left-[calc(100vw-100%)] top-0 flex flex-col w-sidebar h-full pl-0 p-sidebar-gap pb-safe-offset-sidebar-gap gap-sidebar-gap"
                     >
-                      <ContentNested />
+                      <SidebarNotes />
                     </Transition.Child>
                   </Transition.Root>
                 </Dialog.Panel>
@@ -137,7 +137,7 @@ export function Layout() {
           leaveTo="-ml-sidebar opacity-0"
           className="relative flex flex-col w-sidebar h-full pl-0 p-sidebar-gap pb-safe-offset-sidebar-gap gap-sidebar-gap"
         >
-          <ContentNested />
+          <SidebarNotes />
         </Transition>
 
         <div

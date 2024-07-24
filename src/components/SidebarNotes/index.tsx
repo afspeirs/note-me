@@ -12,7 +12,7 @@ import { currentFolderAtom } from '@/context/folders';
 import { notesSearchAtom } from '@/context/notesSearch';
 import { notesSortAtom, notesSortOptions } from '@/context/notesSort';
 
-export function ContentNested() {
+export function SidebarNotes() {
   const [currentFolder, setCurrentFolder] = useAtom(currentFolderAtom);
   const search = useAtomValue(notesSearchAtom);
   const sort = useAtomValue(notesSortAtom);
@@ -42,7 +42,11 @@ export function ContentNested() {
   // console.log(notes.map((folder) => folder.toJSON()));
 
   return (
-    <Card className="flex flex-col h-full">
+    <Card
+      as="nav"
+      className="flex flex-col h-full"
+      aria-label="sidebar notes"
+    >
       <CardHeader
         onBack={() => setCurrentFolder(null)}
         title={currentFolder || 'All Notes'}

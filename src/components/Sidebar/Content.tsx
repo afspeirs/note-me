@@ -40,8 +40,8 @@ export function Content() {
   return (
     <Card
       as="nav"
-      className="flex flex-col flex-1 overflow-hidden relative"
-      aria-label="Sidebar"
+      className="relative flex flex-col flex-1 overflow-hidden"
+      aria-label="sidebar folders"
     >
       <CardHeader title="Folders">
         {/* TODO: Hide this when in mobile */}
