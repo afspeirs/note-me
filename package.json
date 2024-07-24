@@ -1,7 +1,7 @@
 {
   "name": "note-me",
   "private": true,
-  "version": "1.9.1",
+  "version": "1.10.0-develop.3",
   "type": "module",
   "scripts": {
     "start": "vite",
@@ -22,7 +22,7 @@
     "update:minor": "npm run outdated:minor -- -u"
   },
   "dependencies": {
-    "@afspeirs/service-worker": "^1.0.3",
+    "@afspeirs/service-worker": "^1.0.6",
     "@headlessui/react": "^1.7.17",
     "@headlessui/tailwindcss": "^0.2.0",
     "@radix-ui/react-context-menu": "^2.1.5",

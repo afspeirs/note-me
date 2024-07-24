@@ -10,7 +10,10 @@ export function Footer() {
   const currentFolder = useAtomValue(currentFolderAtom);
 
   return (
-    <Card as="nav" aria-label="sidebar footer">
+    <Card
+      as="nav"
+      aria-label="sidebar footer"
+    >
       <ul role="list" className="flex flex-col p-2">
         <li>
           <Button
