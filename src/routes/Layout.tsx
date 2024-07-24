@@ -7,16 +7,19 @@ import { useMediaQuery } from 'usehooks-ts';
 
 import { Card } from '@/components/Card';
 import { Sidebar } from '@/components/Sidebar';
+import { SidebarNotes } from '@/components/SidebarNotes';
 import { TopBar } from '@/components/TopBar';
+import { currentFolderAtom } from '@/context/folders';
 import { drawerOpenAtom, useMobileDrawerAtom } from '@/context/navigation';
 import { useTheme } from '@/hooks/theme';
 import { classNames } from '@/utils/classNames';
 
 export function Layout() {
   const { pathname, search } = useLocation();
+  const [currentFolder, setCurrentFolder] = useAtom(currentFolderAtom);
   const [drawerOpen, setDrawerOpen] = useAtom(drawerOpenAtom);
   const useMobileDrawer = useAtomValue(useMobileDrawerAtom);
-  const mobile = useMediaQuery('(max-width:640px)');
+  const mobile = useMediaQuery('(max-width:1024px)');
   const theme = useTheme();
 
   /**
@@ -61,40 +64,80 @@ export function Layout() {
                 leaveFrom="translate-x-0"
                 leaveTo="-translate-x-full"
               >
-                <Dialog.Panel className="relative mr-16 flex w-full max-w-sidebar flex-1">
-                  <div className="absolute flex flex-col w-full max-w-sidebar h-full p-sidebar-gap pb-safe-offset-sidebar-gap gap-1">
-                    <div className="hidden [@media(display-mode:window-controls-overlay)]:block -mt-sidebar-gap h-titlebar-area-height w-full" aria-hidden="true" />
+                <Dialog.Panel className="relative mr-16 flex">
+                  <div className="hidden [@media(display-mode:window-controls-overlay)]:block -mt-sidebar-gap h-titlebar-area-height w-full" aria-hidden="true" />
+                  <div className="relative flex flex-col w-sidebar h-full pl-0 p-sidebar-gap pb-safe-offset-sidebar-gap gap-sidebar-gap">
                     <Sidebar />
                   </div>
+
+                  <Transition.Root
+                    show={(mobile || useMobileDrawer) && drawerOpen && currentFolder !== null}
+                  >
+                    <Transition.Child
+                      as={Fragment}
+                      enter="transition-opacity ease-linear duration-300"
+                      enterFrom="opacity-0"
+                      enterTo="opacity-100"
+                      leave="transition-opacity ease-linear duration-300"
+                      leaveFrom="opacity-100"
+                      leaveTo="opacity-0"
+                    >
+                      <button
+                        type="button"
+                        className="sm:hidden fixed inset-0 bg-primary/70 dark:bg-black/70 backdrop-blur-sm"
+                        onClick={() => setCurrentFolder(null)}
+                      >
+                        <span className="sr-only">Close Secondary Panel</span>
+                      </button>
+                    </Transition.Child>
+                    <Transition.Child
+                      unmount={false}
+                      enter="transition-[margin-left,opacity] duration-400"
+                      enterFrom="-ml-sidebar opacity-0"
+                      enterTo="ml-0 opacity-100"
+                      leave="transition-[margin-left,opacity] duration-400"
+                      leaveFrom="ml-0 opacity-100"
+                      leaveTo="-ml-sidebar opacity-0"
+                      className="relative max-sm:fixed max-sm:left-[calc(100vw-100%)] top-0 flex flex-col w-sidebar h-full pl-0 p-sidebar-gap pb-safe-offset-sidebar-gap gap-sidebar-gap"
+                    >
+                      <SidebarNotes />
+                    </Transition.Child>
+                  </Transition.Root>
                 </Dialog.Panel>
               </Transition.Child>
             </div>
           </Dialog>
         </Transition.Root>
 
-        <Transition appear show={(!useMobileDrawer && !mobile) && drawerOpen}>
-          <Transition.Child
-            as="aside"
-            unmount={false}
-            enter="transition-transform duration-400"
-            enterFrom="-translate-x-sidebar"
-            enterTo="translate-x-0"
-            leave="transition-transform duration-400"
-            leaveFrom="translate-x-0"
-            leaveTo="-translate-x-sidebar"
-            className="absolute flex flex-col w-sidebar h-full p-sidebar-gap pb-safe-offset-sidebar-gap gap-1"
-          >
-            <Sidebar />
-          </Transition.Child>
-          <Transition.Child
-            role="presentation"
-            enter="transition-[margin-left] duration-400"
-            enterFrom="ml-0"
-            enterTo="ml-sidebar"
-            leave="transition-[margin-left] duration-400"
-            leaveFrom="ml-sidebar"
-            leaveTo="scale-x-100"
-          />
+        <Transition
+          appear
+          show={(!useMobileDrawer && !mobile) && drawerOpen}
+          as="aside"
+          unmount={false}
+          enter="transition-[margin-left,opacity] duration-400"
+          enterFrom="-ml-sidebar opacity-0"
+          enterTo="ml-0 opacity-100"
+          leave="transition-[margin-left,opacity] duration-400"
+          leaveFrom="ml-0 opacity-100"
+          leaveTo="-ml-sidebar opacity-0"
+          className="relative flex flex-col w-sidebar h-full p-sidebar-gap pb-safe-offset-sidebar-gap gap-sidebar-gap"
+        >
+          <Sidebar />
+        </Transition>
+
+        <Transition
+          show={(!useMobileDrawer && !mobile) && drawerOpen && currentFolder !== null}
+          as="aside"
+          unmount={false}
+          enter="transition-[margin-left,opacity] duration-400"
+          enterFrom="-ml-sidebar opacity-0"
+          enterTo="ml-0 opacity-100"
+          leave="transition-[margin-left,opacity] duration-400"
+          leaveFrom="ml-0 opacity-100"
+          leaveTo="-ml-sidebar opacity-0"
+          className="relative flex flex-col w-sidebar h-full pl-0 p-sidebar-gap pb-safe-offset-sidebar-gap gap-sidebar-gap"
+        >
+          <SidebarNotes />
         </Transition>
 
         <div

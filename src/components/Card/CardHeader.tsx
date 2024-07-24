@@ -2,13 +2,13 @@ import { ArrowLeftIcon } from 'lucide-react';
 
 import { Button } from '@/components/Button';
 import { Tooltip } from '@/components/Tooltip';
-import type { ContentHeaderProps } from './types';
+import type { CardHeaderProps } from './types';
 
-export function ContentHeader({
+export function CardHeader({
   children,
   onBack,
   title,
-}: ContentHeaderProps) {
+}: CardHeaderProps) {
   return (
     <div className="relative flex gap-2 p-2 h-16 sm:h-14">
       {onBack && (
