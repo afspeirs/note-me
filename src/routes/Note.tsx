@@ -17,9 +17,9 @@ import { Markdown } from '@/components/Markdown';
 import { ModalConfirm } from '@/components/ModalConfirm';
 import { NotesMoreInformation } from '@/components/NotesMoreInformation';
 import { Page } from '@/components/Page';
+import { openToast } from '@/components/Toast';
 import { Tooltip } from '@/components/Tooltip';
 import { getTitle } from '@/utils/getTitle';
-import { openToast } from '@/components/Toast';
 
 const placeholderText = `
 What is on your mind?
@@ -139,6 +139,8 @@ export function Note() {
           <label htmlFor="note-text">
             <span className="sr-only">note body copy</span>
             <textarea
+              // eslint-disable-next-line jsx-a11y/no-autofocus
+              autoFocus
               name="note-text"
               id="note-text"
               placeholder={placeholderText}

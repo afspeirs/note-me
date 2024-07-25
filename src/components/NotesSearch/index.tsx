@@ -56,6 +56,8 @@ export function NotesSearch() {
             <SearchIcon className="size-6 text-gray-400 pointer-events-none" aria-hidden="true" />
           </div>
           <input
+            // eslint-disable-next-line jsx-a11y/no-autofocus
+            autoFocus
             name="notes-search"
             id="notes-search"
             value={search}
