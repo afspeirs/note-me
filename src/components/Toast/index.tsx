@@ -4,7 +4,7 @@ import { toast } from 'react-hot-toast';
 
 import { Button } from '@/components/Button';
 import { classNames } from '@/utils/classNames';
-import { OpenToast, ToastProps } from './types';
+import type { OpenToast, ToastProps } from './types';
 
 export function Toast({
   action,

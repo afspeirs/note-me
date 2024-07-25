@@ -1,8 +1,8 @@
 import { useAtom } from 'jotai';
-import { ArrowLeftIcon, MenuIcon } from 'lucide-react';
+import { MenuIcon } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 import { useHotkeys } from 'react-hotkeys-hook';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { Button } from '@/components/Button';
 import { Tooltip } from '@/components/Tooltip';
@@ -18,7 +18,6 @@ export function Page({
   const [open, setOpen] = useAtom(drawerOpenAtom);
   const toggleOpen = () => setOpen((prevState) => !prevState);
   const navigate = useNavigate();
-  const { pathname, search } = useLocation();
 
   useHotkeys('ctrl+b, meta+b', toggleOpen, {
     enableOnFormTags: true,
@@ -45,18 +44,6 @@ export function Page({
             {`${open ? 'Close' : 'Open'} Sidebar`}
           </Button>
         </Tooltip>
-
-        {(pathname !== '/' || search.includes('folder')) && (
-          <Tooltip content="Go back">
-            <Button
-              Icon={ArrowLeftIcon}
-              iconOnly
-              onClick={() => navigate(-1)}
-            >
-              Back
-            </Button>
-          </Tooltip>
-        )}
 
         {!titleHide && (
           <div className="ml-2 self-center font-bold text-xl truncate select-none">{title}</div>
