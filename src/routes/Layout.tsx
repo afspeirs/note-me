@@ -64,7 +64,7 @@ export function Layout() {
                 leaveFrom="translate-x-0"
                 leaveTo="-translate-x-full"
               >
-                <Dialog.Panel className="relative mr-16 flex">
+                <Dialog.Panel className="relative mr-16 flex flex-wrap">
                   <div className="hidden [@media(display-mode:window-controls-overlay)]:block -mt-sidebar-gap h-titlebar-area-height w-full" aria-hidden="true" />
                   <div className="relative flex flex-col w-sidebar h-full pl-0 p-sidebar-gap pb-safe-offset-sidebar-gap gap-sidebar-gap">
                     <Sidebar />
