@@ -98,7 +98,7 @@ export function Layout() {
                       leave="transition-[margin-left,opacity] duration-400"
                       leaveFrom="ml-0 opacity-100"
                       leaveTo="-ml-sidebar opacity-0"
-                      className="relative max-sm:fixed max-sm:left-[calc(100vw-100%)] top-0 flex flex-col w-sidebar h-full pl-0 p-sidebar-gap pb-safe-offset-sidebar-gap gap-sidebar-gap"
+                      className="relative max-sm:fixed max-sm:left-[calc(100vw-theme(spacing[sidebar]))] top-0 flex flex-col w-sidebar h-full pl-0 p-sidebar-gap pb-safe-offset-sidebar-gap gap-sidebar-gap"
                     >
                       <SidebarNotes />
                     </Transition.Child>
