@@ -3,12 +3,8 @@ import { HomeIcon, PlusIcon, SettingsIcon } from 'lucide-react';
 import { AuthUserInformation } from '@/components/AuthUserInformation';
 import { Button } from '@/components/Button';
 import { Card } from '@/components/Card';
-import { currentFolderAtom } from '@/context/folders';
-import { useAtomValue } from 'jotai';
 
 export function Footer() {
-  const currentFolder = useAtomValue(currentFolderAtom);
-
   return (
     <Card
       as="nav"
@@ -19,11 +15,10 @@ export function Footer() {
           <Button
             href={{
               pathname: '/note',
-              search: currentFolder ? `folder=${window.encodeURIComponent(currentFolder)}` : undefined,
             }}
             Icon={PlusIcon}
           >
-            {`Create Note${currentFolder ? ` in "${currentFolder}"` : ''}`}
+            Create Note
           </Button>
         </li>
         <li>
