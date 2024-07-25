@@ -1,4 +1,4 @@
-import { ArrowLeftIcon } from 'lucide-react';
+import { XIcon } from 'lucide-react';
 
 import { Button } from '@/components/Button';
 import { Tooltip } from '@/components/Tooltip';
@@ -10,24 +10,24 @@ export function CardHeader({
   title,
 }: CardHeaderProps) {
   return (
-    <div className="relative flex gap-2 p-2 h-16 sm:h-14">
-      {onBack && (
-        <Tooltip content="Close Folder" side="bottom">
-          <Button
-            Icon={ArrowLeftIcon}
-            iconOnly
-            onClick={onBack}
-          >
-            Close Folder
-          </Button>
-        </Tooltip>
-      )}
-
+    <div className="relative flex gap-2 p-2 h-16 overflow-hidden sm:h-14">
       <div className="ml-2 self-center font-bold text-xl truncate select-none">{title}</div>
 
       <div className="ml-auto" />
 
       {children}
+
+      {onBack && (
+        <Tooltip content={`Close "${title}"`} side="bottom">
+          <Button
+            Icon={XIcon}
+            iconOnly
+            onClick={onBack}
+          >
+            {`Close "${title}"`}
+          </Button>
+        </Tooltip>
+      )}
     </div>
   );
 }
