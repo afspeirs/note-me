@@ -2,7 +2,7 @@ import type { LucideIcon } from 'lucide-react';
 import type { MouseEvent, ReactNode } from 'react';
 import type { To } from 'react-router-dom';
 
-import { colours, coloursActive } from '.';
+import type { colours, coloursActive } from '.';
 
 interface BaseProps {
   active?: boolean,
