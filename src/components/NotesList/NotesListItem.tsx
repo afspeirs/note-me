@@ -28,8 +28,8 @@ export function NotesListItem({
             Icon={StickyNoteIcon}
             secondaryAction={(
               <>
-                {note.folder && !currentFolder && (
-                  <span className="max-md:hidden text-light bg-dark dark:text-dark dark:bg-light px-3 py-1 -my-1 truncate max-w-32 rounded-full">{note.folder}</span>
+                {!currentFolder && note.folder && (
+                  <span className="px-2 py-1 -my-1 max-w-32 text-light bg-dark dark:text-dark dark:bg-light truncate rounded-lg">{note.folder}</span>
                 )}
                 {note.favourite && (
                   <StarIcon className="size-6 flex-shrink-0 text-primary fill-primary" aria-hidden="true" />
