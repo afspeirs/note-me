@@ -24,9 +24,10 @@ export function NotesMoveModal({
     setNewFolderName('');
   };
 
-  const handleMoveNote = () => {
+  const handleMoveNote = async () => {
     if (!note || selected === null) return;
-    moveNote(note, selected);
+    await moveNote(note, selected);
+    onClose();
   };
 
   return (
@@ -67,7 +68,7 @@ export function NotesMoveModal({
           <RadioGroup value={selected} onChange={setSelected}>
             <RadioGroup.Label className="sr-only">Folder Names</RadioGroup.Label>
             <div className="relative -space-y-px rounded-lg bg-white dark:bg-black">
-              {[...folders, newFolderName].map((folder, folderIdx) => (
+              {[...folders.filter((folder) => folder !== ''), newFolderName].map((folder, folderIdx) => (
                 <RadioGroup.Option
                   key={folder}
                   value={folder}
@@ -77,7 +78,7 @@ export function NotesMoveModal({
                   )}
                   className={({ checked }) => classNames(
                     folderIdx === 0 ? 'rounded-tl-lg rounded-tr-lg' : '',
-                    folderIdx === folders.length ? 'rounded-bl-lg rounded-br-lg' : '',
+                    folderIdx === folders.length - 1 ? 'rounded-bl-lg rounded-br-lg' : '',
                     checked ? 'z-10 border-primary' : 'border-gray-200',
                     'relative flex cursor-pointer flex-col border p-4 focus:outline-none md:pl-4 md:pr-6 aria-disabled:opacity-40 aria-disabled:bg-dark/5 dark:aria-disabled:bg-white/20 overflow-hidden select-none',
                   )}
