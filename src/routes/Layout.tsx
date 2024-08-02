@@ -37,7 +37,7 @@ export function Layout() {
         <body className={`${theme} ${theme === 'light' ? 'bg-primary' : 'bg-black'}`} />
       </Helmet>
 
-      <div className="fixed inset-0 px-safe flex overflow-hidden mt-titlebar-area-height bg-primary dark:bg-black">
+      <div className="fixed inset-0 px-safe flex gap-sidebar-gap overflow-hidden mt-titlebar-area-height bg-primary dark:bg-black">
         <TopBar />
 
         <Transition.Root show={(mobile || useMobileDrawer) && drawerOpen} as={Fragment}>
@@ -64,9 +64,9 @@ export function Layout() {
                 leaveFrom="translate-x-0"
                 leaveTo="-translate-x-full"
               >
-                <Dialog.Panel className="relative mr-16 flex flex-wrap">
+                <Dialog.Panel className="relative mr-16 flex flex-wrap gap-sidebar-gap">
                   <div className="hidden [@media(display-mode:window-controls-overlay)]:block -mt-sidebar-gap h-titlebar-area-height w-full" aria-hidden="true" />
-                  <div className="relative flex flex-col w-sidebar h-full pl-0 p-sidebar-gap pb-safe-offset-sidebar-gap gap-sidebar-gap">
+                  <div className="relative flex flex-col w-sidebar h-full pl-0 py-sidebar-gap pb-safe-offset-sidebar-gap gap-sidebar-gap">
                     <Sidebar />
                   </div>
 
@@ -98,7 +98,7 @@ export function Layout() {
                       leave="transition-[margin-left,opacity] duration-400"
                       leaveFrom="ml-0 opacity-100"
                       leaveTo="-ml-sidebar opacity-0"
-                      className="relative max-sm:fixed max-sm:left-[calc(100vw-theme(spacing[sidebar]))] top-0 flex flex-col w-sidebar h-full pl-0 p-sidebar-gap pb-safe-offset-sidebar-gap gap-sidebar-gap"
+                      className="relative max-sm:fixed max-sm:left-[calc(100vw-theme(spacing[sidebar]))] top-0 flex flex-col w-sidebar h-full py-sidebar-gap pb-safe-offset-sidebar-gap gap-sidebar-gap"
                     >
                       <SidebarNotes />
                     </Transition.Child>
@@ -120,7 +120,7 @@ export function Layout() {
           leave="transition-[margin-left,opacity] duration-400"
           leaveFrom="ml-0 opacity-100"
           leaveTo="-ml-sidebar opacity-0"
-          className="relative flex flex-col w-sidebar h-full p-sidebar-gap pb-safe-offset-sidebar-gap gap-sidebar-gap"
+          className="relative flex flex-col w-sidebar h-full pl-sidebar-gap py-sidebar-gap pb-safe-offset-sidebar-gap gap-sidebar-gap"
         >
           <Sidebar />
         </Transition>
@@ -135,7 +135,7 @@ export function Layout() {
           leave="transition-[margin-left,opacity] duration-400"
           leaveFrom="ml-0 opacity-100"
           leaveTo="-ml-sidebar opacity-0"
-          className="relative flex flex-col w-sidebar h-full pl-0 p-sidebar-gap pb-safe-offset-sidebar-gap gap-sidebar-gap"
+          className="relative flex flex-col w-sidebar h-full py-sidebar-gap pb-safe-offset-sidebar-gap gap-sidebar-gap"
         >
           <SidebarNotes />
         </Transition>
