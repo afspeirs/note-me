@@ -36,7 +36,7 @@ export function NotesMoveModal({
       onClose={() => onClose()}
       open={!!note}
     >
-      <label htmlFor="folder-create" className="relative block mb-4">
+      <label htmlFor="folder-create" className="relative block mb-8">
         <span className="sr-only">Search Notes</span>
         <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-2">
           <FolderPlusIcon className="size-6 text-gray-400" aria-hidden="true" />
@@ -46,7 +46,7 @@ export function NotesMoveModal({
           id="folder-create"
           value={newFolderName}
           onChange={(event) => setNewFolderName(event.target.value)}
-          className="block w-full rounded-lg bg-white dark:bg-black border border-gray-200 py-3 pl-10 pr-20 bg-inherit outline-offset-1 placeholder:text-gray-400 placeholder:select-none focus-visible"
+          className="block w-full rounded-md bg-white dark:bg-dark border border-gray-200 py-3 pl-10 pr-20 bg-inherit outline-offset-1 placeholder:text-gray-400 placeholder:select-none focus-visible"
           placeholder="Create a name for a new folder"
         />
         <div className="absolute inset-y-0 right-0">
@@ -67,8 +67,8 @@ export function NotesMoveModal({
         <>
           <RadioGroup value={selected} onChange={setSelected}>
             <RadioGroup.Label className="sr-only">Folder Names</RadioGroup.Label>
-            <div className="relative -space-y-px rounded-lg bg-white dark:bg-black">
-              {[...folders.filter((folder) => folder !== ''), newFolderName].map((folder, folderIdx) => (
+            <div className="relative space-y-2 rounded-md">
+              {[...folders.filter((folder) => folder !== ''), newFolderName].map((folder) => (
                 <RadioGroup.Option
                   key={folder}
                   value={folder}
@@ -77,29 +77,27 @@ export function NotesMoveModal({
                     || folder === note.folder
                   )}
                   className={({ checked }) => classNames(
-                    folderIdx === 0 ? 'rounded-tl-lg rounded-tr-lg' : '',
-                    folderIdx === folders.length - 1 ? 'rounded-bl-lg rounded-br-lg' : '',
                     checked ? 'z-10 border-primary' : 'border-gray-200',
-                    'relative flex cursor-pointer flex-col border p-4 focus:outline-none md:pl-4 md:pr-6 aria-disabled:opacity-40 aria-disabled:bg-dark/5 dark:aria-disabled:bg-white/20 overflow-hidden select-none',
+                    'relative flex cursor-pointer flex-col border rounded-md px-4 py-2 focus:outline-none aria-disabled:opacity-40 aria-disabled:bg-dark/5 dark:aria-disabled:bg-white/20 overflow-hidden select-none',
                   )}
                 >
                   {({ active, checked }) => (
                     <span className="flex items-center text-sm">
                       <span
+                        aria-hidden="true"
                         className={classNames(
-                          checked ? 'bg-primary border-transparent' : 'bg-white dark:bg-black border-gray-300',
+                          checked ? 'bg-primary border-transparent' : 'bg-white dark:bg-dark border-gray-300',
                           active ? 'ring-2 ring-offset-2 ring-primary' : '',
                           'size-4 rounded-full border flex items-center justify-center flex-shrink-0',
                         )}
-                        aria-hidden="true"
                       >
-                        <span className="size-1.5 rounded-full bg-white dark:bg-black" />
+                        <span className="size-1.5 rounded-full bg-white dark:bg-dark" />
                       </span>
                       <RadioGroup.Label
                         as="span"
                         className={classNames(
                           checked ? 'text-primary' : 'text-dark dark:text-light',
-                          'ml-8 font-medium',
+                          'ml-4 font-medium',
                         )}
                       >
                         {folder || (note.folder ? `Remove from "${note.folder}"` : '<Please enter a new folder name above>')}
@@ -113,7 +111,7 @@ export function NotesMoveModal({
 
           <Button
             colour="primary"
-            className="mt-4"
+            className="mt-8"
             disabled={selected === null}
             Icon={FolderInputIcon}
             onClick={() => handleMoveNote()}
