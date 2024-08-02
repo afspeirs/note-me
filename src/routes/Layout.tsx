@@ -44,10 +44,10 @@ export function Layout() {
           <Dialog as="div" className="relative" onClose={setDrawerOpen}>
             <Transition.Child
               as={Fragment}
-              enter="transition-opacity ease-linear duration-300"
+              enter="transition-opacity ease-in-out duration-400"
               enterFrom="opacity-0"
               enterTo="opacity-100"
-              leave="transition-opacity ease-linear duration-300"
+              leave="transition-opacity ease-in-out duration-400"
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
             >
@@ -57,14 +57,14 @@ export function Layout() {
             <div className="fixed inset-0 flex">
               <Transition.Child
                 as={Fragment}
-                enter="transition ease-in-out duration-300 transform"
+                enter="transition ease-in-out duration-400 transform"
                 enterFrom="-translate-x-full"
                 enterTo="translate-x-0"
-                leave="transition ease-in-out duration-300 transform"
+                leave="transition ease-in-out duration-400 transform"
                 leaveFrom="translate-x-0"
                 leaveTo="-translate-x-full"
               >
-                <Dialog.Panel className="relative mr-16 flex flex-wrap gap-sidebar-gap">
+                <Dialog.Panel className="relative flex flex-wrap gap-sidebar-gap">
                   <div className="hidden [@media(display-mode:window-controls-overlay)]:block -mt-sidebar-gap h-titlebar-area-height w-full" aria-hidden="true" />
                   <div className="relative flex flex-col w-sidebar h-full pl-0 py-sidebar-gap pb-safe-offset-sidebar-gap gap-sidebar-gap">
                     <Sidebar />
@@ -75,10 +75,10 @@ export function Layout() {
                   >
                     <Transition.Child
                       as={Fragment}
-                      enter="transition-opacity ease-linear duration-300"
+                      enter="transition-opacity ease-in-out duration-400"
                       enterFrom="opacity-0"
                       enterTo="opacity-100"
-                      leave="transition-opacity ease-linear duration-300"
+                      leave="transition-opacity ease-in-out duration-400"
                       leaveFrom="opacity-100"
                       leaveTo="opacity-0"
                     >
@@ -92,10 +92,10 @@ export function Layout() {
                     </Transition.Child>
                     <Transition.Child
                       unmount={false}
-                      enter="transition-[margin-left,opacity] duration-400"
+                      enter="transition-[margin-left,opacity] ease-in-out duration-400"
                       enterFrom="-ml-sidebar opacity-0"
                       enterTo="ml-0 opacity-100"
-                      leave="transition-[margin-left,opacity] duration-400"
+                      leave="transition-[margin-left,opacity] ease-in-out duration-400"
                       leaveFrom="ml-0 opacity-100"
                       leaveTo="-ml-sidebar opacity-0"
                       className="relative max-sm:fixed max-sm:left-[calc(100vw-theme(spacing[sidebar]))] top-0 flex flex-col w-sidebar h-full py-sidebar-gap pb-safe-offset-sidebar-gap gap-sidebar-gap"
@@ -114,10 +114,10 @@ export function Layout() {
           show={(!useMobileDrawer && !mobile) && drawerOpen}
           as="aside"
           unmount={false}
-          enter="transition-[margin-left,opacity] duration-400"
+          enter="transition-[margin-left,opacity] ease-in-out duration-400"
           enterFrom="-ml-sidebar opacity-0"
           enterTo="ml-0 opacity-100"
-          leave="transition-[margin-left,opacity] duration-400"
+          leave="transition-[margin-left,opacity] ease-in-out duration-400"
           leaveFrom="ml-0 opacity-100"
           leaveTo="-ml-sidebar opacity-0"
           className="relative flex flex-col w-sidebar h-full pl-sidebar-gap py-sidebar-gap pb-safe-offset-sidebar-gap gap-sidebar-gap"
@@ -129,10 +129,10 @@ export function Layout() {
           show={(!useMobileDrawer && !mobile) && drawerOpen && currentFolder !== null}
           as="aside"
           unmount={false}
-          enter="transition-[margin-left,opacity] duration-400"
+          enter="transition-[margin-left,opacity] ease-in-out duration-400"
           enterFrom="-ml-sidebar opacity-0"
           enterTo="ml-0 opacity-100"
-          leave="transition-[margin-left,opacity] duration-400"
+          leave="transition-[margin-left,opacity] ease-in-out duration-400"
           leaveFrom="ml-0 opacity-100"
           leaveTo="-ml-sidebar opacity-0"
           className="relative flex flex-col w-sidebar h-full py-sidebar-gap pb-safe-offset-sidebar-gap gap-sidebar-gap"
