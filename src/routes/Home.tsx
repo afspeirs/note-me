@@ -9,11 +9,11 @@ import { Button } from '@/components/Button';
 import { NotesList } from '@/components/NotesList';
 import { Page } from '@/components/Page';
 import { Tooltip } from '@/components/Tooltip';
-import { authAtom } from '@/context/auth';
+import { atomAuth } from '@/context/auth';
 import { notesSortOptions } from '@/context/notesSort';
 
 export function Home() {
-  const auth = useAtomValue(authAtom);
+  const auth = useAtomValue(atomAuth);
   const notesQuery: NoteQuery = useCallback(
     (collection) => collection.find({
       sort: [notesSortOptions['date_modified-desc'].value],

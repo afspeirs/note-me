@@ -2,13 +2,13 @@ import { useAtom } from 'jotai';
 import { FolderIcon, PlusIcon } from 'lucide-react';
 
 import { Button } from '@/components/Button';
-import { currentFolderAtom } from '@/context/folders';
+import { atomCurrentFolder } from '@/context/folders';
 import type { FolderListItemProps } from './types';
 
 export function FolderListItem({
   folder,
 }: FolderListItemProps) {
-  const [currentFolder, setCurrentFolder] = useAtom(currentFolderAtom);
+  const [currentFolder, setCurrentFolder] = useAtom(atomCurrentFolder);
 
   return (
     <li

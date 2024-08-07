@@ -8,14 +8,14 @@ import { CardHeader } from '@/components/Card/CardHeader';
 import { NotesList } from '@/components/NotesList';
 import { NotesSearch } from '@/components/NotesSearch';
 import { NotesSort } from '@/components/NotesSort';
-import { currentFolderAtom } from '@/context/folders';
-import { notesSearchAtom } from '@/context/notesSearch';
-import { notesSortAtom, notesSortOptions } from '@/context/notesSort';
+import { atomCurrentFolder } from '@/context/folders';
+import { atomNotesSearch } from '@/context/notesSearch';
+import { atomNotesSort, notesSortOptions } from '@/context/notesSort';
 
 export function Content() {
-  const [currentFolder, setCurrentFolder] = useAtom(currentFolderAtom);
-  const search = useAtomValue(notesSearchAtom);
-  const sort = useAtomValue(notesSortAtom);
+  const [currentFolder, setCurrentFolder] = useAtom(atomCurrentFolder);
+  const search = useAtomValue(atomNotesSearch);
+  const sort = useAtomValue(atomNotesSort);
   const notesQuery: NoteQuery = useCallback(
     (collection) => collection.find(currentFolder ? {
       selector: {

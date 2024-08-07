@@ -4,14 +4,14 @@ import { useRxCollection } from 'rxdb-hooks';
 
 import { createNote } from '@/api/notes';
 import type { NoteDocType } from '@/api/types';
-import { currentFolderAtom } from '@/context/folders';
+import { atomCurrentFolder } from '@/context/folders';
 
 export function NoteCreate() {
   const collection = useRxCollection<NoteDocType>('notes');
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const searchParamsFolder = searchParams.get('folder');
-  const setCurrentFolder = useSetAtom(currentFolderAtom);
+  const setCurrentFolder = useSetAtom(atomCurrentFolder);
 
   if (collection) {
     createNote(collection, { folder: searchParamsFolder })

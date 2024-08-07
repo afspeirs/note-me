@@ -4,10 +4,10 @@ import { CheckIcon, PaletteIcon } from 'lucide-react';
 import { Fragment } from 'react';
 
 import { Button } from '@/components/Button';
-import { themeAtom, themeOptions } from '@/context/theme';
+import { atomTheme, themeOptions } from '@/context/theme';
 
 export function ChangeTheme() {
-  const [theme, setTheme] = useAtom(themeAtom);
+  const [theme, setTheme] = useAtom(atomTheme);
 
   return (
     <div className="relative m-2">

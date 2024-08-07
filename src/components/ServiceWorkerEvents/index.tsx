@@ -2,12 +2,12 @@ import { useSetAtom } from 'jotai';
 import { useEventListener } from 'usehooks-ts';
 
 import { openToast } from '@/components/Toast';
-import { beforeInstallPromptAtom, updateAvailableAtom } from '@/context/serviceWorker';
+import { atomBeforeInstallPrompt, atomUpdateAvailable } from '@/context/serviceWorker';
 import type { BeforeInstallPromptEvent } from './types';
 
 export function ServiceWorkerEvents() {
-  const setBeforeInstallPrompt = useSetAtom(beforeInstallPromptAtom);
-  const setUpdateAvailable = useSetAtom(updateAvailableAtom);
+  const setBeforeInstallPrompt = useSetAtom(atomBeforeInstallPrompt);
+  const setUpdateAvailable = useSetAtom(atomUpdateAvailable);
 
   const swBeforeInstallPrompt = (event: BeforeInstallPromptEvent) => {
     event.preventDefault();

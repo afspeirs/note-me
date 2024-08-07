@@ -9,15 +9,15 @@ import { useEventListener } from 'usehooks-ts';
 
 import { enableReplication, initialise, supabase } from '@/api';
 import { ServiceWorkerEvents } from '@/components/ServiceWorkerEvents';
-import { authAtom } from '@/context/auth';
-import { dbAtom, replicationAtom } from '@/context/db';
+import { atomAuth } from '@/context/auth';
+import { atomDb, atomReplication } from '@/context/db';
 import { router } from '@/routes';
 import { openToast } from './components/Toast';
 
 export function App() {
-  const [auth, setAuth] = useAtom(authAtom);
-  const [db, setDb] = useAtom(dbAtom);
-  const [replication, setReplication] = useAtom(replicationAtom);
+  const [auth, setAuth] = useAtom(atomAuth);
+  const [db, setDb] = useAtom(atomDb);
+  const [replication, setReplication] = useAtom(atomReplication);
 
   useEffect(() => {
     initialise().then(setDb);

@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { Button } from '@/components/Button';
 import { Tooltip } from '@/components/Tooltip';
-import { drawerOpenAtom } from '@/context/navigation';
+import { atomDrawerOpen } from '@/context/navigation';
 import type { PageProps } from './types';
 
 export function Page({
@@ -15,7 +15,7 @@ export function Page({
   title,
   titleHide = false,
 }: PageProps) {
-  const [open, setOpen] = useAtom(drawerOpenAtom);
+  const [open, setOpen] = useAtom(atomDrawerOpen);
   const toggleOpen = () => setOpen((prevState) => !prevState);
   const navigate = useNavigate();
 

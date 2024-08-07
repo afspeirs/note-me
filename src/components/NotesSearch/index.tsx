@@ -4,13 +4,13 @@ import { Fragment, useState } from 'react';
 
 import { Button } from '@/components/Button';
 import { Tooltip } from '@/components/Tooltip';
-import { notesSearchAtom } from '@/context/notesSearch';
+import { atomNotesSearch } from '@/context/notesSearch';
 import { Transition } from '@headlessui/react';
 import { useHotkeys } from 'react-hotkeys-hook';
 
 export function NotesSearch() {
   const [show, setShow] = useState(false);
-  const [search, setSearch] = useAtom(notesSearchAtom);
+  const [search, setSearch] = useAtom(atomNotesSearch);
 
   useHotkeys('esc', () => setShow(false), {
     enableOnFormTags: true,

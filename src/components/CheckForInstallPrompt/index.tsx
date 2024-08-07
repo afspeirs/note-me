@@ -4,10 +4,10 @@ import { ArrowDownSquareIcon, XIcon } from 'lucide-react';
 import { Button } from '@/components/Button';
 import { Card } from '@/components/Card';
 import { Tooltip } from '@/components/Tooltip';
-import { beforeInstallPromptAtom } from '@/context/serviceWorker';
+import { atomBeforeInstallPrompt } from '@/context/serviceWorker';
 
 export function CheckForInstallPrompt() {
-  const [beforeInstallPrompt, setBeforeInstallPrompt] = useAtom(beforeInstallPromptAtom);
+  const [beforeInstallPrompt, setBeforeInstallPrompt] = useAtom(atomBeforeInstallPrompt);
 
   const handleDismissClick = () => setBeforeInstallPrompt(null);
 

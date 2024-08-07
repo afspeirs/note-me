@@ -2,5 +2,5 @@ import { atom } from 'jotai';
 
 import type { BeforeInstallPromptEvent } from '@/components/ServiceWorkerEvents/types';
 
-export const beforeInstallPromptAtom = atom<BeforeInstallPromptEvent | null>(null);
-export const updateAvailableAtom = atom(false);
+export const atomBeforeInstallPrompt = atom<BeforeInstallPromptEvent | null>(null);
+export const atomUpdateAvailable = atom(false);

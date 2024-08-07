@@ -9,16 +9,16 @@ import { AvatarIcon } from '@/components/AvatarIcon';
 import { Button } from '@/components/Button';
 import { Modal } from '@/components/Modal';
 import { ModalConfirm } from '@/components/ModalConfirm';
-import { authAtom } from '@/context/auth';
-import { dbAtom } from '@/context/db';
+import { atomAuth } from '@/context/auth';
+import { atomDb } from '@/context/db';
 import type { UserInformationModalProps } from './types';
 
 export function UserInformationModal({
   open,
   setOpen,
 }: UserInformationModalProps) {
-  const db = useAtomValue(dbAtom);
-  const auth = useAtomValue(authAtom);
+  const db = useAtomValue(atomDb);
+  const auth = useAtomValue(atomAuth);
   const [openSignOutConfirmation, setOpenSignOutConfirmation] = useState(false);
 
   const signOut = async () => {

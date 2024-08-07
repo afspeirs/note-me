@@ -2,10 +2,10 @@ import { useAtomValue } from 'jotai';
 import { useMemo } from 'react';
 import { useMediaQuery } from 'usehooks-ts';
 
-import { themeAtom } from '@/context/theme';
+import { atomTheme } from '@/context/theme';
 
 export function useTheme() {
-  const theme = useAtomValue(themeAtom);
+  const theme = useAtomValue(atomTheme);
   const matches = useMediaQuery('(prefers-color-scheme: dark)');
   const appTheme = useMemo(() => {
     if (theme !== 'default') return theme;
