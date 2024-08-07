@@ -6,4 +6,4 @@ export const themeOptions = {
   dark: 'Dark',
 } as const;
 
-export const themeAtom = atomWithStorage<keyof typeof themeOptions>('theme', 'default');
+export const atomTheme = atomWithStorage<keyof typeof themeOptions>('theme', 'default');

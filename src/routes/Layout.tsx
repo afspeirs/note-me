@@ -9,16 +9,16 @@ import { Card } from '@/components/Card';
 import { Sidebar } from '@/components/Sidebar';
 import { SidebarNotes } from '@/components/SidebarNotes';
 import { TopBar } from '@/components/TopBar';
-import { currentFolderAtom } from '@/context/folders';
-import { drawerOpenAtom, mobileWidth, useMobileDrawerAtom } from '@/context/navigation';
+import { atomCurrentFolder } from '@/context/folders';
+import { atomDrawerOpen, mobileWidth, atomUseMobileDrawer } from '@/context/navigation';
 import { useTheme } from '@/hooks/theme';
 import { classNames } from '@/utils/classNames';
 
 export function Layout() {
   const { pathname, search } = useLocation();
-  const [currentFolder, setCurrentFolder] = useAtom(currentFolderAtom);
-  const [drawerOpen, setDrawerOpen] = useAtom(drawerOpenAtom);
-  const useMobileDrawer = useAtomValue(useMobileDrawerAtom);
+  const [currentFolder, setCurrentFolder] = useAtom(atomCurrentFolder);
+  const [drawerOpen, setDrawerOpen] = useAtom(atomDrawerOpen);
+  const useMobileDrawer = useAtomValue(atomUseMobileDrawer);
   const isMobile = useMediaQuery(`(max-width:${mobileWidth}px)`);
   const theme = useTheme();
 

@@ -3,10 +3,10 @@ import { PlusIcon } from 'lucide-react';
 
 import { Button } from '@/components/Button';
 import { Card } from '@/components/Card';
-import { currentFolderAtom } from '@/context/folders';
+import { atomCurrentFolder } from '@/context/folders';
 
 export function Footer() {
-  const currentFolder = useAtomValue(currentFolderAtom);
+  const currentFolder = useAtomValue(atomCurrentFolder);
 
   if (!currentFolder) return null;
   return (

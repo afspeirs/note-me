@@ -4,11 +4,11 @@ import { useState } from 'react';
 
 import { AvatarIcon } from '@/components/AvatarIcon';
 import { Button } from '@/components/Button';
-import { authAtom } from '@/context/auth';
+import { atomAuth } from '@/context/auth';
 import { UserInformationModal } from './UserInformationModal';
 
 export function AuthUserInformation() {
-  const auth = useAtomValue(authAtom);
+  const auth = useAtomValue(atomAuth);
   const [open, setOpen] = useState(false);
 
   return (

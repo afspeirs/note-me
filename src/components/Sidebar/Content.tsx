@@ -10,12 +10,12 @@ import { Card } from '@/components/Card';
 import { CardHeader } from '@/components/Card/CardHeader';
 import { FolderList } from '@/components/FolderList';
 import { Tooltip } from '@/components/Tooltip';
-import { foldersAtom } from '@/context/folders';
-import { mobileWidth, useMobileDrawerAtom } from '@/context/navigation';
+import { atomFolders } from '@/context/folders';
+import { mobileWidth, atomUseMobileDrawer } from '@/context/navigation';
 
 export function Content() {
-  const [useMobileDrawer, setUseMobileDrawer] = useAtom(useMobileDrawerAtom);
-  const [folders, setFolders] = useAtom(foldersAtom);
+  const [useMobileDrawer, setUseMobileDrawer] = useAtom(atomUseMobileDrawer);
+  const [folders, setFolders] = useAtom(atomFolders);
   const isMobile = useMediaQuery(`(max-width:${mobileWidth}px)`);
   const notesQuery: NoteQuery = useCallback((collection) => collection.find(), []);
 

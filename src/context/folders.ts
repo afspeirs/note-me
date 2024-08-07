@@ -2,6 +2,6 @@ import { atom } from 'jotai';
 
 import type { FolderDocType } from '@/api/types';
 
-export const foldersAtom = atom<FolderDocType[]>([]);
-export const folderNamesAtom = atom((get) => get(foldersAtom).map((folder) => folder.name));
-export const currentFolderAtom = atom<string | null>(null);
+export const atomFolders = atom<FolderDocType[]>([]);
+export const atomFolderNames = atom((get) => get(atomFolders).map((folder) => folder.name));
+export const atomCurrentFolder = atom<string | null>(null);

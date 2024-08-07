@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { moveNote } from '@/api/notes';
 import { Button } from '@/components/Button';
 import { Modal } from '@/components/Modal';
-import { folderNamesAtom } from '@/context/folders';
+import { atomFolderNames } from '@/context/folders';
 import { classNames } from '@/utils/classNames';
 import { getTitle } from '@/utils/getTitle';
 import type { NotesMoveModalProps } from './types';
@@ -15,7 +15,7 @@ export function NotesMoveModal({
   setShowMoveNoteModal,
   showMoveNoteModal: note,
 }: NotesMoveModalProps) {
-  const folders = useAtomValue(folderNamesAtom);
+  const folders = useAtomValue(atomFolderNames);
   const [selected, setSelected] = useState<string | null>(null);
   const [newFolderName, setNewFolderName] = useState('');
 

@@ -3,10 +3,10 @@ import { RefreshCwIcon, RocketIcon } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 
 import { Button } from '@/components/Button';
-import { updateAvailableAtom } from '@/context/serviceWorker';
+import { atomUpdateAvailable } from '@/context/serviceWorker';
 
 export function CheckForUpdate() {
-  const [updateAvailable] = useAtom(updateAvailableAtom);
+  const [updateAvailable] = useAtom(atomUpdateAvailable);
   const [loading, setLoading] = useState(false);
   const timer = useRef<ReturnType<typeof setTimeout>>();
 

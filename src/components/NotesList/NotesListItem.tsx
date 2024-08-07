@@ -4,7 +4,7 @@ import { MoreHorizontalIcon, StarIcon, StickyNoteIcon } from 'lucide-react';
 import { useRef } from 'react';
 
 import { Button } from '@/components/Button';
-import { currentFolderAtom } from '@/context/folders';
+import { atomCurrentFolder } from '@/context/folders';
 import { getTitle } from '@/utils/getTitle';
 import { NotesContextMenu } from './NotesContextMenu';
 import type { NotesProps } from './types';
@@ -12,7 +12,7 @@ import type { NotesProps } from './types';
 export function NotesListItem({
   note,
 }: NotesProps) {
-  const currentFolder = useAtomValue(currentFolderAtom);
+  const currentFolder = useAtomValue(atomCurrentFolder);
   const contextTriggerRef = useRef<HTMLLIElement>(null);
   const contextButtonRef = useRef<HTMLButtonElement>(null);
 

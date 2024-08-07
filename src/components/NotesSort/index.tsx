@@ -5,10 +5,10 @@ import { Fragment, useMemo } from 'react';
 
 import { Button } from '@/components/Button';
 import { Tooltip } from '@/components/Tooltip';
-import { notesSortAtom, notesSortOptions } from '@/context/notesSort';
+import { atomNotesSort, notesSortOptions } from '@/context/notesSort';
 
 export function NotesSort() {
-  const [sort, setSort] = useAtom(notesSortAtom);
+  const [sort, setSort] = useAtom(atomNotesSort);
   const direction = useMemo(() => sort.includes('-asc'), [sort]);
 
   return (
