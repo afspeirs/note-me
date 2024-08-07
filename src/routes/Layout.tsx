@@ -10,7 +10,7 @@ import { Sidebar } from '@/components/Sidebar';
 import { SidebarNotes } from '@/components/SidebarNotes';
 import { TopBar } from '@/components/TopBar';
 import { currentFolderAtom } from '@/context/folders';
-import { drawerOpenAtom, useMobileDrawerAtom } from '@/context/navigation';
+import { drawerOpenAtom, mobileWidth, useMobileDrawerAtom } from '@/context/navigation';
 import { useTheme } from '@/hooks/theme';
 import { classNames } from '@/utils/classNames';
 
@@ -19,7 +19,7 @@ export function Layout() {
   const [currentFolder, setCurrentFolder] = useAtom(currentFolderAtom);
   const [drawerOpen, setDrawerOpen] = useAtom(drawerOpenAtom);
   const useMobileDrawer = useAtomValue(useMobileDrawerAtom);
-  const mobile = useMediaQuery('(max-width:1024px)');
+  const isMobile = useMediaQuery(`(max-width:${mobileWidth}px)`);
   const theme = useTheme();
 
   /**
@@ -27,7 +27,7 @@ export function Layout() {
    * Deliberately not run the code when mobile or useMobileDrawer updates
   */
   useEffect(() => {
-    if (mobile || useMobileDrawer) setDrawerOpen(false);
+    if (isMobile || useMobileDrawer) setDrawerOpen(false);
   }, [pathname, search, setDrawerOpen]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
@@ -40,7 +40,7 @@ export function Layout() {
       <div className="fixed inset-0 px-safe flex gap-sidebar-gap overflow-hidden mt-titlebar-area-height bg-primary dark:bg-black">
         <TopBar />
 
-        <Transition.Root show={(mobile || useMobileDrawer) && drawerOpen} as={Fragment}>
+        <Transition.Root show={(isMobile || useMobileDrawer) && drawerOpen} as={Fragment}>
           <Dialog as="div" className="relative" onClose={setDrawerOpen}>
             <Transition.Child
               as={Fragment}
@@ -71,7 +71,7 @@ export function Layout() {
                   </div>
 
                   <Transition.Root
-                    show={(mobile || useMobileDrawer) && drawerOpen && currentFolder !== null}
+                    show={(isMobile || useMobileDrawer) && drawerOpen && currentFolder !== null}
                   >
                     <Transition.Child
                       as={Fragment}
@@ -111,7 +111,7 @@ export function Layout() {
 
         <Transition
           appear
-          show={(!useMobileDrawer && !mobile) && drawerOpen}
+          show={(!useMobileDrawer && !isMobile) && drawerOpen}
           as="aside"
           unmount={false}
           enter="transition-[margin-left,opacity] ease-in-out duration-400"
@@ -126,7 +126,7 @@ export function Layout() {
         </Transition>
 
         <Transition
-          show={(!useMobileDrawer && !mobile) && drawerOpen && currentFolder !== null}
+          show={(!useMobileDrawer && !isMobile) && drawerOpen && currentFolder !== null}
           as="aside"
           unmount={false}
           enter="transition-[margin-left,opacity] ease-in-out duration-400"
@@ -143,10 +143,10 @@ export function Layout() {
         <div
           className={classNames(
             'relative flex-1 min-w-full sm:min-w-[initial] transition-[margin] duration-400',
-            drawerOpen && (!mobile && !useMobileDrawer) ? 'ml-0 m-sidebar-gap' : '',
+            drawerOpen && (!isMobile && !useMobileDrawer) ? 'ml-0 m-sidebar-gap' : '',
           )}
         >
-          <Card className="flex flex-col h-full overflow-hidden" fullscreen={!drawerOpen || mobile || useMobileDrawer}>
+          <Card className="flex flex-col h-full overflow-hidden" fullscreen={!drawerOpen || isMobile || useMobileDrawer}>
             <Outlet />
           </Card>
         </div>
