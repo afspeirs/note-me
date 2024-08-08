@@ -41,7 +41,7 @@ export function Layout() {
         <TopBar />
 
         <Transition.Root show={(isMobile || useMobileDrawer) && drawerOpen} as={Fragment}>
-          <Dialog as="div" className="relative" onClose={setDrawerOpen}>
+          <Dialog className="relative" onClose={setDrawerOpen}>
             <Transition.Child
               as={Fragment}
               enter="transition-opacity ease-in-out duration-400"
@@ -64,13 +64,13 @@ export function Layout() {
                 leaveFrom="translate-x-0"
                 leaveTo="-translate-x-full"
               >
-                <Dialog.Panel className="relative flex flex-wrap gap-sidebar-gap">
-                  <div className="hidden [@media(display-mode:window-controls-overlay)]:block -mt-sidebar-gap h-titlebar-area-height w-full" aria-hidden="true" />
-                  <div className="relative flex flex-col w-sidebar h-full pl-0 py-sidebar-gap pb-safe-offset-sidebar-gap gap-sidebar-gap">
+                <Dialog.Panel className="relative flex flex-wrap gap-sidebar-gap [@media(display-mode:window-controls-overlay)]:mt-titlebar-area-height">
+                  <div className="relative flex flex-col w-sidebar h-full py-sidebar-gap pb-safe-offset-sidebar-gap gap-sidebar-gap">
                     <Sidebar />
                   </div>
 
                   <Transition.Root
+                    className="contents"
                     show={(isMobile || useMobileDrawer) && drawerOpen && currentFolder !== null}
                   >
                     <Transition.Child
