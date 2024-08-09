@@ -36,7 +36,7 @@ export function NotesMoveModal({
       onClose={() => onClose()}
       open={!!note}
     >
-      <label htmlFor="folder-create" className="relative block mb-8">
+      <label htmlFor="folder-create" className="relative block">
         <span className="sr-only">Search Notes</span>
         <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-2">
           <FolderPlusIcon className="size-6 text-gray-400" aria-hidden="true" />
@@ -65,9 +65,13 @@ export function NotesMoveModal({
 
       {note && (
         <>
-          <RadioGroup value={selected} onChange={setSelected}>
+          <RadioGroup
+            className="my-4"
+            value={selected}
+            onChange={setSelected}
+          >
             <RadioGroup.Label className="sr-only">Folder Names</RadioGroup.Label>
-            <div className="relative space-y-2 rounded-md">
+            <div className="relative rounded-md">
               {[...folders.filter((folder) => folder !== ''), newFolderName].map((folder) => (
                 <RadioGroup.Option
                   key={folder}
@@ -77,32 +81,27 @@ export function NotesMoveModal({
                     || folder === note.folder
                   )}
                   className={({ checked }) => classNames(
-                    checked ? 'z-10 border-primary' : 'border-gray-200',
-                    'relative flex cursor-pointer flex-col border rounded-md px-4 py-2 focus:outline-none aria-disabled:opacity-40 aria-disabled:bg-dark/5 dark:aria-disabled:bg-white/20 overflow-hidden select-none',
+                    'relative flex items-center gap-3 p-2 text-sm font-medium cursor-pointer rounded-md focus:outline-none aria-disabled:opacity-40 aria-disabled:cursor-not-allowed overflow-hidden select-none',
+                    'last:underline underline-offset-4 decoration-dashed',
+                    checked ? 'text-primary' : 'text-dark dark:text-light',
                   )}
                 >
                   {({ active, checked }) => (
-                    <span className="flex items-center text-sm">
+                    <>
                       <span
                         aria-hidden="true"
                         className={classNames(
                           checked ? 'bg-primary border-transparent' : 'bg-white dark:bg-dark border-gray-300',
-                          active ? 'ring-2 ring-offset-2 ring-primary' : '',
+                          active ? 'ring-2 ring-offset-2 ring-primary dark:ring-offset-dark' : '',
                           'size-4 rounded-full border flex items-center justify-center flex-shrink-0',
                         )}
                       >
                         <span className="size-1.5 rounded-full bg-white dark:bg-dark" />
                       </span>
-                      <RadioGroup.Label
-                        as="span"
-                        className={classNames(
-                          checked ? 'text-primary' : 'text-dark dark:text-light',
-                          'ml-4 font-medium',
-                        )}
-                      >
+                      <RadioGroup.Label as="span">
                         {folder || (note.folder ? `Remove from "${note.folder}"` : '<Please enter a new folder name above>')}
                       </RadioGroup.Label>
-                    </span>
+                    </>
                   )}
                 </RadioGroup.Option>
               ))}
@@ -111,7 +110,6 @@ export function NotesMoveModal({
 
           <Button
             colour="primary"
-            className="mt-8"
             disabled={selected === null}
             Icon={FolderInputIcon}
             onClick={() => handleMoveNote()}
