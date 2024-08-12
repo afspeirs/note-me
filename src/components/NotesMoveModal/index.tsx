@@ -46,7 +46,7 @@ export function NotesMoveModal({
           id="folder-create"
           value={newFolderName}
           onChange={(event) => setNewFolderName(event.target.value)}
-          className="block w-full rounded-md bg-white dark:bg-dark border border-gray-200 py-3 pl-10 pr-20 bg-inherit outline-offset-1 placeholder:text-gray-400 placeholder:select-none focus-visible"
+          className="block w-full rounded-md bg-white dark:bg-dark border border-gray-200 py-3 sm:py-2 pl-10 pr-12 bg-inherit outline-offset-1 placeholder:text-gray-400 placeholder:select-none focus-visible"
           placeholder="Create a name for a new folder"
         />
         <div className="absolute inset-y-0 right-0">
@@ -81,7 +81,7 @@ export function NotesMoveModal({
                     || folder === note.folder
                   )}
                   className={({ checked }) => classNames(
-                    'relative flex items-center gap-3 p-2 text-sm font-medium cursor-pointer rounded-md focus:outline-none aria-disabled:opacity-40 aria-disabled:cursor-not-allowed overflow-hidden select-none',
+                    'relative flex items-center gap-3 pl-2 py-3 sm:py-2 font-medium cursor-pointer rounded-md focus:outline-none aria-disabled:opacity-40 aria-disabled:cursor-not-allowed overflow-hidden select-none',
                     'last:underline underline-offset-4 decoration-dashed',
                     checked ? 'text-primary' : 'text-dark dark:text-light',
                   )}
