@@ -1,4 +1,5 @@
 import {
+  FolderInputIcon as FolderIcon,
   InfoIcon,
   PencilIcon,
   SaveIcon,
@@ -11,11 +12,12 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useRxCollection, useRxData } from 'rxdb-hooks';
 
 import { deleteNote, favouriteNote, updateNote } from '@/api/notes';
-import type { NoteDocType, NoteQuery } from '@/api/types';
+import type { NoteDocType, NoteDocument, NoteQuery } from '@/api/types';
 import { Button } from '@/components/Button';
 import { Markdown } from '@/components/Markdown';
 import { ModalConfirm } from '@/components/ModalConfirm';
 import { NotesMoreInformation } from '@/components/NotesMoreInformation';
+import { NotesMoveModal } from '@/components/NotesMoveModal';
 import { Page } from '@/components/Page';
 import { openToast } from '@/components/Toast';
 import { Tooltip } from '@/components/Tooltip';
@@ -33,6 +35,7 @@ export function Note() {
   const navigate = useNavigate();
   const [edit, setEdit] = useState(false);
   const [showMoreInformation, setShowMoreInformation] = useState(false);
+  const [showMoveNoteModal, setShowMoveNoteModal] = useState<NoteDocument | false>(false);
   const [showDeleteNoteModal, setShowDeleteNoteModal] = useState(false);
   const [text, setText] = useState('');
   // TODO: can i do this better now that I need collection for deleteNote?
@@ -92,16 +95,6 @@ export function Note() {
               {`${edit ? 'Save' : 'Edit'} Note`}
             </Button>
           </Tooltip>
-          <Tooltip content={`${note?.favourite ? 'Unfavourite' : 'Favourite'} Note`}>
-            <Button
-              Icon={StarIcon}
-              IconClassName={note?.favourite ? 'fill-current' : ''}
-              iconOnly
-              onClick={() => favouriteNote(note)}
-            >
-              {`${note?.favourite ? 'Unfavourite' : 'Favourite'} Note`}
-            </Button>
-          </Tooltip>
           <Tooltip content="More information">
             <Button
               Icon={InfoIcon}
@@ -115,6 +108,29 @@ export function Note() {
             note={note}
             open={showMoreInformation}
             setOpen={setShowMoreInformation}
+          />
+          <Tooltip content={`${note?.favourite ? 'Unfavourite' : 'Favourite'} Note`}>
+            <Button
+              Icon={StarIcon}
+              IconClassName={note?.favourite ? 'fill-current' : ''}
+              iconOnly
+              onClick={() => favouriteNote(note)}
+            >
+              {`${note?.favourite ? 'Unfavourite' : 'Favourite'} Note`}
+            </Button>
+          </Tooltip>
+          <Tooltip content="Move Note">
+            <Button
+              Icon={FolderIcon}
+              iconOnly
+              onClick={() => setShowMoveNoteModal(note)}
+            >
+              Move Note
+            </Button>
+          </Tooltip>
+          <NotesMoveModal
+            setShowMoveNoteModal={setShowMoveNoteModal}
+            showMoveNoteModal={showMoveNoteModal}
           />
           <Tooltip content="Delete Note">
             <Button
