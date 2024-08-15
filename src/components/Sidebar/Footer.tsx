@@ -1,4 +1,4 @@
-import { HomeIcon, PlusIcon, SettingsIcon } from 'lucide-react';
+import { HomeIcon, SettingsIcon } from 'lucide-react';
 
 import { AuthUserInformation } from '@/components/AuthUserInformation';
 import { Button } from '@/components/Button';
@@ -11,16 +11,6 @@ export function Footer() {
       aria-label="sidebar footer"
     >
       <ul role="list" className="flex flex-col p-card-gap">
-        <li>
-          <Button
-            href={{
-              pathname: '/note',
-            }}
-            Icon={PlusIcon}
-          >
-            Create Note
-          </Button>
-        </li>
         <li>
           <Button
             href="/"

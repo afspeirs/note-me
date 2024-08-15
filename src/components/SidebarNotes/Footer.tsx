@@ -8,7 +8,6 @@ import { atomCurrentFolder } from '@/context/folders';
 export function Footer() {
   const currentFolder = useAtomValue(atomCurrentFolder);
 
-  if (!currentFolder) return null;
   return (
     <Card
       as="nav"
@@ -19,11 +18,11 @@ export function Footer() {
           <Button
             href={{
               pathname: '/note',
-              search: `folder=${window.encodeURIComponent(currentFolder)}`,
+              search: currentFolder ? `folder=${window.encodeURIComponent(currentFolder)}` : undefined,
             }}
             Icon={PlusIcon}
           >
-            {`Create Note in "${currentFolder}"`}
+            {`Create Note${currentFolder ? ` in "${currentFolder}"` : ''}`}
           </Button>
         </li>
       </ul>
