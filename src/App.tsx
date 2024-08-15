@@ -63,6 +63,12 @@ export function App() {
     console.log('replication resync'); // eslint-disable-line no-console
   });
 
+  // @ts-expect-error - vite:preloadError is a valid event
+  useEventListener('vite:preloadError', (event) => {
+    console.error('vite:preloadError', event); // eslint-disable-line no-console
+    window.location.reload();
+  });
+
   return (
     <>
       <HelmetProvider>
