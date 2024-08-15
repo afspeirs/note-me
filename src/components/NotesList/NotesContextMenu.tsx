@@ -57,13 +57,13 @@ export function NotesContextMenu({
 
           <ContextMenu.Separator className="m-1 h-px bg-gray-300" />
 
-          <NotesContextMenuItem onClick={() => setShowMoveNoteModal(note)}>
-            <FolderIcon className="size-5" aria-hidden="true" />
-            Move Note
-          </NotesContextMenuItem>
           <NotesContextMenuItem onClick={() => favouriteNote(note)}>
             <StarIcon className={classNames(note?.favourite ? 'fill-current' : '', 'size-5')} aria-hidden="true" />
             {`${note?.favourite ? 'Unfavourite' : 'Favourite'} Note`}
+          </NotesContextMenuItem>
+          <NotesContextMenuItem onClick={() => setShowMoveNoteModal(note)}>
+            <FolderIcon className="size-5" aria-hidden="true" />
+            Move Note
           </NotesContextMenuItem>
           <NotesContextMenuItem onClick={() => setShowDeleteNoteModal(true)}>
             <TrashIcon className="size-5" aria-hidden="true" />
