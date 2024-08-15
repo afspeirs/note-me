@@ -12,7 +12,7 @@ export function Card({
     <Component
       className={classNames(
         'bg-light dark:bg-dark dark:text-light shadow',
-        fullscreen ? '[@media_not_(display-mode:_browser)]:rounded-t-xl' : 'rounded-xl',
+        fullscreen ? '[@media_not_(display-mode:_browser)]:rounded-t-lg' : 'rounded-lg',
         className,
       )}
       {...props} // eslint-disable-line react/jsx-props-no-spreading

@@ -6,7 +6,6 @@ import { NotesListItem } from './NotesListItem';
 import type { NotesListProps } from './types';
 
 export function NotesList({
-  children,
   fullHeight,
   isFetching,
   notes,
@@ -14,31 +13,28 @@ export function NotesList({
   const ref = useRef<HTMLUListElement | null>(null);
 
   return (
-    <>
-      {children}
-      <ul
-        role="list"
-        className={classNames(
-          'flex flex-col px-2 overflow-y-auto overflow-x-hidden',
-          fullHeight ? ' h-full' : '',
-        )}
-        ref={ref}
+    <ul
+      role="list"
+      className={classNames(
+        'flex flex-col px-card-gap overflow-y-auto overflow-x-hidden',
+        fullHeight ? ' h-full' : '',
+      )}
+      ref={ref}
+    >
+      {isFetching && (
+        <li className="block p-3 sm:py-2">Loading...</li>
+      )}
+      {!isFetching && notes?.length === 0 && (
+        <li className="block p-3 sm:py-2">No notes found</li>
+      )}
+      <ViewportList
+        viewportRef={ref}
+        items={notes}
       >
-        {isFetching && (
-          <li className="block p-3 sm:py-2">Loading...</li>
+        {(note) => (
+          <NotesListItem key={note.id} note={note} />
         )}
-        {!isFetching && notes?.length === 0 && (
-          <li className="block p-3 sm:py-2">No notes found</li>
-        )}
-        <ViewportList
-          viewportRef={ref}
-          items={notes}
-        >
-          {(note) => (
-            <NotesListItem key={note.id} note={note} />
-          )}
-        </ViewportList>
-      </ul>
-    </>
+      </ViewportList>
+    </ul>
   );
 }

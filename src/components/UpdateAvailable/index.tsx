@@ -14,7 +14,7 @@ export function UpdateAvailable() {
   };
 
   return updateAvailable && (
-    <Card className="flex p-2">
+    <Card className="flex p-card-gap">
       <Button
         Icon={ArrowDownSquareIcon}
         onClick={handleUpdateClick}

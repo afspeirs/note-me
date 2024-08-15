@@ -10,7 +10,7 @@ export function CardHeader({
   title,
 }: CardHeaderProps) {
   return (
-    <div className="relative flex gap-2 p-2 min-h-14">
+    <div className="relative flex gap-card-gap p-card-gap min-h-12">
       <div className="ml-2 self-center font-bold text-xl truncate select-none">{title}</div>
 
       <div className="ml-auto" />

@@ -3,6 +3,16 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --sidebar: 20rem;
+    --sidebar-gap: 0.25rem;
+    --card-gap: 0.5rem;
+
+    @media screen(md) {
+      --card-gap: 0.25rem;
+    }
+  }
+
   html {
     @apply overflow-hidden overscroll-none;
     -webkit-font-smoothing: antialiased;

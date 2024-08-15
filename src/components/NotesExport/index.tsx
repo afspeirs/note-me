@@ -56,7 +56,7 @@ export function NotesExport() {
   };
 
   return (
-    <div className="m-2">
+    <div className="m-card-gap">
       <Button
         active={open}
         disabled={notes.length === 0}

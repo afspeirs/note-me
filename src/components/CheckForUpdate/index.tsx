@@ -32,7 +32,7 @@ export function CheckForUpdate() {
   };
 
   return (
-    <div className="m-2">
+    <div className="m-card-gap">
       <Button
         Icon={RocketIcon}
         onClick={handleButtonClick}

@@ -10,7 +10,7 @@ export function Footer() {
       as="nav"
       aria-label="sidebar footer"
     >
-      <ul role="list" className="flex flex-col p-2">
+      <ul role="list" className="flex flex-col p-card-gap">
         <li>
           <Button
             href={{

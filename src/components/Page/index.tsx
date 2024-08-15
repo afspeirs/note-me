@@ -34,7 +34,7 @@ export function Page({
         <title>{`${title ? `${title} | ` : ''}NoteMe`}</title>
       </Helmet>
 
-      <header className="relative flex gap-2 p-2">
+      <header className="relative flex gap-card-gap p-card-gap">
         <Tooltip content={`${open ? 'Close' : 'Open'} Sidebar`}>
           <Button
             Icon={MenuIcon}

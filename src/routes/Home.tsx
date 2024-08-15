@@ -30,7 +30,7 @@ export function Home() {
         <SignInButton />
       )}
     >
-      <div className="flex flex-col gap-3 p-4">
+      <div className="flex flex-col gap-3 p-3">
         <p>Hello and welcome to NoteMe.</p>
 
         <p>

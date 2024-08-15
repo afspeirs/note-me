@@ -38,7 +38,7 @@ export function NotesSearch() {
         leaveFrom="opacity-100 translate-x-0"
         leaveTo="opacity-0 translate-x-full"
       >
-        <label htmlFor="notes-search" className="absolute block inset-0 m-2 bg-light dark:bg-dark z-50">
+        <label htmlFor="notes-search" className="absolute block inset-0 m-card-gap bg-light dark:bg-dark z-50">
           <span className="sr-only">Search Notes</span>
           <div className="absolute flex items-center gap-3">
             <Tooltip content="Hide Search" side="right">

@@ -109,7 +109,7 @@ export function NotesImport() {
   useEventListener('drop', handleDrop, dropRef);
 
   return (
-    <div className="m-2">
+    <div className="m-card-gap">
       <Button
         active={open}
         Icon={ArrowUpCircleIcon}
