@@ -10,7 +10,7 @@ export function ChangeTheme() {
   const [theme, setTheme] = useAtom(atomTheme);
 
   return (
-    <div className="relative m-2">
+    <div className="relative m-card-gap">
       <Listbox value={theme} onChange={setTheme}>
         {({ open }) => (
           <>

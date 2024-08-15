@@ -8,22 +8,21 @@ import { atomCurrentFolder } from '@/context/folders';
 export function Footer() {
   const currentFolder = useAtomValue(atomCurrentFolder);
 
-  if (!currentFolder) return null;
   return (
     <Card
       as="nav"
       aria-label="sidebar notes footer"
     >
-      <ul role="list" className="flex flex-col p-2">
+      <ul role="list" className="flex flex-col p-card-gap">
         <li>
           <Button
             href={{
               pathname: '/note',
-              search: `folder=${window.encodeURIComponent(currentFolder)}`,
+              search: currentFolder ? `folder=${window.encodeURIComponent(currentFolder)}` : undefined,
             }}
             Icon={PlusIcon}
           >
-            {`Create Note in "${currentFolder}"`}
+            {`Create Note${currentFolder ? ` in "${currentFolder}"` : ''}`}
           </Button>
         </li>
       </ul>

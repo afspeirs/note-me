@@ -44,11 +44,11 @@ export function Settings() {
           <AppVersion />
           <CheckForUpdate />
         </li>
-        <li aria-hidden="true"><hr className="mx-4 border-gray-300 dark:border-gray-400" /></li>
+        <li aria-hidden="true"><hr className="mx-3 border-gray-300 dark:border-gray-400" /></li>
         <li>
           <ChangeTheme />
         </li>
-        <li aria-hidden="true"><hr className="mx-4 border-gray-300 dark:border-gray-400" /></li>
+        <li aria-hidden="true"><hr className="mx-3 border-gray-300 dark:border-gray-400" /></li>
         <li>
           <NotesImport />
           <NotesExport />

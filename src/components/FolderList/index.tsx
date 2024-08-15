@@ -16,7 +16,7 @@ export function FolderList({
     <ul
       role="list"
       className={classNames(
-        'flex flex-col px-2 overflow-y-auto overflow-x-hidden',
+        'flex flex-col px-card-gap overflow-y-auto overflow-x-hidden',
         fullHeight ? 'h-full' : '',
       )}
       ref={ref}

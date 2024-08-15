@@ -5,7 +5,7 @@ import { classNames } from '@/utils/classNames';
 
 export function AppVersion() {
   return (
-    <div className="m-2">
+    <div className="m-card-gap">
       <div className={classNames(style.withText, 'relative p-3 text-dark dark:text-light select-none')}>
         <WrenchIcon className="size-6" aria-hidden="true" />
         <div>

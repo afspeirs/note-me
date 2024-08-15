@@ -1,25 +1,25 @@
-import { useAtom } from 'jotai';
+import { useAtomValue } from 'jotai';
 import { RefreshCwIcon, RocketIcon } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 
 import { Button } from '@/components/Button';
 import { atomUpdateAvailable } from '@/context/serviceWorker';
 
+const updateServiceWorker = () => {
+  if ('serviceWorker' in window.navigator) {
+    window.navigator.serviceWorker.ready.then((registration) => registration.update());
+  } else {
+    setTimeout(() => window.location.reload(), 1500);
+  }
+};
+
 export function CheckForUpdate() {
-  const [updateAvailable] = useAtom(atomUpdateAvailable);
+  const updateAvailable = useAtomValue(atomUpdateAvailable);
   const [loading, setLoading] = useState(false);
   const timer = useRef<ReturnType<typeof setTimeout>>();
 
   // This abominable one-liner will clear the timer if CheckForUpdate component un-mounts
   useEffect(() => () => clearTimeout(timer.current), []);
-
-  const updateServiceWorker = () => {
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.ready.then((registration) => registration.update());
-    } else {
-      setTimeout(() => window.location.reload(), 1500);
-    }
-  };
 
   const handleButtonClick = () => {
     if (updateAvailable) {
@@ -32,7 +32,7 @@ export function CheckForUpdate() {
   };
 
   return (
-    <div className="m-2">
+    <div className="m-card-gap">
       <Button
         Icon={RocketIcon}
         onClick={handleButtonClick}
