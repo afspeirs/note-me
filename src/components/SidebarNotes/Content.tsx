@@ -44,7 +44,7 @@ export function Content() {
   return (
     <Card
       as="nav"
-      className="flex flex-col h-full"
+      className="flex flex-col h-[calc(100%-64px-theme(spacing[sidebar-gap]))] sm:h-[calc(100%-48px-theme(spacing[sidebar-gap]))]"
       aria-label="sidebar notes"
     >
       <CardHeader
