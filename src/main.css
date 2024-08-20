@@ -6,11 +6,7 @@
   :root {
     --sidebar: 20rem;
     --sidebar-gap: 0.25rem;
-    --card-gap: 0.5rem;
-
-    @media screen(sm) {
-      --card-gap: 0.25rem;
-    }
+    --card-gap: 0.25rem;
   }
 
   html {
