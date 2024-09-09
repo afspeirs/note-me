@@ -1,4 +1,5 @@
 import {
+  DotIcon,
   FolderInputIcon as FolderIcon,
   InfoIcon,
   PencilIcon,
@@ -6,7 +7,12 @@ import {
   Star as StarIcon,
   Trash2Icon as TrashIcon,
 } from 'lucide-react';
-import { useCallback, useEffect, useState } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useRxCollection, useRxData } from 'rxdb-hooks';
@@ -38,9 +44,10 @@ export function Note() {
   const [showMoveNoteModal, setShowMoveNoteModal] = useState<NoteDocument | false>(false);
   const [showDeleteNoteModal, setShowDeleteNoteModal] = useState(false);
   const [text, setText] = useState('');
-  // TODO: can i do this better now that I need collection for deleteNote?
+  // TODO: Can I do this better now that I need collection for deleteNote?
   const notesQuery = useCallback<NoteQuery>((collection2) => collection2.findOne(id), [id]);
   const { result: [note], isFetching } = useRxData<NoteDocType>('notes', notesQuery);
+  const isDirty = useMemo(() => text !== note?.text, [text, note?.text]);
 
   const handleDeleteNote = () => {
     setShowDeleteNoteModal(false);
@@ -84,7 +91,15 @@ export function Note() {
     <Page
       title={getTitle(note?.text)}
       titleHide
-      icons={(
+      iconsLeft={isDirty && (
+        <Tooltip content="The note has not been saved">
+          <div className="grid place-content-center">
+            <DotIcon className="size-6 flex-shrink-0" aria-hidden="true" />
+            <span className="sr-only">The note has not been saved</span>
+          </div>
+        </Tooltip>
+      )}
+      iconsRight={(
         <>
           <Tooltip content={`${edit ? 'Save' : 'Edit'} Note`}>
             <Button

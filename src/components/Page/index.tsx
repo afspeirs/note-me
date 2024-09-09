@@ -11,7 +11,8 @@ import type { PageProps } from './types';
 
 export function Page({
   children,
-  icons,
+  iconsLeft,
+  iconsRight,
   title,
   titleHide = false,
 }: PageProps) {
@@ -49,9 +50,11 @@ export function Page({
           <div className="ml-2 self-center font-bold text-xl truncate select-none">{title}</div>
         )}
 
+        {iconsLeft}
+
         <div className="ml-auto" />
 
-        {icons}
+        {iconsRight}
       </header>
 
       <main className="flex-1 overflow-auto">

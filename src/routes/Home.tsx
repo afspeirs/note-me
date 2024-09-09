@@ -26,7 +26,7 @@ export function Home() {
   return (
     <Page
       title="NoteMe"
-      icons={!auth?.user && (
+      iconsRight={!auth?.user && (
         <SignInButton />
       )}
     >
