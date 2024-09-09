@@ -23,7 +23,7 @@
     "scripts",
     "src",
     "*.d.ts",
-    "*.config.cjs"
-  ],
-  "references": [{ "path": "./tsconfig.node.json" }]
+    "*.config.cjs",
+    "vite.config.ts"
+  ]
 }
