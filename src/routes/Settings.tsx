@@ -14,7 +14,7 @@ export function Settings() {
   return (
     <Page
       title="Settings"
-      icons={(
+      iconsRight={(
         <>
           <Tooltip content="Visit speirs.dev">
             <Button

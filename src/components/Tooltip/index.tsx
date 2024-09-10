@@ -22,7 +22,7 @@ export function Tooltip({
       </TooltipPrimitive.Trigger>
       <TooltipPrimitive.Content
         collisionPadding={8}
-        className="p-2 text-xs bg-dark text-light dark:text-dark dark:bg-light rounded-lg pointer-events-none z-10"
+        className="p-2 text-xs bg-dark text-light dark:text-dark dark:bg-light rounded-lg pointer-events-none select-none z-10"
         side={side}
         align="center"
         {...props} // eslint-disable-line react/jsx-props-no-spreading
