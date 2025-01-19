@@ -1,5 +1,6 @@
 <script lang="ts">
-  // import '$lib/utils/registerServiceWorker';
+  import Toaster from '$lib/components/Toaster.svelte';
+  import '$lib/utils/registerServiceWorker';
   import '$lib/utils/webmanifest-apple';
   import '../app.css';
 
@@ -11,3 +12,5 @@
 </svelte:head>
 
 {@render children()}
+
+<Toaster />
