@@ -9,7 +9,10 @@
     "skipLibCheck": true,
     "sourceMap": true,
     "strict": true,
-    "types": [ "@types/wicg-file-system-access"],
+    "types": [
+      "@types/node",
+      "@types/wicg-file-system-access"
+    ],
     "moduleResolution": "bundler"
   }
   // Path aliases are handled by https://svelte.dev/docs/kit/configuration#alias
