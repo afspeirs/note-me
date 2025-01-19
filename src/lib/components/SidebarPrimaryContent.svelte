@@ -12,9 +12,9 @@
     <!-- {#if !isMobile}
       <Button
         className="hidden sm:block"
-        Icon={sidebarUseMobile ? PinIcon : PinOffIcon}
+        icon={sidebarUseMobile ? PinIcon : PinOffIcon}
         iconOnly
-        onClick={() => sidebarUseMobile.toggle()}
+        onclick={() => sidebarUseMobile.toggle()}
       >
         {`${sidebarUseMobile ? 'pin' : 'un-pin'} sidebar`}
       </Button>

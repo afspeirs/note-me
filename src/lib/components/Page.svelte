@@ -32,9 +32,9 @@
     <Button
       icon={MenuIcon}
       iconOnly
-      text={`${open ? 'Close' : 'Open'} Sidebar`}
-      onClick={toggleSidebarOpen}
+      onclick={toggleSidebarOpen}
     >
+      {`${open ? 'Close' : 'Open'} Sidebar`}
     </Button>
 
 

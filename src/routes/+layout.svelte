@@ -81,7 +81,7 @@
                 <button
                   type="button"
                   className="sm:hidden fixed inset-0 bg-primary/70 dark:bg-black/70 backdrop-blur-sm"
-                  onClick={() => setCurrentFolder(null)}
+                  onclick={() => setCurrentFolder(null)}
                 >
                   <span className="sr-only">Close Secondary Panel</span>
                 </button>

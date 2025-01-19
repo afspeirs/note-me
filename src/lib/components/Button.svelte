@@ -38,14 +38,14 @@
   interface ButtonOptions extends BaseProps {
     disabled?: boolean,
     href?: never,
-    onClick?: (event: MouseEvent<HTMLButtonElement>) => void
+    onclick?: (event: MouseEvent<HTMLButtonElement>) => void
     target?: never,
   }
 
   interface LinkOptions extends BaseProps {
     disabled?: never,
     href: string,
-    onClick?: never,
+    onclick?: never,
     target?: '_self' | '_blank',
   }
 
@@ -63,7 +63,7 @@
     icon: Icon,
     iconClassName,
     iconOnly,
-    onClick,
+    onclick,
     secondaryAction,
     target = '_self',
     ...props
@@ -82,7 +82,7 @@
     href={href}
     rel={target === '_blank' ? 'noreferrer' : undefined}
     target={target}
-    onclick={onClick}
+    onclick={onclick}
   >
     {#if Icon}
       <Icon class={classNames('size-6 flex-shrink-0', iconClassName)} aria-hidden="true" />
@@ -109,7 +109,7 @@
       className,
     )}
     disabled={disabled}
-    onclick={onClick}
+    onclick={onclick}
   >
     {#if Icon}
       <Icon class={classNames('size-6 flex-shrink-0', iconClassName)} aria-hidden="true" />
