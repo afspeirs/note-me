@@ -3,6 +3,11 @@
   import type { Snippet } from 'svelte';
 
   import Button from '$lib/components/Button.svelte';
+  import { drawerOpen } from '$lib/context/navigation.svelte';
+
+  function toggleDrawerOpen() {
+    drawerOpen.toggle();
+  }
 
   type PageProps = {
     children: Snippet,
@@ -19,36 +24,6 @@
     title,
     titleHide = false,
   }: PageProps = $props();
-// import { useAtom } from 'jotai';
-// import { MenuIcon } from 'lucide-react';
-// import { Helmet } from 'react-helmet-async';
-// import { useHotkeys } from 'react-hotkeys-hook';
-// import { useNavigate } from 'react-router-dom';
-
-// import { Button } from '@/components/Button';
-// import { Tooltip } from '@/components/Tooltip';
-// import { atomDrawerOpen } from '@/context/navigation';
-// import type { PageProps } from './types';
-
-// export function Page({
-//   children,
-//   iconsLeft,
-//   iconsRight,
-//   title,
-//   titleHide = false,
-// }: PageProps) {
-//   const [open, setOpen] = useAtom(atomDrawerOpen);
-//   const toggleOpen = () => setOpen((prevState) => !prevState);
-//   const navigate = useNavigate();
-
-//   useHotkeys('ctrl+b, meta+b', toggleOpen, {
-//     enableOnFormTags: true,
-//   });
-
-//   useHotkeys('ctrl+n, meta+n', () => navigate('/note/'), {
-//     enableOnFormTags: true,
-//     preventDefault: true,
-//   });
 </script>
 
 <header class="relative flex gap-card-gap p-card-gap">
@@ -58,8 +33,8 @@
       icon={MenuIcon}
       iconOnly
       text={`${open ? 'Close' : 'Open'} Sidebar`}
+      onClick={toggleDrawerOpen}
     >
-      <!-- onClick={toggleOpen} -->
     </Button>
 
 
