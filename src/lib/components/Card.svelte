@@ -3,14 +3,14 @@
   import { classNames } from '$lib/utils/classNames';
 
   type CardProps = {
-    // as?: Component,
+    as?: string, // TODO: fix this type
     children: Snippet,
     class?: string,
     fullscreen?: boolean,
   };
 
   let {
-    // as = 'div',
+    as = 'main',
     children,
     class: className = '',
     fullscreen,
@@ -18,7 +18,8 @@
   }: CardProps = $props();
 </script>
 
-<div
+<svelte:element
+  this={as}
   class={classNames(
     'bg-light dark:bg-dark dark:text-light shadow',
     fullscreen ? '[@media_not_(display-mode:_browser)]:rounded-t-lg' : 'rounded-lg',
@@ -27,4 +28,4 @@
   {...rest}
 >
   {@render children()}
-</div>
+</svelte:element>
