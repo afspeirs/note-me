@@ -12,11 +12,11 @@
     <!-- {#if !isMobile}
       <Button
         className="hidden sm:block"
-        Icon={useMobileDrawer ? PinIcon : PinOffIcon}
+        Icon={sidebarUseMobile ? PinIcon : PinOffIcon}
         iconOnly
-        onClick={() => setUseMobileDrawer((prevState) => !prevState)}
+        onClick={() => sidebarUseMobile.toggle()}
       >
-        {`${useMobileDrawer ? 'pin' : 'un-pin'} sidebar`}
+        {`${sidebarUseMobile ? 'pin' : 'un-pin'} sidebar`}
       </Button>
     {/if} -->
   </CardHeader>

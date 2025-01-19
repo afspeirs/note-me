@@ -3,10 +3,10 @@
   import type { Snippet } from 'svelte';
 
   import Button from '$lib/components/Button.svelte';
-  import { drawerOpen } from '$lib/context/navigation.svelte';
+  import { sidebarOpen } from '$lib/context/navigation.svelte';
 
-  function toggleDrawerOpen() {
-    drawerOpen.toggle();
+  function toggleSidebarOpen() {
+    sidebarOpen.toggle();
   }
 
   type PageProps = {
@@ -33,7 +33,7 @@
       icon={MenuIcon}
       iconOnly
       text={`${open ? 'Close' : 'Open'} Sidebar`}
-      onClick={toggleDrawerOpen}
+      onClick={toggleSidebarOpen}
     >
     </Button>
 

@@ -1,6 +1,6 @@
 export const mobileWidth = 1024;
 
-export const drawerOpen = $state({
+export const sidebarOpen = $state({
   value: false,
   set(value: boolean) {
     this.value = value;
@@ -10,7 +10,7 @@ export const drawerOpen = $state({
   },
 });
 
-export const drawerUseMobile = $state({
+export const sidebarUseMobile = $state({
   value: false,
   set(value: boolean) {
     this.value = value;

@@ -3,7 +3,7 @@
   import Toaster from '$lib/components/Toaster.svelte';
   import SidebarPrimary from '$lib/components/SidebarPrimary.svelte';
   import { classNames } from '$lib/utils/classNames';
-  import { drawerOpen, drawerUseMobile } from '$lib/context/navigation.svelte';
+  import { sidebarOpen, sidebarUseMobile } from '$lib/context/navigation.svelte';
   import '$lib/utils/registerServiceWorker';
   import '$lib/utils/webmanifest-apple';
   import '../app.css';
@@ -12,14 +12,14 @@
   let isMobile = $derived(clientWidth < 1024);
 
   $effect(() => {
-    if (isMobile || drawerUseMobile.value) drawerOpen.value = false;
+    if (isMobile || sidebarUseMobile.value) sidebarOpen.value = false;
   });
 
   // $inspect({
   //   clientWidth,
   //   isMobile,
-  //   drawerUseMobile: drawerUseMobile.value,
-  //   drawerOpen: drawerOpen.value,
+  //   sidebarUseMobile: sidebarUseMobile.value,
+  //   sidebarOpen: sidebarOpen.value,
   // });
 
   let { children } = $props();
@@ -36,8 +36,8 @@
 >
   <!-- <TopBar /> -->
 
-  <!-- <Transition.Root show={(isMobile || drawerUseMobile.value) && drawerOpen.value} as={Fragment}>
-    <Dialog className="relative" onClose={setDrawerOpen.value}>
+  <!-- <Transition.Root show={(isMobile || sidebarUseMobile.value) && sidebarOpen.value} as={Fragment}>
+    <Dialog className="relative" onClose={sidebarOpen.set(false)}>
       <Transition.Child
         as={Fragment}
         enter="transition-opacity ease-in-out duration-400"
@@ -67,7 +67,7 @@
 
             <Transition.Root
               className="contents"
-              show={(isMobile || drawerUseMobile.value) && drawerOpen.value && currentFolder !== null}
+              show={(isMobile || sidebarUseMobile.value) && sidebarOpen.value && currentFolder !== null}
             >
               <Transition.Child
                 as={Fragment}
@@ -107,7 +107,7 @@
 
   <Transition
     appear
-    show={(!drawerUseMobile.value && !isMobile) && drawerOpen.value}
+    show={(!sidebarUseMobile.value && !isMobile) && sidebarOpen.value}
     as="aside"
     unmount={false}
     enter="transition-[margin-left,opacity] ease-in-out duration-400"
@@ -122,7 +122,7 @@
   </Transition>
 
   <Transition
-    show={(!drawerUseMobile.value && !isMobile) && drawerOpen.value && currentFolder !== null}
+    show={(!sidebarUseMobile.value && !isMobile) && sidebarOpen.value && currentFolder !== null}
     as="aside"
     unmount={false}
     enter="transition-[margin-left,opacity] ease-in-out duration-400"
@@ -136,7 +136,7 @@
     <SidebarNotes />
   </Transition> -->
 
-  <!-- {#if (!drawerUseMobile.value && !isMobile) && drawerOpen.value && currentFolder !== null)}
+  <!-- {#if (!sidebarUseMobile.value && !isMobile) && sidebarOpen.value && currentFolder !== null)}
     <aside
       class="relative flex flex-col w-sidebar h-full py-sidebar-gap pb-safe-offset-sidebar-gap gap-sidebar-gap"
       transition:slide={{ duration: 400, x: 'var(--sidebar)' }}
@@ -149,13 +149,13 @@
     class={classNames(
       'relative flex flex-col w-sidebar h-full px-sidebar-gap py-sidebar-gap pb-safe-offset-sidebar-gap gap-sidebar-gap',
       'transition-[margin-left,opacity] ease-in-out duration-400',
-      !drawerUseMobile.value && !isMobile && drawerOpen.value ? 'ml-0 opacity-100' : '-ml-sidebar opacity-0',
+      !sidebarUseMobile.value && !isMobile && sidebarOpen.value ? 'ml-0 opacity-100' : '-ml-sidebar opacity-0',
     )}
   >
     <SidebarPrimary />
   </aside>
 
-  <!-- {#if (isMobile || drawerUseMobile.value) && drawerOpen.value}
+  <!-- {#if (isMobile || sidebarUseMobile.value) && sidebarOpen.value}
     <aside
       class="relative flex flex-wrap gap-sidebar-gap [@media(display-mode:window-controls-overlay)]:mt-titlebar-area-height"
     >
@@ -168,12 +168,12 @@
   <div
     class={classNames(
       'relative flex-1 min-w-full sm:min-w-[initial] transition-[margin] duration-400',
-      drawerOpen.value && (!isMobile && !drawerUseMobile.value) ? 'ml-0 m-sidebar-gap' : '',
+      sidebarOpen.value && (!isMobile && !sidebarUseMobile.value) ? 'ml-0 m-sidebar-gap' : '',
     )}
   >
     <Card
       class="flex flex-col h-full overflow-hidden"
-      fullscreen={!drawerOpen.value || isMobile || drawerUseMobile.value}
+      fullscreen={!sidebarOpen.value || isMobile || sidebarUseMobile.value}
     >
       {@render children()}
     </Card>
