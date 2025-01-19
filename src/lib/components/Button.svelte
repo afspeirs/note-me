@@ -22,16 +22,6 @@
     base: 'bg-gray-200 hover:bg-gray-300 dark:bg-neutral-700/60 dark:hover:bg-neutral-700',
   };
 
-  type ButtonProps = {
-    children: Snippet;
-    class?: string;
-    icon?: typeof IconType;
-    iconOnly?: boolean;
-    invert?: boolean;
-    onclick: () => void;
-    text: string;
-  };
-
   interface BaseProps {
     active?: boolean,
     children: Snippet,
@@ -99,7 +89,7 @@
     {/if}
 
     <span class={classNames(iconOnly ? '' : 'truncate', iconOnly && Icon ? 'sr-only' : '')}>
-      {children}
+      {@render children?.()}
     </span>
 
     {#if secondaryAction}
@@ -126,7 +116,7 @@
     {/if}
 
     <span class={classNames(iconOnly ? '' : 'truncate', iconOnly && Icon ? 'sr-only' : '')}>
-      {children}
+      {@render children?.()}
     </span>
 
     {#if secondaryAction}
