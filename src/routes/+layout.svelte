@@ -1,9 +1,10 @@
 <script lang="ts">
   import Card from '$lib/components/Card.svelte';
-  import Toaster from '$lib/components/Toaster.svelte';
   import SidebarPrimary from '$lib/components/SidebarPrimary.svelte';
-  import { classNames } from '$lib/utils/classNames';
+  import Toaster from '$lib/components/Toaster.svelte';
+  import { restoreFolder } from '$lib/context/file-system.svelte';
   import { sidebarOpen, sidebarUseMobile } from '$lib/context/navigation.svelte';
+  import { classNames } from '$lib/utils/classNames';
   import '$lib/utils/registerServiceWorker';
   import '$lib/utils/webmanifest-apple';
   import '../app.css';
@@ -21,6 +22,8 @@
   //   sidebarUseMobile: sidebarUseMobile.value,
   //   sidebarOpen: sidebarOpen.value,
   // });
+
+  restoreFolder();
 
   let { children } = $props();
 </script>

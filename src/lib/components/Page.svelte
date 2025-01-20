@@ -34,7 +34,7 @@
       iconOnly
       onclick={toggleSidebarOpen}
     >
-      {`${open ? 'Close' : 'Open'} Sidebar`}
+      {`${sidebarOpen.value ? 'Close' : 'Open'} Sidebar`}
     </Button>
 
 
