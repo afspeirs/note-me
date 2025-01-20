@@ -8,8 +8,8 @@
   import '$lib/utils/webmanifest-apple';
   import '../app.css';
 
-  let clientWidth = $state(null);
-  let isMobile = $derived(clientWidth < 1024);
+  let clientWidth = $state<number | null>(null);
+  let isMobile = $derived(clientWidth && clientWidth < 1024);
 
   $effect(() => {
     if (isMobile || sidebarUseMobile.value) sidebarOpen.value = false;

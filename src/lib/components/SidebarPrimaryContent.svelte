@@ -5,7 +5,7 @@
 
 <Card
   as="nav"
-  className="relative flex flex-col flex-1 overflow-hidden"
+  class="relative flex flex-col flex-1 overflow-hidden"
   aria-label="sidebar folders"
 >
   <CardHeader title="Folders">
