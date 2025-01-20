@@ -1,11 +1,11 @@
 <script lang="ts">
   import { openDB } from 'idb';
 
-  type FileEntry = { name: string; handle: FileSystemFileHandle };
+  import { content, type ContentEntry, type ContentFolderEntry } from '$lib/context/content.svelte';
 
-  let folderHandle: FileSystemDirectoryHandle | null = $state(null);
-  let files: FileEntry[] = $state([]);
   let fileContent: string | null = $state(null);
+
+  $inspect(content.folder);
 
   const DB_NAME = 'file-system-db';
   const STORE_NAME = 'handles';
@@ -25,45 +25,53 @@
 
   async function loadHandle(): Promise<FileSystemDirectoryHandle | null> {
     const db = await initDB();
-    return (await db.get(STORE_NAME, 'folderHandle')) || null;
+    return await db.get(STORE_NAME, 'folderHandle') || null;
   }
 
   async function selectFolder() {
     try {
-      folderHandle = await window.showDirectoryPicker();
-      await saveHandle(folderHandle);
+      content.folderHandle = await window.showDirectoryPicker();
+      await saveHandle(content.folderHandle);
 
-      files = [];
-      await readDirectory(folderHandle);
-    } catch (err) {
-      console.error('Error accessing folder:', err);
+      content.folder = await readDirectory(content.folderHandle);
+    } catch (error) {
+      console.error('Error accessing folder:', error); // eslint-disable-line no-console
     }
   }
 
   async function refreshFolder() {
-    if (folderHandle) {
-      files = [];
-      await readDirectory(folderHandle);
+    if (content.folderHandle) {
+      content.folder = await readDirectory(content.folderHandle);
     }
   }
 
   async function restoreFolder() {
-    folderHandle = await loadHandle();
-    if (folderHandle) {
-      files = [];
-      await readDirectory(folderHandle);
+    content.folderHandle = await loadHandle();
+    if (content.folderHandle) {
+      content.folder = await readDirectory(content.folderHandle);
     }
   }
 
-  async function readDirectory(directoryHandle: FileSystemDirectoryHandle, path = '') {
-    if (path.startsWith('.')) return;
+  async function readDirectory(directoryHandle: FileSystemDirectoryHandle): Promise<ContentFolderEntry> {
+    const children: ContentEntry[] = [];
+
     for await (const entry of directoryHandle.values()) {
-      if (entry.kind === 'file') {
-        files.push({ name: `${path}${entry.name}`, handle: entry });
-      } else if (entry.kind === 'directory') {
-        await readDirectory(entry, `${path}${entry.name}/`);
+      if (entry.name.startsWith('.')) continue;
+      if (entry.kind === 'directory') {
+        const subFolder = await readDirectory(entry);
+        children.push(subFolder);
+      } else if (entry.kind === 'file') {
+        children.push({ name: entry.name, handle: entry, kind: 'file' });
       }
     }
+
+    children.sort((a, b) => a.name.localeCompare(b.name));
+
+    return {
+      name: directoryHandle.name,
+      kind: 'directory',
+      children,
+    };
   }
 
   async function readFile(fileHandle: FileSystemFileHandle) {
@@ -71,12 +79,11 @@
       const file = await fileHandle.getFile();
       const text = await file.text();
       fileContent = text;
-    } catch (err) {
-      console.error('Error reading file:', err);
+    } catch (error) {
+      console.error('Error reading file:', error); // eslint-disable-line no-console
     }
   }
 
-  // Automatically attempt to restore the folder handle on component mount
   restoreFolder();
 </script>
 
@@ -100,20 +107,65 @@
 
 <div>
   <button onclick={selectFolder}>Select Folder</button>
-  <button onclick={refreshFolder} disabled={!folderHandle}>Refresh Folder</button>
+  <button onclick={refreshFolder} disabled={!content.folderHandle}>Refresh Folder</button>
 
-  {#if files.length > 0}
+  {#if content.folder}
     <ul class="file-list">
-      {#each files as { name, handle }}
-        <li>
-          <button onclick={() => readFile(handle)}>
-            {name}
-          </button>
-        </li>
-      {/each}
+      <li>
+        <strong>{content.folder.name}</strong>
+        <ul>
+          {#each content.folder.children as child}
+            {#if child.kind === 'file'}
+              <li>
+                <button onclick={() => readFile(child.handle)}>
+                  {child.name}
+                </button>
+              </li>
+            {:else if child.kind === 'directory'}
+              <li>
+                <div>
+                  <strong>{child.name}</strong>
+                  <ul>
+                    {#each child.children as subChild}
+                      {#if subChild.kind === 'file'}
+                        <li>
+                          <button onclick={() => readFile(subChild.handle)}>
+                            {subChild.name}
+                          </button>
+                        </li>
+                      {:else if subChild.kind === 'directory'}
+                        <li>
+                          <div>
+                            <strong>{subChild.name}</strong>
+                            {#if subChild.children.length > 0}
+                              <ul>
+                                {#each subChild.children as subSubChild}
+                                  <li>
+                                    {#if subSubChild.kind === 'file'}
+                                      <button onclick={() => readFile(subSubChild.handle)}>
+                                        {subSubChild.name}
+                                      </button>
+                                    {:else}
+                                      <strong>{subSubChild.name}</strong>
+                                    {/if}
+                                  </li>
+                                {/each}
+                              </ul>
+                            {/if}
+                          </div>
+                        </li>
+                      {/if}
+                    {/each}
+                  </ul>
+                </div>
+              </li>
+            {/if}
+          {/each}
+        </ul>
+      </li>
     </ul>
   {:else}
-    <p>No files selected</p>
+    <p>No folders selected</p>
   {/if}
 
   {#if fileContent}
