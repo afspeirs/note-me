@@ -1,23 +1,23 @@
 import { openDB } from 'idb';
 
-export type ContentFileEntry = {
+export type FileSystemFileEntry = {
   handle: FileSystemFileHandle;
   kind: 'file';
   name: string;
 };
-export type ContentFolderEntry = {
-  children: ContentEntry[];
+export type FileSystemFolderEntry = {
+  children: FileSystemEntry[];
   kind: 'directory';
   name: string;
 };
-export type ContentEntry = ContentFileEntry | ContentFolderEntry;
+export type FileSystemEntry = FileSystemFileEntry | FileSystemFolderEntry;
 
-type Content = {
+type FileSystem = {
   folderHandle: FileSystemDirectoryHandle | null;
-  folder: ContentFolderEntry | null;
+  folder: FileSystemFolderEntry | null;
 };
 
-export const content: Content = $state({
+export const fileSystem: FileSystem = $state({
   folderHandle: null,
   folder: null,
 });
@@ -45,30 +45,30 @@ async function loadHandle(): Promise<FileSystemDirectoryHandle | null> {
 
 export async function selectFolder() {
   try {
-    content.folderHandle = await window.showDirectoryPicker();
-    await saveHandle(content.folderHandle);
+    fileSystem.folderHandle = await window.showDirectoryPicker();
+    await saveHandle(fileSystem.folderHandle);
 
-    content.folder = await readDirectory(content.folderHandle);
+    fileSystem.folder = await readDirectory(fileSystem.folderHandle);
   } catch (error) {
     console.error('Error accessing folder:', error); // eslint-disable-line no-console
   }
 }
 
 export async function refreshFolder() {
-  if (content.folderHandle) {
-    content.folder = await readDirectory(content.folderHandle);
+  if (fileSystem.folderHandle) {
+    fileSystem.folder = await readDirectory(fileSystem.folderHandle);
   }
 }
 
 export async function restoreFolder() {
-  content.folderHandle = await loadHandle();
-  if (content.folderHandle) {
-    content.folder = await readDirectory(content.folderHandle);
+  fileSystem.folderHandle = await loadHandle();
+  if (fileSystem.folderHandle) {
+    fileSystem.folder = await readDirectory(fileSystem.folderHandle);
   }
 }
 
-async function readDirectory(directoryHandle: FileSystemDirectoryHandle): Promise<ContentFolderEntry> {
-  const children: ContentEntry[] = [];
+async function readDirectory(directoryHandle: FileSystemDirectoryHandle): Promise<FileSystemFolderEntry> {
+  const children: FileSystemEntry[] = [];
 
   for await (const entry of directoryHandle.values()) {
     if (entry.name.startsWith('.')) continue;
@@ -80,12 +80,10 @@ async function readDirectory(directoryHandle: FileSystemDirectoryHandle): Promis
     }
   }
 
-  children.sort((a, b) => a.name.localeCompare(b.name));
-
   return {
     name: directoryHandle.name,
     kind: 'directory',
-    children,
+    children: children.sort((a, b) => a.name.localeCompare(b.name)),
   };
 }
 

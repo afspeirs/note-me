@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { content, refreshFolder, restoreFolder, selectFolder } from '$lib/context/content.svelte';
+  import { fileSystem, refreshFolder, restoreFolder, selectFolder } from '$lib/context/file-system.svelte';
 
-  $inspect(content.folder);
+  $inspect(fileSystem.folder);
 
   restoreFolder();
 </script>
@@ -14,14 +14,14 @@
 
 <div>
   <button onclick={selectFolder}>Select Folder</button>
-  <button onclick={refreshFolder} disabled={!content.folderHandle}>Refresh Folder</button>
+  <button onclick={refreshFolder} disabled={!fileSystem.folderHandle}>Refresh Folder</button>
 
-  {#if content.folder}
+  {#if fileSystem.folder}
     <ul class="file-list">
       <li>
-        <strong>{content.folder.name}</strong>
+        <strong>{fileSystem.folder.name}</strong>
         <ul>
-          {#each content.folder.children as child}
+          {#each fileSystem.folder.children as child}
             {#if child.kind === 'file'}
               <li>
                 <button>
