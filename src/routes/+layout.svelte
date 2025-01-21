@@ -39,7 +39,7 @@
 
 <svelte:head>
   <title>NoteMe</title>
-  <!-- <meta name="theme-color" content={theme === 'light' ? '#ee6e00' : '#000000'} /> -->
+  <meta name="theme-color" content={$themeSystem === 'light' ? '#ee6e00' : '#000000'} />
 </svelte:head>
 
 <div
