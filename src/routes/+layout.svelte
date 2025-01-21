@@ -4,10 +4,19 @@
   import Toaster from '$lib/components/Toaster.svelte';
   import { restoreFolder } from '$lib/context/file-system.svelte';
   import { sidebarOpen, sidebarUseMobile } from '$lib/context/navigation.svelte';
+  import { themeSystem } from '$lib/context/theme.svelte';
   import { classNames } from '$lib/utils/classNames';
   import '$lib/utils/registerServiceWorker';
   import '$lib/utils/webmanifest-apple';
   import '../app.css';
+
+  themeSystem.subscribe((theme) => {
+    if (theme === 'dark') {
+      document.body.classList.add('dark');
+    } else {
+      document.body.classList.remove('dark');
+    }
+  });
 
   let clientWidth = $state<number | null>(null);
   let isMobile = $derived(clientWidth && clientWidth < 1024);
@@ -34,7 +43,7 @@
 </svelte:head>
 
 <div
-  class="fixed inset-0 px-safe flex overflow-hidden mt-titlebar-area-height bg-primary dark:bg-black"
+  class="fixed inset-0 px-safe flex overflow-hidden pt-titlebar-area-height bg-primary dark:bg-black"
   bind:clientWidth={clientWidth}
 >
   <!-- <TopBar /> -->
