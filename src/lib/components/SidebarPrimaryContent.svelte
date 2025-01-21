@@ -1,9 +1,11 @@
 <script lang="ts">
+  import { FileIcon, FolderIcon, FolderOpenIcon, RefreshCwIcon } from 'lucide-svelte';
+
+  import Button from '$lib/components/Button.svelte';
   import Card from '$lib/components/Card.svelte';
   import CardHeader from '$lib/components/CardHeader.svelte';
   import { fileSystem, refreshFolder, selectFolder } from '$lib/context/file-system.svelte';
-  import Button from '$lib/components/Button.svelte';
-  import { RefreshCwIcon } from 'lucide-svelte';
+  import { currentFolder } from '$lib/context/navigation.svelte';
 
   let isFileSystemRefreshing = $state(false);
 </script>
@@ -16,7 +18,7 @@
   <CardHeader title={fileSystem.folder?.name || 'No folder selected'}>
     <!-- {#if !isMobile}
       <Button
-        className="hidden sm:block"
+        class="hidden sm:block"
         icon={sidebarUseMobile ? PinIcon : PinOffIcon}
         iconOnly
         onclick={() => sidebarUseMobile.toggle()}
@@ -44,49 +46,55 @@
     {/if}
   </CardHeader>
 
-  <div class="overflow-auto px-2">
+  <div class="overflow-auto px-card-gap">
     {#if fileSystem.folder}
       <ul>
         {#each fileSystem.folder.children as child}
           {#if child.kind === 'file'}
             <li>
-              <button>
+              <Button
+                icon={FileIcon}
+                onclick={() => console.log(child.name)}
+              >
                 {child.name}
-              </button>
+              </Button>
             </li>
           {:else if child.kind === 'directory'}
             <li>
-              <div>
-                <strong>{child.name}</strong>
-                <ul>
-                  {#each child.children as subChild}
-                    {#if subChild.kind === 'file'}
-                      <li>
-                        {subChild.name}
-                      </li>
-                    {:else if subChild.kind === 'directory'}
-                      <li>
-                        <div>
-                          <strong>{subChild.name}</strong>
-                          {#if subChild.children.length > 0}
-                            <ul>
-                              {#each subChild.children as subSubChild}
-                                <li>
-                                  {#if subSubChild.kind === 'file'}
-                                    {subSubChild.name}
-                                  {:else}
-                                    <strong>{subSubChild.name}</strong>
-                                  {/if}
-                                </li>
-                              {/each}
-                            </ul>
-                          {/if}
-                        </div>
-                      </li>
-                    {/if}
-                  {/each}
-                </ul>
-              </div>
+              <Button
+                icon={currentFolder.value === child.name ? FolderOpenIcon : FolderIcon}
+                onclick={() => currentFolder.set(child.name)}
+              >
+                {child.name}
+              </Button>
+              <!-- <ul>
+                {#each child.children as subChild}
+                  {#if subChild.kind === 'file'}
+                    <li>
+                      {subChild.name}
+                    </li>
+                  {:else if subChild.kind === 'directory'}
+                    <li>
+                      <div>
+                        <strong>{subChild.name}</strong>
+                        {#if subChild.children.length > 0}
+                          <ul>
+                            {#each subChild.children as subSubChild}
+                              <li>
+                                {#if subSubChild.kind === 'file'}
+                                  {subSubChild.name}
+                                {:else}
+                                  <strong>{subSubChild.name}</strong>
+                                {/if}
+                              </li>
+                            {/each}
+                          </ul>
+                        {/if}
+                      </div>
+                    </li>
+                  {/if}
+                {/each}
+              </ul> -->
             </li>
           {/if}
         {/each}

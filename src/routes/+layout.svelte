@@ -49,7 +49,7 @@
   <!-- <TopBar /> -->
 
   <!-- <Transition.Root show={(isMobile || sidebarUseMobile.value) && sidebarOpen.value} as={Fragment}>
-    <Dialog className="relative" onClose={sidebarOpen.set(false)}>
+    <Dialog class="relative" onClose={sidebarOpen.set(false)}>
       <Transition.Child
         as={Fragment}
         enter="transition-opacity ease-in-out duration-400"
@@ -59,10 +59,10 @@
         leaveFrom="opacity-100"
         leaveTo="opacity-0"
       >
-        <div className="fixed inset-0 bg-primary/70 dark:bg-black/70 backdrop-blur-sm" />
+        <div class="fixed inset-0 bg-primary/70 dark:bg-black/70 backdrop-blur-sm" />
       </Transition.Child>
 
-      <div className="fixed inset-0 flex">
+      <div class="fixed inset-0 flex">
         <Transition.Child
           as={Fragment}
           enter="transition ease-in-out duration-400 transform"
@@ -72,13 +72,13 @@
           leaveFrom="translate-x-0"
           leaveTo="-translate-x-full"
         >
-          <Dialog.Panel className="relative flex flex-wrap gap-sidebar-gap [@media(display-mode:window-controls-overlay)]:mt-titlebar-area-height">
-            <div className="relative flex flex-col w-sidebar h-full py-sidebar-gap pb-safe-offset-sidebar-gap gap-sidebar-gap">
+          <Dialog.Panel class="relative flex flex-wrap gap-sidebar-gap [@media(display-mode:window-controls-overlay)]:mt-titlebar-area-height">
+            <div class="relative flex flex-col w-sidebar h-full py-sidebar-gap pb-safe-offset-sidebar-gap gap-sidebar-gap">
               <Sidebar />
             </div>
 
             <Transition.Root
-              className="contents"
+              class="contents"
               show={(isMobile || sidebarUseMobile.value) && sidebarOpen.value && currentFolder !== null}
             >
               <Transition.Child
@@ -92,10 +92,10 @@
               >
                 <button
                   type="button"
-                  className="sm:hidden fixed inset-0 bg-primary/70 dark:bg-black/70 backdrop-blur-sm"
+                  class="sm:hidden fixed inset-0 bg-primary/70 dark:bg-black/70 backdrop-blur-sm"
                   onclick={() => setCurrentFolder(null)}
                 >
-                  <span className="sr-only">Close Secondary Panel</span>
+                  <span class="sr-only">Close Secondary Panel</span>
                 </button>
               </Transition.Child>
               <Transition.Child
@@ -106,7 +106,7 @@
                 leave="transition-[margin-left,opacity] ease-in-out duration-400"
                 leaveFrom="ml-0 opacity-100"
                 leaveTo="-ml-sidebar opacity-0"
-                className="relative max-sm:absolute max-sm:left-[calc(100vw-theme(spacing[sidebar]))] flex flex-col w-sidebar h-full py-sidebar-gap pb-safe-offset-sidebar-gap gap-sidebar-gap"
+                class="relative max-sm:absolute max-sm:left-[calc(100vw-theme(spacing[sidebar]))] flex flex-col w-sidebar h-full py-sidebar-gap pb-safe-offset-sidebar-gap gap-sidebar-gap"
               >
                 <SidebarNotes />
               </Transition.Child>
@@ -128,7 +128,7 @@
     leave="transition-[margin-left,opacity] ease-in-out duration-400"
     leaveFrom="ml-0 opacity-100"
     leaveTo="-ml-sidebar opacity-0"
-    className="relative flex flex-col w-sidebar h-full pl-sidebar-gap py-sidebar-gap pb-safe-offset-sidebar-gap gap-sidebar-gap"
+    class="relative flex flex-col w-sidebar h-full pl-sidebar-gap py-sidebar-gap pb-safe-offset-sidebar-gap gap-sidebar-gap"
   >
     <Sidebar />
   </Transition>
@@ -143,7 +143,7 @@
     leave="transition-[margin-left,opacity] ease-in-out duration-400"
     leaveFrom="ml-0 opacity-100"
     leaveTo="-ml-sidebar opacity-0"
-    className="relative flex flex-col w-sidebar h-full py-sidebar-gap pb-safe-offset-sidebar-gap gap-sidebar-gap"
+    class="relative flex flex-col w-sidebar h-full py-sidebar-gap pb-safe-offset-sidebar-gap gap-sidebar-gap"
   >
     <SidebarNotes />
   </Transition> -->
