@@ -113,6 +113,19 @@ export async function readFile(fileHandle: FileSystemFileHandle) {
     return text;
   } catch (error) {
     console.error('Error reading file:', error); // eslint-disable-line no-console
-    throw new Error('Error reading file');
+    throw error;
+  }
+}
+
+export async function writeFile(fileHandle: FileSystemFileHandle, content: string) {
+  try {
+    const writable = await fileHandle.createWritable();
+    await writable.write(content);
+    await writable.close();
+
+    await refreshFolder();
+  } catch (error) {
+    console.error('Error writing to file:', error); // eslint-disable-line no-console
+    throw error;
   }
 }
