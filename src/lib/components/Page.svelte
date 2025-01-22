@@ -11,8 +11,8 @@
 
   type PageProps = {
     children: Snippet,
-    iconsLeft?: Snippet | null,
-    iconsRight?: Snippet | null,
+    iconsLeft?: Snippet,
+    iconsRight?: Snippet,
     title?: string | null,
     titleHide?: boolean | null,
   };
@@ -42,11 +42,11 @@
     <div class="ml-2 self-center font-bold text-xl truncate select-none">{title}</div>
   {/if}
 
-  {iconsLeft}
+  {@render iconsLeft?.()}
 
   <div class="ml-auto"></div>
 
-  {iconsRight}
+  {@render iconsRight?.()}
 </header>
 
 <main class="flex-1 overflow-auto">

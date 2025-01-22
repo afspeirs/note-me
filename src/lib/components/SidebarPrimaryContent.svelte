@@ -50,11 +50,13 @@
     {#if fileSystem.folder}
       <ul>
         {#each fileSystem.folder.children as child (child.id)}
+          {@const active = currentFolderName.value === child.name}
           {#if child.kind === 'file'}
             <li>
               <Button
                 icon={FileIcon}
                 href="/note/{child.id}"
+                {active}
               >
                 {child.name}
               </Button>
@@ -64,6 +66,7 @@
               <Button
                 icon={currentFolderName.value === child.name ? FolderOpenIcon : FolderIcon}
                 onclick={() => currentFolderName.set(child.name)}
+                {active}
               >
                 {child.name}
               </Button>

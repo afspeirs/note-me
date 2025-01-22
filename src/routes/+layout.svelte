@@ -13,18 +13,18 @@
 
   themeSystem.subscribe((theme) => {
     if (theme === 'dark') {
-      document.body.classList.add('dark');
+      document.body.classList.add('dark', 'bg-black');
     } else {
-      document.body.classList.remove('dark');
+      document.body.classList.remove('dark', 'bg-black');
     }
   });
 
   let clientWidth = $state<number | null>(null);
   let isMobile = $derived(clientWidth && clientWidth < 1024);
 
-  $effect(() => {
-    if (isMobile || sidebarUseMobile.value) sidebarOpen.value = false;
-  });
+  // $effect(() => {
+  //   if (isMobile || sidebarUseMobile.value) sidebarOpen.value = false;
+  // });
 
   // $inspect({
   //   clientWidth,
@@ -151,7 +151,7 @@
 
   <aside
     class={classNames(
-      'relative flex flex-col w-sidebar h-full px-sidebar-gap py-sidebar-gap pb-safe-offset-sidebar-gap gap-sidebar-gap',
+      'relative flex flex-col min-w-sidebar w-sidebar h-full px-sidebar-gap py-sidebar-gap pb-safe-offset-sidebar-gap gap-sidebar-gap',
       'transition-[margin-left,opacity] ease-in-out duration-400',
       !sidebarUseMobile.value && !isMobile && sidebarOpen.value ? 'ml-0 opacity-100' : '-ml-sidebar opacity-0',
     )}
@@ -161,7 +161,7 @@
 
   <aside
   class={classNames(
-    'relative flex flex-col w-sidebar h-full pr-sidebar-gap py-sidebar-gap pb-safe-offset-sidebar-gap gap-sidebar-gap',
+    'relative flex flex-col min-w-sidebar w-sidebar h-full pr-sidebar-gap py-sidebar-gap pb-safe-offset-sidebar-gap gap-sidebar-gap',
     'transition-[margin-left,opacity] ease-in-out duration-400 -z-10',
     !sidebarUseMobile.value && !isMobile && sidebarOpen.value && currentFolderName.value !== null ? 'ml-0 opacity-100' : '-ml-sidebar opacity-0',
   )}
@@ -173,7 +173,7 @@
     <aside
       class="relative flex flex-wrap gap-sidebar-gap [@media(display-mode:window-controls-overlay)]:mt-titlebar-area-height"
     >
-      <div class="relative flex flex-col w-sidebar h-full py-sidebar-gap pb-safe-offset-sidebar-gap gap-sidebar-gap">
+      <div class="relative flex flex-col min-w-sidebar w-sidebar h-full py-sidebar-gap pb-safe-offset-sidebar-gap gap-sidebar-gap">
         <Sidebar />
       </div>
     </aside>
