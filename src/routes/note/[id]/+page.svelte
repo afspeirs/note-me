@@ -34,21 +34,36 @@
     }
   }
 
+  async function toggleEdit() {
+    if (edit) {
+      await saveFile();
+    }
+    edit = !edit;
+  }
+
   $effect(() => {
     setText();
   });
 </script>
 
+<svelte:head>
+  <title>{file?.name} | NoteMe</title>
+</svelte:head>
+
+<svelte:window
+  on:keydown={(event) => {
+    if ((event.ctrlKey || event.metaKey) && event.key === 's') {
+      event.preventDefault();
+      toggleEdit();
+    }
+  }}
+/>
+
 {#snippet iconsRight()}
   <Button
     icon={edit ? SaveIcon : PencilIcon}
     iconOnly
-    onclick={async () => {
-      if (edit) {
-        await saveFile();
-      }
-      edit = !edit;
-    }}
+    onclick={toggleEdit}
   >
     {edit ? 'Save' : 'Edit'} Note
   </Button>

@@ -43,6 +43,15 @@
   <meta name="theme-color" content={$themeSystem === 'light' ? '#ee6e00' : '#000000'} />
 </svelte:head>
 
+<svelte:window
+  on:keydown={(event) => {
+    if ((event.ctrlKey || event.metaKey) && event.key === 'b') {
+      event.preventDefault();
+      sidebarOpen.set(!sidebarOpen.value);
+    }
+  }}
+/>
+
 <div
   class="fixed inset-0 px-safe flex overflow-hidden pt-titlebar-area-height bg-primary dark:bg-black"
   bind:clientWidth={clientWidth}
