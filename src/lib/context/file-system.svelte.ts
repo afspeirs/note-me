@@ -1,15 +1,22 @@
 import { openDB } from 'idb';
 
-export type FileSystemFileEntry = {
+type FileSystemBase = {
+  id: string;
+  name: string;
+};
+
+export type FileSystemFileEntry = FileSystemBase & {
   handle: FileSystemFileHandle;
   kind: 'file';
-  name: string;
+  parent: FileSystemDirectoryHandle;
 };
-export type FileSystemFolderEntry = {
+
+export type FileSystemFolderEntry = FileSystemBase & {
   children: FileSystemEntry[];
   kind: 'directory';
-  name: string;
+  parent: FileSystemDirectoryHandle | null;
 };
+
 export type FileSystemEntry = FileSystemFileEntry | FileSystemFolderEntry;
 
 type FileSystem = {
@@ -24,6 +31,10 @@ export const fileSystem: FileSystem = $state({
 
 const DB_NAME = 'note-me-file-system-db';
 const STORE_NAME = 'handles';
+
+function encodeFileSystemId(text: string, parent?: string) {
+  return window.encodeURIComponent(`${parent || ''}_${text}`.replaceAll(' ', '-').toLowerCase());
+}
 
 async function initDB() {
   return openDB(DB_NAME, 1, {
@@ -67,23 +78,31 @@ export async function restoreFolder() {
   }
 }
 
-async function readDirectory(directoryHandle: FileSystemDirectoryHandle): Promise<FileSystemFolderEntry> {
+async function readDirectory(directoryHandle: FileSystemDirectoryHandle, parentHandle: FileSystemDirectoryHandle | null = null): Promise<FileSystemFolderEntry> {
   const children: FileSystemEntry[] = [];
 
   for await (const entry of directoryHandle.values()) {
     if (entry.name.startsWith('.')) continue;
     if (entry.kind === 'directory') {
-      const subFolder = await readDirectory(entry);
+      const subFolder = await readDirectory(entry, directoryHandle);
       children.push(subFolder);
     } else if (entry.kind === 'file') {
-      children.push({ name: entry.name, handle: entry, kind: 'file' });
+      children.push({
+        id: encodeFileSystemId(entry.name, directoryHandle?.name),
+        name: entry.name,
+        handle: entry,
+        kind: 'file',
+        parent: directoryHandle,
+      });
     }
   }
 
   return {
+    id: encodeFileSystemId(directoryHandle.name, parentHandle?.name),
+    children: children.sort((a, b) => a.name.localeCompare(b.name)),
     name: directoryHandle.name,
     kind: 'directory',
-    children: children.sort((a, b) => a.name.localeCompare(b.name)),
+    parent: parentHandle,
   };
 }
 

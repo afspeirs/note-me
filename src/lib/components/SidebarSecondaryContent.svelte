@@ -31,7 +31,7 @@
             <li>
               <Button
                 icon={FileIcon}
-                onclick={() => console.log(child.name)}
+                href="/note/{child.id}"
               >
                 {child.name}
               </Button>

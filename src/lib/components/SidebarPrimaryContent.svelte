@@ -49,12 +49,12 @@
   <div class="overflow-auto px-card-gap">
     {#if fileSystem.folder}
       <ul>
-        {#each fileSystem.folder.children as child}
+        {#each fileSystem.folder.children as child (child.id)}
           {#if child.kind === 'file'}
             <li>
               <Button
                 icon={FileIcon}
-                onclick={() => console.log(child.name)}
+                href="/note/{child.id}"
               >
                 {child.name}
               </Button>
@@ -68,7 +68,7 @@
                 {child.name}
               </Button>
               <!-- <ul>
-                {#each child.children as subChild}
+                {#each child.children as subChild (subChild.id)}
                   {#if subChild.kind === 'file'}
                     <li>
                       {subChild.name}
@@ -79,7 +79,7 @@
                         <strong>{subChild.name}</strong>
                         {#if subChild.children.length > 0}
                           <ul>
-                            {#each subChild.children as subSubChild}
+                            {#each subChild.children as subSubChild (subSubChild.id)}
                               <li>
                                 {#if subSubChild.kind === 'file'}
                                   {subSubChild.name}
