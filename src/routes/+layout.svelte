@@ -1,9 +1,10 @@
 <script lang="ts">
   import Card from '$lib/components/Card.svelte';
   import SidebarPrimary from '$lib/components/SidebarPrimary.svelte';
+  import SidebarSecondary from '$lib/components/SidebarSecondary.svelte';
   import Toaster from '$lib/components/Toaster.svelte';
   import { restoreFolder } from '$lib/context/file-system.svelte';
-  import { sidebarOpen, sidebarUseMobile } from '$lib/context/navigation.svelte';
+  import { currentFolderName, sidebarOpen, sidebarUseMobile } from '$lib/context/navigation.svelte';
   import { themeSystem } from '$lib/context/theme.svelte';
   import { classNames } from '$lib/utils/classNames';
   import '$lib/utils/registerServiceWorker';
@@ -128,7 +129,7 @@
     leave="transition-[margin-left,opacity] ease-in-out duration-400"
     leaveFrom="ml-0 opacity-100"
     leaveTo="-ml-sidebar opacity-0"
-    class="relative flex flex-col w-sidebar h-full pl-sidebar-gap py-sidebar-gap pb-safe-offset-sidebar-gap gap-sidebar-gap"
+    class="relative flex flex-col w-sidebar h-full py-sidebar-gap pb-safe-offset-sidebar-gap gap-sidebar-gap"
   >
     <Sidebar />
   </Transition>
@@ -148,15 +149,6 @@
     <SidebarNotes />
   </Transition> -->
 
-  <!-- {#if (!sidebarUseMobile.value && !isMobile) && sidebarOpen.value && currentFolder !== null)}
-    <aside
-      class="relative flex flex-col w-sidebar h-full py-sidebar-gap pb-safe-offset-sidebar-gap gap-sidebar-gap"
-      transition:slide={{ duration: 400, x: 'var(--sidebar)' }}
-    >
-      <SidebarSecondary />
-    </aside>
-  {/if} -->
-
   <aside
     class={classNames(
       'relative flex flex-col w-sidebar h-full px-sidebar-gap py-sidebar-gap pb-safe-offset-sidebar-gap gap-sidebar-gap',
@@ -166,6 +158,16 @@
   >
     <SidebarPrimary />
   </aside>
+
+  <aside
+  class={classNames(
+    'relative flex flex-col w-sidebar h-full pr-sidebar-gap py-sidebar-gap pb-safe-offset-sidebar-gap gap-sidebar-gap',
+    'transition-[margin-left,opacity] ease-in-out duration-400 -z-10',
+    !sidebarUseMobile.value && !isMobile && sidebarOpen.value && currentFolderName.value !== null ? 'ml-0 opacity-100' : '-ml-sidebar opacity-0',
+  )}
+>
+  <SidebarSecondary />
+</aside>
 
   <!-- {#if (isMobile || sidebarUseMobile.value) && sidebarOpen.value}
     <aside

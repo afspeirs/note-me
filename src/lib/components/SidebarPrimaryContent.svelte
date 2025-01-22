@@ -5,7 +5,7 @@
   import Card from '$lib/components/Card.svelte';
   import CardHeader from '$lib/components/CardHeader.svelte';
   import { fileSystem, refreshFolder, selectFolder } from '$lib/context/file-system.svelte';
-  import { currentFolder } from '$lib/context/navigation.svelte';
+  import { currentFolderName } from '$lib/context/navigation.svelte';
 
   let isFileSystemRefreshing = $state(false);
 </script>
@@ -62,8 +62,8 @@
           {:else if child.kind === 'directory'}
             <li>
               <Button
-                icon={currentFolder.value === child.name ? FolderOpenIcon : FolderIcon}
-                onclick={() => currentFolder.set(child.name)}
+                icon={currentFolderName.value === child.name ? FolderOpenIcon : FolderIcon}
+                onclick={() => currentFolderName.set(child.name)}
               >
                 {child.name}
               </Button>

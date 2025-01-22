@@ -1,6 +1,6 @@
 export const mobileWidth = 1024;
 
-export const currentFolder = $state({
+export const currentFolderName = $state({
   value: window.localStorage.getItem('note-me-current-folder') || null,
   set(value: string) {
     this.value = value;

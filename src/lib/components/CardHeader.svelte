@@ -6,7 +6,7 @@
   type CardHeaderProps = {
     children?: Snippet,
     onBack?: () => void,
-    title: string,
+    title?: string,
   };
 
   let {
@@ -25,9 +25,9 @@
 
   {#if onBack}
     <Button
-      Icon={XIcon}
+      icon={XIcon}
       iconOnly
-      onClick={onBack}
+      onclick={onBack}
     >
       {`Close "${title}"`}
     </Button>
