@@ -3,6 +3,7 @@
   import SidebarPrimary from '$lib/components/SidebarPrimary.svelte';
   import SidebarSecondary from '$lib/components/SidebarSecondary.svelte';
   import Toaster from '$lib/components/Toaster.svelte';
+  import TopBar from '$lib/components/TopBar.svelte';
   import { restoreFolder } from '$lib/context/file-system.svelte';
   import { currentFolderName, sidebarOpen, sidebarUseMobile } from '$lib/context/navigation.svelte';
   import { themeSystem } from '$lib/context/theme.svelte';
@@ -56,7 +57,7 @@
   class="fixed inset-0 px-safe flex overflow-hidden pt-titlebar-area-height bg-primary dark:bg-black"
   bind:clientWidth={clientWidth}
 >
-  <!-- <TopBar /> -->
+  <TopBar />
 
   <!-- <Transition.Root show={(isMobile || sidebarUseMobile.value) && sidebarOpen.value} as={Fragment}>
     <Dialog class="relative" onClose={sidebarOpen.set(false)}>

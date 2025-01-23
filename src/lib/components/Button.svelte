@@ -84,10 +84,10 @@
       style.base,
       className,
     )}
-    href={href}
+    {href}
     rel={target === '_blank' ? 'noreferrer' : undefined}
-    target={target}
-    onclick={onclick}
+    {target}
+    {onclick}
     {...restProps as HTMLAnchorAttributes}
   >
     {#if Icon}
@@ -114,8 +114,8 @@
       style.base,
       className,
     )}
-    disabled={disabled}
-    onclick={onclick}
+    {disabled}
+    {onclick}
     {...restProps as HTMLButtonAttributes}
   >
     {#if Icon}
