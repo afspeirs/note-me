@@ -1,38 +1,54 @@
-# sv
+# NoteMe
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+[![Netlify Status][netlify-status-sheild]][netlify-status-url]
+[![Github package.json version][package-version-shield]][github-url]
+[![LICENSE][license-shield]][license-url]
 
-## Creating a project
+Create and store markdown notes
 
-If you're seeing this, you've probably already done this step. Congrats!
+## Table of Contents
 
-```bash
-# create a new project in the current directory
-npx sv create
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+- [Available Scripts](#available-scripts)
+- [Acknowledgements](#acknowledgements)
+- [License](#license)
 
-# create a new project in my-app
-npx sv create my-app
-```
+## Getting Started
 
-## Developing
+### Prerequisites
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+This project uses Node and NPM.
+To install Node I would recommend using nvm for easy swapping of node versions.
 
-```bash
-npm run dev
+### Installation
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+1. Clone the repo
+2. Install the dependencies with `npm install`
+3. Create a `.env.local` file with the following variables:
 
-## Building
+    ```properties
+    GITHUB_TOKEN="INSERT_GITHUB_TOKEN"
+    ```
 
-To create a production version of your app:
+## Available Scripts
 
-```bash
-npm run build
-```
+> TODO
 
-You can preview the production build with `npm run preview`.
+## Acknowledgements
 
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+A special thanks to [Devisha Bijwe](https://www.linkedin.com/in/devishabijwe) for designing the logo.
+
+## License
+
+[ISC License](/LICENSE.txt) © Andrew Speirs
+
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+[netlify-status-sheild]: https://img.shields.io/netlify/5c3fcfd1-3410-451b-ae2c-82cd72888332?style=for-the-badge&color=ee6e00
+[netlify-status-url]: https://app.netlify.com/sites/noteme/deploys
+[license-shield]: https://img.shields.io/github/license/afspeirs/note-me?style=for-the-badge&color=ee6e00
+[license-url]: LICENSE.txt
+[package-version-shield]: https://img.shields.io/github/package-json/v/afspeirs/note-me?style=for-the-badge&color=ee6e00
+[github-url]: https://github.com/afspeirs/note-me
