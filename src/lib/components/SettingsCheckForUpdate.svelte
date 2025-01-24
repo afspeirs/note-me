@@ -27,7 +27,7 @@
 
 {#snippet secondaryAction()}
   {#if updateAvailable.value}
-    <span class="px-3 py-1.5 rounded-full bg-primary text-white">Update</span>
+    <span class="px-3 py-1.5 -my-1.5 rounded-full bg-primary text-white">Update</span>
   {:else}
     <div
       aria-busy={loading}

@@ -70,7 +70,7 @@
     iconOnly,
     onclick,
     secondaryAction,
-    target = '_self',
+    target,
     ...restProps
   }: ButtonProps = $props();
 </script>

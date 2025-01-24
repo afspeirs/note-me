@@ -1,14 +1,13 @@
 <script lang="ts">
   import { marked } from 'marked';
 
-  import { page } from '$app/state';
   import Button from '$lib/components/Button.svelte';
   import Page from '$lib/components/Page.svelte';
   import { fileSystem, readFile, writeFile } from '$lib/context/file-system.svelte';
   import { classNames } from '$lib/utils/classNames';
   import { PencilIcon, SaveIcon, Trash2Icon } from 'lucide-svelte';
 
-  const { id } = page.params;
+  let { data } = $props();
 
   const files = $derived(fileSystem.folder?.children.flatMap((child) => {
     if (child.kind === 'directory') {
@@ -16,8 +15,7 @@
     }
     return child;
   }));
-
-  const file = $derived(files?.find((file) => file.id === id));
+  const file = $derived(files?.find((file) => file.id === data.params.id));
   const fileContents = $derived(file?.kind === 'file' ? readFile(file?.handle) : '');
   let edit = $state(false);
   let text = $state('');
