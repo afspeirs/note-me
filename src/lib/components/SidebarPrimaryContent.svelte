@@ -1,6 +1,7 @@
 <script lang="ts">
   import { FileIcon, FolderIcon, FolderOpenIcon, RefreshCwIcon } from 'lucide-svelte';
 
+  import { page } from '$app/state';
   import Button from '$lib/components/Button.svelte';
   import Card from '$lib/components/Card.svelte';
   import CardHeader from '$lib/components/CardHeader.svelte';
@@ -56,7 +57,7 @@
               <Button
                 icon={FileIcon}
                 href="/note/{child.id}"
-                {active}
+                active={child.id === page.params.id}
               >
                 {child.name}
               </Button>
