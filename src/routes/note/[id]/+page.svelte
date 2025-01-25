@@ -15,7 +15,7 @@
     }
     return child;
   }));
-  const file = $derived(files?.find((file) => file.id === data.params.id));
+  const file = $derived(files?.find((file) => file.id === data.params?.id) || null);
   const fileContents = $derived(file?.kind === 'file' ? readFile(file?.handle) : '');
   let edit = $state(false);
   let text = $state('');
