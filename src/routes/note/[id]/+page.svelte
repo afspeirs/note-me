@@ -3,9 +3,10 @@
 
   import Button from '$lib/components/Button.svelte';
   import Page from '$lib/components/Page.svelte';
+  import Tooltip from '$lib/components/Tooltip.svelte';
   import { fileSystem, readFile, writeFile } from '$lib/context/file-system.svelte';
   import { classNames } from '$lib/utils/classNames';
-  import { PencilIcon, SaveIcon, Trash2Icon } from 'lucide-svelte';
+  import { PencilIcon, SaveIcon } from 'lucide-svelte';
 
   let { data } = $props();
 
@@ -58,20 +59,15 @@
 />
 
 {#snippet iconsRight()}
-  <Button
-    icon={edit ? SaveIcon : PencilIcon}
-    iconOnly
-    onclick={toggleEdit}
-  >
-    {edit ? 'Save' : 'Edit'} Note
-  </Button>
-  <Button
-    icon={Trash2Icon}
-    iconOnly
-    disabled
-  >
-    Delete Note
-  </Button>
+  <Tooltip content="{edit ? 'Save' : 'Edit'} Note">
+    <Button
+      icon={edit ? SaveIcon : PencilIcon}
+      iconOnly
+      onclick={toggleEdit}
+    >
+      {edit ? 'Save' : 'Edit'} Note
+    </Button>
+  </Tooltip>
 {/snippet}
 
 <Page

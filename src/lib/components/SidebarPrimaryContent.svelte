@@ -5,6 +5,7 @@
   import Button from '$lib/components/Button.svelte';
   import Card from '$lib/components/Card.svelte';
   import CardHeader from '$lib/components/CardHeader.svelte';
+  import Tooltip from '$lib/components/Tooltip.svelte';
   import { fileSystem, refreshFolder, selectFolder } from '$lib/context/file-system.svelte';
   import { currentFolderName } from '$lib/context/navigation.svelte';
 
@@ -28,22 +29,24 @@
       </Button>
     {/if} -->
     {#if fileSystem.folderHandle}
-      <Button
-        class={isFileSystemRefreshing ? 'animate-spin' : ''}
-        disabled={isFileSystemRefreshing}
-        icon={RefreshCwIcon}
-        iconOnly
-        onclick={() => {
-          refreshFolder();
+      <Tooltip content="Refresh Folder">
+        <Button
+          class={isFileSystemRefreshing ? 'animate-spin' : ''}
+          disabled={isFileSystemRefreshing}
+          icon={RefreshCwIcon}
+          iconOnly
+          onclick={() => {
+            refreshFolder();
 
-          isFileSystemRefreshing = true;
-          setTimeout(() => {
-            isFileSystemRefreshing = false;
-          }, 1000);
-        }}
-      >
-        Refresh Folder
-      </Button>
+            isFileSystemRefreshing = true;
+            setTimeout(() => {
+              isFileSystemRefreshing = false;
+            }, 1000);
+          }}
+        >
+          Refresh Folder
+        </Button>
+      </Tooltip>
     {/if}
   </CardHeader>
 

@@ -7,26 +7,31 @@
   import SettingsAppVersion from '$lib/components/SettingsAppVersion.svelte';
   import SettingsChangeTheme from '$lib/components/SettingsChangeTheme.svelte';
   import SettingsCheckForUpdate from '$lib/components/SettingsCheckForUpdate.svelte';
+  import Tooltip from '$lib/components/Tooltip.svelte';
 
 </script>
 
 {#snippet iconsRight()}
-  <!-- <Button
-    icon={AIcon}
-    iconOnly
-    href="https://speirs.dev"
-    target="_blank"
-  >
-    Visit speirs.dev
-  </Button> -->
-  <Button
-    icon={GithubIcon}
-    iconOnly
-    href="https://github.com/afspeirs/note-me"
-    target="_blank"
-  >
-    Visit github.com/afspeirs/note-me
-  </Button>
+  <!-- <Tooltip content="Visit speirs.dev">
+    <Button
+      icon={AIcon}
+      iconOnly
+      href="https://speirs.dev"
+      target="_blank"
+    >
+      Visit speirs.dev
+    </Button>
+  </Tooltip> -->
+  <Tooltip content="Visit github.com/afspeirs/note-me">
+    <Button
+      icon={GithubIcon}
+      iconOnly
+      href="https://github.com/afspeirs/note-me"
+      target="_blank"
+    >
+      Visit github.com/afspeirs/note-me
+    </Button>
+  </Tooltip>
 {/snippet}
 
 <Page

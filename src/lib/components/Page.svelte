@@ -3,6 +3,7 @@
   import type { Snippet } from 'svelte';
 
   import Button from '$lib/components/Button.svelte';
+  import Tooltip from '$lib/components/Tooltip.svelte';
   import { sidebarOpen } from '$lib/context/navigation.svelte';
 
   function toggleSidebarOpen() {
@@ -27,8 +28,7 @@
 </script>
 
 <header class="relative flex gap-card-gap p-card-gap">
-  <!-- <Tooltip content={`${open ? 'Close' : 'Open'} Sidebar`}>
-  </Tooltip> -->
+  <Tooltip content={`${sidebarOpen.value ? 'Close' : 'Open'} Sidebar`}>
     <Button
       icon={MenuIcon}
       iconOnly
@@ -36,7 +36,7 @@
     >
       {`${sidebarOpen.value ? 'Close' : 'Open'} Sidebar`}
     </Button>
-
+  </Tooltip>
 
   {#if !titleHide}
     <div class="ml-2 self-center font-bold text-xl truncate select-none">{title}</div>

@@ -2,6 +2,7 @@
   import { XIcon } from 'lucide-svelte';
   import type { Snippet } from 'svelte';
   import Button from '$lib/components/Button.svelte';
+  import Tooltip from '$lib/components/Tooltip.svelte';
 
   type CardHeaderProps = {
     children?: Snippet,
@@ -24,12 +25,14 @@
   {@render children?.()}
 
   {#if onBack}
-    <Button
-      icon={XIcon}
-      iconOnly
-      onclick={onBack}
-    >
-      {`Close "${title}"`}
-    </Button>
+    <Tooltip content={`Close "${title}"`}>
+      <Button
+        icon={XIcon}
+        iconOnly
+        onclick={onBack}
+      >
+        {`Close "${title}"`}
+      </Button>
+    </Tooltip>
   {/if}
 </div>
