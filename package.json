@@ -37,6 +37,7 @@
     "@types/wicg-file-system-access": "^2023.10.5",
     "@vite-pwa/sveltekit": "^0.6.7",
     "autoprefixer": "^10.4.20",
+    "bits-ui": "^0.22.0",
     "eslint": "^9.18.0",
     "eslint-plugin-svelte": "^2.46.1",
     "globals": "^15.14.0",
