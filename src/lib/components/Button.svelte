@@ -1,9 +1,9 @@
 <script lang="ts" module>
   export const style = {
     base: 'peer/button rounded-lg select-none disabled:opacity-40 disabled:pointer-events-none focus-visible ring-inset',
-    iconOnly: 'block p-3 sm:p-2',
+    iconOnly: 'block p-2',
     fullWidth: 'min-w-0 w-full',
-    withText: 'flex items-center gap-3 p-3 sm:py-2',
+    withText: 'flex items-center gap-3 p-3 py-2',
   };
 
   export const colours = {
