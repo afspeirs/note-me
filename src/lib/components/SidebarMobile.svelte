@@ -10,10 +10,10 @@
     show: boolean;
   };
 
-  const duration = 400;
   let {
     show,
   }: SidebarMobileProps = $props();
+  const duration = 400;
 </script>
 
 <Dialog.Root bind:open={show} onOpenChange={(value) => sidebarOpen.set(value)}>
