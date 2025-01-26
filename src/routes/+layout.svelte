@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { afterNavigate } from '$app/navigation';
   import Card from '$lib/components/Card.svelte';
   import SidebarMobile from '$lib/components/SidebarMobile.svelte';
   import SidebarPrimary from '$lib/components/SidebarPrimary.svelte';
@@ -13,6 +14,10 @@
   import '$lib/utils/webmanifest-apple';
   import '../app.css';
 
+  let { children } = $props();
+  let innerWidth = $state<number | null>(null);
+  let isMobile = $derived(innerWidth && innerWidth < 1024);
+
   themeSystem.subscribe((theme) => {
     if (theme === 'dark') {
       document.body.classList.add('dark', 'bg-black');
@@ -21,23 +26,11 @@
     }
   });
 
-  let clientWidth = $state<number | null>(null);
-  let isMobile = $derived(clientWidth && clientWidth < 1024);
-
-  // $effect(() => {
-  //   if (isMobile || sidebarUseMobile.value) sidebarOpen.value = false;
-  // });
-
-  // $inspect({
-  //   clientWidth,
-  //   isMobile,
-  //   sidebarUseMobile: sidebarUseMobile.value,
-  //   sidebarOpen: sidebarOpen.value,
-  // });
+  afterNavigate(() => {
+    if (isMobile || sidebarUseMobile.value) sidebarOpen.set(false);
+  });
 
   restoreFolder();
-
-  let { children } = $props();
 </script>
 
 <svelte:head>
@@ -46,6 +39,7 @@
 </svelte:head>
 
 <svelte:window
+  bind:innerWidth={innerWidth}
   on:keydown={(event) => {
     if ((event.ctrlKey || event.metaKey) && event.key === 'b') {
       event.preventDefault();
@@ -54,10 +48,7 @@
   }}
 />
 
-<div
-  class="fixed inset-0 px-safe flex overflow-hidden pt-titlebar-area-height bg-primary dark:bg-black"
-  bind:clientWidth={clientWidth}
->
+<div class="fixed inset-0 px-safe flex overflow-hidden pt-titlebar-area-height bg-primary dark:bg-black">
   <TopBar />
 
   <SidebarMobile show={(isMobile || sidebarUseMobile.value) && sidebarOpen.value} />
