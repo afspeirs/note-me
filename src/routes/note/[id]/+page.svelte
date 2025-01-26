@@ -4,9 +4,10 @@
   import Button from '$lib/components/Button.svelte';
   import Page from '$lib/components/Page.svelte';
   import Tooltip from '$lib/components/Tooltip.svelte';
-  import { fileSystem, readFile, writeFile } from '$lib/context/file-system.svelte';
+  import { fileSystem, readFile, writeFile, deleteFile } from '$lib/context/file-system.svelte';
   import { classNames } from '$lib/utils/classNames';
-  import { PencilIcon, SaveIcon } from 'lucide-svelte';
+  import { PencilIcon, SaveIcon, Trash2Icon } from 'lucide-svelte';
+  import { goto } from '$app/navigation';
 
   let { data } = $props();
 
@@ -40,6 +41,20 @@
     edit = !edit;
   }
 
+  async function handleDeleteNote() {
+    if (file?.kind === 'file') {
+      // TODO: Replace with a dialog
+      // eslint-disable-next-line no-alert
+      const confirm = window.confirm('Are you sure you want to delete this note?');
+
+      if (confirm) {
+        await deleteFile(file.handle).then(() => {
+          goto('/');
+        });
+      }
+    }
+  }
+
   $effect(() => {
     setText();
   });
@@ -66,6 +81,15 @@
       onclick={toggleEdit}
     >
       {edit ? 'Save' : 'Edit'} Note
+    </Button>
+  </Tooltip>
+  <Tooltip content="Delete Note">
+    <Button
+      icon={Trash2Icon}
+      iconOnly
+      onclick={handleDeleteNote}
+    >
+      Delete Note
     </Button>
   </Tooltip>
 {/snippet}
