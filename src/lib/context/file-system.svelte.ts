@@ -13,6 +13,7 @@ export type FileSystemFileEntry = FileSystemBase & {
 
 export type FileSystemFolderEntry = FileSystemBase & {
   children: FileSystemEntry[];
+  handle: FileSystemDirectoryHandle
   kind: 'directory';
   parent: FileSystemDirectoryHandle | null;
 };
@@ -101,6 +102,7 @@ async function readDirectory(directoryHandle: FileSystemDirectoryHandle, parentH
     id: encodeFileSystemId(directoryHandle.name, parentHandle?.name),
     children: children.sort((a, b) => a.name.localeCompare(b.name)),
     name: directoryHandle.name,
+    handle: directoryHandle,
     kind: 'directory',
     parent: parentHandle,
   };
@@ -126,6 +128,49 @@ export async function writeFile(fileHandle: FileSystemFileHandle, content: strin
     await refreshFolder();
   } catch (error) {
     console.error('Error writing to file:', error); // eslint-disable-line no-console
+    throw error;
+  }
+}
+
+export async function createFile(folderHandle: FileSystemDirectoryHandle, fileName: string) {
+  try {
+    let newFileName = `${fileName}.md`;
+    let counter = 1;
+
+    // Check for existing files and create unique names if necessary
+    const existingFiles = new Set<string>();
+    for await (const entry of folderHandle.values()) {
+      if (entry.kind === 'file') {
+        existingFiles.add(entry.name);
+      }
+    }
+
+    while (existingFiles.has(newFileName)) {
+      newFileName = `${fileName} (${counter++}).md`;
+    }
+
+    // Create a new file handle in the specified folder
+    const fileHandle = await folderHandle.getFileHandle(newFileName, { create: true });
+
+    await writeFile(fileHandle, '');
+    await refreshFolder();
+
+    return fileHandle;
+  } catch (error) {
+    console.error('Error creating file:', error); // eslint-disable-line no-console
+    throw error;
+  }
+}
+
+export async function deleteFile(fileHandle: FileSystemFileHandle) {
+  try {
+    // @ts-expect-error - The remove method is not yet part of the official spec
+    await fileHandle.remove();
+    await refreshFolder();
+
+    return fileHandle;
+  } catch (error) {
+    console.error('Error deleting file:', error); // eslint-disable-line no-console
     throw error;
   }
 }

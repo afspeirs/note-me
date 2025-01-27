@@ -1,12 +1,13 @@
 <script lang="ts">
-  import { FileIcon, FolderIcon, FolderOpenIcon, RefreshCwIcon } from 'lucide-svelte';
+  import { FileIcon, FolderIcon, FolderOpenIcon, PinIcon, PinOffIcon, RefreshCwIcon } from 'lucide-svelte';
 
   import { page } from '$app/state';
   import Button from '$lib/components/Button.svelte';
   import Card from '$lib/components/Card.svelte';
   import CardHeader from '$lib/components/CardHeader.svelte';
+  import Tooltip from '$lib/components/Tooltip.svelte';
   import { fileSystem, refreshFolder, selectFolder } from '$lib/context/file-system.svelte';
-  import { currentFolderName } from '$lib/context/navigation.svelte';
+  import { currentFolderName, sidebarUseMobile } from '$lib/context/navigation.svelte';
 
   let isFileSystemRefreshing = $state(false);
 </script>
@@ -17,33 +18,36 @@
   aria-label="sidebar folders"
 >
   <CardHeader title={fileSystem.folder?.name || 'No folder selected'}>
-    <!-- {#if !isMobile}
-      <Button
-        class="hidden sm:block"
-        icon={sidebarUseMobile ? PinIcon : PinOffIcon}
-        iconOnly
-        onclick={() => sidebarUseMobile.toggle()}
-      >
-        {`${sidebarUseMobile ? 'pin' : 'un-pin'} sidebar`}
-      </Button>
-    {/if} -->
+    <div class="hidden lg:contents">
+      <Tooltip content={`${sidebarUseMobile.value ? 'Pin' : 'Un-pin'} sidebar`}>
+        <Button
+          icon={sidebarUseMobile.value ? PinIcon : PinOffIcon}
+          iconOnly
+          onclick={() => sidebarUseMobile.toggle()}
+        >
+          {`${sidebarUseMobile.value ? 'Pin' : 'Un-pin'} sidebar`}
+        </Button>
+      </Tooltip>
+    </div>
     {#if fileSystem.folderHandle}
-      <Button
-        class={isFileSystemRefreshing ? 'animate-spin' : ''}
-        disabled={isFileSystemRefreshing}
-        icon={RefreshCwIcon}
-        iconOnly
-        onclick={() => {
-          refreshFolder();
+      <Tooltip content="Refresh Folder">
+        <Button
+          class={isFileSystemRefreshing ? 'animate-spin' : ''}
+          disabled={isFileSystemRefreshing}
+          icon={RefreshCwIcon}
+          iconOnly
+          onclick={() => {
+            refreshFolder();
 
-          isFileSystemRefreshing = true;
-          setTimeout(() => {
-            isFileSystemRefreshing = false;
-          }, 1000);
-        }}
-      >
-        Refresh Folder
-      </Button>
+            isFileSystemRefreshing = true;
+            setTimeout(() => {
+              isFileSystemRefreshing = false;
+            }, 1000);
+          }}
+        >
+          Refresh Folder
+        </Button>
+      </Tooltip>
     {/if}
   </CardHeader>
 
