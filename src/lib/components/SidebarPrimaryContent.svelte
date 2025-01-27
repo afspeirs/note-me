@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { FileIcon, FolderIcon, FolderOpenIcon, PinIcon, PinOffIcon, RefreshCwIcon } from 'lucide-svelte';
+  import { ChevronRightIcon, FileIcon, FolderIcon, FolderOpenIcon, PinIcon, PinOffIcon, RefreshCwIcon } from 'lucide-svelte';
 
   import { page } from '$app/state';
   import Button from '$lib/components/Button.svelte';
@@ -74,6 +74,9 @@
                 {active}
               >
                 {child.name}
+                {#snippet secondaryAction()}
+                  <ChevronRightIcon class="size-6 flex-shrink-0 -mr-1" aria-hidden="true" />
+                {/snippet}
               </Button>
               <!-- <ul>
                 {#each child.children as subChild (subChild.id)}
