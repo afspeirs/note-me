@@ -5,7 +5,7 @@
 </script>
 
 <div class="m-card-gap">
-  <div class="{style.withText} relative p-3 text-dark dark:text-light select-none">
+  <div class="{style.withText} relative text-dark dark:text-light select-none">
     <WrenchIcon class="size-6" aria-hidden="true" />
     <div>
       <p>App version</p>

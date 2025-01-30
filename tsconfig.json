@@ -13,7 +13,8 @@
     "types": [
       "@types/node",
       "@types/wicg-file-system-access",
-      "vite-plugin-pwa/info"
+      "vite-plugin-pwa/info",
+      "vite-plugin-pwa/client"
     ]
   }
   // Path aliases are handled by https://svelte.dev/docs/kit/configuration#alias

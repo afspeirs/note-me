@@ -1,13 +1,13 @@
 <script lang="ts">
+  import { PencilIcon, SaveIcon, Trash2Icon } from 'lucide-svelte';
   import { marked } from 'marked';
 
+  import { goto } from '$app/navigation';
   import Button from '$lib/components/Button.svelte';
   import Page from '$lib/components/Page.svelte';
+  import Prose from '$lib/components/Prose.svelte';
   import Tooltip from '$lib/components/Tooltip.svelte';
-  import { fileSystem, readFile, writeFile, deleteFile } from '$lib/context/file-system.svelte';
-  import { classNames } from '$lib/utils/classNames';
-  import { PencilIcon, SaveIcon, Trash2Icon } from 'lucide-svelte';
-  import { goto } from '$app/navigation';
+  import { deleteFile, fileSystem, readFile, writeFile } from '$lib/context/file-system.svelte';
 
   let { data } = $props();
 
@@ -108,16 +108,10 @@
         class="block w-full h-full px-4 pt-1 pb-safe-offset-4 bg-transparent font-mono text-lg border-none outline-none resize-none overflow-auto"
       ></textarea>
     {:else}
-      <div
-        class={classNames(
-          'w-full h-full px-4 pt-1 pb-safe-offset-4 overflow-auto prose dark:prose-invert',
-          'prose-headings:mb-2 prose-headings:mt-4 first:prose-headings:mt-0 prose-a:text-link',
-          'prose-ol:m-0 prose-ul:m-0 prose-li:relative prose-li:my-1 prose-code:whitespace-break-spaces',
-        )}
-      >
+      <Prose>
         <!-- eslint-disable-next-line svelte/no-at-html-tags -->
         {@html marked(fetchedText)}
-      </div>
+      </Prose>
     {/if}
   {/await}
 </Page>
