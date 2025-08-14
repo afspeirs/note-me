@@ -22,7 +22,7 @@
       {#snippet child({ props, open })}
         {#if open}
           <div
-            class="fixed inset-0 bg-primary/70 dark:bg-black/70 backdrop-blur-sm"
+            class="fixed inset-0 bg-primary/70 dark:bg-black/70 backdrop-blur-xs"
             transition:fade={{ duration }}
             {...props}
           ></div>
@@ -45,14 +45,14 @@
               <button
                 transition:fade={{ duration }}
                 type="button"
-                class="sm:hidden fixed inset-0 bg-primary/70 dark:bg-black/70 backdrop-blur-sm"
+                class="sm:hidden fixed inset-0 bg-primary/70 dark:bg-black/70 backdrop-blur-xs"
                 onclick={() => currentFolderName.unset()}
               >
                 <span class="sr-only">Close secondary sidebar</span>
               </button>
               <div
                 transition:fly={{ duration, x: '-100%' }}
-                class="relative max-sm:absolute max-sm:left-[calc(100vw-theme(spacing[sidebar]))] flex flex-col min-w-sidebar w-sidebar h-full pr-sidebar-gap py-sidebar-gap pb-safe-offset-sidebar-gap gap-sidebar-gap"
+                class="relative max-sm:absolute max-sm:left-[calc(100vw-(var(--spacing-sidebar)))] flex flex-col min-w-sidebar w-sidebar h-full pr-sidebar-gap py-sidebar-gap pb-safe-offset-sidebar-gap gap-sidebar-gap"
               >
                 <SidebarSecondary />
               </div>

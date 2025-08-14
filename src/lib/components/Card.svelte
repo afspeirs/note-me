@@ -15,7 +15,7 @@
     children,
     class: className = '',
     fullscreen,
-    ...rest
+    ...rest // TODO: Remove this rest props usage
   }: CardProps = $props();
 </script>
 
@@ -23,7 +23,7 @@
   this={as}
   class={classNames(
     'bg-light dark:bg-dark dark:text-light shadow',
-    fullscreen ? '[@media_not_(display-mode:_browser)]:rounded-t-lg' : 'rounded-lg',
+    fullscreen ? 'not-[@media_(display-mode:_browser)]:rounded-t-lg' : 'rounded-lg',
     className,
   )}
   {...rest}

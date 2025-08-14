@@ -31,7 +31,7 @@
               transition:fly={{ y: 8, duration: 150 }}
               {...props}
             >
-              <Tooltip.Arrow class="rounded-sm border-l-light border-t-light" />
+              <Tooltip.Arrow class="rounded-xs border-l-light border-t-light" />
               <div class="p-2 text-xs bg-dark text-light dark:text-dark dark:bg-light rounded-lg">
                 {content}
               </div>

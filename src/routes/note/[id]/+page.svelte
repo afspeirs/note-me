@@ -105,7 +105,7 @@
         id="note-text"
         placeholder="What's on your mind?"
         bind:value={text}
-        class="block w-full h-full px-4 pt-1 pb-safe-offset-4 bg-transparent font-mono text-lg border-none outline-none resize-none overflow-auto"
+        class="block w-full h-full px-4 pt-1 pb-safe-offset-4 bg-transparent font-mono text-lg border-none outline-hidden resize-none overflow-auto"
       ></textarea>
     {:else}
       <Prose>

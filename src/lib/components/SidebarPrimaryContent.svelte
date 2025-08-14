@@ -75,7 +75,7 @@
               >
                 {child.name}
                 {#snippet secondaryAction()}
-                  <ChevronRightIcon class="size-6 flex-shrink-0 -mr-1" aria-hidden="true" />
+                  <ChevronRightIcon class="size-6 shrink-0 -mr-1" aria-hidden="true" />
                 {/snippet}
               </Button>
               <!-- <ul>
