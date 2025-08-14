@@ -14,19 +14,31 @@
   }: TooltipProps = $props();
 </script>
 
-<Tooltip.Root>
-  <Tooltip.Trigger>
-    {@render children()}
-  </Tooltip.Trigger>
-  <Tooltip.Content
-    transition={fly}
-    transitionConfig={{ y: 8, duration: 150 }}
-    sideOffset={8}
-    class="p-2 text-xs bg-dark text-light dark:text-dark dark:bg-light rounded-lg pointer-events-none select-none z-10"
-  >
-    <Tooltip.Arrow class="rounded-[2px] border-l border-t border-dark-10" />
-    <div class="">
-      {content}
-    </div>
-  </Tooltip.Content>
-</Tooltip.Root>
+<Tooltip.Provider>
+  <Tooltip.Root>
+    <Tooltip.Trigger>
+      {@render children()}
+    </Tooltip.Trigger>
+    <Tooltip.Content
+      forceMount
+      sideOffset={8}
+    >
+      {#snippet child({ wrapperProps, props, open })}
+        {#if open}
+          <div {...wrapperProps}>
+            <div
+              class="pointer-events-none select-none z-10"
+              transition:fly={{ y: 8, duration: 150 }}
+              {...props}
+            >
+              <Tooltip.Arrow class="rounded-sm border-l-light border-t-light" />
+              <div class="p-2 text-xs bg-dark text-light dark:text-dark dark:bg-light rounded-lg">
+                {content}
+              </div>
+            </div>
+          </div>
+        {/if}
+      {/snippet}
+    </Tooltip.Content>
+  </Tooltip.Root>
+</Tooltip.Provider>
