@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ChevronRightIcon, FileIcon, FolderIcon, FolderOpenIcon, PinIcon, PinOffIcon, RefreshCwIcon } from 'lucide-svelte';
+  import { ChevronRightIcon, FileIcon, FolderIcon, FolderOpenIcon, FolderSearch, PinIcon, PinOffIcon, RefreshCwIcon } from 'lucide-svelte';
 
   import { page } from '$app/state';
   import Button from '$lib/components/Button.svelte';
@@ -75,7 +75,7 @@
               >
                 {child.name}
                 {#snippet secondaryAction()}
-                  <ChevronRightIcon class="size-6 flex-shrink-0 -mr-1" aria-hidden="true" />
+                  <ChevronRightIcon class="size-6 shrink-0 -mr-1" aria-hidden="true" />
                 {/snippet}
               </Button>
               <!-- <ul>
@@ -111,7 +111,12 @@
         {/each}
       </ul>
     {:else}
-      <Button onclick={selectFolder}>Select Folder</Button>
+      <Button
+        icon={FolderSearch}
+        onclick={selectFolder}
+      >
+        Select Folder
+      </Button>
     {/if}
   </div>
 </Card>

@@ -1,13 +1,37 @@
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
+@import 'tailwindcss';
+@import 'tailwindcss-safe-area';
+@plugin '@tailwindcss/forms';
+@plugin '@tailwindcss/typography';
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --color-primary: hsl(28, 100%, 47%);
+  /* --color-black: #000; */
+  /* --color-white: #fff; */
+  --color-dark: hsl(0, 0%, 15%);
+  --color-light: hsl(0, 0%, 98%);
+  /* --color-gray, */
+  /* --color-neutral, */
+
+  --shadow: -1px 1px 4px 0px hsla(0, 0%, 0%, 0.4);
+
+  --spacing-sidebar: 20rem;
+  --spacing-sidebar-gap: 0.25rem;
+  --spacing-card-gap: 0.25rem;
+
+  --spacing-titlebar-area-x: env(titlebar-area-x, 0);
+  --spacing-titlebar-area-y: env(titlebar-area-y, 0);
+  --spacing-titlebar-area-width: env(titlebar-area-width, 0);
+  --spacing-titlebar-area-height: env(titlebar-area-height, 0);
+}
 
 @layer base {
-  :root {
-    --sidebar: 20rem;
-    --sidebar-gap: 0.25rem;
-    --card-gap: 0.25rem;
-  }
+  /* :root {
+    --tw-prose-bullets: var(--tw-prose-body);
+    --tw-prose-invert-body: white;
+    --tw-prose-invert-bullets: var(--tw-prose-invert-body);
+  } */
 
   html {
     @apply overflow-hidden overscroll-none;
@@ -42,25 +66,24 @@
   }
 }
 
-@layer utilities {
-  .text-link {
-    @apply underline text-primary hover:text-current;
-  }
+@utility text-link {
+  @apply underline text-primary hover:text-current;
+}
 
-  .focus-visible {
-    @apply outline-none focus-visible:ring-2 focus-visible:ring-black dark:focus-visible:ring-white;
-  }
+@utility focus-visible {
+  @apply outline-hidden focus-visible:ring-2 focus-visible:ring-black dark:focus-visible:ring-white;
+}
 
-  .pwa-header {
-    @apply left-titlebar-area-x top-titlebar-area-y w-titlebar-area-width h-titlebar-area-height;
-  }
+@utility pwa-header {
+  @apply left-titlebar-area-x top-titlebar-area-y w-titlebar-area-width h-titlebar-area-height;
+}
 
-  .drag {
-    -webkit-app-region: drag;
-    app-region: drag;
-  }
-  .no-drag {
-    -webkit-app-region: no-drag;
-    app-region: no-drag;
-  }
+@utility drag {
+  -webkit-app-region: drag;
+  app-region: drag;
+}
+
+@utility no-drag {
+  -webkit-app-region: no-drag;
+  app-region: no-drag;
 }

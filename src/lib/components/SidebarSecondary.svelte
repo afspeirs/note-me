@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { FileIcon, PlusIcon } from 'lucide-svelte';
+  import { FileIcon, FolderSearch, PlusIcon } from 'lucide-svelte';
 
   import { page } from '$app/state';
   import Button, { style } from '$lib/components/Button.svelte';
@@ -20,14 +20,14 @@
     onBack={() => currentFolderName.unset()}
     title={currentFolderName.value || undefined}
   >
-    <!-- <NotesSort />
-    <NotesSearch /> -->
+    <!-- <NotesSort /> -->
+    <!-- <NotesSearch /> -->
   </CardHeader>
 
   <div class="overflow-auto px-card-gap">
     {#if currentFolder?.kind === 'directory' && currentFolder?.children}
       <ul>
-        {#each currentFolder.children as child}
+        {#each currentFolder.children as child (child.id)}
           {#if child.kind === 'file'}
             <li>
               <Button
@@ -46,7 +46,7 @@
               >
                 {child.name}
                 {#snippet secondaryAction()}
-                  <ChevronRightIcon class="size-6 flex-shrink-0 -mr-1" aria-hidden="true" />
+                  <ChevronRightIcon class="size-6 shrink-0 -mr-1" aria-hidden="true" />
                 {/snippet}
               </Button>
             </li> -->
@@ -59,7 +59,12 @@
         {/if}
       </ul>
     {:else}
-      <Button onclick={selectFolder}>Select Folder</Button>
+      <Button
+        icon={FolderSearch}
+        onclick={selectFolder}
+      >
+        Select Folder
+      </Button>
     {/if}
   </div>
 </Card>
