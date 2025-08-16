@@ -7,10 +7,10 @@
 
 @theme {
   --color-primary: hsl(28, 100%, 47%);
-  /* --color-black, */
-  /* --color-white, */
-  --color-dark: var(--color-neutral-800);
-  --color-light: var(--color-neutral-50);
+  /* --color-black: #000; */
+  /* --color-white: #fff; */
+  --color-dark: hsl(0, 0%, 15%);
+  --color-light: hsl(0, 0%, 98%);
   /* --color-gray, */
   /* --color-neutral, */
 
