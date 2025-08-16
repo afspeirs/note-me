@@ -20,7 +20,7 @@ const { updateServiceWorker } = useRegisterSW({
     console.log('SW: Caching complete! Now available offline'); // eslint-disable-line no-console
     addToast({
       data: {
-        title: 'Caching complete! Now available offline'
+        title: 'Caching complete! Now available offline',
       },
     });
   },
