@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { FolderSearch } from 'lucide-svelte';
+
   import Button from '$lib/components/Button.svelte';
   import Page from '$lib/components/Page.svelte';
   import { fileSystem, selectFolder } from '$lib/context/file-system.svelte';
@@ -20,7 +22,12 @@
       <p>
         You are not currently viewing any folder.
       </p>
-      <Button onclick={selectFolder}>Select Folder</Button>
+      <Button
+        icon={FolderSearch}
+        onclick={selectFolder}
+      >
+        Select Folder
+      </Button>
     {/if}
 
   </div>
