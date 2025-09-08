@@ -3,6 +3,7 @@
   import { marked } from 'marked';
 
   import { goto } from '$app/navigation';
+  import { resolve } from '$app/paths';
   import Button from '$lib/components/Button.svelte';
   import Page from '$lib/components/Page.svelte';
   import Prose from '$lib/components/Prose.svelte';
@@ -49,7 +50,7 @@
 
       if (confirm) {
         await deleteFile(file.handle).then(() => {
-          goto('/');
+          goto(resolve('/'));
         });
       }
     }
