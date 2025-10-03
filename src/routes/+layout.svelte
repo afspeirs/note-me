@@ -34,8 +34,8 @@
 </script>
 
 <svelte:head>
-  <title>NoteMe</title>
   <meta name="theme-color" content={$themeSystem === 'light' ? '#ee6e00' : '#000000'} />
+  <meta name="version" content={import.meta.env.APP_VERSION}>
 </svelte:head>
 
 <svelte:window
