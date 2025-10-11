@@ -1,4 +1,5 @@
 import { openDB } from 'idb';
+import { SvelteSet } from 'svelte/reactivity';
 
 type FileSystemBase = {
   id: string;
@@ -138,7 +139,7 @@ export async function createFile(folderHandle: FileSystemDirectoryHandle, fileNa
     let counter = 1;
 
     // Check for existing files and create unique names if necessary
-    const existingFiles = new Set<string>();
+    const existingFiles = new SvelteSet<string>();
     for await (const entry of folderHandle.values()) {
       if (entry.kind === 'file') {
         existingFiles.add(entry.name);
