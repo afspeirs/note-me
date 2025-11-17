@@ -8,7 +8,6 @@
   import SettingsChangeTheme from '$lib/components/SettingsChangeTheme.svelte';
   import SettingsCheckForUpdate from '$lib/components/SettingsCheckForUpdate.svelte';
   import Tooltip from '$lib/components/Tooltip.svelte';
-
 </script>
 
 {#snippet iconsRight()}
