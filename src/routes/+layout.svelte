@@ -48,6 +48,8 @@
   }}
 />
 
+<h1>NoteMe</h1>
+
 <div class="fixed inset-0 px-safe flex overflow-hidden pt-titlebar-area-height bg-primary dark:bg-black">
   <TopBar />
 
