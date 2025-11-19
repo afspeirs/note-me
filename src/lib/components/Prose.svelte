@@ -16,6 +16,7 @@
     prose-headings:mb-2 prose-headings:mt-4 prose-headings:first:mt-0 prose-a:text-link
     prose-ol:m-0 prose-ul:m-0 prose-li:relative prose-li:m-1
     [&_li>p]:m-0
+    [&_li:has(input)]:list-none [&_li:has(input)]:-ml-4 [&_li>input]:relative [&_li>input]:-left-2
     [&_input]:text-primary
     prose-code:whitespace-break-spaces
   "
