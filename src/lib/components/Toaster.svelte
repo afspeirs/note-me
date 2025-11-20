@@ -19,7 +19,6 @@
   import { flip } from 'svelte/animate';
   import { fly } from 'svelte/transition';
 
-  // Need to used $derived to ensure reactivity between the Toaster and the module
   const toasts = $derived(toaster.toasts);
 </script>
 
@@ -34,8 +33,8 @@
         {...toast.content}
       >
         <div class="relative min-w-36 max-w-[calc(100vw-2rem)] p-2">
-          <div class="flex gap-2 font-semibold">
-            <h3 class="flex items-center gap-2 px-2" {...toast.title}>
+          <div class="flex justify-between gap-2 font-semibold">
+            <h3 class="flex items-center gap-2 p-2" {...toast.title}>
               {toast.data.title}
             </h3>
             {#if toast.data.action}
@@ -55,7 +54,7 @@
             </button>
           </div>
           {#if toast.data.description}
-            <div {...toast.description}>
+            <div class="p-2 pt-0" {...toast.description}>
               {toast.data.description}
             </div>
           {/if}
