@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { Accordion } from 'bits-ui';
   import { ChevronRightIcon, FileIcon, FolderIcon, FolderOpenIcon, FolderSearch, PinIcon, PinOffIcon, RefreshCwIcon } from 'lucide-svelte';
 
   import { page } from '$app/state';
@@ -10,6 +11,7 @@
   import { currentFolderName, sidebarUseMobile } from '$lib/context/navigation.svelte';
 
   let isFileSystemRefreshing = $state(false);
+  let openFolders = $state<string[]>([]);
 </script>
 
 <Card
@@ -54,61 +56,78 @@
   <div class="overflow-auto px-card-gap">
     {#if fileSystem.folder}
       <ul>
-        {#each fileSystem.folder.children as child (child.id)}
-          {@const active = currentFolderName.value === child.name}
-          {#if child.kind === 'file'}
-            <li>
-              <Button
-                icon={FileIcon}
-                href="/note/{child.id}"
-                active={child.id === page.params.id}
-              >
-                {child.name}
-              </Button>
-            </li>
-          {:else if child.kind === 'directory'}
-            <li>
-              <Button
-                icon={currentFolderName.value === child.name ? FolderOpenIcon : FolderIcon}
-                onclick={() => currentFolderName.set(child.name)}
-                {active}
-              >
-                {child.name}
-                {#snippet secondaryAction()}
-                  <ChevronRightIcon class="size-6 shrink-0 -mr-1" aria-hidden="true" />
-                {/snippet}
-              </Button>
-              <!-- <ul>
-                {#each child.children as subChild (subChild.id)}
-                  {#if subChild.kind === 'file'}
-                    <li>
-                      {subChild.name}
-                    </li>
-                  {:else if subChild.kind === 'directory'}
-                    <li>
-                      <div>
-                        <strong>{subChild.name}</strong>
-                        {#if subChild.children.length > 0}
-                          <ul>
-                            {#each subChild.children as subSubChild (subSubChild.id)}
-                              <li>
-                                {#if subSubChild.kind === 'file'}
-                                  {subSubChild.name}
-                                {:else}
-                                  <strong>{subSubChild.name}</strong>
-                                {/if}
-                              </li>
-                            {/each}
-                          </ul>
+        <Accordion.Root type="multiple" bind:value={openFolders}>
+          {#each fileSystem.folder.children as item (item.id)}
+            {@const active = openFolders.includes(item.id)}
+            {#if item.kind === 'file'}
+              <li>
+                <Button
+                  icon={FileIcon}
+                  href="/note/{item.id}"
+                  active={item.id === page.params.id}
+                >
+                  {item.name}
+                </Button>
+              </li>
+            {:else if item.kind === 'directory'}
+              <li>
+                <Accordion.Item value={item.id}>
+                  <Accordion.Header>
+                    <Accordion.Trigger>
+                      {#snippet child({ props })}
+                        <Button
+                          icon={active ? FolderOpenIcon : FolderIcon}
+                          onclick={() => currentFolderName.set(item.name)}
+                          {active}
+                          {...props}
+                        >
+                          {item.name}
+                          {#snippet secondaryAction()}
+                            <ChevronRightIcon
+                              class="size-6 shrink-0 -mr-1 transition-transform {active && 'rotate-90'}"
+                              aria-hidden="true"
+                            />
+                          {/snippet}
+                        </Button>
+                      {/snippet}
+                    </Accordion.Trigger>
+                  </Accordion.Header>
+                  <Accordion.Content class="data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down overflow-hidden text-sm tracking-[-0.01em]">
+                    <ul class="ml-4">
+                      {#each item.children as subItem (subItem.id)}
+                        {#if subItem.kind === 'file'}
+                          <li>
+                            <Button
+                              icon={FileIcon}
+                              href="/note/{subItem.id}"
+                              active={subItem.id === page.params.id}
+                            >
+                              {subItem.name}
+                            </Button>
+                          </li>
+                        {:else if subItem.kind === 'directory'}
+                          <li>
+                            <!-- TODO: Add recursion for the component here to display nested folders -->
+                            <Button
+                              disabled
+                              icon={FolderIcon}
+                              onclick={() => currentFolderName.set(subItem.name)}
+                            >
+                              {subItem.name}
+                              {#snippet secondaryAction()}
+                                <ChevronRightIcon class="size-6 shrink-0 -mr-1" aria-hidden="true" />
+                              {/snippet}
+                            </Button>
+                          </li>
                         {/if}
-                      </div>
-                    </li>
-                  {/if}
-                {/each}
-              </ul> -->
-            </li>
-          {/if}
-        {/each}
+                      {/each}
+                    </ul>
+                  </Accordion.Content>
+                </Accordion.Item>
+              </li>
+            {/if}
+          {/each}
+        </Accordion.Root>
       </ul>
     {:else}
       <Button
