@@ -113,7 +113,14 @@ async function readDirectory(directoryHandle: FileSystemDirectoryHandle, parentH
 
   return {
     id: encodeFileSystemId(directoryHandle.name, parentHandle?.name),
-    children: children.sort((a, b) => a.name.localeCompare(b.name)),
+    children: children.sort((a, b) => {
+      // 1. If types are different, put directories first
+      if (a.kind === 'directory' && b.kind !== 'directory') return -1;
+      if (a.kind !== 'directory' && b.kind === 'directory') return 1;
+
+      // 2. If types are the same, sort alphabetically
+      return a.name.localeCompare(b.name);
+    }),
     name: directoryHandle.name,
     handle: directoryHandle,
     kind: 'directory',
