@@ -16,7 +16,6 @@
       icon={AIcon}
       iconOnly
       href="https://speirs.dev"
-      target="_blank"
     >
       Visit speirs.dev
     </Button>
@@ -26,7 +25,6 @@
       icon={GithubIcon}
       iconOnly
       href="https://github.com/afspeirs/note-me"
-      target="_blank"
     >
       Visit github.com/afspeirs/note-me
     </Button>
