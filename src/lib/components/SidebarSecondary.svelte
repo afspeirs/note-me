@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { FileIcon, FolderSearch, PlusIcon } from 'lucide-svelte';
+  import { ChevronRightIcon, FileIcon, FolderIcon, FolderOpenIcon, FolderSearch, PlusIcon } from 'lucide-svelte';
 
   import { page } from '$app/state';
   import Button, { style } from '$lib/components/Button.svelte';
@@ -38,9 +38,10 @@
                 {child.name}
               </Button>
             </li>
-          <!-- {:else if child.kind === 'directory'}
+          {:else if child.kind === 'directory'}
             <li>
               <Button
+                disabled
                 icon={currentFolderName.value === child.name ? FolderOpenIcon : FolderIcon}
                 onclick={() => currentFolderName.set(child.name)}
               >
@@ -49,7 +50,7 @@
                   <ChevronRightIcon class="size-6 shrink-0 -mr-1" aria-hidden="true" />
                 {/snippet}
               </Button>
-            </li> -->
+            </li>
           {/if}
         {/each}
         {#if currentFolder.children.length === 0}

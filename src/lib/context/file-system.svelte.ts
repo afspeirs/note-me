@@ -1,6 +1,8 @@
 import { openDB } from 'idb';
 import { SvelteSet } from 'svelte/reactivity';
 
+import { addToast } from '$lib/components/Toaster.svelte';
+
 type FileSystemBase = {
   id: string;
   name: string;
@@ -57,6 +59,16 @@ async function loadHandle(): Promise<FileSystemDirectoryHandle | null> {
 }
 
 export async function selectFolder() {
+  if (!window.showDirectoryPicker) {
+    addToast({
+      data: {
+        title: 'Error',
+        description: 'Unfortunately, your current browser doesn\'t allow direct folder access.',
+      },
+    });
+    return;
+  }
+
   try {
     fileSystem.folderHandle = await window.showDirectoryPicker();
     await saveHandle(fileSystem.folderHandle);
@@ -101,7 +113,14 @@ async function readDirectory(directoryHandle: FileSystemDirectoryHandle, parentH
 
   return {
     id: encodeFileSystemId(directoryHandle.name, parentHandle?.name),
-    children: children.sort((a, b) => a.name.localeCompare(b.name)),
+    children: children.sort((a, b) => {
+      // 1. If types are different, put directories first
+      if (a.kind === 'directory' && b.kind !== 'directory') return -1;
+      if (a.kind !== 'directory' && b.kind === 'directory') return 1;
+
+      // 2. If types are the same, sort alphabetically
+      return a.name.localeCompare(b.name);
+    }),
     name: directoryHandle.name,
     handle: directoryHandle,
     kind: 'directory',

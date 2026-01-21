@@ -23,6 +23,8 @@
   import type { Snippet } from 'svelte';
   import type { HTMLAnchorAttributes, HTMLButtonAttributes } from 'svelte/elements';
 
+  import { resolve } from '$app/paths';
+  import type { Pathname } from '$app/types';
   import { classNames } from '$lib/utils/classNames';
 
   type BaseButtonProps = {
@@ -44,14 +46,12 @@
     disabled?: boolean,
     href?: never,
     onclick?: (event: MouseEvent) => void
-    target?: never,
   };
 
   type LinkOptions = BaseButtonProps & HTMLAnchorAttributes & {
     disabled?: never,
-    href: string,
+    href: Pathname | `https://${string}`;
     onclick?: never,
-    target?: '_self' | '_blank',
   };
 
   type ButtonProps = ButtonOptions | LinkOptions;
@@ -70,12 +70,12 @@
     iconOnly,
     onclick,
     secondaryAction,
-    target,
     ...restProps
   }: ButtonProps = $props();
 </script>
 
 {#if href}
+  {@const externalHref = href?.startsWith('https://')}
   <a
     class={classNames(
       iconOnly ? style.iconOnly : style.withText,
@@ -84,9 +84,9 @@
       style.base,
       className,
     )}
-    {href}
-    rel={target === '_blank' ? 'noreferrer' : undefined}
-    {target}
+    href={resolve(href as Pathname)}
+    target={externalHref ? '_blank' : undefined}
+    rel={externalHref ? 'noopener noreferrer' : undefined}
     {onclick}
     {...restProps as HTMLAnchorAttributes}
   >

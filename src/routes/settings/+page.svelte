@@ -8,7 +8,6 @@
   import SettingsChangeTheme from '$lib/components/SettingsChangeTheme.svelte';
   import SettingsCheckForUpdate from '$lib/components/SettingsCheckForUpdate.svelte';
   import Tooltip from '$lib/components/Tooltip.svelte';
-
 </script>
 
 {#snippet iconsRight()}
@@ -17,7 +16,6 @@
       icon={AIcon}
       iconOnly
       href="https://speirs.dev"
-      target="_blank"
     >
       Visit speirs.dev
     </Button>
@@ -27,7 +25,6 @@
       icon={GithubIcon}
       iconOnly
       href="https://github.com/afspeirs/note-me"
-      target="_blank"
     >
       Visit github.com/afspeirs/note-me
     </Button>
