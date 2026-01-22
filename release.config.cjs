@@ -7,7 +7,7 @@ const configProduction = [
   [
     '@semantic-release/git',
     {
-      assets: ['.version', 'package.json'],
+      assets: ['package.json'],
       message: 'chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}',
     },
   ],
@@ -16,18 +16,18 @@ const configProduction = [
 module.exports = {
   branches: [
     'main',
-    { name: 'develop', prerelease: true },
-    { name: 'next', prerelease: true },
+    { name: 'develop', prerelease: 'develop' },
+    { name: 'next', prerelease: 'next' },
   ],
   plugins: [
     '@semantic-release/commit-analyzer',
     '@semantic-release/release-notes-generator',
-    ...isDryRun() ? [] : configProduction,
     [
       '@semantic-release/exec',
       {
-        verifyReleaseCmd: './scripts/release-update-version.sh ${nextRelease.version}',
+        prepareCmd: './scripts/release-update-version.sh ${nextRelease.version}',
       },
     ],
+    ...isDryRun() ? [] : configProduction,
   ],
 };
