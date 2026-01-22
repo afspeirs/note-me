@@ -27,6 +27,10 @@
   }: PageProps = $props();
 </script>
 
+<svelte:head>
+  <title>{title === 'NoteMe' ? 'Home' : title} | NoteMe</title>
+</svelte:head>
+
 <header class="relative flex gap-card-gap p-card-gap">
   <Tooltip content={`${sidebarOpen.value ? 'Close' : 'Open'} Sidebar`}>
     <Button
