@@ -218,7 +218,7 @@ export async function deleteFile(fileHandle: FileSystemFileHandle) {
   }
 }
 
-export function getFileFromId(id: string) {
+export function getFileEntryFromId(id: string) {
   if (!fileSystem.cache) return null;
 
   const entry = fileSystem.cache.get(id);
