@@ -18,27 +18,26 @@ export type FileSystemFolderEntry = FileSystemBase & {
   children: FileSystemEntry[];
   handle: FileSystemDirectoryHandle
   kind: 'directory';
-  parent: FileSystemDirectoryHandle | null;
 };
 
 export type FileSystemEntry = FileSystemFileEntry | FileSystemFolderEntry;
 
+type FileSystemCache = Map<string, FileSystemEntry>;
+
 type FileSystem = {
   folderHandle: FileSystemDirectoryHandle | null;
   folder: FileSystemFolderEntry | null;
+  cache: FileSystemCache | null,
 };
 
 export const fileSystem: FileSystem = $state({
   folderHandle: null,
   folder: null,
+  cache: null,
 });
 
 const DB_NAME = 'note-me-file-system-db';
 const STORE_NAME = 'handles';
-
-function encodeFileSystemId(text: string, parent?: string) {
-  return window.encodeURIComponent(`${parent || ''}_${text}`.replaceAll(' ', '-').toLowerCase());
-}
 
 async function initDB() {
   return openDB(DB_NAME, 1, {
@@ -73,7 +72,9 @@ export async function selectFolder() {
     fileSystem.folderHandle = await window.showDirectoryPicker();
     await saveHandle(fileSystem.folderHandle);
 
-    fileSystem.folder = await readDirectory(fileSystem.folderHandle);
+    const { root, cache } = await readDirectory(fileSystem.folderHandle);
+    fileSystem.folder = root;
+    fileSystem.cache = cache;
   } catch (error) {
     console.error('Error accessing folder:', error); // eslint-disable-line no-console
   }
@@ -81,50 +82,72 @@ export async function selectFolder() {
 
 export async function refreshFolder() {
   if (fileSystem.folderHandle) {
-    fileSystem.folder = await readDirectory(fileSystem.folderHandle);
+    const { root, cache } = await readDirectory(fileSystem.folderHandle);
+    fileSystem.folder = root;
+    fileSystem.cache = cache;
   }
 }
 
 export async function restoreFolder() {
   fileSystem.folderHandle = await loadHandle();
   if (fileSystem.folderHandle) {
-    fileSystem.folder = await readDirectory(fileSystem.folderHandle);
+    const { root, cache } = await readDirectory(fileSystem.folderHandle);
+    fileSystem.folder = root;
+    fileSystem.cache = cache;
   }
 }
 
-async function readDirectory(directoryHandle: FileSystemDirectoryHandle, parentHandle: FileSystemDirectoryHandle | null = null): Promise<FileSystemFolderEntry> {
-  const children: FileSystemEntry[] = [];
+async function readDirectory(
+  directoryHandle: FileSystemDirectoryHandle,
+  parentPath: string = '',
+  cache: FileSystemCache = new Map(),
+) {
+  async function recursiveScan(
+    handle: FileSystemDirectoryHandle,
+    path: string = '',
+  ): Promise<FileSystemFolderEntry> {
+    const children: FileSystemEntry[] = [];
+    const currentPath = path ? `${path}/${handle.name}` : handle.name;
 
-  for await (const entry of directoryHandle.values()) {
-    if (entry.name.startsWith('.')) continue;
-    if (entry.kind === 'directory') {
-      const subFolder = await readDirectory(entry, directoryHandle);
-      children.push(subFolder);
-    } else if (entry.kind === 'file') {
-      children.push({
-        id: encodeFileSystemId(entry.name, directoryHandle?.name),
-        name: entry.name,
-        handle: entry,
-        kind: 'file',
-        parent: directoryHandle,
-      });
+    for await (const entry of handle.values()) {
+      if (entry.name.startsWith('.')) continue;
+      if (entry.kind === 'directory') {
+        const subFolder = await recursiveScan(entry, currentPath);
+        children.push(subFolder);
+      } else {
+        const fileEntry: FileSystemFileEntry = {
+          id: `${currentPath}/${entry.name}`,
+          name: entry.name,
+          handle: entry,
+          kind: 'file',
+          parent: handle,
+        };
+        children.push(fileEntry);
+        cache.set(fileEntry.id, fileEntry);
+      }
     }
+
+    const folderEntry: FileSystemFolderEntry = {
+      id: currentPath,
+      name: handle.name,
+      handle: handle,
+      kind: 'directory',
+      children: children.sort((a, b) => {
+        if (a.kind === 'directory' && b.kind !== 'directory') return -1;
+        if (a.kind !== 'directory' && b.kind === 'directory') return 1;
+        return a.name.localeCompare(b.name);
+      }),
+    };
+
+    cache.set(currentPath, folderEntry);
+    return folderEntry;
   }
 
-  return {
-    id: encodeFileSystemId(directoryHandle.name, parentHandle?.name),
-    children: children.sort((a, b) => {
-      // 1. If types are different, put directories first
-      if (a.kind === 'directory' && b.kind !== 'directory') return -1;
-      if (a.kind !== 'directory' && b.kind === 'directory') return 1;
+  const root = await recursiveScan(directoryHandle, parentPath);
 
-      // 2. If types are the same, sort alphabetically
-      return a.name.localeCompare(b.name);
-    }),
-    name: directoryHandle.name,
-    handle: directoryHandle,
-    kind: 'directory',
-    parent: parentHandle,
+  return {
+    root,
+    cache
   };
 }
 
@@ -193,4 +216,12 @@ export async function deleteFile(fileHandle: FileSystemFileHandle) {
     console.error('Error deleting file:', error); // eslint-disable-line no-console
     throw error;
   }
+}
+
+export function getFileFromId(id: string) {
+  if (!fileSystem.cache) return null;
+
+  const entry = fileSystem.cache.get(id);
+  if (entry?.kind === 'directory') throw new Error(`This is a directory: ${id}`);
+  return entry;
 }

@@ -8,17 +8,11 @@
   import Page from '$lib/components/Page.svelte';
   import Prose from '$lib/components/Prose.svelte';
   import Tooltip from '$lib/components/Tooltip.svelte';
-  import { deleteFile, fileSystem, readFile, writeFile } from '$lib/context/file-system.svelte';
+  import { deleteFile, getFileFromId, readFile, writeFile } from '$lib/context/file-system.svelte';
 
   let { data } = $props();
 
-  const files = $derived(fileSystem.folder?.children.flatMap((child) => {
-    if (child.kind === 'directory') {
-      return child.children;
-    }
-    return child;
-  }));
-  const file = $derived(files?.find((file) => file.id === data.params?.id) || null);
+  let file = $derived(getFileFromId(data.params.path));
   const fileContents = $derived(file?.kind === 'file' ? readFile(file?.handle) : '');
   let edit = $state(false);
   let text = $state('');
