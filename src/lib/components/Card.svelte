@@ -11,7 +11,7 @@
   } & HTMLAttributes<HTMLDivElement>;
 
   let {
-    as = 'main',
+    as = 'div',
     children,
     class: className = '',
     fullscreen,
