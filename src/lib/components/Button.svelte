@@ -76,6 +76,7 @@
 
 {#if href}
   {@const externalHref = href?.startsWith('https://')}
+  <!-- eslint-disable svelte/no-navigation-without-resolve -- TODO: Remove the need for this to handle external urls -->
   <a
     class={classNames(
       iconOnly ? style.iconOnly : style.withText,
@@ -84,9 +85,9 @@
       style.base,
       className,
     )}
-    href={resolve(href as Pathname)}
+    href={externalHref ? href : resolve(href as Pathname)}
     target={externalHref ? '_blank' : undefined}
-    rel={externalHref ? 'noopener noreferrer' : undefined}
+    rel={externalHref ? 'external noopener noreferrer' : undefined}
     {onclick}
     {...restProps as HTMLAnchorAttributes}
   >
