@@ -28,7 +28,7 @@
 </script>
 
 <svelte:head>
-  <title>{title === 'NoteMe' ? 'Home' : title} | NoteMe</title>
+  <title>{title && title !== 'NoteMe' ? `${title} | ` : ''}NoteMe</title>
 </svelte:head>
 
 <header class="relative flex gap-card-gap p-card-gap">
