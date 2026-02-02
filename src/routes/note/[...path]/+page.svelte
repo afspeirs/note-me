@@ -1,12 +1,12 @@
 <script lang="ts">
   import { PencilIcon, SaveIcon, Trash2Icon } from 'lucide-svelte';
-  import { marked } from 'marked';
 
   import { goto } from '$app/navigation';
   import { resolve } from '$app/paths';
   import Button from '$lib/components/Button.svelte';
   import Page from '$lib/components/Page.svelte';
-  import Prose from '$lib/components/Prose.svelte';
+  // import Prose from '$lib/components/Prose.svelte';
+  import Tiptap from '$lib/components/Tiptap.svelte';
   import Tooltip from '$lib/components/Tooltip.svelte';
   import { deleteFile, getFileEntryFromId, readFile, writeFile } from '$lib/context/file-system.svelte';
 
@@ -90,7 +90,7 @@
   {iconsRight}
 >
   {#await fileContents then fetchedText}
-    {#if edit}
+    <!-- {#if edit}
       <textarea
         name="note-text"
         id="note-text"
@@ -100,9 +100,9 @@
       ></textarea>
     {:else}
       <Prose>
-        <!-- eslint-disable-next-line svelte/no-at-html-tags -->
         {@html marked(fetchedText)}
       </Prose>
-    {/if}
+    {/if} -->
+    <Tiptap content={fetchedText} />
   {/await}
 </Page>
