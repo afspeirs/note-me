@@ -8,24 +8,18 @@
   import Page from '$lib/components/Page.svelte';
   import Prose from '$lib/components/Prose.svelte';
   import Tooltip from '$lib/components/Tooltip.svelte';
-  import { deleteFile, fileSystem, readFile, writeFile } from '$lib/context/file-system.svelte';
+  import { deleteFile, getFileEntryFromId, readFile, writeFile } from '$lib/context/file-system.svelte';
 
   let { data } = $props();
 
-  const files = $derived(fileSystem.folder?.children.flatMap((child) => {
-    if (child.kind === 'directory') {
-      return child.children;
-    }
-    return child;
-  }));
-  const file = $derived(files?.find((file) => file.id === data.params?.id) || null);
-  const fileContents = $derived(file?.kind === 'file' ? readFile(file?.handle) : '');
+  let fileEntry = $derived(getFileEntryFromId(data.params.path));
+  const fileContents = $derived(fileEntry?.kind === 'file' ? readFile(fileEntry.handle) : '');
   let edit = $state(false);
   let text = $state('');
 
   async function saveFile() {
-    if (file?.kind === 'file' && text !== await fileContents) {
-      await writeFile(file.handle, text);
+    if (fileEntry?.kind === 'file' && text !== await fileContents) {
+      await writeFile(fileEntry.handle, text);
     }
   }
 
@@ -43,13 +37,13 @@
   }
 
   async function handleDeleteNote() {
-    if (file?.kind === 'file') {
+    if (fileEntry?.kind === 'file') {
       // TODO: Replace with a dialog
       // eslint-disable-next-line no-alert
       const confirm = window.confirm('Are you sure you want to delete this note?');
 
       if (confirm) {
-        await deleteFile(file.handle).then(() => {
+        await deleteFile(fileEntry.handle).then(() => {
           goto(resolve('/'));
         });
       }
@@ -60,10 +54,6 @@
     setText();
   });
 </script>
-
-<svelte:head>
-  <title>{file?.name} | NoteMe</title>
-</svelte:head>
 
 <svelte:window
   on:keydown={(event) => {
@@ -96,7 +86,7 @@
 {/snippet}
 
 <Page
-  title={file?.name}
+  title={fileEntry?.name}
   {iconsRight}
 >
   {#await fileContents then fetchedText}

@@ -11,7 +11,6 @@
   import { themeSystem } from '$lib/context/theme.svelte';
   import { classNames } from '$lib/utils/classNames';
   import '$lib/utils/registerServiceWorker';
-  import '$lib/utils/webmanifest-apple';
   import '../app.css';
 
   let { children } = $props();

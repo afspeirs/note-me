@@ -1,9 +1,9 @@
 <script lang="ts" module>
   export const style = {
     base: 'peer/button cursor-pointer rounded-lg select-none disabled:opacity-40 disabled:pointer-events-none focus-visible ring-inset',
-    iconOnly: 'block p-2',
+    iconOnly: 'block p-3 sm:p-2',
     fullWidth: 'min-w-0 w-full',
-    withText: 'flex items-center gap-3 p-3 py-2',
+    withText: 'flex items-center gap-3 p-3 sm:py-2',
   };
 
   export const colours = {
@@ -76,6 +76,7 @@
 
 {#if href}
   {@const externalHref = href?.startsWith('https://')}
+  <!-- eslint-disable svelte/no-navigation-without-resolve -- TODO: Remove the need for this to handle external urls -->
   <a
     class={classNames(
       iconOnly ? style.iconOnly : style.withText,
@@ -84,9 +85,9 @@
       style.base,
       className,
     )}
-    href={resolve(href as Pathname)}
+    href={externalHref ? href : resolve(href as Pathname)}
     target={externalHref ? '_blank' : undefined}
-    rel={externalHref ? 'noopener noreferrer' : undefined}
+    rel={externalHref ? 'external noopener noreferrer' : undefined}
     {onclick}
     {...restProps as HTMLAnchorAttributes}
   >

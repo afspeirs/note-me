@@ -1,8 +1,7 @@
 <script lang="ts">
-  import { GithubIcon } from 'lucide-svelte';
-
-  // import AIcon from '$lib/components/AIcon.svelte';
   import Button from '$lib/components/Button.svelte';
+  import AIcon from '$lib/components/icons/AIcon.svelte';
+  import GithubIcon from '$lib/components/icons/GithubIcon.svelte';
   import Page from '$lib/components/Page.svelte';
   import SettingsAppVersion from '$lib/components/SettingsAppVersion.svelte';
   import SettingsChangeTheme from '$lib/components/SettingsChangeTheme.svelte';
@@ -11,18 +10,20 @@
 </script>
 
 {#snippet iconsRight()}
-  <!-- <Tooltip content="Visit speirs.dev">
+  <Tooltip content="Visit speirs.dev">
     <Button
       icon={AIcon}
+      iconClassName="fill-black dark:fill-white"
       iconOnly
       href="https://speirs.dev"
     >
       Visit speirs.dev
     </Button>
-  </Tooltip> -->
+  </Tooltip>
   <Tooltip content="Visit github.com/afspeirs/note-me">
     <Button
       icon={GithubIcon}
+      iconClassName="fill-black dark:fill-white"
       iconOnly
       href="https://github.com/afspeirs/note-me"
     >
