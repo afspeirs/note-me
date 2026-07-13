@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { PencilIcon, SaveIcon, Trash2Icon } from 'lucide-svelte';
+  import { PencilIcon, SaveIcon, Trash2Icon } from '@lucide/svelte';
   import { marked } from 'marked';
 
   import { goto } from '$app/navigation';

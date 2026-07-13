@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Accordion } from 'bits-ui';
-  import { ChevronRightIcon, FileIcon, FolderIcon, FolderOpenIcon } from 'lucide-svelte';
+  import { ChevronRightIcon, FileIcon, FolderIcon, FolderOpenIcon } from '@lucide/svelte';
 
   import { page } from '$app/state';
   import Button from '$lib/components/Button.svelte';

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { FolderSearch, PinIcon, PinOffIcon, RefreshCwIcon } from 'lucide-svelte';
+  import { FolderSearch, PinIcon, PinOffIcon, RefreshCwIcon } from '@lucide/svelte';
 
   import Button from '$lib/components/Button.svelte';
   import Card from '$lib/components/Card.svelte';

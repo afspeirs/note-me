@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { MenuIcon } from 'lucide-svelte';
+  import { MenuIcon } from '@lucide/svelte';
   import type { Snippet } from 'svelte';
 
   import Button from '$lib/components/Button.svelte';

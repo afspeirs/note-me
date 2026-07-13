@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ChevronRightIcon, FileIcon, FolderIcon, FolderOpenIcon, FolderSearch, PlusIcon } from 'lucide-svelte';
+  import { ChevronRightIcon, FileIcon, FolderIcon, FolderOpenIcon, FolderSearch, PlusIcon } from '@lucide/svelte';
 
   import { page } from '$app/state';
   import Button, { style } from '$lib/components/Button.svelte';

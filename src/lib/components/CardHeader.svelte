@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { XIcon } from 'lucide-svelte';
+  import { XIcon } from '@lucide/svelte';
   import type { Snippet } from 'svelte';
   import Button from '$lib/components/Button.svelte';
   import Tooltip from '$lib/components/Tooltip.svelte';

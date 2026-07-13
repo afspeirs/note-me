@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { HomeIcon, SettingsIcon } from 'lucide-svelte';
+  import { HomeIcon, SettingsIcon } from '@lucide/svelte';
 
   import { page } from '$app/state';
   import Button from '$lib/components/Button.svelte';

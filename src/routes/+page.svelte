@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { FolderSearch } from 'lucide-svelte';
+  import { FolderSearch } from '@lucide/svelte';
 
   import Button from '$lib/components/Button.svelte';
   import Page from '$lib/components/Page.svelte';

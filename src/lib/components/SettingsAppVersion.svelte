@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { WrenchIcon } from 'lucide-svelte';
+  import { WrenchIcon } from '@lucide/svelte';
 
   import { style } from '$lib/components/Button.svelte';
 </script>
