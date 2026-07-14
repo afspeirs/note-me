@@ -18,6 +18,13 @@
   let text = $state('');
   let textareaRef: HTMLTextAreaElement | null = $state(null);
 
+  // Add this function near the top of your script, after imports
+  function removeFrontmatter(markdown: string): string {
+    // Match frontmatter: starts with ---, followed by content, ends with ---
+    const frontmatterRegex = /^---\s*\n([\s\S]*?)\n---\s*\n/;
+    return markdown.replace(frontmatterRegex, '');
+  }
+
   async function saveFile() {
     if (fileEntry?.kind === 'file' && text !== await fileContents) {
       await writeFile(fileEntry.handle, text);
@@ -275,7 +282,7 @@
       {:else}
         <Prose>
           <!-- eslint-disable-next-line svelte/no-at-html-tags -->
-          {@html marked(fetchedText)}
+          {@html marked(removeFrontmatter(fetchedText))}
         </Prose>
       {/if}
     </div>
