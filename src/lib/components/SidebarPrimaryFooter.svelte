@@ -28,8 +28,7 @@
       <Button
         onclick={() => modal.open('settings')}
         icon={SettingsIcon}
-        active={path === '/settings'}
-        aria-current={path === '/settings' ? 'page' : undefined}
+        active={modal.current.type === 'settings'}
       >
         Settings
       </Button>

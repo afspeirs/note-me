@@ -147,7 +147,7 @@ async function readDirectory(
 
   return {
     root,
-    cache
+    cache,
   };
 }
 

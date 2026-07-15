@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { BoldIcon, HeadingIcon, ItalicIcon, KeyboardIcon, ListIcon, ListTodoIcon, PencilIcon, SaveIcon, Trash2Icon } from '@lucide/svelte';
+  import { BoldIcon, HeadingIcon, ItalicIcon, ListIcon, ListTodoIcon, PencilIcon, SaveIcon, Trash2Icon } from '@lucide/svelte';
   import { marked } from 'marked';
 
   import { goto } from '$app/navigation';
