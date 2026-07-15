@@ -2,11 +2,16 @@
   import Button from '$lib/components/Button.svelte';
   import AIcon from '$lib/components/icons/AIcon.svelte';
   import GithubIcon from '$lib/components/icons/GithubIcon.svelte';
-  import Page from '$lib/components/Page.svelte';
+  import Modal from '$lib/components/Modal.svelte';
   import SettingsAppVersion from '$lib/components/SettingsAppVersion.svelte';
   import SettingsChangeTheme from '$lib/components/SettingsChangeTheme.svelte';
   import SettingsCheckForUpdate from '$lib/components/SettingsCheckForUpdate.svelte';
   import Tooltip from '$lib/components/Tooltip.svelte';
+  import { modal } from '$lib/context/modal.svelte';
+
+  function onClose() {
+    modal.close();
+  }
 </script>
 
 {#snippet iconsRight()}
@@ -32,9 +37,10 @@
   </Tooltip>
 {/snippet}
 
-<Page
+<Modal
   title="Settings"
   {iconsRight}
+  {onClose}
 >
   <ul role="list">
     <li>
@@ -46,4 +52,4 @@
       <SettingsChangeTheme />
     </li>
   </ul>
-</Page>
+</Modal>

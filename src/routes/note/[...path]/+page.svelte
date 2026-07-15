@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { BoldIcon, HeadingIcon, ItalicIcon, ListIcon, ListTodoIcon, PencilIcon, SaveIcon, Trash2Icon } from '@lucide/svelte';
+  import { BoldIcon, HeadingIcon, ItalicIcon, KeyboardIcon, ListIcon, ListTodoIcon, PencilIcon, SaveIcon, Trash2Icon } from '@lucide/svelte';
   import { marked } from 'marked';
 
   import { goto } from '$app/navigation';
@@ -9,6 +9,7 @@
   import Prose from '$lib/components/Prose.svelte';
   import Tooltip from '$lib/components/Tooltip.svelte';
   import { deleteFile, getFileEntryFromId, readFile, writeFile } from '$lib/context/file-system.svelte';
+  import { modal } from '$lib/context/modal.svelte';
 
   let { data } = $props();
 
@@ -44,18 +45,21 @@
     edit = !edit;
   }
 
-  async function handleDeleteNote() {
-    if (fileEntry?.kind === 'file') {
-      // TODO: Replace with a dialog
-      // eslint-disable-next-line no-alert
-      const confirm = window.confirm('Are you sure you want to delete this note?');
-
-      if (confirm) {
-        await deleteFile(fileEntry.handle).then(() => {
+  function handleDeleteNote() {
+    modal.open('confirm', {
+      onConfirm: async () => {
+        if (fileEntry?.kind === 'file') {
+          await deleteFile(fileEntry.handle);
           goto(resolve('/'));
-        });
-      }
-    }
+        }
+      },
+      data: {
+        title: 'Confirm Delete',
+        message: `Are you sure you want to delete "${fileEntry?.name}"?`,
+        description: 'This action cannot be undone.',
+        confirmText: 'Delete Note',
+      },
+    });
   }
 
   function applyMarkdown(type: 'bold' | 'italic' | 'heading' | 'list' | 'list-todo') {

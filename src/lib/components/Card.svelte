@@ -8,6 +8,7 @@
     children: Snippet,
     class?: string,
     fullscreen?: boolean,
+    ref?: HTMLElement;
   } & HTMLAttributes<HTMLDivElement>;
 
   let {
@@ -15,11 +16,13 @@
     children,
     class: className = '',
     fullscreen,
-    ...rest // TODO: Remove this rest props usage
+    ref = $bindable(),
+    ...rest
   }: CardProps = $props();
 </script>
 
 <svelte:element
+  bind:this={ref}
   this={as}
   class={classNames(
     'bg-light dark:bg-dark dark:text-light shadow',

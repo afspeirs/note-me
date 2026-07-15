@@ -1,9 +1,10 @@
 <script lang="ts">
-  import { HomeIcon, SettingsIcon } from '@lucide/svelte';
+  import { HouseIcon, SettingsIcon } from '@lucide/svelte';
 
   import { page } from '$app/state';
   import Button from '$lib/components/Button.svelte';
   import Card from '$lib/components/Card.svelte';
+  import { modal } from '$lib/context/modal.svelte';
 
   const path = $derived(page.url.pathname);
 </script>
@@ -16,7 +17,7 @@
     <li>
       <Button
         href="/"
-        icon={HomeIcon}
+        icon={HouseIcon}
         active={path === '/'}
         aria-current={path === '/' ? 'page' : undefined}
       >
@@ -25,7 +26,7 @@
     </li>
     <li>
       <Button
-        href="/settings/"
+        onclick={() => modal.open('settings')}
         icon={SettingsIcon}
         active={path === '/settings'}
         aria-current={path === '/settings' ? 'page' : undefined}

@@ -7,8 +7,11 @@
   import Toaster from '$lib/components/Toaster.svelte';
   import TopBar from '$lib/components/TopBar.svelte';
   import { restoreFolder } from '$lib/context/file-system.svelte';
+  import { modal } from '$lib/context/modal.svelte';
   import { currentFolderName, sidebarOpen, sidebarUseMobile } from '$lib/context/navigation.svelte';
   import { themeSystem } from '$lib/context/theme.svelte';
+  import ConfirmModal from '$lib/modals/ConfirmModal.svelte';
+  import SettingsModal from '$lib/modals/SettingsModal.svelte';
   import { classNames } from '$lib/utils/classNames';
   import '$lib/utils/registerServiceWorker';
   import '../app.css';
@@ -92,3 +95,10 @@
 </div>
 
 <Toaster />
+
+{#if modal.current.type === 'confirm'}
+  <ConfirmModal />
+{/if}
+{#if modal.current.type === 'settings'}
+  <SettingsModal />
+{/if}
