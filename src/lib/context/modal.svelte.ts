@@ -1,20 +1,14 @@
-type ModalType = 'confirm' | 'shortcuts' | 'settings' | null;
+type ModalType = 'confirm' | 'shortcuts' | 'settings';
 
-type ModalConfig = {
-  type: ModalType;
+type ModalState = {
+  type: ModalType | null;
   onConfirm?: () => void | Promise<void>;
-  data?: {
-    title?: string;
-    message?: string;
-    description?: string;
-    confirmText?: string;
-    cancelText?: string;
-    fileName?: string;
-    [key: string]: string;
-  };
+  data?: Record<string, string>,
 };
 
-let modalState = $state<ModalConfig>({
+type ModalConfig = Omit<ModalState, 'type'>;
+
+let modalState = $state<ModalState>({
   type: null,
 });
 
@@ -23,7 +17,7 @@ export const modal = {
     return modalState;
   },
 
-  open(type: Exclude<ModalType, null>, config?: Omit<ModalConfig, 'type'>) {
+  open(type: ModalType, config?: ModalConfig) {
     modalState = {
       type,
       onConfirm: config?.onConfirm,
