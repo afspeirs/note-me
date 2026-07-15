@@ -58,6 +58,7 @@
       </ul>
     {:else}
       <Button
+        active
         icon={FolderSearch}
         onclick={selectFolder}
       >

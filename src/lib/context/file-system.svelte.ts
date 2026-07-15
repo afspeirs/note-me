@@ -1,5 +1,5 @@
 import { openDB } from 'idb';
-import { SvelteSet } from 'svelte/reactivity';
+import { SvelteDate, SvelteMap, SvelteSet } from 'svelte/reactivity';
 
 import { addToast } from '$lib/components/Toaster.svelte';
 
@@ -12,11 +12,12 @@ export type FileSystemFileEntry = FileSystemBase & {
   handle: FileSystemFileHandle;
   kind: 'file';
   parent: FileSystemDirectoryHandle;
+  lastModified: Date;
 };
 
 export type FileSystemFolderEntry = FileSystemBase & {
   children: FileSystemEntry[];
-  handle: FileSystemDirectoryHandle
+  handle: FileSystemDirectoryHandle;
   kind: 'directory';
 };
 
@@ -27,13 +28,15 @@ type FileSystemCache = Map<string, FileSystemEntry>;
 type FileSystem = {
   folderHandle: FileSystemDirectoryHandle | null;
   folder: FileSystemFolderEntry | null;
-  cache: FileSystemCache | null,
+  cache: FileSystemCache | null;
+  loading: boolean,
 };
 
 export const fileSystem: FileSystem = $state({
   folderHandle: null,
   folder: null,
   cache: null,
+  loading: true,
 });
 
 const DB_NAME = 'note-me-file-system-db';
@@ -95,12 +98,13 @@ export async function restoreFolder() {
     fileSystem.folder = root;
     fileSystem.cache = cache;
   }
+  fileSystem.loading = false;
 }
 
 async function readDirectory(
   directoryHandle: FileSystemDirectoryHandle,
   parentPath: string = '',
-  cache: FileSystemCache = new Map(),
+  cache: FileSystemCache = new SvelteMap(),
 ) {
   async function recursiveScan(
     handle: FileSystemDirectoryHandle,
@@ -115,12 +119,15 @@ async function readDirectory(
         const subFolder = await recursiveScan(entry, currentPath);
         children.push(subFolder);
       } else {
+        const file = await entry.getFile();
+
         const fileEntry: FileSystemFileEntry = {
           id: `${currentPath}/${entry.name}`,
           name: entry.name,
           handle: entry,
           kind: 'file',
           parent: handle,
+          lastModified: new Date(file.lastModified),
         };
         children.push(fileEntry);
         cache.set(fileEntry.id, fileEntry);
@@ -224,4 +231,42 @@ export function getFileEntryFromId(id: string) {
   const entry = fileSystem.cache.get(id);
   if (entry?.kind === 'directory') throw new Error(`This is a directory: ${id}`);
   return entry;
+}
+
+export function getFilePathWithoutRoot(file: FileSystemFileEntry): string {
+  const pathWithoutRoot = file.id.split('/').slice(1).join('/');
+  return pathWithoutRoot;
+}
+
+// Helper functions for formatting dates
+export function formatDate(date: Date): string {
+  return new Intl.DateTimeFormat('en-GB', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  }).format(date);
+}
+
+export function formatDateTime(date: Date): string {
+  return new Intl.DateTimeFormat('en-GB', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: '2-digit',
+  }).format(date);
+}
+
+export function formatRelativeTime(date: Date): string {
+  const now = new SvelteDate();
+  const diffMs = now.getTime() - date.getTime();
+  const diffMins = Math.floor(diffMs / 60000);
+  const diffHours = Math.floor(diffMins / 60);
+  const diffDays = Math.floor(diffHours / 24);
+
+  if (diffMins < 1) return 'Just now';
+  if (diffMins < 60) return `${diffMins} minute${diffMins === 1 ? '' : 's'} ago`;
+  if (diffHours < 24) return `${diffHours} hour${diffHours === 1 ? '' : 's'} ago`;
+  if (diffDays < 7) return `${diffDays} day${diffDays === 1 ? '' : 's'} ago`;
+  return formatDateTime(date);
 }

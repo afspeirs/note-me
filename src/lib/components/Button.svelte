@@ -101,7 +101,7 @@
 
     {#if secondaryAction}
       <div class="ml-auto flex gap-2">
-        {@render secondaryAction?.()}
+        {@render secondaryAction()}
       </div>
     {/if}
   </a>
@@ -129,7 +129,7 @@
 
     {#if secondaryAction}
       <div class="ml-auto flex gap-2">
-        {@render secondaryAction?.()}
+        {@render secondaryAction()}
       </div>
     {/if}
   </button>
