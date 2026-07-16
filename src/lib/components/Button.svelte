@@ -3,7 +3,7 @@
     base: 'peer/button cursor-pointer rounded-lg select-none disabled:opacity-40 disabled:pointer-events-none focus-visible ring-inset',
     iconOnly: 'block p-3 sm:p-2',
     fullWidth: 'min-w-0 w-full',
-    withText: 'flex items-center gap-3 p-3 sm:py-2',
+    withText: 'flex items-center gap-3 p-2 sm:py-1',
   };
 
   export const colours = {
@@ -92,7 +92,7 @@
     {...restProps as HTMLAnchorAttributes}
   >
     {#if Icon}
-      <Icon class="size-6 shrink-0 {iconClassName}" aria-hidden="true" />
+      <Icon class="size-6 sm:size-5 shrink-0 {iconClassName}" aria-hidden="true" />
     {/if}
 
     <span class={classNames(iconOnly ? '' : 'truncate', iconOnly && Icon ? 'sr-only' : '')}>
@@ -120,7 +120,7 @@
     {...restProps as HTMLButtonAttributes}
   >
     {#if Icon}
-      <Icon class="size-6 shrink-0 {iconClassName}" aria-hidden="true" />
+      <Icon class="size-6 sm:size-5 shrink-0 {iconClassName}" aria-hidden="true" />
     {/if}
 
     <span class={classNames(iconOnly ? '' : 'truncate', iconOnly && Icon ? 'sr-only' : '')}>

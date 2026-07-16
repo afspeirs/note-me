@@ -17,7 +17,7 @@
   }: CardHeaderProps = $props();
 </script>
 
-<div class="relative flex gap-card-gap p-card-gap min-h-12">
+<div class="relative flex gap-card-gap p-card-gap">
   <div class="ml-2 self-center font-bold text-xl truncate select-none">{title}</div>
 
   <div class="ml-auto"></div>
