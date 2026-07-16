@@ -23,7 +23,7 @@
           Select a note from the sidebar to get started, or select a recently edited note below:
         </p>
       {:else}
-        <p class="text-gray-700 dark:text-gray-300 mb-4">
+        <p class="text-gray-700 dark:text-gray-300">
           You are not currently viewing any folder.
         </p>
         <Button
