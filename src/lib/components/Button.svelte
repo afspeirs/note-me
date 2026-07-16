@@ -3,7 +3,7 @@
     base: 'peer/button cursor-pointer rounded-lg select-none disabled:opacity-40 disabled:pointer-events-none focus-visible ring-inset',
     iconOnly: 'block p-3 sm:p-2',
     fullWidth: 'min-w-0 w-full',
-    withText: 'flex items-center gap-3 p-2 sm:py-1',
+    withText: 'flex items-center gap-3 p-2 sm:py-1.5',
   };
 
   export const colours = {
