@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { RefreshCwIcon as RefreshIcon, RocketIcon } from 'lucide-svelte';
+  import { RefreshCwIcon as RefreshIcon, RocketIcon } from '@lucide/svelte';
 
   import { updateAvailable } from '$lib/context/service-worker.svelte';
   import Button from '$lib/components/Button.svelte';

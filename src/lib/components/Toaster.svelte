@@ -15,7 +15,7 @@
 
 <script lang="ts">
   import { Toaster } from 'melt/builders';
-  import { XIcon } from 'lucide-svelte';
+  import { XIcon } from '@lucide/svelte';
   import { flip } from 'svelte/animate';
   import { fly } from 'svelte/transition';
 
