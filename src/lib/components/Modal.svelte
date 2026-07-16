@@ -57,7 +57,7 @@
     event.preventDefault();
     onClose();
   }}
-  class="fixed inset-0 m-auto border-none p-0 w-full max-h-[90vh] overflow-auto pointer-events-auto {sizeClasses[size]} open:animate-modal-show backdrop:animate-backdrop-show backdrop:bg-primary/80 dark:backdrop:bg-black/80 backdrop:backdrop-blur-sm"
+  class="fixed inset-0 m-auto border-none p-0 w-full max-h-[90vh] overflow-auto pointer-events-auto {sizeClasses[size]} open:animate-modal-show backdrop:animate-backdrop-show backdrop:bg-primary/70 dark:backdrop:bg-black/70 backdrop:backdrop-blur-sm"
 >
   <header class="relative flex gap-card-gap p-card-gap">
     {#if !titleHide}
