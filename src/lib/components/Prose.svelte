@@ -13,7 +13,7 @@
 <div
   class="
     max-w-full w-full h-full px-4 pt-1 pb-safe-offset-4 overflow-auto prose dark:prose-invert
-    prose-headings:mb-2 prose-headings:mt-4 prose-headings:first:mt-0 prose-a:text-link
+    prose-headings:mb-2 prose-headings:mt-4 prose-headings:first:mt-0 prose-a:text-link prose-a:break-all
     prose-ol:m-0 prose-ul:m-0 prose-li:relative prose-li:m-1
     [&_li>p]:m-0
     [&_li:has(input)]:list-none [&_li:has(input)]:-ml-4 [&_li>input]:relative [&_li>input]:-left-2
