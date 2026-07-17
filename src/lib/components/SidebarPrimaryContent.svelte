@@ -30,7 +30,7 @@
       </Tooltip>
     </div>
     {#if fileSystem.folderHandle}
-      <Tooltip content="Refresh Folder">
+      <Tooltip align="end" content="Refresh Folder">
         <Button
           class={isFileSystemRefreshing ? 'animate-spin' : ''}
           disabled={isFileSystemRefreshing}

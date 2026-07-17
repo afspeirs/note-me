@@ -37,7 +37,7 @@
 
     <div class="flex flex-col gap-2">
       {#each recentFiles as file (file.id)}
-        <Tooltip content={file.id}>
+        <Tooltip side="top" content={file.id}>
           <Button
             active
             icon={FileTextIcon}

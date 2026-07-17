@@ -25,7 +25,7 @@
       Visit speirs.dev
     </Button>
   </Tooltip>
-  <Tooltip content="Visit github.com/afspeirs/note-me">
+  <Tooltip align="end" content="Visit github.com/afspeirs/note-me">
     <Button
       icon={GithubIcon}
       iconClassName="fill-black dark:fill-white"
