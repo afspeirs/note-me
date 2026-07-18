@@ -19,12 +19,13 @@
 </script>
 
 <script lang="ts">
-  import type { Icon as IconType } from '@lucide/svelte';
+  import type { FileIcon } from '@lucide/svelte';
   import type { Snippet } from 'svelte';
   import type { HTMLAnchorAttributes, HTMLButtonAttributes } from 'svelte/elements';
 
   import { resolve } from '$app/paths';
   import type { Pathname } from '$app/types';
+  import type AIcon from '$lib/components/icons/AIcon.svelte';
   import { classNames } from '$lib/utils/classNames';
 
   type BaseButtonProps = {
@@ -34,9 +35,7 @@
     colour?: keyof typeof colours;
     colourActive?: keyof typeof coloursActive;
     fullWidth?: boolean,
-    // TODO: fix this type
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    icon?: IconType | any;
+    icon?: typeof FileIcon | typeof AIcon;
     iconClassName?: string,
     iconOnly?: boolean,
     secondaryAction?: Snippet,

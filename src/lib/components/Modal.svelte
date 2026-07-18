@@ -70,7 +70,7 @@
 
     {@render iconsRight?.()}
 
-    <Tooltip content="Close">
+    <Tooltip align="end" content="Close">
       <Button
         icon={XIcon}
         iconOnly

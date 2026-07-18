@@ -208,7 +208,7 @@
       {edit ? 'Save' : 'Edit'} Note
     </Button>
   </Tooltip>
-  <Tooltip content="Delete Note">
+  <Tooltip align="end" content="Delete Note">
     <Button
       icon={Trash2Icon}
       iconOnly

@@ -32,7 +32,7 @@
 </svelte:head>
 
 <header class="relative flex gap-card-gap p-card-gap">
-  <Tooltip content={`${sidebarOpen.value ? 'Close' : 'Open'} Sidebar`}>
+  <Tooltip align="start" content={`${sidebarOpen.value ? 'Close' : 'Open'} Sidebar`}>
     <Button
       icon={MenuIcon}
       iconOnly

@@ -25,7 +25,7 @@
   {@render children?.()}
 
   {#if onBack}
-    <Tooltip content={`Close "${title}"`}>
+    <Tooltip align="end" content={`Close "${title}"`}>
       <Button
         icon={XIcon}
         iconOnly

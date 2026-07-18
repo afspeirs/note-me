@@ -19,7 +19,7 @@
 >
   <CardHeader title={fileSystem.folder?.name || 'No folder selected'}>
     <div class="hidden lg:contents">
-      <Tooltip content={`${sidebarUseMobile.value ? 'Pin' : 'Un-pin'} sidebar`}>
+      <Tooltip align={!fileSystem.folderHandle ? 'end' : 'center'} content={`${sidebarUseMobile.value ? 'Pin' : 'Un-pin'} sidebar`}>
         <Button
           icon={sidebarUseMobile.value ? PinIcon : PinOffIcon}
           iconOnly
@@ -30,7 +30,7 @@
       </Tooltip>
     </div>
     {#if fileSystem.folderHandle}
-      <Tooltip content="Refresh Folder">
+      <Tooltip align="end" content="Refresh Folder">
         <Button
           class={isFileSystemRefreshing ? 'animate-spin' : ''}
           disabled={isFileSystemRefreshing}

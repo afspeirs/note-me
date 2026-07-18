@@ -33,7 +33,7 @@
               <Button
                 icon={FileIcon}
                 href="/note/{child.id}"
-                active={child.id === page.params.id}
+                active={child.id === page.params.path}
               >
                 {child.name}
               </Button>
@@ -79,8 +79,7 @@
       <li>
         <Button
           onclick={async () => {
-            // TODO: Replace with a dialog
-            // eslint-disable-next-line no-alert
+            // eslint-disable-next-line no-alert -- TODO: Replace with a dialog
             const fileName = window.prompt('New file name?', 'Untitled')?.trim();
 
             if (fileName) {

@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { Tooltip } from 'bits-ui';
+
   import { afterNavigate } from '$app/navigation';
   import Card from '$lib/components/Card.svelte';
   import SidebarMobile from '$lib/components/SidebarMobile.svelte';
@@ -52,6 +54,8 @@
 
 <h1>NoteMe</h1>
 
+<Tooltip.Provider>
+
 <div class="fixed inset-0 px-safe flex overflow-hidden pt-titlebar-area-height bg-primary dark:bg-black">
   <TopBar />
 
@@ -102,3 +106,5 @@
 {#if modal.current.type === 'settings'}
   <SettingsModal />
 {/if}
+
+</Tooltip.Provider>
