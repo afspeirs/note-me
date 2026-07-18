@@ -10,7 +10,7 @@ const { updateServiceWorker } = useRegisterSW({
         title: 'A new version is available',
         action: {
           title: 'Update',
-          onclick: () => window.location.reload(),
+          onclick: () => updateServiceWorker(true),
         },
       },
     });
