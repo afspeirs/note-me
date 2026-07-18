@@ -19,7 +19,7 @@
 >
   <CardHeader title={fileSystem.folder?.name || 'No folder selected'}>
     <div class="hidden lg:contents">
-      <Tooltip content={`${sidebarUseMobile.value ? 'Pin' : 'Un-pin'} sidebar`}>
+      <Tooltip align={!fileSystem.folderHandle ? 'end' : 'center'} content={`${sidebarUseMobile.value ? 'Pin' : 'Un-pin'} sidebar`}>
         <Button
           icon={sidebarUseMobile.value ? PinIcon : PinOffIcon}
           iconOnly
