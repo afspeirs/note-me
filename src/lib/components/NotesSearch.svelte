@@ -1,6 +1,9 @@
 <script lang="ts">
   import { ArrowLeftIcon, XIcon } from '@lucide/svelte';
+  import { SvelteURLSearchParams } from 'svelte/reactivity';
 
+  import { goto } from '$app/navigation';
+  import { page } from '$app/state';
   import Button from '$lib/components/Button.svelte';
   import Tooltip from '$lib/components/Tooltip.svelte';
   import { search } from '$lib/context/search.svelte';
@@ -14,6 +17,35 @@
       hideSidebarSearch();
     }
   }
+
+  // If the URL contains a search parameter, consume it into state and strip it from the URL
+  $effect(() => {
+    const searchParam = page.url.searchParams.get('search');
+
+    if (searchParam !== null) {
+      const decoded = decodeURIComponent(searchParam);
+
+      // Consume the value into state and open sidebar
+      if (search.value !== decoded) {
+        search.value = decoded; // Direct assignment avoids loops
+      }
+      search.sidebarOpen = true;
+
+      // Strip the ?search parameter from the browser address bar
+      const newParams = new SvelteURLSearchParams(page.url.searchParams);
+      newParams.delete('search');
+
+      const newQuery = newParams.toString();
+      const newUrl = newQuery ? `?${newQuery}` : window.location.pathname;
+
+      // eslint-disable-next-line svelte/no-navigation-without-resolve
+      goto(newUrl, {
+        keepFocus: true,
+        noScroll: true,
+        replaceState: true,
+      });
+    }
+  });
 </script>
 
 <svelte:window onkeydown={handleKeydown} />

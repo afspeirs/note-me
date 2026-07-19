@@ -19,7 +19,6 @@
   let text = $state('');
   let textareaRef: HTMLTextAreaElement | null = $state(null);
 
-  // Add this function near the top of your script, after imports
   function removeFrontmatter(markdown: string): string {
     // Match frontmatter: starts with ---, followed by content, ends with ---
     const frontmatterRegex = /^---\s*\n([\s\S]*?)\n---\s*\n/;
@@ -33,15 +32,11 @@
   }
 
   async function setText() {
-    if (!edit) {
-      text = await fileContents;
-    }
+    if (!edit) text = await fileContents;
   }
 
   async function toggleEdit() {
-    if (edit) {
-      await saveFile();
-    }
+    if (edit) await saveFile();
     edit = !edit;
   }
 
@@ -62,7 +57,8 @@
     });
   }
 
-  function applyMarkdown(type: 'bold' | 'italic' | 'heading' | 'list' | 'list-todo') {
+  type MarkdownType = 'bold' | 'italic' | 'heading' | 'list' | 'list-todo' | 'wikilink' | 'tag';
+  function applyMarkdown(type: MarkdownType) {
     if (!textareaRef) return;
 
     textareaRef.focus();
@@ -94,6 +90,14 @@
         replacement = `\n- [ ] ${selection}`;
         cursorOffset = replacement.length;
         break;
+      case 'wikilink':
+        replacement = `[[${selection}]]`;
+        cursorOffset = selection ? replacement.length : 2;
+        break;
+      case 'tag':
+        replacement = `#${selection}`;
+        cursorOffset = replacement.length;
+        break;
     }
 
     textareaRef.setSelectionRange(start, end);
@@ -123,6 +127,16 @@
         applyMarkdown('italic');
         return;
       }
+      // if (event.key === 'k') {
+      //   event.preventDefault();
+      //   applyMarkdown('wikilink');
+      //   return;
+      // }
+      // if (event.key === 'h') {
+      //   event.preventDefault();
+      //   applyMarkdown('tag');
+      //   return;
+      // }
     }
 
     if (event.key === 'Tab') {
@@ -187,6 +201,57 @@
   $effect(() => {
     setText();
   });
+
+  // marked.use({
+  //   extensions: [
+  //     {
+  //       name: 'wikilink',
+  //       level: 'inline',
+  //       start(src) { return src.indexOf('[['); },
+  //       tokenizer(src) {
+  //         const rule = /^\[\[([^\]|]+)(?:\|([^\]]+))?\]\]/;
+  //         const match = rule.exec(src);
+  //         if (match) {
+  //           return {
+  //             type: 'wikilink',
+  //             raw: match[0],
+  //             href: `/notes/${encodeURIComponent(match[1].trim())}`,
+  //             text: (match[2] || match[1]).trim(),
+  //           };
+  //         }
+  //         return undefined;
+  //       },
+  //       renderer(token) {
+  //         return `<a class="wikilink underline text-primary" href="${token.href}">${token.text}</a>`;
+  //       },
+  //     },
+  //     {
+  //       name: 'tag',
+  //       level: 'inline',
+  //       start(src) { return src.indexOf('#'); },
+  //       tokenizer(src) {
+  //         // Ensure it's not a Markdown Header (e.g., "# " or "## ")
+  //         if (/^#+\s/.test(src)) return undefined;
+
+  //         // Match a tag. We capture valid characters: alphanumeric, underscores, hyphens
+  //         const rule = /^#([a-zA-Z0-9_-]+)/;
+  //         const match = rule.exec(src);
+  //         if (match) {
+  //           return {
+  //             type: 'tag',
+  //             raw: match[0],
+  //             href: `?search=${encodeURIComponent(match[1])}`,
+  //             text: match[0],
+  //           };
+  //         }
+  //         return undefined;
+  //       },
+  //       renderer(token) {
+  //         return `<a class="tag font-medium text-secondary hover:underline" href="${token.href}">${token.text}</a>`;
+  //       },
+  //     },
+  //   ],
+  // });
 </script>
 
 <svelte:window
@@ -238,49 +303,25 @@
 
         <div class="flex items-center gap-card-gap p-card-gap">
           <Tooltip content="Bold (Ctrl+B)">
-            <Button
-              icon={BoldIcon}
-              iconOnly
-              onclick={() => applyMarkdown('bold')}
-            >
-              Bold
-            </Button>
+            <Button icon={BoldIcon} iconOnly onclick={() => applyMarkdown('bold')}>Bold</Button>
           </Tooltip>
           <Tooltip content="Italic (Ctrl+I)">
-            <Button
-              icon={ItalicIcon}
-              iconOnly
-              onclick={() => applyMarkdown('italic')}
-            >
-              Italic
-            </Button>
+            <Button icon={ItalicIcon} iconOnly onclick={() => applyMarkdown('italic')}>Italic</Button>
           </Tooltip>
           <Tooltip content="Heading">
-            <Button
-              icon={HeadingIcon}
-              iconOnly
-              onclick={() => applyMarkdown('heading')}
-            >
-              Heading
-            </Button>
+            <Button icon={HeadingIcon} iconOnly onclick={() => applyMarkdown('heading')}>Heading</Button>
           </Tooltip>
+          <!-- <Tooltip content="Tag">
+            <Button icon={HashIcon} iconOnly onclick={() => applyMarkdown('hashtag')}>Tag</Button>
+          </Tooltip> -->
+          <!-- <Tooltip content="Wikilink (Ctrl+K)">
+            <Button icon={LinkIcon} iconOnly onclick={() => applyMarkdown('wikilink')}>Link</Button>
+          </Tooltip> -->
           <Tooltip content="Bullet List">
-            <Button
-              icon={ListIcon}
-              iconOnly
-              onclick={() => applyMarkdown('list')}
-            >
-              List
-            </Button>
+            <Button icon={ListIcon} iconOnly onclick={() => applyMarkdown('list')}>List</Button>
           </Tooltip>
           <Tooltip content="Todo List">
-            <Button
-              icon={ListTodoIcon}
-              iconOnly
-              onclick={() => applyMarkdown('list-todo')}
-            >
-              List
-            </Button>
+            <Button icon={ListTodoIcon} iconOnly onclick={() => applyMarkdown('list-todo')}>List</Button>
           </Tooltip>
         </div>
       {:else}
