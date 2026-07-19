@@ -50,6 +50,10 @@
       event.preventDefault();
       sidebarOpen.set(!sidebarOpen.value);
     }
+    if ((event.ctrlKey || event.metaKey) && event.key === ',') {
+      event.preventDefault();
+      modal.open('settings');
+    }
   }}
 />
 
