@@ -2,9 +2,10 @@
   import { Dialog } from 'bits-ui';
   import { fade, fly } from 'svelte/transition';
 
-  import { currentFolderName, sidebarOpen } from '$lib/context/navigation.svelte';
-  import SidebarPrimary from './SidebarPrimary.svelte';
-  import SidebarSecondary from './SidebarSecondary.svelte';
+  import SidebarPrimary from '$lib/components/SidebarPrimary.svelte';
+  import { sidebarOpen } from '$lib/context/navigation.svelte';
+  import { search } from '$lib/context/search.svelte';
+  import SidebarSearch from './SidebarSearch.svelte';
 
   type SidebarMobileProps = {
     show: boolean;
@@ -41,12 +42,12 @@
               <SidebarPrimary />
             </div>
 
-            {#if currentFolderName.value !== null}
+            {#if search.sidebarOpen}
               <button
                 transition:fade={{ duration }}
                 type="button"
                 class="sm:hidden fixed inset-0 bg-primary/70 dark:bg-black/70 backdrop-blur-xs"
-                onclick={() => currentFolderName.unset()}
+                onclick={() => search.setSidebarOpen(false)}
               >
                 <span class="sr-only">Close secondary sidebar</span>
               </button>
@@ -54,7 +55,7 @@
                 transition:fly={{ duration, x: '-100%' }}
                 class="relative max-sm:absolute max-sm:left-[calc(100vw-(var(--spacing-sidebar)))] flex flex-col min-w-sidebar w-sidebar h-full pr-sidebar-gap py-sidebar-gap pb-safe-offset-sidebar-gap gap-sidebar-gap"
               >
-                <SidebarSecondary />
+                <SidebarSearch />
               </div>
             {/if}
           </div>

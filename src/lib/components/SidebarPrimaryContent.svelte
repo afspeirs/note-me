@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { FolderSearch, PinIcon, PinOffIcon, RefreshCwIcon } from '@lucide/svelte';
+  import { FolderSearch, PinIcon, PinOffIcon, RefreshCwIcon, SearchIcon, SearchXIcon } from '@lucide/svelte';
 
   import Button from '$lib/components/Button.svelte';
   import Card from '$lib/components/Card.svelte';
@@ -8,6 +8,7 @@
   import Tooltip from '$lib/components/Tooltip.svelte';
   import { fileSystem, refreshFolder, selectFolder } from '$lib/context/file-system.svelte';
   import { sidebarUseMobile } from '$lib/context/navigation.svelte';
+  import { search } from '$lib/context/search.svelte';
 
   let isFileSystemRefreshing = $state(false);
 </script>
@@ -18,18 +19,16 @@
   aria-label="sidebar folders"
 >
   <CardHeader title={fileSystem.folder?.name || 'No folder selected'}>
-    <div class="hidden lg:contents">
-      <Tooltip align={!fileSystem.folderHandle ? 'end' : 'center'} content={`${sidebarUseMobile.value ? 'Pin' : 'Un-pin'} sidebar`}>
+    {#if fileSystem.folderHandle}
+      <Tooltip content="Show Search">
         <Button
-          icon={sidebarUseMobile.value ? PinIcon : PinOffIcon}
+          icon={search.sidebarOpen ? SearchXIcon : SearchIcon}
           iconOnly
-          onclick={() => sidebarUseMobile.toggle()}
+          onclick={() => search.toggleSidebar()}
         >
-          {`${sidebarUseMobile.value ? 'Pin' : 'Un-pin'} sidebar`}
+          Show Search
         </Button>
       </Tooltip>
-    </div>
-    {#if fileSystem.folderHandle}
       <Tooltip align="end" content="Refresh Folder">
         <Button
           class={isFileSystemRefreshing ? 'animate-spin' : ''}
@@ -49,6 +48,17 @@
         </Button>
       </Tooltip>
     {/if}
+    <div class="hidden lg:contents">
+      <Tooltip align={!fileSystem.folderHandle ? 'end' : 'center'} content={`${sidebarUseMobile.value ? 'Pin' : 'Un-pin'} sidebar`}>
+        <Button
+          icon={sidebarUseMobile.value ? PinIcon : PinOffIcon}
+          iconOnly
+          onclick={() => sidebarUseMobile.toggle()}
+        >
+          {`${sidebarUseMobile.value ? 'Pin' : 'Un-pin'} sidebar`}
+        </Button>
+      </Tooltip>
+    </div>
   </CardHeader>
 
   <div class="overflow-auto px-card-gap">
