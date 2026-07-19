@@ -49,7 +49,7 @@
       </Tooltip>
     {/if}
     <div class="hidden lg:contents">
-      <Tooltip align={!fileSystem.folderHandle ? 'end' : 'center'} content={`${sidebarUseMobile.value ? 'Pin' : 'Un-pin'} sidebar`}>
+      <Tooltip align="end" content={`${sidebarUseMobile.value ? 'Pin' : 'Un-pin'} sidebar`}>
         <Button
           icon={sidebarUseMobile.value ? PinIcon : PinOffIcon}
           iconOnly
