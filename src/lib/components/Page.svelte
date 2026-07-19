@@ -38,7 +38,7 @@
       iconOnly
       onclick={toggleSidebarOpen}
     >
-      {`${sidebarOpen.value ? 'Close' : 'Open'} Sidebar`}
+      {sidebarOpen.value ? 'Close' : 'Open'} Sidebar
     </Button>
   </Tooltip>
 

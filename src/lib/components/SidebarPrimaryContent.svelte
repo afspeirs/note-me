@@ -55,7 +55,7 @@
           iconOnly
           onclick={() => sidebarUseMobile.toggle()}
         >
-          {`${sidebarUseMobile.value ? 'Pin' : 'Un-pin'} sidebar`}
+          {sidebarUseMobile.value ? 'Pin' : 'Un-pin'} sidebar
         </Button>
       </Tooltip>
     </div>

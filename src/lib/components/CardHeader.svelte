@@ -31,7 +31,7 @@
         iconOnly
         onclick={onBack}
       >
-        {`Close "${title}"`}
+        Close "{title}"
       </Button>
     </Tooltip>
   {/if}
