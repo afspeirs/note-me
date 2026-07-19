@@ -1,7 +1,7 @@
 <script lang="ts" module>
   export const style = {
     base: 'peer/button cursor-pointer rounded-lg select-none disabled:opacity-40 disabled:pointer-events-none focus-visible ring-inset',
-    iconOnly: 'block p-3 sm:p-2',
+    iconOnly: 'p-2 sm:p-1.5',
     fullWidth: 'min-w-0 w-full',
     withText: 'flex items-center gap-3 p-2 sm:py-1.5',
   };
@@ -78,6 +78,7 @@
   <!-- eslint-disable svelte/no-navigation-without-resolve -- TODO: Remove the need for this to handle external urls -->
   <a
     class={classNames(
+      'block',
       iconOnly ? style.iconOnly : style.withText,
       !iconOnly && fullWidth ? style.fullWidth : '',
       active ? coloursActive[colourActive] : colours[colour],
