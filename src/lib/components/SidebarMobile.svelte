@@ -2,9 +2,8 @@
   import { Dialog } from 'bits-ui';
   import { fade, fly } from 'svelte/transition';
 
-  import { currentFolderName, sidebarOpen } from '$lib/context/navigation.svelte';
-  import SidebarPrimary from './SidebarPrimary.svelte';
-  import SidebarSecondary from './SidebarSecondary.svelte';
+  import SidebarPrimary from '$lib/components/SidebarPrimary.svelte';
+  import { sidebarOpen } from '$lib/context/navigation.svelte';
 
   type SidebarMobileProps = {
     show: boolean;
@@ -41,12 +40,12 @@
               <SidebarPrimary />
             </div>
 
-            {#if currentFolderName.value !== null}
+            <!-- {#if secondary.sidebarOpen}
               <button
                 transition:fade={{ duration }}
                 type="button"
                 class="sm:hidden fixed inset-0 bg-primary/70 dark:bg-black/70 backdrop-blur-xs"
-                onclick={() => currentFolderName.unset()}
+                onclick={() => secondary.setSidebarOpen(false)}
               >
                 <span class="sr-only">Close secondary sidebar</span>
               </button>
@@ -56,7 +55,7 @@
               >
                 <SidebarSecondary />
               </div>
-            {/if}
+            {/if} -->
           </div>
         {/if}
       {/snippet}

@@ -5,12 +5,11 @@
   import Card from '$lib/components/Card.svelte';
   import SidebarMobile from '$lib/components/SidebarMobile.svelte';
   import SidebarPrimary from '$lib/components/SidebarPrimary.svelte';
-  import SidebarSecondary from '$lib/components/SidebarSecondary.svelte';
   import Toaster from '$lib/components/Toaster.svelte';
   import TopBar from '$lib/components/TopBar.svelte';
   import { restoreFolder } from '$lib/context/file-system.svelte';
   import { modal } from '$lib/context/modal.svelte';
-  import { currentFolderName, sidebarOpen, sidebarUseMobile } from '$lib/context/navigation.svelte';
+  import { sidebarOpen, sidebarUseMobile } from '$lib/context/navigation.svelte';
   import { themeSystem } from '$lib/context/theme.svelte';
   import ConfirmModal from '$lib/modals/ConfirmModal.svelte';
   import SettingsModal from '$lib/modals/SettingsModal.svelte';
@@ -73,15 +72,15 @@
   </aside>
 
   <!-- TODO: Refactor to use transition: instead of adding classes -->
-  <aside
+  <!-- <aside
     class={classNames(
       'relative flex flex-col min-w-sidebar w-sidebar h-full pr-sidebar-gap py-sidebar-gap pb-safe-offset-sidebar-gap gap-sidebar-gap',
       'transition-[margin-left,opacity] duration-400 -z-10',
-      !sidebarUseMobile.value && !isMobile && sidebarOpen.value && currentFolderName.value !== null ? 'ml-0 opacity-100' : '-ml-sidebar opacity-0',
+      !sidebarUseMobile.value && !isMobile && sidebarOpen.value && SidebarSecondaryOpen ? 'ml-0 opacity-100' : '-ml-sidebar opacity-0',
     )}
   >
     <SidebarSecondary />
-  </aside>
+  </aside> -->
 
   <div
     class={classNames(
