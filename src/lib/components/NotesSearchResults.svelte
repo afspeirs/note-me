@@ -2,8 +2,7 @@
   import { FileIcon } from '@lucide/svelte';
 
   import { page } from '$app/state';
-  import Button from '$lib/components/Button.svelte';
-  import { style } from '$lib/components/Button.svelte';
+  import Button, { style } from '$lib/components/Button.svelte';
   import { fileSystem } from '$lib/context/file-system.svelte';
   import { search } from '$lib/context/search.svelte';
 
@@ -13,6 +12,7 @@
     const query = search.value.trim();
     if (!query) return [];
 
+    // TODO: Add serach for file contents
     return [...fileSystem.cache.values()]
       .filter((item) => item.kind === 'file' && item.name.toLowerCase().includes(query))
       .sort((a, b) => a.name.localeCompare(b.name));
