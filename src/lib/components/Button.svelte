@@ -1,33 +1,4 @@
 <script lang="ts" module>
-  export const style = {
-    base: 'peer/button cursor-pointer rounded-lg select-none disabled:opacity-40 disabled:pointer-events-none focus-visible ring-inset',
-    iconOnly: 'p-2 sm:p-1.5',
-    fullWidth: 'min-w-0 w-full',
-    withText: 'flex items-center gap-3 p-2 sm:py-1.5',
-  };
-
-  export const colours = {
-    base: 'text-dark dark:text-light hover:bg-gray-300 dark:hover:bg-neutral-700',
-    inverted: 'text-light dark:text-dark hover:bg-neutral-700 dark:hover:bg-gray-300',
-    primary: 'text-light bg-primary hover:bg-primary/90',
-  };
-
-  export const coloursActive = {
-    ...colours,
-    base: 'bg-gray-200 hover:bg-gray-300 dark:bg-neutral-700/60 dark:hover:bg-neutral-700',
-  };
-</script>
-
-<script lang="ts">
-  import type { FileIcon } from '@lucide/svelte';
-  import type { Snippet } from 'svelte';
-  import type { HTMLAnchorAttributes, HTMLButtonAttributes } from 'svelte/elements';
-
-  import { resolve } from '$app/paths';
-  import type { Pathname } from '$app/types';
-  import type AIcon from '$lib/components/icons/AIcon.svelte';
-  import { classNames } from '$lib/utils/classNames';
-
   type BaseButtonProps = {
     active?: boolean,
     children: Snippet,
@@ -53,7 +24,37 @@
     onclick?: never,
   };
 
-  type ButtonProps = ButtonOptions | LinkOptions;
+  export type ButtonProps = ButtonOptions | LinkOptions;
+
+  export const style = {
+    base: 'peer/button cursor-pointer rounded-lg select-none disabled:opacity-40 disabled:pointer-events-none focus-visible ring-inset',
+    iconOnly: 'p-2 sm:p-1.5',
+    fullWidth: 'min-w-0 w-full',
+    withText: 'flex items-center gap-3 p-2 sm:py-1.5',
+  } as const;
+
+  export const colours = {
+    base: 'text-dark dark:text-light hover:bg-gray-300 dark:hover:bg-neutral-700',
+    inverted: 'text-light dark:text-dark hover:bg-neutral-700 dark:hover:bg-gray-300',
+    primary: 'text-light bg-primary hover:bg-primary/90',
+  } as const;
+
+  export const coloursActive = {
+    ...colours,
+    base: 'bg-gray-200 hover:bg-gray-300 dark:bg-neutral-700/60 dark:hover:bg-neutral-700',
+  } as const;
+</script>
+
+<script lang="ts">
+  import type { FileIcon } from '@lucide/svelte';
+  import type { Snippet } from 'svelte';
+  import type { HTMLAnchorAttributes, HTMLButtonAttributes } from 'svelte/elements';
+
+  import { resolve } from '$app/paths';
+  import type { Pathname } from '$app/types';
+  import type AIcon from '$lib/components/icons/AIcon.svelte';
+  import { classNames } from '$lib/utils/classNames';
+
 
   const {
     active,

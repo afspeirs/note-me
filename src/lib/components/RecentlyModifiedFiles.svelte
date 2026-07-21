@@ -3,8 +3,7 @@
 
   import { goto } from '$app/navigation';
   import { resolve } from '$app/paths';
-  import Button from '$lib/components/Button.svelte';
-  import Tooltip from '$lib/components/Tooltip.svelte';
+  import ButtonWithTooltip from '$lib/components/ButtonWithTooltip.svelte';
   import { fileSystem, formatRelativeTime, type FileSystemFileEntry } from '$lib/context/file-system.svelte';
 
   const recentFilesLimit = 5;
@@ -37,19 +36,21 @@
 
     <div class="flex flex-col gap-2">
       {#each recentFiles as file (file.id)}
-        <Tooltip side="top" content={file.id}>
-          <Button
-            active
-            icon={FileTextIcon}
-            onclick={() => goto(resolve(`/note/${file.id}`))}
-          >
-            {file.name}
+        <ButtonWithTooltip
+          active
+          icon={FileTextIcon}
+          onclick={() => goto(resolve(`/note/${file.id}`))}
+          tooltip={file.id}
+          tooltipProps={{
+            side: 'top',
+          }}
+        >
+          {file.name}
 
-            {#snippet secondaryAction()}
-              <span class="text-nowrap">{formatRelativeTime(file.lastModified)}</span>
-            {/snippet}
-          </Button>
-        </Tooltip>
+          {#snippet secondaryAction()}
+            <span class="text-nowrap">{formatRelativeTime(file.lastModified)}</span>
+          {/snippet}
+        </ButtonWithTooltip>
       {/each}
     </div>
   </div>

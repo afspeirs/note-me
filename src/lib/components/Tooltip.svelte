@@ -1,29 +1,33 @@
+<script lang="ts" module>
+  export type TooltipProps = {
+    align?: 'start' | 'center' | 'end';
+    alignOffset?: number;
+    content: string;
+    side?: 'top' | 'right' | 'bottom' | 'left';
+    sideOffset?: number;
+    trigger: Snippet<[Record<string, unknown>]>,
+  };
+</script>
+
 <script lang="ts">
   import { Tooltip } from 'bits-ui';
   import type { Snippet } from 'svelte';
   import { fly } from 'svelte/transition';
 
-  type TooltipProps = {
-    align?: 'start' | 'center' | 'end';
-    alignOffset?: number;
-    children: Snippet;
-    content: string;
-    side?: 'top' | 'right' | 'bottom' | 'left';
-    sideOffset?: number;
-  };
-
   let {
     align = 'center',
-    children,
     content,
     side = 'bottom',
     sideOffset = 8,
+    trigger,
   }: TooltipProps = $props();
 </script>
 
 <Tooltip.Root>
   <Tooltip.Trigger>
-    {@render children()}
+    {#snippet child({ props })}
+      {@render trigger(props)}
+    {/snippet}
   </Tooltip.Trigger>
   <Tooltip.Content
     forceMount

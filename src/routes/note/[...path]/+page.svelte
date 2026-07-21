@@ -4,10 +4,9 @@
 
   import { goto } from '$app/navigation';
   import { resolve } from '$app/paths';
-  import Button from '$lib/components/Button.svelte';
+  import ButtonWithTooltip from '$lib/components/ButtonWithTooltip.svelte';
   import Page from '$lib/components/Page.svelte';
   import Prose from '$lib/components/Prose.svelte';
-  import Tooltip from '$lib/components/Tooltip.svelte';
   import { deleteFile, getFileEntryFromId, readFile, writeFile } from '$lib/context/file-system.svelte';
   import { modal } from '$lib/context/modal.svelte';
 
@@ -20,7 +19,7 @@
   let textareaRef: HTMLTextAreaElement | null = $state(null);
 
   function removeFrontmatter(markdown: string): string {
-    // Match frontmatter: starts with ---, followed by content, ends with ---
+    /** Match frontmatter: starts with ---, followed by content, ends with --- */
     const frontmatterRegex = /^---\s*\n([\s\S]*?)\n---\s*\n/;
     return markdown.replace(frontmatterRegex, '');
   }
@@ -264,24 +263,25 @@
 />
 
 {#snippet iconsRight()}
-  <Tooltip content="{edit ? 'Save' : 'Edit'} Note">
-    <Button
-      icon={edit ? SaveIcon : PencilIcon}
-      iconOnly
-      onclick={toggleEdit}
-    >
-      {edit ? 'Save' : 'Edit'} Note
-    </Button>
-  </Tooltip>
-  <Tooltip align="end" content="Delete Note">
-    <Button
-      icon={Trash2Icon}
-      iconOnly
-      onclick={handleDeleteNote}
-    >
-      Delete Note
-    </Button>
-  </Tooltip>
+  <ButtonWithTooltip
+    icon={edit ? SaveIcon : PencilIcon}
+    iconOnly
+    onclick={toggleEdit}
+    tooltip="{edit ? 'Save' : 'Edit'} Note"
+  >
+    {edit ? 'Save' : 'Edit'} Note
+  </ButtonWithTooltip>
+  <ButtonWithTooltip
+    icon={Trash2Icon}
+    iconOnly
+    onclick={handleDeleteNote}
+    tooltip="Delete Note"
+    tooltipProps={{
+      align: 'end',
+    }}
+  >
+    Delete Note
+  </ButtonWithTooltip>
 {/snippet}
 
 <Page
@@ -302,27 +302,62 @@
         ></textarea>
 
         <div class="flex items-center gap-card-gap p-card-gap">
-          <Tooltip content="Bold (Ctrl+B)">
-            <Button icon={BoldIcon} iconOnly onclick={() => applyMarkdown('bold')}>Bold</Button>
-          </Tooltip>
-          <Tooltip content="Italic (Ctrl+I)">
-            <Button icon={ItalicIcon} iconOnly onclick={() => applyMarkdown('italic')}>Italic</Button>
-          </Tooltip>
-          <Tooltip content="Heading">
-            <Button icon={HeadingIcon} iconOnly onclick={() => applyMarkdown('heading')}>Heading</Button>
-          </Tooltip>
-          <!-- <Tooltip content="Tag">
-            <Button icon={HashIcon} iconOnly onclick={() => applyMarkdown('hashtag')}>Tag</Button>
-          </Tooltip> -->
-          <!-- <Tooltip content="Wikilink (Ctrl+K)">
-            <Button icon={LinkIcon} iconOnly onclick={() => applyMarkdown('wikilink')}>Link</Button>
-          </Tooltip> -->
-          <Tooltip content="Bullet List">
-            <Button icon={ListIcon} iconOnly onclick={() => applyMarkdown('list')}>List</Button>
-          </Tooltip>
-          <Tooltip content="Todo List">
-            <Button icon={ListTodoIcon} iconOnly onclick={() => applyMarkdown('list-todo')}>List</Button>
-          </Tooltip>
+          <ButtonWithTooltip
+            icon={BoldIcon}
+            iconOnly
+            onclick={() => applyMarkdown('bold')}
+            tooltip="Bold (Ctrl+B)"
+          >
+            Bold
+          </ButtonWithTooltip>
+          <ButtonWithTooltip
+            icon={ItalicIcon}
+            iconOnly
+            onclick={() => applyMarkdown('italic')}
+            tooltip="Italic (Ctrl+I)"
+          >
+            Italic
+          </ButtonWithTooltip>
+          <ButtonWithTooltip
+            icon={HeadingIcon}
+            iconOnly
+            onclick={() => applyMarkdown('heading')}
+            tooltip="Heading"
+          >
+            Heading
+          </ButtonWithTooltip>
+          <!-- <ButtonWithTooltip
+            icon={HashIcon}
+            iconOnly
+            onclick={() => applyMarkdown('tag')}
+            tooltip="Tag"
+          >
+            Tag
+          </ButtonWithTooltip> -->
+          <!-- <ButtonWithTooltip
+            icon={LinkIcon}
+            iconOnly
+            onclick={() => applyMarkdown('wikilink')}
+            tooltip="Wikilink (Ctrl+K)"
+          >
+            Link
+          </ButtonWithTooltip> -->
+          <ButtonWithTooltip
+            icon={ListIcon}
+            iconOnly
+            onclick={() => applyMarkdown('list')}
+            tooltip="Bullet List"
+          >
+            Bullet List
+          </ButtonWithTooltip>
+          <ButtonWithTooltip
+            icon={ListTodoIcon}
+            iconOnly
+            onclick={() => applyMarkdown('list-todo')}
+            tooltip="Todo List"
+          >
+            Todo List
+          </ButtonWithTooltip>
         </div>
       {:else}
         <Prose>

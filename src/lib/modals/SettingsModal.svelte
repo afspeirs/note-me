@@ -1,12 +1,11 @@
 <script lang="ts">
-  import Button from '$lib/components/Button.svelte';
+  import ButtonWithTooltip from '$lib/components/ButtonWithTooltip.svelte';
   import AIcon from '$lib/components/icons/AIcon.svelte';
   import GithubIcon from '$lib/components/icons/GithubIcon.svelte';
   import Modal from '$lib/components/Modal.svelte';
   import SettingsAppVersion from '$lib/components/SettingsAppVersion.svelte';
   import SettingsChangeTheme from '$lib/components/SettingsChangeTheme.svelte';
   import SettingsCheckForUpdate from '$lib/components/SettingsCheckForUpdate.svelte';
-  import Tooltip from '$lib/components/Tooltip.svelte';
   import { modal } from '$lib/context/modal.svelte';
 
   function onClose() {
@@ -15,26 +14,27 @@
 </script>
 
 {#snippet iconsRight()}
-  <Tooltip content="Visit speirs.dev">
-    <Button
-      icon={AIcon}
-      iconClassName="fill-black dark:fill-white"
-      iconOnly
-      href="https://speirs.dev"
-    >
-      Visit speirs.dev
-    </Button>
-  </Tooltip>
-  <Tooltip align="end" content="Visit github.com/afspeirs/note-me">
-    <Button
-      icon={GithubIcon}
-      iconClassName="fill-black dark:fill-white"
-      iconOnly
-      href="https://github.com/afspeirs/note-me"
-    >
-      Visit github.com/afspeirs/note-me
-    </Button>
-  </Tooltip>
+  <ButtonWithTooltip
+    icon={AIcon}
+    iconClassName="fill-black dark:fill-white"
+    iconOnly
+    href="https://speirs.dev"
+    tooltip="Visit speirs.dev"
+  >
+    Visit speirs.dev
+  </ButtonWithTooltip>
+  <ButtonWithTooltip
+    icon={GithubIcon}
+    iconClassName="fill-black dark:fill-white"
+    iconOnly
+    href="https://github.com/afspeirs/note-me"
+    tooltip="Visit github.com/afspeirs/note-me"
+    tooltipProps={{
+      align: 'end',
+    }}
+  >
+    Visit github.com/afspeirs/note-me
+  </ButtonWithTooltip>
 {/snippet}
 
 <Modal

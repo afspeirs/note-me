@@ -2,8 +2,7 @@
   import { MenuIcon } from '@lucide/svelte';
   import type { Snippet } from 'svelte';
 
-  import Button from '$lib/components/Button.svelte';
-  import Tooltip from '$lib/components/Tooltip.svelte';
+  import ButtonWithTooltip from '$lib/components/ButtonWithTooltip.svelte';
   import { sidebarOpen } from '$lib/context/navigation.svelte';
 
   function toggleSidebarOpen() {
@@ -32,15 +31,17 @@
 </svelte:head>
 
 <header class="relative flex gap-card-gap p-card-gap">
-  <Tooltip align="start" content={`${sidebarOpen.value ? 'Close' : 'Open'} Sidebar`}>
-    <Button
-      icon={MenuIcon}
-      iconOnly
-      onclick={toggleSidebarOpen}
-    >
-      {sidebarOpen.value ? 'Close' : 'Open'} Sidebar
-    </Button>
-  </Tooltip>
+  <ButtonWithTooltip
+    icon={MenuIcon}
+    iconOnly
+    onclick={toggleSidebarOpen}
+    tooltip="{sidebarOpen.value ? 'Close' : 'Open'} Sidebar"
+    tooltipProps={{
+      align: 'start',
+    }}
+  >
+    {sidebarOpen.value ? 'Close' : 'Open'} Sidebar
+  </ButtonWithTooltip>
 
   {#if !titleHide}
     <div class="ml-2 self-center font-bold text-xl truncate select-none">{title}</div>

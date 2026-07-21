@@ -2,9 +2,8 @@
   import { XIcon } from '@lucide/svelte';
   import { onMount, type Snippet } from 'svelte';
 
-  import Button from '$lib/components/Button.svelte';
+  import ButtonWithTooltip from '$lib/components/ButtonWithTooltip.svelte';
   import Card from '$lib/components/Card.svelte';
-  import Tooltip from '$lib/components/Tooltip.svelte';
 
   type ModalProps = {
     children: Snippet;
@@ -70,15 +69,17 @@
 
     {@render iconsRight?.()}
 
-    <Tooltip align="end" content="Close">
-      <Button
-        icon={XIcon}
-        iconOnly
-        onclick={onClose}
-      >
-        Close
-      </Button>
-    </Tooltip>
+    <ButtonWithTooltip
+      icon={XIcon}
+      iconOnly
+      onclick={onClose}
+      tooltip="Close"
+      tooltipProps={{
+        align: 'end',
+      }}
+    >
+      Close
+    </ButtonWithTooltip>
   </header>
 
   {@render children()}

@@ -5,7 +5,7 @@
   import { goto } from '$app/navigation';
   import { page } from '$app/state';
   import Button from '$lib/components/Button.svelte';
-  import Tooltip from '$lib/components/Tooltip.svelte';
+  import ButtonWithTooltip from '$lib/components/ButtonWithTooltip.svelte';
   import { search } from '$lib/context/search.svelte';
 
   function hideSidebarSearch() {
@@ -55,15 +55,17 @@
   class="flex items-center gap-2 bg-light dark:bg-dark z-50"
 >
   <span class="sr-only">Search Notes</span>
-  <Tooltip align="start" content="Hide Search">
-    <Button
-      icon={ArrowLeftIcon}
-      iconOnly
-      onclick={hideSidebarSearch}
-    >
-      Hide Search
-    </Button>
-  </Tooltip>
+  <ButtonWithTooltip
+    icon={ArrowLeftIcon}
+    iconOnly
+    onclick={hideSidebarSearch}
+    tooltip="Hide Search"
+    tooltipProps={{
+      align: 'start',
+    }}
+  >
+    Hide Search
+  </ButtonWithTooltip>
   <input
     autocomplete="off"
     name="notes-search"
