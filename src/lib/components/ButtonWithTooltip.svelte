@@ -19,7 +19,7 @@
 
 <Tooltip content={tooltip} {...tooltipProps}>
   {#snippet trigger(triggerProps)}
-    <Button {...buttonProps} {...triggerProps}>
+    <Button {...triggerProps} {...buttonProps}>
       {@render children()}
     </Button>
   {/snippet}
