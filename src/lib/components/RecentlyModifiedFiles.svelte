@@ -3,8 +3,8 @@
 
   import { goto } from '$app/navigation';
   import { resolve } from '$app/paths';
-  import ButtonWithTooltip from '$lib/components/ButtonWithTooltip.svelte';
-  import { fileSystem, formatRelativeTime, type FileSystemFileEntry } from '$lib/context/file-system.svelte';
+  import ButtonWithTooltip from '#lib/components/ButtonWithTooltip.svelte';
+  import { fileSystem, formatRelativeTime, type FileSystemFileEntry } from '#lib/context/file-system.svelte.js';
 
   const recentFilesLimit = 5;
 
@@ -39,7 +39,7 @@
         <ButtonWithTooltip
           active
           icon={FileTextIcon}
-          onclick={() => goto(resolve(`/note/${file.id}`))}
+          onclick={() => goto(resolve(`note/${file.id}`))}
           tooltip={file.id}
           tooltipProps={{
             side: 'top',

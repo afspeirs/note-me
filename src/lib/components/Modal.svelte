@@ -2,8 +2,8 @@
   import { XIcon } from '@lucide/svelte';
   import { onMount, type Snippet } from 'svelte';
 
-  import ButtonWithTooltip from '$lib/components/ButtonWithTooltip.svelte';
-  import Card from '$lib/components/Card.svelte';
+  import ButtonWithTooltip from '#lib/components/ButtonWithTooltip.svelte';
+  import Card from '#lib/components/Card.svelte';
 
   type ModalProps = {
     children: Snippet;

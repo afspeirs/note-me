@@ -2,10 +2,10 @@
   import { HouseIcon } from '@lucide/svelte';
 
   import { page } from '$app/state';
-  import Button from '$lib/components/Button.svelte';
-  import Card from '$lib/components/Card.svelte';
-  import CardHeader from '$lib/components/CardHeader.svelte';
-  import TopBar from '$lib/components/TopBar.svelte';
+  import Button from '#lib/components/Button.svelte';
+  import Card from '#lib/components/Card.svelte';
+  import CardHeader from '#lib/components/CardHeader.svelte';
+  import TopBar from '#lib/components/TopBar.svelte';
 </script>
 
 <div class="fixed inset-0 px-safe flex overflow-hidden pt-titlebar-area-height bg-primary dark:bg-black">
@@ -19,7 +19,7 @@
 
       <Button
         colour="primary"
-        href="/"
+        href=""
         icon={HouseIcon}
         class="mt-auto"
       >

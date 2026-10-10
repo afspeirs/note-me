@@ -1,12 +1,12 @@
 <script lang="ts">
-  import ButtonWithTooltip from '$lib/components/ButtonWithTooltip.svelte';
-  import AIcon from '$lib/components/icons/AIcon.svelte';
-  import GithubIcon from '$lib/components/icons/GithubIcon.svelte';
-  import Modal from '$lib/components/Modal.svelte';
-  import SettingsAppVersion from '$lib/components/SettingsAppVersion.svelte';
-  import SettingsChangeTheme from '$lib/components/SettingsChangeTheme.svelte';
-  import SettingsCheckForUpdate from '$lib/components/SettingsCheckForUpdate.svelte';
-  import { modal } from '$lib/context/modal.svelte';
+  import ButtonWithTooltip from '#lib/components/ButtonWithTooltip.svelte';
+  import AIcon from '#lib/components/icons/AIcon.svelte';
+  import GithubIcon from '#lib/components/icons/GithubIcon.svelte';
+  import Modal from '#lib/components/Modal.svelte';
+  import SettingsAppVersion from '#lib/components/SettingsAppVersion.svelte';
+  import SettingsChangeTheme from '#lib/components/SettingsChangeTheme.svelte';
+  import SettingsCheckForUpdate from '#lib/components/SettingsCheckForUpdate.svelte';
+  import { modal } from '#lib/context/modal.svelte.js';
 
   function onClose() {
     modal.close();

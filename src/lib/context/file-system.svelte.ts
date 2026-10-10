@@ -1,7 +1,7 @@
 import { openDB } from 'idb';
 import { SvelteDate, SvelteMap, SvelteSet } from 'svelte/reactivity';
 
-import { addToast } from '$lib/components/Toaster.svelte';
+import { addToast } from '#lib/components/Toaster.svelte';
 
 type FileSystemBase = {
   id: string;

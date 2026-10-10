@@ -2,9 +2,9 @@
   import { Dialog } from 'bits-ui';
   import { fade, fly } from 'svelte/transition';
 
-  import SidebarPrimary from '$lib/components/SidebarPrimary.svelte';
-  import { sidebarOpen } from '$lib/context/navigation.svelte';
-  import { search } from '$lib/context/search.svelte';
+  import SidebarPrimary from '#lib/components/SidebarPrimary.svelte';
+  import { sidebarOpen } from '#lib/context/navigation.svelte.js';
+  import { search } from '#lib/context/search.svelte.js';
   import SidebarSearch from './SidebarSearch.svelte';
 
   type SidebarMobileProps = {

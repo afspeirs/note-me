@@ -1,7 +1,7 @@
 <script lang="ts">
-  import Tooltip, { type TooltipProps} from '$lib/components/Tooltip.svelte';
+  import Tooltip, { type TooltipProps} from '#lib/components/Tooltip.svelte';
   import type { Snippet } from 'svelte';
-  import Button, { type ButtonProps } from '$lib/components/Button.svelte';
+  import Button, { type ButtonProps } from '#lib/components/Button.svelte';
 
   type ButtonWithTooltipProps = ButtonProps & {
     children: Snippet,

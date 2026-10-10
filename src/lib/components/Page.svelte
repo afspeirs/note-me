@@ -2,8 +2,8 @@
   import { MenuIcon } from '@lucide/svelte';
   import type { Snippet } from 'svelte';
 
-  import ButtonWithTooltip from '$lib/components/ButtonWithTooltip.svelte';
-  import { sidebarOpen } from '$lib/context/navigation.svelte';
+  import ButtonWithTooltip from '#lib/components/ButtonWithTooltip.svelte';
+  import { sidebarOpen } from '#lib/context/navigation.svelte.js';
 
   function toggleSidebarOpen() {
     sidebarOpen.toggle();

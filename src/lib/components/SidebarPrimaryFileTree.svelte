@@ -3,9 +3,9 @@
   import { Accordion, ContextMenu } from 'bits-ui';
 
   import { page } from '$app/state';
-  import Button, { colours, style } from '$lib/components/Button.svelte';
-  import SidebarPrimaryFileTree from '$lib/components/SidebarPrimaryFileTree.svelte';
-  import { createFile, deleteFile, type FileSystemEntry } from '$lib/context/file-system.svelte';
+  import Button, { colours, style } from '#lib/components/Button.svelte';
+  import SidebarPrimaryFileTree from '#lib/components/SidebarPrimaryFileTree.svelte';
+  import { createFile, deleteFile, type FileSystemEntry } from '#lib/context/file-system.svelte.js';
 
   type SidebarPrimaryFileTreeProps = {
     items: FileSystemEntry[];
@@ -50,7 +50,7 @@
             <li {...menuProps}>
               <Button
                 icon={FileIcon}
-                href="/note/{item.id}"
+                href="note/{item.id}"
                 active={item.id === page.params.path}
               >
                 {item.name}

@@ -2,9 +2,9 @@
   import { FileIcon } from '@lucide/svelte';
 
   import { page } from '$app/state';
-  import Button, { style } from '$lib/components/Button.svelte';
-  import { fileSystem } from '$lib/context/file-system.svelte';
-  import { search } from '$lib/context/search.svelte';
+  import Button, { style } from '#lib/components/Button.svelte';
+  import { fileSystem } from '#lib/context/file-system.svelte.js';
+  import { search } from '#lib/context/search.svelte.js';
 
   const items = $derived.by(() => {
     if (!fileSystem.cache) return [];
@@ -26,7 +26,7 @@
       <li>
         <Button
           icon={FileIcon}
-          href="/note/{item.id}"
+          href="note/{item.id}"
           active={isFileOpen}
         >
           {item.name}

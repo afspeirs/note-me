@@ -1,8 +1,8 @@
 <script lang="ts">
   import { MoonIcon, SunIcon } from '@lucide/svelte';
 
-  import Button from '$lib/components/Button.svelte';
-  import { themeSystem, themeUser, themeUserOptions } from '$lib/context/theme.svelte';
+  import Button from '#lib/components/Button.svelte';
+  import { themeSystem, themeUser, themeUserOptions } from '#lib/context/theme.svelte.js';
 
   function handleUpdateTheme() {
     themeUser.set($themeSystem === 'dark' ? 'light' : 'dark');

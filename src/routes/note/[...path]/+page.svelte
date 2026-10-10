@@ -4,11 +4,11 @@
 
   import { goto } from '$app/navigation';
   import { resolve } from '$app/paths';
-  import ButtonWithTooltip from '$lib/components/ButtonWithTooltip.svelte';
-  import Page from '$lib/components/Page.svelte';
-  import Prose from '$lib/components/Prose.svelte';
-  import { deleteFile, getFileEntryFromId, readFile, writeFile } from '$lib/context/file-system.svelte';
-  import { modal } from '$lib/context/modal.svelte';
+  import ButtonWithTooltip from '#lib/components/ButtonWithTooltip.svelte';
+  import Page from '#lib/components/Page.svelte';
+  import Prose from '#lib/components/Prose.svelte';
+  import { deleteFile, getFileEntryFromId, readFile, writeFile } from '#lib/context/file-system.svelte.js';
+  import { modal } from '#lib/context/modal.svelte.js';
 
   let { data } = $props();
 

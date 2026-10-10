@@ -2,21 +2,21 @@
   import { Tooltip } from 'bits-ui';
 
   import { afterNavigate } from '$app/navigation';
-  import Card from '$lib/components/Card.svelte';
-  import SidebarMobile from '$lib/components/SidebarMobile.svelte';
-  import SidebarPrimary from '$lib/components/SidebarPrimary.svelte';
-  import SidebarSearch from '$lib/components/SidebarSearch.svelte';
-  import Toaster from '$lib/components/Toaster.svelte';
-  import TopBar from '$lib/components/TopBar.svelte';
-  import { restoreFolder } from '$lib/context/file-system.svelte';
-  import { modal } from '$lib/context/modal.svelte';
-  import { sidebarOpen, sidebarUseMobile } from '$lib/context/navigation.svelte';
-  import { search } from '$lib/context/search.svelte';
-  import { themeSystem } from '$lib/context/theme.svelte';
-  import ConfirmModal from '$lib/modals/ConfirmModal.svelte';
-  import SettingsModal from '$lib/modals/SettingsModal.svelte';
-  import { classNames } from '$lib/utils/classNames';
-  import '$lib/utils/registerServiceWorker';
+  import Card from '#lib/components/Card.svelte';
+  import SidebarMobile from '#lib/components/SidebarMobile.svelte';
+  import SidebarPrimary from '#lib/components/SidebarPrimary.svelte';
+  import SidebarSearch from '#lib/components/SidebarSearch.svelte';
+  import Toaster from '#lib/components/Toaster.svelte';
+  import TopBar from '#lib/components/TopBar.svelte';
+  import { restoreFolder } from '#lib/context/file-system.svelte.js';
+  import { modal } from '#lib/context/modal.svelte.js';
+  import { sidebarOpen, sidebarUseMobile } from '#lib/context/navigation.svelte.js';
+  import { search } from '#lib/context/search.svelte.js';
+  import { themeSystem } from '#lib/context/theme.svelte.js';
+  import ConfirmModal from '#lib/modals/ConfirmModal.svelte';
+  import SettingsModal from '#lib/modals/SettingsModal.svelte';
+  import { classNames } from '#lib/utils/classNames.js';
+  import '#lib/utils/registerServiceWorker.js';
   import '../app.css';
 
   let { children } = $props();
@@ -31,7 +31,8 @@
     }
   });
 
-  afterNavigate(() => {
+  afterNavigate(({ shallow, type }) => {
+    if (shallow && type === 'goto') return;
     if (isMobile || sidebarUseMobile.value) sidebarOpen.set(false);
   });
 
@@ -40,11 +41,11 @@
 
 <svelte:head>
   <meta name="theme-color" content={$themeSystem === 'light' ? '#ee6e00' : '#000000'} />
-  <meta name="version" content={import.meta.env.APP_VERSION}>
+  <meta name="version" content={import.meta.env.APP_VERSION} />
 </svelte:head>
 
 <svelte:window
-  bind:innerWidth={innerWidth}
+  bind:innerWidth
   on:keydown={(event) => {
     if ((event.ctrlKey || event.metaKey) && event.key === 'b') {
       event.preventDefault();

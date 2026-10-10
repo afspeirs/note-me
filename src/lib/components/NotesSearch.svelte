@@ -4,9 +4,9 @@
 
   import { goto } from '$app/navigation';
   import { page } from '$app/state';
-  import Button from '$lib/components/Button.svelte';
-  import ButtonWithTooltip from '$lib/components/ButtonWithTooltip.svelte';
-  import { search } from '$lib/context/search.svelte';
+  import Button from '#lib/components/Button.svelte';
+  import ButtonWithTooltip from '#lib/components/ButtonWithTooltip.svelte';
+  import { search } from '#lib/context/search.svelte.js';
 
   function hideSidebarSearch() {
     search.setSidebarOpen(false);
@@ -32,7 +32,7 @@
       search.sidebarOpen = true;
 
       // Strip the ?search parameter from the browser address bar
-      const newParams = new SvelteURLSearchParams(page.url.searchParams);
+      const newParams = new SvelteURLSearchParams(page.url.searchParams.toString());
       newParams.delete('search');
 
       const newQuery = newParams.toString();
@@ -40,8 +40,7 @@
 
       // eslint-disable-next-line svelte/no-navigation-without-resolve
       goto(newUrl, {
-        keepFocus: true,
-        noScroll: true,
+        reset: false,
         replaceState: true,
       });
     }

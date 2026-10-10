@@ -1,27 +1,27 @@
 <script lang="ts" module>
   type BaseButtonProps = {
-    active?: boolean,
-    children: Snippet,
-    class?: string,
+    active?: boolean;
+    children: Snippet;
+    class?: string;
     colour?: keyof typeof colours;
     colourActive?: keyof typeof coloursActive;
     fullWidth?: boolean,
     icon?: typeof FileIcon | typeof AIcon;
-    iconClassName?: string,
-    iconOnly?: boolean,
-    secondaryAction?: Snippet,
+    iconClassName?: string;
+    iconOnly?: boolean;
+    secondaryAction?: Snippet;
   };
 
   type ButtonOptions = BaseButtonProps & HTMLButtonAttributes & {
-    disabled?: boolean,
-    href?: never,
-    onclick?: (event: MouseEvent) => void
+    disabled?: boolean;
+    href?: never;
+    onclick?: (event: MouseEvent) => void;
   };
 
   type LinkOptions = BaseButtonProps & HTMLAnchorAttributes & {
-    disabled?: never,
-    href: Pathname | `https://${string}`;
-    onclick?: never,
+    disabled?: never;
+    href: Path | `https://${string}`;
+    onclick?: never;
   };
 
   export type ButtonProps = ButtonOptions | LinkOptions;
@@ -51,10 +51,9 @@
   import type { HTMLAnchorAttributes, HTMLButtonAttributes } from 'svelte/elements';
 
   import { resolve } from '$app/paths';
-  import type { Pathname } from '$app/types';
-  import type AIcon from '$lib/components/icons/AIcon.svelte';
-  import { classNames } from '$lib/utils/classNames';
-
+  import type { Path } from '$app/types';
+  import type AIcon from '#lib/components/icons/AIcon.svelte';
+  import { classNames } from '#lib/utils/classNames.js';
 
   const {
     active,
@@ -76,7 +75,6 @@
 
 {#if href}
   {@const externalHref = href?.startsWith('https://')}
-  <!-- eslint-disable svelte/no-navigation-without-resolve -- TODO: Remove the need for this to handle external urls -->
   <a
     class={classNames(
       'block',
@@ -86,7 +84,7 @@
       style.base,
       className,
     )}
-    href={externalHref ? href : resolve(href as Pathname)}
+    href={externalHref ? href : resolve(href as Path)}
     target={externalHref ? '_blank' : undefined}
     rel={externalHref ? 'external noopener noreferrer' : undefined}
     {onclick}

@@ -1,7 +1,7 @@
 <script lang="ts">
-  import Card from '$lib/components/Card.svelte';
-  import NotesSearch from '$lib/components/NotesSearch.svelte';
-  import NotesSearchResults from '$lib/components/NotesSearchResults.svelte';
+  import Card from '#lib/components/Card.svelte';
+  import NotesSearch from '#lib/components/NotesSearch.svelte';
+  import NotesSearchResults from '#lib/components/NotesSearchResults.svelte';
 </script>
 
 <Card

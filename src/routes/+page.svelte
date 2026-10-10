@@ -1,10 +1,10 @@
 <script lang="ts">
   import { FolderSearch } from '@lucide/svelte';
 
-  import Button from '$lib/components/Button.svelte';
-  import Page from '$lib/components/Page.svelte';
-  import RecentlyModifiedFiles from '$lib/components/RecentlyModifiedFiles.svelte';
-  import { fileSystem, selectFolder } from '$lib/context/file-system.svelte';
+  import Button from '#lib/components/Button.svelte';
+  import Page from '#lib/components/Page.svelte';
+  import RecentlyModifiedFiles from '#lib/components/RecentlyModifiedFiles.svelte';
+  import { fileSystem, selectFolder } from '#lib/context/file-system.svelte.js';
 </script>
 
 <Page title="NoteMe">

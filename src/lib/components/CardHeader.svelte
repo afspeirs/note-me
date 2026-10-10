@@ -2,7 +2,7 @@
   import { XIcon } from '@lucide/svelte';
   import type { Snippet } from 'svelte';
 
-  import ButtonWithTooltip from '$lib/components/ButtonWithTooltip.svelte';
+  import ButtonWithTooltip from '#lib/components/ButtonWithTooltip.svelte';
 
   type CardHeaderProps = {
     children?: Snippet,

@@ -1,7 +1,7 @@
 <script lang="ts">
-  import Button from '$lib/components/Button.svelte';
-  import Modal from '$lib/components/Modal.svelte';
-  import { modal } from '$lib/context/modal.svelte';
+  import Button from '#lib/components/Button.svelte';
+  import Modal from '#lib/components/Modal.svelte';
+  import { modal } from '#lib/context/modal.svelte.js';
 
   let isLoading = $state(false);
 

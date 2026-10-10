@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Snippet } from 'svelte';
-  import { classNames } from '$lib/utils/classNames';
+  import { classNames } from '#lib/utils/classNames.js';
   import type { HTMLAttributes } from 'svelte/elements';
 
   type CardProps = {

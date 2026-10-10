@@ -1,14 +1,14 @@
 <script lang="ts">
   import { FolderSearch, PinIcon, PinOffIcon, RefreshCwIcon, SearchIcon, SearchXIcon } from '@lucide/svelte';
 
-  import Button from '$lib/components/Button.svelte';
-  import ButtonWithTooltip from '$lib/components/ButtonWithTooltip.svelte';
-  import Card from '$lib/components/Card.svelte';
-  import CardHeader from '$lib/components/CardHeader.svelte';
-  import SidebarPrimaryFileTree from '$lib/components/SidebarPrimaryFileTree.svelte';
-  import { fileSystem, refreshFolder, selectFolder } from '$lib/context/file-system.svelte';
-  import { sidebarUseMobile } from '$lib/context/navigation.svelte';
-  import { search } from '$lib/context/search.svelte';
+  import Button from '#lib/components/Button.svelte';
+  import ButtonWithTooltip from '#lib/components/ButtonWithTooltip.svelte';
+  import Card from '#lib/components/Card.svelte';
+  import CardHeader from '#lib/components/CardHeader.svelte';
+  import SidebarPrimaryFileTree from '#lib/components/SidebarPrimaryFileTree.svelte';
+  import { fileSystem, refreshFolder, selectFolder } from '#lib/context/file-system.svelte.js';
+  import { sidebarUseMobile } from '#lib/context/navigation.svelte.js';
+  import { search } from '#lib/context/search.svelte.js';
 
   let isFileSystemRefreshing = $state(false);
 </script>
