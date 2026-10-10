@@ -55,9 +55,26 @@ async function saveHandle(handle: FileSystemDirectoryHandle) {
   await db.put(STORE_NAME, handle, 'folderHandle');
 }
 
+async function clearHandle() {
+  const db = await initDB();
+  await db.delete(STORE_NAME, 'folderHandle');
+}
+
 async function loadHandle(): Promise<FileSystemDirectoryHandle | null> {
   const db = await initDB();
   return await db.get(STORE_NAME, 'folderHandle') || null;
+}
+
+function isFolderAccessError(error: unknown): error is DOMException {
+  return error instanceof DOMException
+    && (error.name === 'NotFoundError' || error.name === 'NotAllowedError');
+}
+
+async function clearFolderSelection() {
+  fileSystem.folderHandle = null;
+  fileSystem.folder = null;
+  fileSystem.cache = null;
+  await clearHandle();
 }
 
 export async function selectFolder() {
@@ -85,20 +102,51 @@ export async function selectFolder() {
 
 export async function refreshFolder() {
   if (fileSystem.folderHandle) {
-    const { root, cache } = await readDirectory(fileSystem.folderHandle);
-    fileSystem.folder = root;
-    fileSystem.cache = cache;
+    try {
+      const { root, cache } = await readDirectory(fileSystem.folderHandle);
+      fileSystem.folder = root;
+      fileSystem.cache = cache;
+    } catch (error) {
+      if (isFolderAccessError(error)) {
+        await clearFolderSelection();
+        addToast({
+          data: {
+            title: 'Folder unavailable',
+            description: 'The selected folder is no longer available. Please select it again.',
+          },
+        });
+        return;
+      }
+
+      console.error('Error refreshing folder:', error); // eslint-disable-line no-console
+      throw error;
+    }
   }
 }
 
 export async function restoreFolder() {
-  fileSystem.folderHandle = await loadHandle();
-  if (fileSystem.folderHandle) {
-    const { root, cache } = await readDirectory(fileSystem.folderHandle);
-    fileSystem.folder = root;
-    fileSystem.cache = cache;
+  try {
+    fileSystem.folderHandle = await loadHandle();
+    if (fileSystem.folderHandle) {
+      const { root, cache } = await readDirectory(fileSystem.folderHandle);
+      fileSystem.folder = root;
+      fileSystem.cache = cache;
+    }
+  } catch (error) {
+    if (isFolderAccessError(error)) {
+      await clearFolderSelection();
+      addToast({
+        data: {
+          title: 'Folder unavailable',
+          description: 'Your previous folder could not be restored. Please select it again.',
+        },
+      });
+    } else {
+      console.error('Error restoring folder:', error); // eslint-disable-line no-console
+    }
+  } finally {
+    fileSystem.loading = false;
   }
-  fileSystem.loading = false;
 }
 
 async function readDirectory(
@@ -119,7 +167,17 @@ async function readDirectory(
         const subFolder = await recursiveScan(entry, currentPath);
         children.push(subFolder);
       } else {
-        const file = await entry.getFile();
+        let file;
+
+        try {
+          file = await entry.getFile();
+        } catch (error) {
+          if (error instanceof DOMException && error.name === 'NotFoundError') {
+            continue;
+          }
+
+          throw error;
+        }
 
         const fileEntry: FileSystemFileEntry = {
           id: `${currentPath}/${entry.name}`,
